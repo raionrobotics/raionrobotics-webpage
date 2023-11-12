@@ -8,16 +8,16 @@
 
 				<ul class="text-gray-400 font-medium mt-3 space-y-2">
 					<li class="flex items-center gap-1">
-						<p class="text">(주)라이온로보틱스 <br></p>
+						<p class="font-noto text">(주)라이온로보틱스 <br></p>
 					</li>
 					<li class="flex items-center gap-1">
-						<p class="text">대표이사: 황보제민 </p><br>
+						<p class="font-noto text">대표이사: 황보제민 </p><br>
 					</li>
 					<li class="flex items-center gap-1">
-						<p class="text">주소: 대전광역시 유성구 문지로 193, 진리관 티305호 (문지동, KAIST 문지캠퍼스)</p>
+						<p class="font-noto text">주소: 대전광역시 유성구 문지로 193, 진리관 티305호 (문지동, KAIST 문지캠퍼스)</p>
 					</li>
 					<li class="flex items-center gap-1">
-						<p class="text">사업자등록번호: 580-81-03287</p>
+						<p class="font-noto text">사업자등록번호: 580-81-03287</p>
 					</li>
 					<li class="flex items-center gap-1">
 						<svg
@@ -34,7 +34,7 @@
 						</svg>
 						<a href="tel:9051290512">+9051290512</a>
 					</li>
-					<li class="flex items-center gap-1">
+					<li class="font-noto flex items-center gap-1">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="15"
@@ -57,10 +57,10 @@
 					<h2 class="mb-6 text-sm font-semibold uppercase text-white">Legal</h2>
 					<ul class=" text-gray-400 font-medium">
 						<li class="mb-4">
-							<a href="pp" class="hover:underline">Privacy Policy</a>
+							<a href="pp" class="font-noto hover:underline">Privacy Policy</a>
 						</li>
 						<li>
-							<a href="tc" class="hover:underline">Terms &amp; Conditions</a>
+							<a href="tc" class="font-noto hover:underline">Terms &amp; Conditions</a>
 						</li>
 					</ul>
 				</div>
@@ -69,7 +69,7 @@
 		<hr class="my-6 sm:mx-auto border-gray-700 lg:my-8" />
 		<div class="sm:flex sm:items-center sm:justify-between">
 			<span class="text-sm sm:text-center text-gray-400"
-				>© 2023 <a href="hoverun" class="hover:underline">(주)라이온로보틱스</a>. All Rights Reserved.
+				>© 2023 <a href="hoverun" class="font-noto hover:underline">(주)라이온로보틱스</a>. All Rights Reserved.
 			</span>
 			<div class="flex mt-4 space-x-5 sm:justify-center sm:mt-0">
 				<a href="tg" class="text-gray-500 hover:text-white">
@@ -86,10 +86,10 @@
 							clip-rule="evenodd"
 						/>
 					</svg>
-					<span class="sr-only">Facebook page</span>
+					<span class="font-noto sr-only">Facebook page</span>
 				</a>
 
-				<a href="tgg" class="text-gray-500 hover:text-white">
+				<a href="tgg" class="font-noto text-gray-500 hover:text-white">
 					<svg
 						class="w-4 h-4"
 						aria-hidden="true"
@@ -103,10 +103,10 @@
 							clip-rule="evenodd"
 						/>
 					</svg>
-					<span class="sr-only">Twitter page</span>
+					<span class="font-noto sr-only">Twitter page</span>
 				</a>
 
-				<a href="textis" class="text-gray-500 hover:text-white">
+				<a href="textis" class="font-noto text-gray-500 hover:text-white">
 					<svg
 						class="w-4 h-4"
 						aria-hidden="true"
@@ -120,9 +120,15 @@
 							clip-rule="evenodd"
 						/>
 					</svg>
-					<span class="sr-only">Dribbble account</span>
+					<span class="font-noto sr-only">Dribbble account</span>
 				</a>
 			</div>
 		</div>
 	</div>
 </footer>
+
+<style>
+	.font-noto {
+		font-family: "Noto Sans";
+	}
+</style>

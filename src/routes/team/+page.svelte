@@ -6,7 +6,7 @@
 	/>
 </svelte:head>
 
-<section id="hero" style="width: 600px;margin-left: auto;margin-right: auto;" class="bg-gray-100">
+<section id="hero" style="width: 600px;margin-left: auto;margin-right: auto;" class="font-noto bg-gray-100">
 	<figure>
 		<img class="center" src="/images/members/JeminHwangbo.jpg" alt="Jemin Hwangbo" />
 		<figcaption style="text-align:center"><b>황보제민 대표</b></figcaption>
@@ -29,4 +29,9 @@
 	padding: 0px;
 	width: 25%;
 	}
+	
+	.font-noto {
+		font-family: "Noto Sans";
+	}
 </style>
+

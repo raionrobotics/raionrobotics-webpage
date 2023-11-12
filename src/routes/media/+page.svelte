@@ -25,7 +25,7 @@
 		<a href={item.url}>
 			<img src={item.image} alt="news"/>
 		</a>
-		<figcaption>{item.text}</figcaption>
+		<figcaption class="font-noto">{item.text}</figcaption>
 	</figure>
 	{/each}
 </div>
@@ -36,7 +36,7 @@
 		<button on:click={() => currentItems = currentItems + 6}
 			id="loadmore"
 			type="button"
-			class="text-white bg-blue-400 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-purple-100 font-medium rounded-lg text-sm px-4 py-4 text-center mr-3 md:mr-0"
+			class="font-noto text-white bg-blue-400 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-purple-100 font-medium rounded-lg text-sm px-4 py-4 text-center mr-3 md:mr-0"
 			>Show more
 		</button>
 		{/if}
@@ -69,5 +69,9 @@
 	.button-container { 
 		height: 100px;
 		position: relative;
+	}
+
+	.font-noto {
+		font-family: "Noto Sans";
 	}
 </style>

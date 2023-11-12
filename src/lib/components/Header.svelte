@@ -1,6 +1,7 @@
 <script>
 	import Menu from './Menu.svelte'
 	import MenuItem from './MenuItem.svelte'
+	import '/src/styles/app.css';
 </script>
 
 <header>
@@ -19,14 +20,14 @@
 					<li>
 						<a
 							href="/"
-							class="block py-5 pl-3 pr-4 text-xl rounded md:bg-transparent md:text-purple-700 md:p-0"
+							class="font-noto font-bold block py-5 pl-3 pr-4 text-xl rounded md:bg-transparent md:text-purple-700 md:p-0"
 							aria-current="page">홈
 						</a>
 					</li>
 					<li>
 						<a
 							href="/team"
-							class="block py-2 pl-3 pr-4 text-xl rounded md:bg-transparent md:text-purple-700 md:p-0"
+							class="font-noto font-bold block py-2 pl-3 pr-4 text-xl rounded md:bg-transparent md:text-purple-700 md:p-0"
 							aria-current="page">회사소개
 						</a>
 					</li>
@@ -35,7 +36,7 @@
 							<span
 								slot='toggle'
 								href="/product/Raibo2"
-								class="block py-2 pl-3 pr-4 text-xl rounded md:bg-transparent md:text-purple-700 md:p-0"
+								class="font-noto font-bold block py-2 pl-3 pr-4 text-xl rounded md:bg-transparent md:text-purple-700 md:p-0"
 								aria-current="page">제품
 							</span>
 							<MenuItem><a href="/product/Raibo2">라이보2</a></MenuItem>
@@ -45,21 +46,21 @@
 					<li>
 						<a
 							href="/media"
-							class="block py-2 pl-3 pr-4 text-xl rounded md:bg-transparent md:text-purple-700 md:p-0"
+							class="font-noto font-bold block py-2 pl-3 pr-4 text-xl rounded md:bg-transparent md:text-purple-700 md:p-0"
 							aria-current="page">뉴스
 						</a>
 					</li>
 					<li>
 						<a
 							href="/gallery"
-							class="block py-2 pl-3 pr-4 text-xl rounded md:bg-transparent md:text-purple-700 md:p-0"
+							class="font-noto font-bold block py-2 pl-3 pr-4 text-xl rounded md:bg-transparent md:text-purple-700 md:p-0"
 							aria-current="page">갤러리
 						</a>
 					</li>
 					<li>
 						<a
 							href="/hiring"
-							class="block py-2 pl-3 pr-4 text-xl rounded md:bg-transparent md:text-purple-700 md:p-0"
+							class="font-noto font-bold block py-2 pl-3 pr-4 text-xl rounded md:bg-transparent md:text-purple-700 md:p-0"
 							>채용
 						</a>
 					</li>
@@ -68,3 +69,9 @@
 		</div>
 	</nav>
 </header>
+
+<style>
+	.font-noto {
+		font-family: "Noto Sans";
+	}
+</style>
