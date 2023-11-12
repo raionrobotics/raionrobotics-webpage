@@ -1,59 +1,66 @@
-<header class="mb-12">
-	<nav class="bg-gray-100 py-3 fixed w-full z-20 top-0 left-0">
-		<div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-			<div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
-				<p><a href="/team"><img src="/images/logo_f2-02.png" width="257" alt="Logo" /></a></p>
-			</div>
-			<div class="flex md:order-2">
-				<button
-					type="button"
-					class="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg md:text-lg px-6 py-2 text-center mr-3 md:mr-0"
-					>Login</button
-				>
-				<button
-					data-collapse-toggle="navbar-sticky"
-					type="button"
-					class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-					aria-controls="navbar-sticky"
-					aria-expanded="false"
-				>
-					<span class="sr-only">Open main menu</span>
-					<svg
-						class="w-5 h-5"
-						aria-hidden="true"
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 17 14"
-					>
-						<path
-							stroke="currentColor"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M1 1h15M1 7h15M1 13h15"
-						/>
-					</svg>
-				</button>
+<script>
+	import Menu from './Menu.svelte'
+	import MenuItem from './MenuItem.svelte'
+</script>
+
+<header>
+	<nav class="bg-gray-100">
+		<div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2">
+			<div class="lg:mt-0 lg:flex">
+				<p><a href="/"><img src="/images/logo_f2-02.png" width="157" alt="Logo" /></a></p>
 			</div>
 			<div
-				class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+				class="items-center justify-between w-full md:flex md:w-auto md:order-1"
 				id="navbar-sticky"
 			>
 				<ul
-					class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0"
+					class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:flex-row md:space-x-16 md:mt-0 md:border-0"
 				>
 					<li>
 						<a
 							href="/"
-							class="block py-2 pl-3 pr-4 text-white bg-purple-700 rounded md:bg-transparent md:text-purple-700 md:p-0"
-							aria-current="page">제품
+							class="block py-5 pl-3 pr-4 text-xl rounded md:bg-transparent md:text-purple-700 md:p-0"
+							aria-current="page">홈
 						</a>
 					</li>
 					<li>
 						<a
-							href="team"
-							class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-purple-700 md:p-0"
-							>회사소개
+							href="/team"
+							class="block py-2 pl-3 pr-4 text-xl rounded md:bg-transparent md:text-purple-700 md:p-0"
+							aria-current="page">회사소개
+						</a>
+					</li>
+					<li>
+						<Menu>
+							<span
+								slot='toggle'
+								href="/product/Raibo2"
+								class="block py-2 pl-3 pr-4 text-xl rounded md:bg-transparent md:text-purple-700 md:p-0"
+								aria-current="page">제품
+							</span>
+							<MenuItem><a href="/product/Raibo2">라이보2</a></MenuItem>
+							<MenuItem><a href="#?">barfoo</a></MenuItem>
+						</Menu>
+					</li>
+					<li>
+						<a
+							href="/media"
+							class="block py-2 pl-3 pr-4 text-xl rounded md:bg-transparent md:text-purple-700 md:p-0"
+							aria-current="page">뉴스
+						</a>
+					</li>
+					<li>
+						<a
+							href="/gallery"
+							class="block py-2 pl-3 pr-4 text-xl rounded md:bg-transparent md:text-purple-700 md:p-0"
+							aria-current="page">갤러리
+						</a>
+					</li>
+					<li>
+						<a
+							href="/hiring"
+							class="block py-2 pl-3 pr-4 text-xl rounded md:bg-transparent md:text-purple-700 md:p-0"
+							>채용
 						</a>
 					</li>
 				</ul>

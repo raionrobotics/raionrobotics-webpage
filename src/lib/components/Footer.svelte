@@ -8,19 +8,16 @@
 
 				<ul class="text-gray-400 font-medium mt-3 space-y-2">
 					<li class="flex items-center gap-1">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="15"
-							height="14"
-							viewBox="0 0 15 14"
-							fill="none"
-						>
-							<path
-								d="M7.49998 1.16669C5.04998 1.16669 2.83331 3.04502 2.83331 5.95002C2.83331 7.80502 4.26248 9.98669 7.11498 12.5009C7.33665 12.6934 7.66915 12.6934 7.89081 12.5009C10.7375 9.98669 12.1666 7.80502 12.1666 5.95002C12.1666 3.04502 9.94998 1.16669 7.49998 1.16669ZM7.49998 7.00002C6.85831 7.00002 6.33331 6.47502 6.33331 5.83335C6.33331 5.19169 6.85831 4.66669 7.49998 4.66669C8.14165 4.66669 8.66665 5.19169 8.66665 5.83335C8.66665 6.47502 8.14165 7.00002 7.49998 7.00002Z"
-								fill="#BDBDBD"
-							/>
-						</svg>
-						<p class="text">Street Name, City Name</p>
+						<p class="text">(주)라이온로보틱스 <br></p>
+					</li>
+					<li class="flex items-center gap-1">
+						<p class="text">대표이사: 황보제민 </p><br>
+					</li>
+					<li class="flex items-center gap-1">
+						<p class="text">주소: 대전광역시 유성구 문지로 193, 진리관 티305호 (문지동, KAIST 문지캠퍼스)</p>
+					</li>
+					<li class="flex items-center gap-1">
+						<p class="text">사업자등록번호: 580-81-03287</p>
 					</li>
 					<li class="flex items-center gap-1">
 						<svg
@@ -60,10 +57,10 @@
 					<h2 class="mb-6 text-sm font-semibold uppercase text-white">Legal</h2>
 					<ul class=" text-gray-400 font-medium">
 						<li class="mb-4">
-							<a href="#" class="hover:underline">Privacy Policy</a>
+							<a href="pp" class="hover:underline">Privacy Policy</a>
 						</li>
 						<li>
-							<a href="#" class="hover:underline">Terms &amp; Conditions</a>
+							<a href="tc" class="hover:underline">Terms &amp; Conditions</a>
 						</li>
 					</ul>
 				</div>
@@ -72,10 +69,10 @@
 		<hr class="my-6 sm:mx-auto border-gray-700 lg:my-8" />
 		<div class="sm:flex sm:items-center sm:justify-between">
 			<span class="text-sm sm:text-center text-gray-400"
-				>© 2023 <a href="#" class="hover:underline">(주)라이온로보틱스</a>. All Rights Reserved.
+				>© 2023 <a href="hoverun" class="hover:underline">(주)라이온로보틱스</a>. All Rights Reserved.
 			</span>
 			<div class="flex mt-4 space-x-5 sm:justify-center sm:mt-0">
-				<a href="#" class="text-gray-500 hover:text-white">
+				<a href="tg" class="text-gray-500 hover:text-white">
 					<svg
 						class="w-4 h-4"
 						aria-hidden="true"
@@ -92,7 +89,7 @@
 					<span class="sr-only">Facebook page</span>
 				</a>
 
-				<a href="#" class="text-gray-500 hover:text-white">
+				<a href="tgg" class="text-gray-500 hover:text-white">
 					<svg
 						class="w-4 h-4"
 						aria-hidden="true"
@@ -109,7 +106,7 @@
 					<span class="sr-only">Twitter page</span>
 				</a>
 
-				<a href="#" class="text-gray-500 hover:text-white">
+				<a href="textis" class="text-gray-500 hover:text-white">
 					<svg
 						class="w-4 h-4"
 						aria-hidden="true"
