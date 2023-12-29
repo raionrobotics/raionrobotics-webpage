@@ -1,99 +1,44 @@
 {
     "news": [
         {
-            "image": "/news/과학기술대전2023.png",
-            "text": "라이랩 과학기술대전2023에서 라이보 데모",
+            "image": "/news/CNN.png",
+            "text": "CNN Bold Pursuits: How robots are about to impact our lives",
+            "url": "https://edition.cnn.com/videos/tv/2023/11/06/bold-pursuits-robots-spc.cnn"
+        },
+        {
+            "image": "/news/한동훈장관방문.jpg",
+            "text": "한동훈 법무부 장관 라이랩 방문",
+            "url": "https://www.lawtimes.co.kr/news/193441?serial=193441"
+        },
+        {
+            "image": "/news/K스타트업_라이온로보틱스.jpg",
+            "text": "도전! K-스타트업 2023: 예비창업리그 왕중왕전 대상 수상",
+            "url": "https://www.news1.kr/articles/?5216606"
+        },
+        {
+            "image": "/news/과학기술대전2023.jpg",
+            "text": "과학기술대전 2023: 라이보 데모",
             "url": "https://www.etnews.com/20231109000335"
         },
         {
-            "image": "/news/과학기술대전2023.png",
-            "text": "라이랩 과학기술대전2023에서 라이보 데모",
-            "url": "https://www.etnews.com/20231109000335"
+            "image": "/news/innovate.png",
+            "text": "이노베이트 코리아 2023: 라이보 시연",
+            "url": "https://news.heraldcorp.com/view.php?ud=20230628000382"
         },
         {
-            "image": "/news/과학기술대전2023.png",
-            "text": "라이랩 과학기술대전2023에서 라이보 데모",
-            "url": "https://www.etnews.com/20231109000335"
+            "image": "/news/nature_raibo.gif",
+            "text": "Nature 뉴스: Swift progress for robots over complex terrain",
+            "url": "https://www.nature.com/articles/d41586-023-00710-0"
         },
         {
-            "image": "/news/과학기술대전2023.png",
-            "text": "라이랩 과학기술대전2023에서 라이보 데모",
-            "url": "https://www.etnews.com/20231109000335"
+            "image": "/news/YTN사이언스.jpg",
+            "text": "YTN 사이언스: [과학의 달인] 어디든지 달린다 '라이보 로봇'",
+            "url": "https://www.youtube.com/watch?v=f_nXTHReTFA&ab_channel=YTN%EC%82%AC%EC%9D%B4%EC%96%B8%EC%8A%A4%ED%88%AC%EB%8D%B0%EC%9D%B4"
         },
         {
-            "image": "/news/과학기술대전2023.png",
-            "text": "라이랩 과학기술대전2023에서 라이보 데모",
-            "url": "https://www.etnews.com/20231109000335"
-        },
-        {
-            "image": "/news/과학기술대전2023.png",
-            "text": "라이랩 과학기술대전2023에서 라이보 데모",
-            "url": "https://www.etnews.com/20231109000335"
-        },
-        {
-            "image": "/news/과학기술대전2023.png",
-            "text": "라이랩 과학기술대전2023에서 라이보 데모",
-            "url": "https://www.etnews.com/20231109000335"
-        },
-        {
-            "image": "/news/과학기술대전2023.png",
-            "text": "라이랩 과학기술대전2023에서 라이보 데모",
-            "url": "https://www.etnews.com/20231109000335"
-        },
-        {
-            "image": "/news/과학기술대전2023.png",
-            "text": "라이랩 과학기술대전2023에서 라이보 데모",
-            "url": "https://www.etnews.com/20231109000335"
-        },
-        {
-            "image": "/news/과학기술대전2023.png",
-            "text": "라이랩 과학기술대전2023에서 라이보 데모",
-            "url": "https://www.etnews.com/20231109000335"
-        },
-        {
-            "image": "/news/과학기술대전2023.png",
-            "text": "라이랩 과학기술대전2023에서 라이보 데모",
-            "url": "https://www.etnews.com/20231109000335"
-        },
-        {
-            "image": "/news/과학기술대전2023.png",
-            "text": "라이랩 과학기술대전2023에서 라이보 데모",
-            "url": "https://www.etnews.com/20231109000335"
-        },
-        {
-            "image": "/news/과학기술대전2023.png",
-            "text": "라이랩 과학기술대전2023에서 라이보 데모",
-            "url": "https://www.etnews.com/20231109000335"
-        },
-        {
-            "image": "/news/과학기술대전2023.png",
-            "text": "라이랩 과학기술대전2023에서 라이보 데모",
-            "url": "https://www.etnews.com/20231109000335"
-        },
-        {
-            "image": "/news/과학기술대전2023.png",
-            "text": "라이랩 과학기술대전2023에서 라이보 데모",
-            "url": "https://www.etnews.com/20231109000335"
-        },
-        {
-            "image": "/news/과학기술대전2023.png",
-            "text": "라이랩 과학기술대전2023에서 라이보 데모",
-            "url": "https://www.etnews.com/20231109000335"
-        },
-        {
-            "image": "/news/과학기술대전2023.png",
-            "text": "라이랩 과학기술대전2023에서 라이보 데모",
-            "url": "https://www.etnews.com/20231109000335"
-        },
-        {
-            "image": "/news/과학기술대전2023.png",
-            "text": "라이랩 과학기술대전2023에서 라이보 데모",
-            "url": "https://www.etnews.com/20231109000335"
-        },
-        {
-            "image": "/news/과학기술대전2023.png",
-            "text": "라이랩 과학기술대전2023에서 라이보 데모",
-            "url": "https://www.etnews.com/20231109000335"
+            "image": "/news/SBS8시뉴스.jpg",
+            "text": "SBS 등 국내 언론사: 사람도 걷기 힘든 곳 달리는 로봇… 국내 연구진 일냈다",
+            "url": "https://www.youtube.com/watch?v=86dtiv1Z3Qk&ab_channel=SBS%EB%89%B4%EC%8A%A4"
         }
     ]
 }
