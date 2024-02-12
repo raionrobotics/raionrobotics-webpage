@@ -52,7 +52,7 @@
 
 <style>
 	.news {
-		width: 50vw;
+		width: 70vw;
 		display: grid;
 		margin: auto;
 		padding: 20px;
