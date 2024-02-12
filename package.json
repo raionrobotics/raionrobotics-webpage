@@ -10,7 +10,8 @@
 		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "^2.1.1",
+		"@sveltejs/adapter-cloudflare": "next",
+		"@sveltejs/adapter-auto": "^3.1.1",
 		"@sveltejs/kit": "^1.27.6",
 		"autoprefixer": "^10.4.16",
 		"eslint": "^8.55.0",
@@ -26,6 +27,8 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@sveltejs/adapter-cloudflare": "next",
+		"@sveltejs/adapter-auto": "^3.1.1",
 		"d3": "^7.8.5",
 		"jquery-csv": "^1.0.21"
 	}
