@@ -14,8 +14,8 @@ dependencies:
 
 devDependencies:
   '@sveltejs/adapter-auto':
-    specifier: ^2.1.1
-    version: 2.1.1(@sveltejs/kit@1.30.3)
+    specifier: ^3.1.1
+    version: 3.1.1(@sveltejs/kit@1.30.3)
   '@sveltejs/kit':
     specifier: ^1.27.6
     version: 1.30.3(svelte@4.2.10)(vite@4.5.2)
