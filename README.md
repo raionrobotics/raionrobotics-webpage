@@ -67,6 +67,8 @@ npm run preview
 
 To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) suitable for your hosting environment.
 
+## to fix the lock file
+pnpm install --lockfile-only
 
 ## Demo
 ![Real Estate Template Demo](https://raw.githubusercontent.com/lyon93/svelte-real-estate-landing/main/static/images/demo.png)
