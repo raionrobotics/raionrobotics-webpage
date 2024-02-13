@@ -6,16 +6,16 @@
 
 <header>
 	<nav class="bg-gray-100">
-		<div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2">
-			<div class="lg:mt-0 lg:flex">
+		<div class="width:100vw flex flex-wrap items-center justify-between">
+			<div class="lg:mt-0 lg:flex pe-5">
 				<p><a href="/"><img src="/images/logo_f2-02.png" width="207" alt="Logo" /></a></p>
 			</div>
 			<div
-				class="items-center justify-between w-full md:flex md:w-auto md:order-1 z-30"
+				class="z-30"
 				id="navbar-sticky"
 			>
 				<ul
-					class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:flex-row md:space-x-16 md:mt-0 md:border-0"
+					class="flex flex-col font-medium md:flex-row md:space-x-10 md:border-0 w-50 pe-5"
 				>
 					<li>
 						<a
@@ -61,6 +61,7 @@
 						<a
 							href="/hiring"
 							class="font-menu"
+							aria-current="page"
 							>채용
 						</a>
 					</li>
@@ -74,7 +75,7 @@
 	.font-menu {
 		font-family: "Noto Sans";
 		font-size: larger;
-		font-weight: 600;
+		font-weight: 700;
 		color: rgb(12, 12, 105)
 	}
 </style>

@@ -52,12 +52,12 @@
 
 <style>
 	.news {
-		width: 50vw;
+		width: 80vw;
 		display: grid;
 		margin: auto;
-		padding: 20px;
+		padding: 10px;
 		grid-template-columns: repeat(3, 1fr);
-		grid-gap: 20px;
+		grid-gap: 10px;
 		justify-content: center;
   		align-items: center;
 	}
@@ -78,6 +78,7 @@
 	figure,
 	img {
 		width: 100%;
+		aspect-ratio: 16/11;
 		margin: 0;
 	}
 

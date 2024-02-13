@@ -6,27 +6,13 @@
 	/>
 </svelte:head>
 
-<section id="hero" style="background-image: url('/images/Raibo2.JPG'); background-size: cover; height:1280px; padding-top:600px;">
-	<div class="grid max-w-screen-xl py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-0 lg:pt-16 lg:grid-cols-12">
-		<div class="mr-auto place-self-center lg:col-span-7">
-			<h1 class="max-w-2xl mb-4 text-4xl text-white font-extrabold tracking-tight leading-none md:text-5xl xl:text-8xl">
-				라이보 2
-			</h1>
-			<p class="max-w-2xl mb-6 font-bold text-white lg:mb-8 md:text-lg lg:text-3xl">
-				모든 지형을 위한 사족 로봇 솔루션
-			</p>
-		</div>
+<section id="hero" style="background-image: url('/images/Raibo2.JPG'); background-size: cover; width:full; aspect-ratio:1616/1080; padding-top:600px;">
+	<div class="mr-auto place-self-center">
+		<h1 class="mb-4 text-white font-extrabold md:text-5xl">
+			라이보 2
+		</h1>
+		<p class="font-bold text-white lg:mb-8 lg:text-3xl">
+			모든 지형을 위한 사족 로봇 솔루션
+		</p>
 	</div>
-</section>
-
-<section id="hero" style="">
-	<p class="indent-8 max-w-2xl mb-6 font-bold lg:mb-8 md:text-lg lg:text-xl">
-		성능
-	</p>
-</section>
-
-<section id="hero" style="">
-	<p class="indent-8 max-w-2xl mb-6 font-bold lg:mb-8 md:text-lg lg:text-xl">
-		인증
-	</p>
 </section>
