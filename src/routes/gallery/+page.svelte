@@ -6,6 +6,12 @@
 	/>
 </svelte:head>
 
+<div class="section_title">
+	<h1>갤러리
+	  <span>라이온로보틱스와 로봇</span>
+	</h1>
+</div>
+
 <div id="news" class="gallery">
 	<iframe src="https://www.youtube.com/embed/yV-tP3DHXes?si=63h6jaclVHazXDjg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 	<iframe src="https://www.youtube.com/embed/dt1u8zwUMok?si=PZ5ejWCwmTOcgtrL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -14,6 +20,8 @@
 </div>
 
 <style>
+	@import "src/styles/main_style.css";
+
 	.gallery {
 		width: 80vw;
 		margin: auto;

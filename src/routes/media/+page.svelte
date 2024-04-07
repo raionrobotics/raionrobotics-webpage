@@ -24,6 +24,12 @@
 	}	
 </script>
 
+<div class="section_title">
+	<h1>소식
+	  <span>라이온로보틱스와 카이스트 라이랩 관련 소식</span>
+	</h1>
+</div>
+
 <div id="news" class="news">	
 	{#each news_data_shown as item}	
 		<figure>
@@ -51,6 +57,8 @@
 </div>
 
 <style>
+	@import "src/styles/main_style.css";
+
 	.news {
 		width: 80vw;
 		display: grid;

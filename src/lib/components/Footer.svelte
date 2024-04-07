@@ -32,7 +32,7 @@
 								fill="#BDBDBD"
 							/>
 						</svg>
-						<a href="tel:9051290512">-</a>
+						<a href="tel:0423852753">042-385-2753</a>
 					</li>
 					<li class="font-noto flex items-center gap-1">
 						<svg
@@ -47,7 +47,7 @@
 								fill="#BDBDBD"
 							/>
 						</svg>
-						<a href="mailto:contact@company.com">-</a>
+						<a href="mailto:jhwangbo@raionrobotics.com">jhwangbo@raionrobotics.com</a>
 					</li>
 				</ul>
 			</div>
@@ -69,7 +69,7 @@
 		<hr class="my-6 sm:mx-auto border-gray-700 lg:my-8" />
 		<div class="sm:flex sm:items-center sm:justify-between">
 			<span class="text-sm sm:text-center text-gray-400"
-				>© 2023 <a href="hoverun" class="font-noto hover:underline">(주)라이온로보틱스</a>. All Rights Reserved.
+				>© 2024 <a href="hoverun" class="font-noto hover:underline">(주)라이온로보틱스</a>. All Rights Reserved.
 			</span>
 			<div class="flex mt-4 space-x-5 sm:justify-center sm:mt-0">
 				<a href="tg" class="text-gray-500 hover:text-white">

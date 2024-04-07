@@ -1,0 +1,30 @@
+{
+    "news": [
+        {
+            "title": "로봇 설계 담당자",
+            "duty": "로봇 기계부 개발, 생산 설계",
+            "number": "0명",
+            "requirements": "기계공학 및 관련 전공자, 로봇이나 기계 설계에 경험, 솔리드웍스 등 설계툴 능숙자, 구조 해석 (FEM) 경험자, 양산 관련 경험자, CNC 머시닝을 위한 설계 경험자",
+            "advantages": "다이캐스팅, 플라스틱 사출 등 경험자, 모터, 기어, 베어링을 사용한 설계 경험자",
+            "link": "https://www.jobkorea.co.kr/Recruit/GI_Read/44359648?Oem_Code=C1"
+        },
+
+        {
+            "title": "로봇 소프트웨어 담당자",
+            "duty": "로봇 관리 소프트웨어 개발",
+            "number": "0명",
+            "requirements": "C/C++ 능숙자, 리눅스 개발환경 능숙자",
+            "advantages": "ROS2 능숙자, 파이썬 능숙자, Opengl, GLFW, SDL 등 그래픽스 관련 경험자, Android app 개발 경험자, 웹서버, VPN 개발 경험자",
+            "link": "https://www.jobkorea.co.kr/Recruit/GI_Read/44359214?Oem_Code=C1"
+        },
+
+        {
+            "title": "전장 설계 담당자",
+            "duty": "모터드라이버 PCB 설계, 파워 시스템 설계",
+            "number": "0명",
+            "requirements": "전기 및 전자공학 관련 전공자, 회로 설계 및 아트웍 경험자, C/C++ 임베디드 개발 능숙자, MCU 기능 능숙자 (인터럽트, pwm, ADC, SPI, UART 등)",
+            "advantages": "이더캣 슬레이브 개발 경험자, 전파 인증 유경험자, 1kW이상급 모터 드라이버 개발 유경험자, 로봇 양산 경험 유경험자",
+            "link": "https://www.jobkorea.co.kr/Recruit/GI_Read/44359044?Oem_Code=C1"
+        }
+    ]
+}
