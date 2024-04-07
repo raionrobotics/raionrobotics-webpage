@@ -72,7 +72,7 @@
 	margin: auto;
 	padding: 1px;
   	font-family: "Noto Sans";
-	grid-template-columns: repeat(3, 1fr);
+	grid-template-columns: repeat(auto-fit, 350px);
 	grid-gap: 5px;
 	justify-content: center;
 	align-items: center;
@@ -84,6 +84,7 @@
 	border-radius: 10px;
 	padding: 5px;
 	height: 400px;
+	width: 350px;
 	padding-bottom: 10px;
 }
 

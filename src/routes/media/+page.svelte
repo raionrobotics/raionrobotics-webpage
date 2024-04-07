@@ -64,7 +64,7 @@
 		display: grid;
 		margin: auto;
 		padding: 10px;
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(auto-fit, 400px);
 		grid-gap: 10px;
 		justify-content: center;
   		align-items: center;

@@ -23,18 +23,18 @@
 	@import "src/styles/main_style.css";
 
 	.gallery {
-		width: 80vw;
+		width: 90vw;
 		margin: auto;
 		display: grid;
 		padding: 20px;
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: repeat(auto-fit, 560px);
 		grid-gap: 20px;
 		justify-content: center;
   		align-items: center;
 	}
 
 	iframe {
-		width: 38vw; 
-		height: 21.375vw; /* 100/56.25 = 560/315 = 1.778 */
+		width: 560px; 
+		height: 315px; /* 100/56.25 = 560/315 = 1.778 */
 	}
 </style>
