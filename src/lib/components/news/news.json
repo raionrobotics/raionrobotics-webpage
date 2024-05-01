@@ -1,6 +1,11 @@
 {
     "news": [
         {
+            "image": "/images/Raibo2.JPG",
+            "text": "라이온로보틱스, 컴퍼니케이파트너스·퓨쳐플레이로부터 투자유치",
+            "url": "https://www.mk.co.kr/news/it/10981069"
+        },
+        {
             "image": "/news/CNN.png",
             "text": "CNN Bold Pursuits: How robots are about to impact our lives",
             "url": "https://edition.cnn.com/videos/tv/2023/11/06/bold-pursuits-robots-spc.cnn"
