@@ -14,7 +14,7 @@
 						<p class="font-noto text">대표이사: 황보제민 </p><br>
 					</li>
 					<li class="flex items-center gap-1">
-						<p class="font-noto text">주소: 대전광역시 유성구 문지로 193, 진리관 티305호 (문지동, KAIST 문지캠퍼스)</p>
+						<p class="font-noto text">주소: 대전광역시 문지로 272-37(문지동) 1층</p>
 					</li>
 					<li class="flex items-center gap-1">
 						<p class="font-noto text">사업자등록번호: 580-81-03287</p>
