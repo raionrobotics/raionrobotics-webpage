@@ -47,7 +47,7 @@
 								fill="#BDBDBD"
 							/>
 						</svg>
-						<a href="mailto:jhwangbo@raionrobotics.com">jhwangbo@raionrobotics.com</a>
+						<a href="mailto:jhwangbo@raionrobotics.com">sales@raionrobotics.com</a>
 					</li>
 				</ul>
 			</div>
