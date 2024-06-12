@@ -5,14 +5,17 @@
 		content="Raibo2"
 	/>
 </svelte:head>
+ 
+<center>
+<img src="/images/Raibo2.JPG" alt="raibo2" class="centered_image">
+<img src="/images/raibo2_specification.png" alt="raibo2" class="centered_image">
+</center>
 
-<section id="hero" style="background-image: url('/images/Raibo2.JPG'); background-size: cover; width:full; aspect-ratio:1616/1080; padding-top:600px;">
-	<div class="mr-auto place-self-center">
-		<h1 class="indent-8 max-w-2xl mb-4 text-4xl text-white font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl">
-			라이보 2
-		</h1>
-		<p class="indent-8 max-w-2xl mb-6 font-bold text-white lg:mb-8 md:text-lg lg:text-xl">
-			모든 지형을 위한 사족 로봇 솔루션
-		</p>
-	</div>
-</section>
+
+<style>	
+	.centered_image {
+		width: 50vw;
+		align-content: center;
+	}
+</style>
+
