@@ -41,6 +41,7 @@
 							</span>
 							<MenuItem><a href="/product/Raibo1">라이보1</a></MenuItem>
 							<MenuItem><a href="/product/Raibo2">라이보2</a></MenuItem>
+							<MenuItem><a href="/product/RaiboOnWheel">라이보 with wheels</a></MenuItem>
 						</Menu>
 					</li>
 					<li>
