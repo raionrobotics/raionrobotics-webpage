@@ -66,6 +66,14 @@
 							>채용
 						</a>
 					</li>
+					<li>
+						<a
+							href="/announcements"
+							class="font-menu"
+							aria-current="page"
+							>공고
+						</a>
+					</li>
 				</ul>
 			</div>
 		</div>
