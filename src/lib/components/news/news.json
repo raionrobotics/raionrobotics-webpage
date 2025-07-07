@@ -1,6 +1,26 @@
 {
     "news": [
         {
+            "image": "/news/marathon_raibo2.png",
+            "text": "라이보 2, 세계 최초 4족보행 로봇 마라톤 풀코스 충전 없이 완주. 4시간 19분 52초",
+            "url": "https://zdnet.co.kr/view/?no=20241117194122"
+        },
+        {
+            "image": "/news/CES2025_Raibo2.png",
+            "text": "CES 2025: 라이온로보틱스, 2세대 사족보행 로봇 ‘Raibo 2’ 첫 공개",
+            "url": "https://kr.aving.net/news/articleView.html?idxno=1796249"
+        },
+        {
+            "image": "/news/neubility.jpg",
+            "text": "뉴빌리티와 차세대 4족보행 로봇 서비스 공동개발 MOU 체결",
+            "url": "https://heraldk.com/2025/05/19/%EB%89%B4%EB%B9%8C%EB%A6%AC%ED%8B%B0-%EB%9D%BC%EC%9D%B4%EC%98%A8%EB%A1%9C%EB%B3%B4%ED%8B%B1%EC%8A%A4%EC%99%80-4%EC%A1%B1%EB%B3%B4%ED%96%89-%EB%A1%9C%EB%B4%87-%EC%84%9C%EB%B9%84%EC%8A%A4-%EA%B3%B5/"
+        },
+        {
+            "image": "/news/gukbang.jpg",
+            "text": "국방·치안 로봇 시장 정조준: ‘스팟’을 뛰어넘는 기술력 부각",
+            "url": "https://www.irobotnews.com/news/articleView.html?idxno=38200"
+        },
+        {
             "image": "/images/Raibo2.JPG",
             "text": "라이온로보틱스, 컴퍼니케이파트너스·퓨쳐플레이로부터 투자유치",
             "url": "https://www.mk.co.kr/news/it/10981069"

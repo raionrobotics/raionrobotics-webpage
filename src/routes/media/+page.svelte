@@ -7,7 +7,6 @@
 </svelte:head>
 
 <script>
-	import { onMount } from 'svelte';
 	import news_data from "$lib/components/news/news.json"
 	
 	let news_data_shown = []
@@ -16,8 +15,8 @@
 	addMoreNews();
 
 	function addMoreNews() {
-		currentItems += 6;
-		for (let i = currentItems-6; i < Math.min(news_data.news.length, currentItems); i++) {
+		currentItems += 12;
+		for (let i = currentItems-12; i < Math.min(news_data.news.length, currentItems); i++) {
 			news_data_shown.push(news_data.news[i]);
 		}
 		news_data_shown = news_data_shown;
