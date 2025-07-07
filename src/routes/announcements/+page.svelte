@@ -63,7 +63,8 @@
     }
 
     .news-card {
-        width: 75vw;
+        width: 100%;
+				max-width: 700px;
         background-color: #f5f5f5; /* ✅ 연한 회색으로 수정 */
         border-radius: 12px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
