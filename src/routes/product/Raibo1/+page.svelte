@@ -13,22 +13,8 @@
 				라이보 1
 			</h1>
 			<p class="indent-8 max-w-2xl mb-6 font-bold text-white lg:mb-8 md:text-lg lg:text-xl">
-				연구용 사족 로봇 플랫폼
+				연구용 사족 로봇 플랫폼 (내부 연구용)
 			</p>
 		</div>
 	</div>
 </section>
-
-<!--
-<section id="hero" style="">
-	<p class="indent-8 max-w-2xl mb-6 font-bold lg:mb-8 md:text-lg lg:text-xl">
-		성능
-	</p>
-</section>
-
-<section id="hero" style="">
-	<p class="indent-8 max-w-2xl mb-6 font-bold lg:mb-8 md:text-lg lg:text-xl">
-		인증
-	</p>
-</section>
--->
