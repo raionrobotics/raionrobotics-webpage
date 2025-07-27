@@ -10,9 +10,8 @@
 		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "next",
-		"@sveltejs/adapter-cloudflare": "next",
-		"@sveltejs/kit": "next",
+		"@sveltejs/adapter-static": "latest",
+		"@sveltejs/kit": "latest",
 		"autoprefixer": "^10.4.16",
 		"eslint": "^8.55.0",
 		"eslint-config-prettier": "^8.10.0",
@@ -20,15 +19,13 @@
 		"postcss": "^8.4.31",
 		"postcss-load-config": "^4.0.2",
 		"prettier": "^2.8.8",
-		"prettier-plugin-svelte": "^2.10.1",
-		"svelte": "^3.59.2",
+		"svelte": "latest",
 		"tailwindcss": "^3.3.5",
-		"vite": "^4.5.0"
+		"vite": "latest"
 	},
 	"type": "module",
 	"dependencies": {
-		"@sveltejs/adapter-auto": "^3.1.1",
-		"@sveltejs/adapter-cloudflare": "next",
+		"@sveltejs/adapter-static": "latest",
 		"d3": "^7.8.5",
 		"jquery-csv": "^1.0.21",
 		"leaflet": "^1.9.4"

@@ -3,20 +3,12 @@
     "groupName": "raibo",
     "manuals": [
       {
-        "version": "2_7_3_2",
-        "path": "/documentation/raibo/v_2_7_3_2/index.html"
-      },
-      {
-        "version": "2_7_3_1",
-        "path": "/documentation/raibo/v_2_7_3_1/index.html"
-      },
-      {
-        "version": "2_7_3",
-        "path": "/documentation/raibo/v_2_7_3/index.html"
-      },
-      {
         "version": "2_7_2",
         "path": "/documentation/raibo/v_2_7_2/index.html"
+      },
+      {
+        "version": "1_1_1",
+        "path": "/documentation/raibo/v_1_1_1/index.html"
       }
     ]
   }
