@@ -5,7 +5,7 @@ export default {
 		adapter: adapter({
 			routes: {
 				include: ['/*'], // match all
-				exclude: ["/documentation/*"]      // match nothing else
+				exclude: ["/documentation/*/sections/*"]      // match nothing else
 			}
 		})
 	}
