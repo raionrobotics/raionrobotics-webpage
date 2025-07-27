@@ -1,0 +1,225 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joy Interface &mdash; raisin 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css?v=2a6c4383" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css?v=45cf7dbc" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css?v=d290406d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="RaiboNode" href="RaiboNode.html" />
+    <link rel="prev" title="Raisin Gui" href="RaisinGui.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            raisin
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Chapters</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="RaisinMaster.html">Raisin Master</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinNetwork.html">Raisin Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinGui.html">Raisin Gui</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Joy Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#raisin-command-topic">raisin/command Topic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#raisin-joy-signal-topic">raisin/joy_signal Topic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#parameters-of-raisin-joy-interface-params-yaml">Parameters of raisin_joy_interface (params.yaml)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="RaiboNode.html">RaiboNode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Parameter.html">Parameter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DataLogger.html">DataLogger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Controller.html">Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Plugin.html">Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Reference.html">Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">raisin</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Joy Interface</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="joy-interface">
+<h1>Joy Interface<a class="headerlink" href="#joy-interface" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The <strong>raisin_joy_interface</strong> is an interface that receives multiple command source topics from a joystick connected to a robot or from a planning plugin. It manipulates these inputs into a single command message that is sent to the raisin_controller and outputs a ROS2 topic. Each command source topic has properties such as the topic name, priority, and a boolean variable called listen status. Except for a few exceptional cases, the interface <strong>outputs the message from the command source with the highest priority among those with listen status set to true</strong>.
+The command messages output by the interface are of two types:</p>
+<ol class="arabic simple">
+<li><p>raisin/command: Commands the controller to move.</p></li>
+<li><p>raisin/joy_signal: Commands the transition of the phase or state of the motion.</p></li>
+</ol>
+<p>Additionally, the interface includes safety features such as decaying the command to zero after a certain time if the joystick is disconnected, limiting the maximum rate of change of the desired velocity, and setting the listen status of a disconnected joystick to false.
+Command Source Types
+The command sources are divided into two types:</p>
+<ol class="arabic simple">
+<li><p>JOY: Generated from a joystick.</p></li>
+<li><p>VEL_CMD: Generated from a plugin.</p></li>
+</ol>
+<p>To be understood by the joy_interface, the topic names must follow specific naming conventions:</p>
+<ul class="simple">
+<li><p>JOY type topic names start with joy/….</p></li>
+<li><p>VEL_CMD type topic names start with vel_cmd/….</p></li>
+</ul>
+<p>Configuring Topics to Receive
+The potential topics and their priorities are defined in the <strong>params.yaml file of raisin_raibo2</strong>. <strong>Lower numbers indicate higher priority</strong>.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>command_source_topics:
+<span class="w">  </span>value:<span class="w"> </span>[&quot;joy/gui&quot;,<span class="w"> </span>&quot;joy/rf&quot;,<span class="w"> </span>&quot;vel_cmd/path_planning&quot;]
+<span class="w">  </span>dtype:<span class="w"> </span>vector<span class="nt">&lt;string&gt;</span>
+
+command_source_topic_priorities:
+<span class="w">  </span>value:<span class="w"> </span>[1,<span class="w"> </span>0,<span class="w"> </span>2]
+<span class="w">  </span>dtype:<span class="w"> </span>vector<span class="nt">&lt;int&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="raisin-command-topic">
+<h2>raisin/command Topic<a class="headerlink" href="#raisin-command-topic" title="Link to this heading"></a></h2>
+<p>The message type for the <code class="docutils literal notranslate"><span class="pre">raisin/command</span></code> topic is <code class="docutils literal notranslate"><span class="pre">raisin_interfaces::msg::Command</span></code>, which includes the following fields:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>float64<span class="w"> </span>x_pos
+float64<span class="w"> </span>y_pos
+float64<span class="w"> </span>x_vel
+float64<span class="w"> </span>y_vel
+float64<span class="w"> </span>yaw_rate
+</pre></div>
+</div>
+<p>Currently, <code class="docutils literal notranslate"><span class="pre">x_pos</span></code> and <code class="docutils literal notranslate"><span class="pre">y_pos</span></code> are fixed at 0. The <code class="docutils literal notranslate"><span class="pre">x_vel</span></code>, <code class="docutils literal notranslate"><span class="pre">y_vel</span></code>, and <code class="docutils literal notranslate"><span class="pre">yaw_rate</span></code> correspond to axes 0, 1, and 2 of the <code class="docutils literal notranslate"><span class="pre">sensor_msgs::msg::Joy</span></code> message generated by the joystick.</p>
+</section>
+<section id="raisin-joy-signal-topic">
+<h2>raisin/joy_signal Topic<a class="headerlink" href="#raisin-joy-signal-topic" title="Link to this heading"></a></h2>
+<p>The message type for the joy_signal topic is <code class="docutils literal notranslate"><span class="pre">std_msgs::msg::Int16</span></code>. Each value corresponds to a specific signal defined in the JoySignal class. This message is generated only by JOY type command sources. The buttons <strong>0, 1, 2, and 3</strong> of the <code class="docutils literal notranslate"><span class="pre">sensor_msgs::msg::Joy</span></code> message correspond to the <code class="docutils literal notranslate"><span class="pre">HALT</span></code>, <code class="docutils literal notranslate"><span class="pre">LISTEN</span></code>, <code class="docutils literal notranslate"><span class="pre">ACTION0</span></code>, and <code class="docutils literal notranslate"><span class="pre">ACTION1</span></code> signals, respectively.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">HALT</span></code>: Transitions the robot’s state to MOTOR_DISABLED.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LISTEN</span></code>: Changes the listen status of the command source.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ACTION0</span> <span class="pre">and</span> <span class="pre">ACTION1</span></code>: Can be customized to change the phase in the controller.</p></li>
+</ul>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span><span class="w"> </span><span class="n">class</span><span class="w"> </span><span class="n">JoySignal</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">SIGHALT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">  </span><span class="n">SIGLISTEN</span><span class="p">,</span>
+<span class="w">  </span><span class="n">SIGACTION0</span><span class="p">,</span>
+<span class="w">  </span><span class="n">SIGACTION1</span><span class="p">,</span>
+<span class="w">  </span><span class="n">NUM_JOY_SIGNALS</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="parameters-of-raisin-joy-interface-params-yaml">
+<h2>Parameters of raisin_joy_interface (params.yaml)<a class="headerlink" href="#parameters-of-raisin-joy-interface-params-yaml" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>joy_allowable_delay_time: If no communication is received from the joystick for this duration (in seconds), the command starts to decay.</p></li>
+<li><p>joy_axes_to_zero_time: The time (in seconds) it takes to decay the command to zero after starting the decay process.</p></li>
+</ul>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>#<span class="w"> </span>Safety<span class="w"> </span>settings
+joy_allowable_delay_time:
+<span class="w">  </span>value:<span class="w"> </span>0.5
+<span class="w">  </span>dtype:<span class="w"> </span>double
+
+joy_axes_to_zero_time:
+<span class="w">  </span>value:<span class="w"> </span>0.5
+<span class="w">  </span>dtype:<span class="w"> </span>double
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>command_allowable_accel: Defines the maximum rate of change per unit time for the desired velocity commands (x_vel, y_vel, yaw_rate).</p></li>
+</ul>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>command_allowable_accel:
+<span class="w">  </span>value:<span class="w"> </span>[8.0,<span class="w"> </span>4.0,<span class="w"> </span>4.0]
+<span class="w">  </span>dtype:<span class="w"> </span>vector<span class="nt">&lt;double&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>listen_default_status: Defines the default listen status for each topic when the Raibo_node starts (default: false).</p></li>
+<li><p>unintended_signal_guard_max_count: To prevent erroneous values from a communication error, the same button must be pressed multiple times to send a JoySignal. This count is defined here.</p></li>
+</ul>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>joy/gui:
+<span class="w">  </span>listen_default_status:
+<span class="w">    </span>value:<span class="w"> </span>true
+<span class="w">    </span>dtype:<span class="w"> </span>bool
+<span class="w">  </span>unintended_signal_guard_max_count:
+<span class="w">    </span>value:<span class="w"> </span>0
+<span class="w">    </span>dtype:<span class="w"> </span>int
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="RaisinGui.html" class="btn btn-neutral float-left" title="Raisin Gui" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="RaiboNode.html" class="btn btn-neutral float-right" title="RaiboNode" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Raion Robotics..</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+#############################
+RaiboNode
+#############################
+
+Run
+***********************************************
+
+These commands can also be executed using the ``raisin_gui``
+
+Run In simulation
+======================
+Open a new terminal, navigate to ``raisin_ws``, and source the setup files:
+
+.. code-block:: bash
+
+  source install/setup.bash
+
+Now run the ``raisin_raibo2`` node:
+
+.. code-block:: bash
+
+  ros2 run raisin_raibo2 raisin_raibo2_node
+
+.. You can visualize it using `raisimUnity`.
+
+Run in real robot
+======================
+Open a new terminal, navigate to `raisin_ws`, and source the setup files:
+
+.. code-block:: bash
+
+  source install/setup.bash
+
+Now run the `raisin_raibo2` node:
+
+.. code-block:: bash
+
+  ros2 run raisin_raibo2 raisin_raibo2_node real
+
+This node primarily facilitates communication between ``worldHub_`` and other components.
+
+Initially, it initiates communication based on settings from the configuration YAML file ``$raisin_ws/install/raisin_raibo2/share/raisin_raibo2/params.yaml``.
+Ensure that the ``camera`` is properly configured, including settings for ``use_depth`` and ``use_rgb``, and ``serial_number``. This configuration is essential for the camera to function correctly according to your requirements.
+If a sensor is not connected on a real robot, make sure to set ``use_sensor`` false, otherwise the robot will not operate.
+
+It subscribes to the topic ``raisin/joy``, which is published by a user, to receive desired velocity inputs.
+Additionally, by subscribing to the service ``raibo/load_controller``, you can load a new controller and unload an existing one.
+
+The node also publishes several topics and logs data for further analysis and debugging.

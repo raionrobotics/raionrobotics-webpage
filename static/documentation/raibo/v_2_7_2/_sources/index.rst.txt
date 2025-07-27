@@ -1,0 +1,33 @@
+#############################
+Raisin v\ |raisin_version|
+#############################
+
+Raisin is a software framework of Raion Robotics.
+It is designed to control and communicate with robots.
+It is composed of Raisin Master and raisin packages.
+Raisin master is a build system which is equivalent to colcon for ROS2.
+Raisin packages are cmake packages that follow raisin cmake guidelines.
+Core raisin packages are distributed as a binary package, and can be pulled from Raion Robotics repository.
+
+System requirements
+=====================
+
+* Supported OS: Ubuntu 20.04 or higher
+* Supported CPU architecture: X86 and arm
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Chapters
+
+   sections/RaisinMaster
+   sections/RaisinNetwork
+   sections/Introduction
+   sections/Installation
+   sections/RaisinGui
+   sections/JoyInterface
+   sections/RaiboNode
+   sections/Parameter
+   sections/DataLogger
+   sections/Controller
+   sections/Plugin
+   sections/Reference

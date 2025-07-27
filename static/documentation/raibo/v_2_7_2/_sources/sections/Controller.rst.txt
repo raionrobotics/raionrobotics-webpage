@@ -1,0 +1,29 @@
+#############################
+Controller
+#############################
+To hand over torque commands to ``worldHub_``, you utilize a controller within the Raisin framework.
+
+In the Raisin system, controllers are dynamically loaded as needed, which can be triggered through the ROS2 service ``raibo/load_controller``. Once loaded, the ``advance()`` method of these controllers is called periodically according to a specified frequency set in the ``config/params.yaml`` file under the ``raisin_raibo2`` package, with a default rate of 4000 Hz.
+
+if control mode is
+
+#. ``PD_PLUS_FEEDFORWARD_TORQUE``: robot's pdtarget, pdgain should be updated.
+
+#. ``FORCE_AND_TORQUE``: robot's feedforward torque should be updated.
+
+If a robot's joint angle or velocity exceeds set limits, the ``safetyController`` halts the robot by issuing ``ZERO_TORQUE`` or ``ZERO_VELOCITY`` commands to ensure safety.
+
+For implementing controllers in Raisin, it's important to adhere to the naming convention specified. Each controller should be named following the pattern ``raisin_**_controller``, where ** represents a descriptive part of the controller's functionality. 
+
+For practical implementation examples, refer to the :download:`raisin_example_controller.zip <../example/raisin_example_controller.zip>`.
+
+API
+====
+
+.. doxygenclass:: raisin::controller::Controller
+   :members:
+   :protected-members:
+
+.. doxygenclass:: raisin::controller::ControllerManager
+   :members:
+   :protected-members:

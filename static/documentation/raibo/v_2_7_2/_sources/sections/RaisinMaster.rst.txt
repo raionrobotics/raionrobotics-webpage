@@ -1,0 +1,152 @@
+#############################
+Raisin Master
+#############################
+
+Introduction
+==============
+
+Raisin Master is a fast, lightweight build system designed to replace colcon in ROS2.
+It leverages the efficiency of CMake by acting as a CMake script generator to streamline the build process for raisin-based projects.
+In essence, Raisin Master is powered by Python scripts that set up the CMake build environment and provide helper functions.
+All you need to get started is knowledge of CMake.
+
+**Key Benefits**
+
+- **Faster Build Times Compared to Colcon+ROS2**: Since Raisin Master simply generates CMake scripts, its performance is as fast as CMake itself. Script generation typically takes less than a second, and builds can be further accelerated with ninja-build <https://ninja-build.org/>_, the recommended tool. Although detailed benchmarks are pending, our internal project compiles in about 35 seconds with Raisin Master versus over 4 minutes with colcon. Improved message and service handling also contribute to its speed.
+- **IDE Support**: Being almost entirely implemented in pure CMake, Raisin Master integrates seamlessly with popular IDEs such as CLion and VSCode. This enables advanced debugging features like pausing execution, setting breakpoints, and evaluating variables in real time.
+- **No Installation Required**: Simply clone the repository and start using Raisin Master immediately. There is no bulky installation process; removing the directory completely eliminates all components of Raisin Master.
+- **Streamlined Development Workflow**: Unlike colcon, which installs every package it builds, Raisin Master installs packages only when you are ready to release your software. This avoids unnecessary file duplication (e.g., header files) that could confuse both the IDE and the user, while reducing overhead.
+- **Enhanced Compatibility**: Many existing C++ packages support CMake but not colcon. Most modern CMake packages already satisfy the requirements for a Raisin package, allowing for straightforward integration with Raisin Master. Additionally, utilities are provided to convert existing ROS2 packages into Raisin packages.
+
+Directory Structure
+The following directories are part of Raisin Master:
+
+- ``include``: Contains header files for directory and time management.
+
+- ``install``: All Raisin packages are installed in this folder. Raisin Master’s CMake configuration enforces that the CMAKE_INSTALL_PREFIX points to this directory.
+
+- ``src``: Holds all Raisin packages.
+
+- ``templates`: Contains templates for generating message, service, and CMake files.
+
+- ``messages``: Stores basic and common message and service definitions.
+
+- ``generated``: Contains generated message and service files, which are produced from the definitions and used in C++ code.
+
+- ``log``: Logging data from the packages will go here.
+
+- ``raisin_workspace_setup.py``: The primary file to be familiar with is raisin_workspace_setup.py. Before building any Raisin packages, run this Python script. It performs the following tasks:
+
+    - Convert Message Definitions: Transforms message definitions into corresponding message header files.
+    - Generate the Master CMakeLists.txt File: Automatically adds all projects from the src directory to the CMakeLists.txt file using add_subdirectory(). The script organizes packages based on their dependencies by parsing each package’s CMakeLists.txt file.
+    - Create a Release File: Generates a release.txt file that lists the commit hash for each Git repository within the src directory.
+    - Copy Resource Directories: Copy the resource, config, and scripts directories from each package in the src directory to install directory.
+
+Note that some directories are created during runtime and you might not see them at first.
+
+Raisin Package
+==============
+
+A Raisin package is a set of files in a directory containing a CMakeLists.txt file—even if the file is empty.
+Note that subdirectories within a Raisin package cannot be treated as separate Raisin packages.
+
+A typical raisin package looks like this
+
+.. code-block:: text
+
+    my_project/
+    ├── resource/
+    ├── scripts/
+    ├── config/
+    ├── msg/
+    ├── srv/
+    ├── include/
+    ├   └── my_project/
+    ├       └── my_project.hpp
+    ├── src/
+    ├   └── my_project.cpp
+    └── CMakeLists.txt
+
+Requirements for a Raisin package include:
+
+1. **Directory Structure**:
+Header files must reside in the ``include/${PROJECT_NAME}/`` directory.
+Source files should be placed in the ``src`` directory.
+
+2. **Resource Organization**:
+Resources should be stored in the ``resource``` directory.
+Python and Bash scripts should be located in the ``scripts``` directory.
+Parameter files should be placed in the ``config``` directory.
+Message files should be placed in the ``msg`` directory.
+Service files should be placed in the ``srv`` directory.
+Explanation about messages and services will be given in the Raisin Network section.
+
+3. **Naming Conventions**:
+The project name must match the name of the Raisin package directory.
+
+4. **Dependency Management**:
+Use ``raisin_find_package``` (instead of the standard ``find_package``) to locate other Raisin packages.
+``raisin_find_package``is explained further in the following section.
+
+
+CMakeLists file
+=================
+
+There are no constraints on the ``CMakeLists.txt`` file
+Below is an example of a typical ``CMakeLists.txt``` file for a Raisin package:
+
+.. code-block:: cmake
+
+    cmake_minimum_required(VERSION 3.5)
+    project(raisin_package)
+
+    find_package(Eigen3 REQUIRED)
+    find_package(yaml-cpp REQUIRED)
+    raisin_find_package(raisin_dependencies REQUIRED)
+
+    add_library(${PROJECT_NAME} SHARED
+      src/raisin_package.cpp
+    )
+
+    set_property(TARGET ${PROJECT_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+    target_link_libraries(${PROJECT_NAME} yaml-cpp raisim::raisim raisin_dependencies)
+    target_include_directories(${PROJECT_NAME} PUBLIC
+            "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+            "$<INSTALL_INTERFACE:include>")
+
+    raisin_install(${PROJECT_NAME} Eigen3 yaml-cpp raisin_master)
+
+In this file, ``raisin_find_package`` runs ``find_package`` under the hood if the library is not part of the build targets, in other words, if it does nothing if the dependency is not part of the build.
+
+``raisin_install`` performs several commands necessary for install the package,
+like creating the config file, installing the ``include`` directory, defining the export set, etc.
+What follows after ``${PROJECT_NAME}`` are the dependencies.
+The auto-generated config file will call ``find_package`` for each dependencies.
+The definitions can be found in ``cmake/raisin_helper``
+
+There is also an expert version of ``raisin_install``.
+An example follows:
+
+.. code-block:: cmake
+
+    raisin_install_config_string(${PROJECT_NAME} "
+        find_package(raisim REQUIRED)
+        get_filename_component(RAISIN_INSTALL_DIR \"\${CMAKE_CURRENT_LIST_DIR}\" DIRECTORY)
+        get_filename_component(RAISIN_INSTALL_DIR \"\${RAISIN_INSTALL_DIR}/../..\" ABSOLUTE)
+        add_compile_definitions(\${PROJECT_NAME} INTERFACE \"RAISIN_INSTALL_DIR=\${RAISIN_INSTALL_DIR}/\")
+    ")
+
+``raisin_install_config_string`` lets you customize the config file.
+The string will be added to the config file.
+
+Video Tutorial
+=================
+
+1. How to create your own raisin pacakge and build it in Raisin Master.
+
+.. only:: html
+
+    .. raw:: html
+
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/zUZwiI6xp6U?si=fexkBLAAN7Qz42y5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

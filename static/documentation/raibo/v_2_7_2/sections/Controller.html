@@ -1,0 +1,496 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Controller &mdash; raisin 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css?v=2a6c4383" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css?v=45cf7dbc" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css?v=d290406d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Plugin" href="Plugin.html" />
+    <link rel="prev" title="DataLogger" href="DataLogger.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            raisin
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Chapters</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="RaisinMaster.html">Raisin Master</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinNetwork.html">Raisin Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinGui.html">Raisin Gui</a></li>
+<li class="toctree-l1"><a class="reference internal" href="JoyInterface.html">Joy Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaiboNode.html">RaiboNode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Parameter.html">Parameter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DataLogger.html">DataLogger</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Controller</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#api">API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6raisin10controller10ControllerE"><code class="docutils literal notranslate"><span class="pre">Controller</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller10ControllerERKNSt6stringERN6raisim5WorldERN6raisim12RaisimServerERN6raisim5WorldERN6raisim12RaisimServerER14GlobalResource"><code class="docutils literal notranslate"><span class="pre">Controller::Controller()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller6createEv"><code class="docutils literal notranslate"><span class="pre">Controller::create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller4initEv"><code class="docutils literal notranslate"><span class="pre">Controller::init()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller7advanceEv"><code class="docutils literal notranslate"><span class="pre">Controller::advance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller5resetEv"><code class="docutils literal notranslate"><span class="pre">Controller::reset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller9terminateEv"><code class="docutils literal notranslate"><span class="pre">Controller::terminate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller4stopEv"><code class="docutils literal notranslate"><span class="pre">Controller::stop()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller16setPluginManagerEPN6plugin13PluginManagerE"><code class="docutils literal notranslate"><span class="pre">Controller::setPluginManager()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller6isDoneEv"><code class="docutils literal notranslate"><span class="pre">Controller::isDone()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller9worldHub_E"><code class="docutils literal notranslate"><span class="pre">Controller::worldHub_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller10serverHub_E"><code class="docutils literal notranslate"><span class="pre">Controller::serverHub_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller9robotHub_E"><code class="docutils literal notranslate"><span class="pre">Controller::robotHub_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller9robotSim_E"><code class="docutils literal notranslate"><span class="pre">Controller::robotSim_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller9worldSim_E"><code class="docutils literal notranslate"><span class="pre">Controller::worldSim_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller10serverSim_E"><code class="docutils literal notranslate"><span class="pre">Controller::serverSim_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller10paramRoot_E"><code class="docutils literal notranslate"><span class="pre">Controller::paramRoot_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller11dataLogger_E"><code class="docutils literal notranslate"><span class="pre">Controller::dataLogger_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller14pluginManager_E"><code class="docutils literal notranslate"><span class="pre">Controller::pluginManager_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller7logIdx_E"><code class="docutils literal notranslate"><span class="pre">Controller::logIdx_</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6raisin10controller17ControllerManagerE"><code class="docutils literal notranslate"><span class="pre">ControllerManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller17ControllerManager4loadERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">ControllerManager::load()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller17ControllerManager6unloadEv"><code class="docutils literal notranslate"><span class="pre">ControllerManager::unload()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller17ControllerManager4haltEv"><code class="docutils literal notranslate"><span class="pre">ControllerManager::halt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller17ControllerManager15controllerResetEv"><code class="docutils literal notranslate"><span class="pre">ControllerManager::controllerReset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller17ControllerManager7advanceEv"><code class="docutils literal notranslate"><span class="pre">ControllerManager::advance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller17ControllerManager27advanceSafetyControllerOnlyEv"><code class="docutils literal notranslate"><span class="pre">ControllerManager::advanceSafetyControllerOnly()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller17ControllerManager9terminateEv"><code class="docutils literal notranslate"><span class="pre">ControllerManager::terminate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK6raisin10controller17ControllerManager7isReadyEv"><code class="docutils literal notranslate"><span class="pre">ControllerManager::isReady()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK6raisin10controller17ControllerManager6isDoneEv"><code class="docutils literal notranslate"><span class="pre">ControllerManager::isDone()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller17ControllerManager24getCurrentControllerNameEv"><code class="docutils literal notranslate"><span class="pre">ControllerManager::getCurrentControllerName()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Plugin.html">Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Reference.html">Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">raisin</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Controller</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="controller">
+<h1>Controller<a class="headerlink" href="#controller" title="Link to this heading"></a></h1>
+<p>To hand over torque commands to <code class="docutils literal notranslate"><span class="pre">worldHub_</span></code>, you utilize a controller within the Raisin framework.</p>
+<p>In the Raisin system, controllers are dynamically loaded as needed, which can be triggered through the ROS2 service <code class="docutils literal notranslate"><span class="pre">raibo/load_controller</span></code>. Once loaded, the <code class="docutils literal notranslate"><span class="pre">advance()</span></code> method of these controllers is called periodically according to a specified frequency set in the <code class="docutils literal notranslate"><span class="pre">config/params.yaml</span></code> file under the <code class="docutils literal notranslate"><span class="pre">raisin_raibo2</span></code> package, with a default rate of 4000 Hz.</p>
+<p>if control mode is</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">PD_PLUS_FEEDFORWARD_TORQUE</span></code>: robot’s pdtarget, pdgain should be updated.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FORCE_AND_TORQUE</span></code>: robot’s feedforward torque should be updated.</p></li>
+</ol>
+<p>If a robot’s joint angle or velocity exceeds set limits, the <code class="docutils literal notranslate"><span class="pre">safetyController</span></code> halts the robot by issuing <code class="docutils literal notranslate"><span class="pre">ZERO_TORQUE</span></code> or <code class="docutils literal notranslate"><span class="pre">ZERO_VELOCITY</span></code> commands to ensure safety.</p>
+<p>For implementing controllers in Raisin, it’s important to adhere to the naming convention specified. Each controller should be named following the pattern <code class="docutils literal notranslate"><span class="pre">raisin_**_controller</span></code>, where ** represents a descriptive part of the controller’s functionality.</p>
+<p>For practical implementation examples, refer to the <a class="reference download internal" download="" href="../_downloads/b0a1740084f868856ddc98b5a5c0c1a2/raisin_example_controller.zip"><code class="xref download docutils literal notranslate"><span class="pre">raisin_example_controller.zip</span></code></a>.</p>
+<section id="api">
+<h2>API<a class="headerlink" href="#api" title="Link to this heading"></a></h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller10ControllerE">
+<span id="_CPPv3N6raisin10controller10ControllerE"></span><span id="_CPPv2N6raisin10controller10ControllerE"></span><span id="raisin::controller::Controller"></span><span class="target" id="classraisin_1_1controller_1_1Controller"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Controller</span></span></span><a class="headerlink" href="#_CPPv4N6raisin10controller10ControllerE" title="Link to this definition"></a><br /></dt>
+<dd><p><a class="reference internal" href="#classraisin_1_1controller_1_1Controller"><span class="std std-ref">Controller</span></a> class to control a robot.</p>
+<p>To implement your own controller, inherit this class and implement virtual methods.</p>
+<p><a class="reference internal" href="#classraisin_1_1controller_1_1Controller_1a85505ad1226985e109e2af09fbceeea5"><span class="std std-ref">worldHub_</span></a> holds the robot’s estimated state and environment(including height), which are set by plugins.</p>
+<p>Inside <a class="reference internal" href="#classraisin_1_1controller_1_1Controller_1a85505ad1226985e109e2af09fbceeea5"><span class="std std-ref">worldHub_</span></a>, <a class="reference internal" href="#classraisin_1_1controller_1_1Controller_1aeafba0aef0a2bdbe99f70ead24e04088"><span class="std std-ref">robotHub_</span></a> offers sensor data access (encoders, cameras, IMUs) and allows for issuing torque commands.</p>
+<p>Note: <a class="reference internal" href="#classraisin_1_1controller_1_1Controller_1ac179576b21d5150c47dc056de1cdf97c"><span class="std std-ref">worldSim_</span></a> is solely for simulations and must not be used with actual robots.</p>
+<p>Estimated world(<a class="reference internal" href="#classraisin_1_1controller_1_1Controller_1a85505ad1226985e109e2af09fbceeea5"><span class="std std-ref">worldHub_</span></a>) is visualized in <a class="reference internal" href="#classraisin_1_1controller_1_1Controller_1acee21c03f97bcb9d54fca71abaf6b3cc"><span class="std std-ref">serverHub_</span></a> (port 8080), and simulated world(<a class="reference internal" href="#classraisin_1_1controller_1_1Controller_1ac179576b21d5150c47dc056de1cdf97c"><span class="std std-ref">worldSim_</span></a>) is visualized in <a class="reference internal" href="#classraisin_1_1controller_1_1Controller_1ae8a8a3e02a1c2250c44f6d3dea81a6b2"><span class="std std-ref">serverSim_</span></a> (port 7000). </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller10Controller10ControllerERKNSt6stringERN6raisim5WorldERN6raisim12RaisimServerERN6raisim5WorldERN6raisim12RaisimServerER14GlobalResource">
+<span id="_CPPv3N6raisin10controller10Controller10ControllerERKNSt6stringERN6raisim5WorldERN6raisim12RaisimServerERN6raisim5WorldERN6raisim12RaisimServerER14GlobalResource"></span><span id="_CPPv2N6raisin10controller10Controller10ControllerERKNSt6stringERN6raisim5WorldERN6raisim12RaisimServerERN6raisim5WorldERN6raisim12RaisimServerER14GlobalResource"></span><span id="raisin::controller::Controller::Controller__ssCR.raisim::WorldR.raisim::RaisimServerR.raisim::WorldR.raisim::RaisimServerR.GlobalResourceR"></span><span class="target" id="classraisin_1_1controller_1_1Controller_1a89f9a30c11ed65c97bb8cd00f96347ec"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Controller</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">name</span></span>, <span class="n"><span class="pre">raisim</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">World</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">worldHub</span></span>, <span class="n"><span class="pre">raisim</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">RaisimServer</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">serverHub</span></span>, <span class="n"><span class="pre">raisim</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">World</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">worldSim</span></span>, <span class="n"><span class="pre">raisim</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">RaisimServer</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">serverSim</span></span>, <span class="n"><span class="pre">GlobalResource</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">globalResource</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin10controller10Controller10ControllerERKNSt6stringERN6raisim5WorldERN6raisim12RaisimServerERN6raisim5WorldERN6raisim12RaisimServerER14GlobalResource" title="Link to this definition"></a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – name of the controller </p></li>
+<li><p><strong>world</strong> – see <a class="reference internal" href="#classraisin_1_1controller_1_1Controller_1a85505ad1226985e109e2af09fbceeea5"><span class="std std-ref">worldHub_</span></a></p></li>
+<li><p><strong>server</strong> – see <a class="reference internal" href="#classraisin_1_1controller_1_1Controller_1acee21c03f97bcb9d54fca71abaf6b3cc"><span class="std std-ref">serverHub_</span></a></p></li>
+<li><p><strong>worldSim</strong> – see <a class="reference internal" href="#classraisin_1_1controller_1_1Controller_1ac179576b21d5150c47dc056de1cdf97c"><span class="std std-ref">worldSim_</span></a></p></li>
+<li><p><strong>serverSim</strong> – see <a class="reference internal" href="#classraisin_1_1controller_1_1Controller_1ae8a8a3e02a1c2250c44f6d3dea81a6b2"><span class="std std-ref">serverSim_</span></a></p></li>
+<li><p><strong>globalResource</strong> – global resources such as paramRoot, dataLogger </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller10Controller6createEv">
+<span id="_CPPv3N6raisin10controller10Controller6createEv"></span><span id="_CPPv2N6raisin10controller10Controller6createEv"></span><span id="raisin::controller::Controller::create"></span><span class="target" id="classraisin_1_1controller_1_1Controller_1a0adb930af88783cfe81ca91116a1c227"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">create</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><a class="headerlink" href="#_CPPv4N6raisin10controller10Controller6createEv" title="Link to this definition"></a><br /></dt>
+<dd><p>create controller. this is called only once. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if successful </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller10Controller4initEv">
+<span id="_CPPv3N6raisin10controller10Controller4initEv"></span><span id="_CPPv2N6raisin10controller10Controller4initEv"></span><span id="raisin::controller::Controller::init"></span><span class="target" id="classraisin_1_1controller_1_1Controller_1acb99093a2fb2ac5fce2b996165265e8e"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">init</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin10controller10Controller4initEv" title="Link to this definition"></a><br /></dt>
+<dd><p>initialize controller. this is called only once. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if successful </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller10Controller7advanceEv">
+<span id="_CPPv3N6raisin10controller10Controller7advanceEv"></span><span id="_CPPv2N6raisin10controller10Controller7advanceEv"></span><span id="raisin::controller::Controller::advance"></span><span class="target" id="classraisin_1_1controller_1_1Controller_1aaec5ca596fcebf927bf7957a1d3e7e36"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">advance</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin10controller10Controller7advanceEv" title="Link to this definition"></a><br /></dt>
+<dd><p>advance controller. This is called regularly by <a class="reference internal" href="#classraisin_1_1controller_1_1ControllerManager"><span class="std std-ref">ControllerManager</span></a>.</p>
+<p>if control mode is</p>
+<p>1) PD_PLUS_FEEDFORWARD_TORQUE: robot’s pdtarget, pdgain should be updated.</p>
+<p>2) FORCE_AND_TORQUE robot’s feedforward torque should be updated. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if successful </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller10Controller5resetEv">
+<span id="_CPPv3N6raisin10controller10Controller5resetEv"></span><span id="_CPPv2N6raisin10controller10Controller5resetEv"></span><span id="raisin::controller::Controller::reset"></span><span class="target" id="classraisin_1_1controller_1_1Controller_1a8cdada3a806dca19b6fb49c3b620c5af"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">reset</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin10controller10Controller5resetEv" title="Link to this definition"></a><br /></dt>
+<dd><p>reset controller </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if successful </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller10Controller9terminateEv">
+<span id="_CPPv3N6raisin10controller10Controller9terminateEv"></span><span id="_CPPv2N6raisin10controller10Controller9terminateEv"></span><span id="raisin::controller::Controller::terminate"></span><span class="target" id="classraisin_1_1controller_1_1Controller_1a0d24f32b8fefbeeb158e8b4af4b28521"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">terminate</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin10controller10Controller9terminateEv" title="Link to this definition"></a><br /></dt>
+<dd><p>terminate controller </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if successful </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller10Controller4stopEv">
+<span id="_CPPv3N6raisin10controller10Controller4stopEv"></span><span id="_CPPv2N6raisin10controller10Controller4stopEv"></span><span id="raisin::controller::Controller::stop"></span><span class="target" id="classraisin_1_1controller_1_1Controller_1aa621c89c28947433787c2c8e63ed0cdd"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">stop</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin10controller10Controller4stopEv" title="Link to this definition"></a><br /></dt>
+<dd><p>stop controller </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if successful </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller10Controller16setPluginManagerEPN6plugin13PluginManagerE">
+<span id="_CPPv3N6raisin10controller10Controller16setPluginManagerEPN6plugin13PluginManagerE"></span><span id="_CPPv2N6raisin10controller10Controller16setPluginManagerEPN6plugin13PluginManagerE"></span><span id="raisin::controller::Controller::setPluginManager__plugin::PluginManagerP"></span><span class="target" id="classraisin_1_1controller_1_1Controller_1af293518771dfb7acdd708250a4e85fa2"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setPluginManager</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">plugin</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="Plugin.html#_CPPv4N6raisin6plugin13PluginManagerE" title="raisin::plugin::PluginManager"><span class="n"><span class="pre">PluginManager</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">pluginManager</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin10controller10Controller16setPluginManagerEPN6plugin13PluginManagerE" title="Link to this definition"></a><br /></dt>
+<dd><p>set pluginManager. This is used only in controllerManager. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pluginManager</strong> – pluginManager pointer </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller10Controller6isDoneEv">
+<span id="_CPPv3N6raisin10controller10Controller6isDoneEv"></span><span id="_CPPv2N6raisin10controller10Controller6isDoneEv"></span><span id="raisin::controller::Controller::isDone"></span><span class="target" id="classraisin_1_1controller_1_1Controller_1a1ef4d40ffe37df31308d736effafccef"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isDone</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin10controller10Controller6isDoneEv" title="Link to this definition"></a><br /></dt>
+<dd><p>returns if the controller finished its work. Only episodic controllers can return true </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-attributes">Protected Attributes</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller10Controller9worldHub_E">
+<span id="_CPPv3N6raisin10controller10Controller9worldHub_E"></span><span id="_CPPv2N6raisin10controller10Controller9worldHub_E"></span><span id="raisin::controller::Controller::worldHub___raisim::WorldR"></span><span class="target" id="classraisin_1_1controller_1_1Controller_1a85505ad1226985e109e2af09fbceeea5"></span><span class="n"><span class="pre">raisim</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">World</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">worldHub_</span></span></span><a class="headerlink" href="#_CPPv4N6raisin10controller10Controller9worldHub_E" title="Link to this definition"></a><br /></dt>
+<dd><p>The <a class="reference internal" href="#classraisin_1_1controller_1_1Controller_1a85505ad1226985e109e2af09fbceeea5"><span class="std std-ref">worldHub_</span></a> object holds the robot’s estimated state and environment(including height), which are set by plugins.</p>
+<p>1) get the estimated environment(addHeightMap…)</p>
+<p>2) get the world time (getWolrdTime) </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller10Controller10serverHub_E">
+<span id="_CPPv3N6raisin10controller10Controller10serverHub_E"></span><span id="_CPPv2N6raisin10controller10Controller10serverHub_E"></span><span id="raisin::controller::Controller::serverHub___raisim::RaisimServerR"></span><span class="target" id="classraisin_1_1controller_1_1Controller_1acee21c03f97bcb9d54fca71abaf6b3cc"></span><span class="n"><span class="pre">raisim</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">RaisimServer</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">serverHub_</span></span></span><a class="headerlink" href="#_CPPv4N6raisin10controller10Controller10serverHub_E" title="Link to this definition"></a><br /></dt>
+<dd><p>This is for visualization of <a class="reference internal" href="#classraisin_1_1controller_1_1Controller_1a85505ad1226985e109e2af09fbceeea5"><span class="std std-ref">worldHub_</span></a> in port 8080. You can add visualObject through this <a class="reference internal" href="#classraisin_1_1controller_1_1Controller_1acee21c03f97bcb9d54fca71abaf6b3cc"><span class="std std-ref">serverHub_</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller10Controller9robotHub_E">
+<span id="_CPPv3N6raisin10controller10Controller9robotHub_E"></span><span id="_CPPv2N6raisin10controller10Controller9robotHub_E"></span><span id="raisin::controller::Controller::robotHub___raisim::ArticulatedSystemP"></span><span class="target" id="classraisin_1_1controller_1_1Controller_1aeafba0aef0a2bdbe99f70ead24e04088"></span><span class="n"><span class="pre">raisim</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ArticulatedSystem</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">robotHub_</span></span></span><a class="headerlink" href="#_CPPv4N6raisin10controller10Controller9robotHub_E" title="Link to this definition"></a><br /></dt>
+<dd><p>ArticulatedSystem variable that holds the information about the robot. This is member of <a class="reference internal" href="#classraisin_1_1controller_1_1Controller_1a85505ad1226985e109e2af09fbceeea5"><span class="std std-ref">worldHub_</span></a>. Through this variable, you can</p>
+<p>1) get the robot’s state(getGeneralizedCoordinate, getGeneralizedVelocity…)</p>
+<p>2) control it(setPdTarget, setPdGain…) </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller10Controller9robotSim_E">
+<span id="_CPPv3N6raisin10controller10Controller9robotSim_E"></span><span id="_CPPv2N6raisin10controller10Controller9robotSim_E"></span><span id="raisin::controller::Controller::robotSim___raisim::ArticulatedSystemP"></span><span class="target" id="classraisin_1_1controller_1_1Controller_1ad2e149642d7fd781adf6943c9a8b74e5"></span><span class="n"><span class="pre">raisim</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ArticulatedSystem</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">robotSim_</span></span></span><a class="headerlink" href="#_CPPv4N6raisin10controller10Controller9robotSim_E" title="Link to this definition"></a><br /></dt>
+<dd><p>ArticulatedSystem variable that holds the information about the robot in the simulation. This is member of <a class="reference internal" href="#classraisin_1_1controller_1_1Controller_1ac179576b21d5150c47dc056de1cdf97c"><span class="std std-ref">worldSim_</span></a>. Through this variable, you can</p>
+<p>set the estimated robot’s state(setGeneralizedCoordinate, setGeneralizedVelocity…)</p>
+<p>get the estimated robot’s state(getGeneralizedCoordinate, getGeneralizedVelocity…) </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller10Controller9worldSim_E">
+<span id="_CPPv3N6raisin10controller10Controller9worldSim_E"></span><span id="_CPPv2N6raisin10controller10Controller9worldSim_E"></span><span id="raisin::controller::Controller::worldSim___raisim::WorldR"></span><span class="target" id="classraisin_1_1controller_1_1Controller_1ac179576b21d5150c47dc056de1cdf97c"></span><span class="n"><span class="pre">raisim</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">World</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">worldSim_</span></span></span><a class="headerlink" href="#_CPPv4N6raisin10controller10Controller9worldSim_E" title="Link to this definition"></a><br /></dt>
+<dd><p><a class="reference internal" href="#classraisin_1_1controller_1_1Controller_1ac179576b21d5150c47dc056de1cdf97c"><span class="std std-ref">worldSim_</span></a> is solely for simulations and must not be used with actual robots. You can get ground truth information of simulation through <a class="reference internal" href="#classraisin_1_1controller_1_1Controller_1ac179576b21d5150c47dc056de1cdf97c"><span class="std std-ref">worldSim_</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller10Controller10serverSim_E">
+<span id="_CPPv3N6raisin10controller10Controller10serverSim_E"></span><span id="_CPPv2N6raisin10controller10Controller10serverSim_E"></span><span id="raisin::controller::Controller::serverSim___raisim::RaisimServerR"></span><span class="target" id="classraisin_1_1controller_1_1Controller_1ae8a8a3e02a1c2250c44f6d3dea81a6b2"></span><span class="n"><span class="pre">raisim</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">RaisimServer</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">serverSim_</span></span></span><a class="headerlink" href="#_CPPv4N6raisin10controller10Controller10serverSim_E" title="Link to this definition"></a><br /></dt>
+<dd><p>This is for visualization of <a class="reference internal" href="#classraisin_1_1controller_1_1Controller_1ac179576b21d5150c47dc056de1cdf97c"><span class="std std-ref">worldSim_</span></a>, and simulated camera streaming in port 7000. If you want to use camera, make sure to turn on raisimUnreal on port 7000. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller10Controller10paramRoot_E">
+<span id="_CPPv3N6raisin10controller10Controller10paramRoot_E"></span><span id="_CPPv2N6raisin10controller10Controller10paramRoot_E"></span><span id="raisin::controller::Controller::paramRoot___raisin::parameter::ParameterContainerR"></span><span class="target" id="classraisin_1_1controller_1_1Controller_1a743a1e52e9af6b5a631d2c5d852e9d47"></span><span class="n"><span class="pre">raisin</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">parameter</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="Parameter.html#_CPPv4N6raisin9parameter18ParameterContainerE" title="raisin::parameter::ParameterContainer"><span class="n"><span class="pre">ParameterContainer</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">paramRoot_</span></span></span><a class="headerlink" href="#_CPPv4N6raisin10controller10Controller10paramRoot_E" title="Link to this definition"></a><br /></dt>
+<dd><p>Use this variable instead of calling <a class="reference internal" href="Parameter.html#classraisin_1_1parameter_1_1ParameterContainer_1a8dbedb0b05f2e79ce7d751cb04eb4661"><span class="std std-ref">parameter::ParameterContainer::getRoot()</span></a>, which is not valid in dynamic library.</p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>test_raisin_parameter.cpp for example </p>
+</div>
+</p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller10Controller11dataLogger_E">
+<span id="_CPPv3N6raisin10controller10Controller11dataLogger_E"></span><span id="_CPPv2N6raisin10controller10Controller11dataLogger_E"></span><span id="raisin::controller::Controller::dataLogger___raisin::DataLoggerR"></span><span class="target" id="classraisin_1_1controller_1_1Controller_1ae5c765658d8129582be1b559b89f124f"></span><span class="n"><span class="pre">raisin</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="DataLogger.html#_CPPv4N6raisin10DataLoggerE" title="raisin::DataLogger"><span class="n"><span class="pre">DataLogger</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">dataLogger_</span></span></span><a class="headerlink" href="#_CPPv4N6raisin10controller10Controller11dataLogger_E" title="Link to this definition"></a><br /></dt>
+<dd><p>Use this variable instead of calling “raisin::DataLogger raisin::DataLogger::getInstance() = raisin::DataLogger()”, which is not valid in dynamic library. <div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>test_raisin_data_logger.cpp for example </p>
+</div>
+</p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller10Controller14pluginManager_E">
+<span id="_CPPv3N6raisin10controller10Controller14pluginManager_E"></span><span id="_CPPv2N6raisin10controller10Controller14pluginManager_E"></span><span id="raisin::controller::Controller::pluginManager___raisin::plugin::PluginManagerP"></span><span class="target" id="classraisin_1_1controller_1_1Controller_1a4d83262cddeab63bd097a35446d1d426"></span><span class="n"><span class="pre">raisin</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">plugin</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="Plugin.html#_CPPv4N6raisin6plugin13PluginManagerE" title="raisin::plugin::PluginManager"><span class="n"><span class="pre">PluginManager</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">pluginManager_</span></span></span><a class="headerlink" href="#_CPPv4N6raisin10controller10Controller14pluginManager_E" title="Link to this definition"></a><br /></dt>
+<dd><p>To access plugin from controller, use <a class="reference internal" href="Plugin.html#classraisin_1_1plugin_1_1PluginManager_1ae8cfef8bbedfbbc52873e124ab1da139"><span class="std std-ref">plugin::PluginManager::getPlugin(const std::string &amp; plugin_name)</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller10Controller7logIdx_E">
+<span id="_CPPv3N6raisin10controller10Controller7logIdx_E"></span><span id="_CPPv2N6raisin10controller10Controller7logIdx_E"></span><span id="raisin::controller::Controller::logIdx___s"></span><span class="target" id="classraisin_1_1controller_1_1Controller_1afb922f963d7b4c4403da15daddf512fc"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">logIdx_</span></span></span><a class="headerlink" href="#_CPPv4N6raisin10controller10Controller7logIdx_E" title="Link to this definition"></a><br /></dt>
+<dd><p>Initialize this with <a class="reference internal" href="DataLogger.html#classraisin_1_1DataLogger_1a9b58f45ae759576d76447c54db74802b"><span class="std std-ref">DataLogger::initializeAnotherDataGroup</span></a>. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller17ControllerManagerE">
+<span id="_CPPv3N6raisin10controller17ControllerManagerE"></span><span id="_CPPv2N6raisin10controller17ControllerManagerE"></span><span id="raisin::controller::ControllerManager"></span><span class="target" id="classraisin_1_1controller_1_1ControllerManager"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ControllerManager</span></span></span><a class="headerlink" href="#_CPPv4N6raisin10controller17ControllerManagerE" title="Link to this definition"></a><br /></dt>
+<dd><p>Class to manage <a class="reference internal" href="#classraisin_1_1controller_1_1Controller"><span class="std std-ref">Controller</span></a>.</p>
+<p>Only one <a class="reference internal" href="#classraisin_1_1controller_1_1Controller"><span class="std std-ref">Controller</span></a> is used at once.</p>
+<p>When load is called, it</p>
+<p>1) replaces already loaded controller with new controller</p>
+<p>2) calls <a class="reference internal" href="#classraisin_1_1controller_1_1Controller_1aaec5ca596fcebf927bf7957a1d3e7e36"><span class="std std-ref">Controller::advance()</span></a> of loaded controller regularly.</p>
+<p>See <a class="reference internal" href="#classraisin_1_1controller_1_1Controller"><span class="std std-ref">Controller</span></a>, for more details </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller17ControllerManager4loadERKNSt6stringE">
+<span id="_CPPv3N6raisin10controller17ControllerManager4loadERKNSt6stringE"></span><span id="_CPPv2N6raisin10controller17ControllerManager4loadERKNSt6stringE"></span><span id="raisin::controller::ControllerManager::load__ssCR"></span><span class="target" id="classraisin_1_1controller_1_1ControllerManager_1a74ec9d69b1f90b71678794fdfa632bc7"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">load</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">controller_path</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin10controller17ControllerManager4loadERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>load controller </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>controller_path</strong> – path to the controller dynamic library </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if successful </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller17ControllerManager6unloadEv">
+<span id="_CPPv3N6raisin10controller17ControllerManager6unloadEv"></span><span id="_CPPv2N6raisin10controller17ControllerManager6unloadEv"></span><span id="raisin::controller::ControllerManager::unload"></span><span class="target" id="classraisin_1_1controller_1_1ControllerManager_1a7332961c3370988533aadfcc4ea9a331"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">unload</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin10controller17ControllerManager6unloadEv" title="Link to this definition"></a><br /></dt>
+<dd><p>unload the currently loaded controller </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if successful </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller17ControllerManager4haltEv">
+<span id="_CPPv3N6raisin10controller17ControllerManager4haltEv"></span><span id="_CPPv2N6raisin10controller17ControllerManager4haltEv"></span><span id="raisin::controller::ControllerManager::halt"></span><span class="target" id="classraisin_1_1controller_1_1ControllerManager_1ae0ec7f29fbee70c88d725a9503d3f91d"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">halt</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin10controller17ControllerManager4haltEv" title="Link to this definition"></a><br /></dt>
+<dd><p>call SafetyController::halt(). Turn in to halt mode. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if successful </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller17ControllerManager15controllerResetEv">
+<span id="_CPPv3N6raisin10controller17ControllerManager15controllerResetEv"></span><span id="_CPPv2N6raisin10controller17ControllerManager15controllerResetEv"></span><span id="raisin::controller::ControllerManager::controllerReset"></span><span class="target" id="classraisin_1_1controller_1_1ControllerManager_1a3c1c71d0598f01eb9135fc508d6c5331"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">controllerReset</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin10controller17ControllerManager15controllerResetEv" title="Link to this definition"></a><br /></dt>
+<dd><p>call <a class="reference internal" href="#classraisin_1_1controller_1_1Controller_1a8cdada3a806dca19b6fb49c3b620c5af"><span class="std std-ref">Controller::reset()</span></a> of the currently loaded controller. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if successful </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller17ControllerManager7advanceEv">
+<span id="_CPPv3N6raisin10controller17ControllerManager7advanceEv"></span><span id="_CPPv2N6raisin10controller17ControllerManager7advanceEv"></span><span id="raisin::controller::ControllerManager::advance"></span><span class="target" id="classraisin_1_1controller_1_1ControllerManager_1a20ad263b0a4b1834e6887e564a54c6cf"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">advance</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin10controller17ControllerManager7advanceEv" title="Link to this definition"></a><br /></dt>
+<dd><p>call <a class="reference internal" href="#classraisin_1_1controller_1_1Controller_1aaec5ca596fcebf927bf7957a1d3e7e36"><span class="std std-ref">Controller::advance()</span></a> of the currently loaded controller. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if successful </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller17ControllerManager27advanceSafetyControllerOnlyEv">
+<span id="_CPPv3N6raisin10controller17ControllerManager27advanceSafetyControllerOnlyEv"></span><span id="_CPPv2N6raisin10controller17ControllerManager27advanceSafetyControllerOnlyEv"></span><span id="raisin::controller::ControllerManager::advanceSafetyControllerOnly"></span><span class="target" id="classraisin_1_1controller_1_1ControllerManager_1a110b5d2ac54bc2a9992e05dcf6d23731"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">advanceSafetyControllerOnly</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin10controller17ControllerManager27advanceSafetyControllerOnlyEv" title="Link to this definition"></a><br /></dt>
+<dd><p>call SafetyController::advance() only. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if successful </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller17ControllerManager9terminateEv">
+<span id="_CPPv3N6raisin10controller17ControllerManager9terminateEv"></span><span id="_CPPv2N6raisin10controller17ControllerManager9terminateEv"></span><span id="raisin::controller::ControllerManager::terminate"></span><span class="target" id="classraisin_1_1controller_1_1ControllerManager_1ad1243e5c7c77d7d314b6dbb86cfb3a01"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">terminate</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin10controller17ControllerManager9terminateEv" title="Link to this definition"></a><br /></dt>
+<dd><p>call <a class="reference internal" href="#classraisin_1_1controller_1_1Controller_1a0d24f32b8fefbeeb158e8b4af4b28521"><span class="std std-ref">Controller::terminate()</span></a> of the currently loaded controller. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if successful </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6raisin10controller17ControllerManager7isReadyEv">
+<span id="_CPPv3NK6raisin10controller17ControllerManager7isReadyEv"></span><span id="_CPPv2NK6raisin10controller17ControllerManager7isReadyEv"></span><span id="raisin::controller::ControllerManager::isReadyC"></span><span class="target" id="classraisin_1_1controller_1_1ControllerManager_1a5e0c3efa89d345edbde812424cbb8f92"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isReady</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6raisin10controller17ControllerManager7isReadyEv" title="Link to this definition"></a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>whether the currently loaded controller is ready </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6raisin10controller17ControllerManager6isDoneEv">
+<span id="_CPPv3NK6raisin10controller17ControllerManager6isDoneEv"></span><span id="_CPPv2NK6raisin10controller17ControllerManager6isDoneEv"></span><span id="raisin::controller::ControllerManager::isDoneC"></span><span class="target" id="classraisin_1_1controller_1_1ControllerManager_1a470e40ccc01c61ac44ea4181c83e92f4"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isDone</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6raisin10controller17ControllerManager6isDoneEv" title="Link to this definition"></a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>whether the currently loaded (episodic) controller is done </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin10controller17ControllerManager24getCurrentControllerNameEv">
+<span id="_CPPv3N6raisin10controller17ControllerManager24getCurrentControllerNameEv"></span><span id="_CPPv2N6raisin10controller17ControllerManager24getCurrentControllerNameEv"></span><span id="raisin::controller::ControllerManager::getCurrentControllerName"></span><span class="target" id="classraisin_1_1controller_1_1ControllerManager_1a74511c802397bf842af79df84819526c"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentControllerName</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin10controller17ControllerManager24getCurrentControllerNameEv" title="Link to this definition"></a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>name of the currently loaded controller </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="DataLogger.html" class="btn btn-neutral float-left" title="DataLogger" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Plugin.html" class="btn btn-neutral float-right" title="Plugin" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Raion Robotics..</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

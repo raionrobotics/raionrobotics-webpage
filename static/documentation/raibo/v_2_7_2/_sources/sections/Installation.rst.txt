@@ -1,0 +1,130 @@
+#############################
+Installation
+#############################
+
+Dependencies
+***********************************************
+
+You have to install the following packages before using raisin
+
+* ros2
+* yq
+* jq
+
+Build
+***********************************************
+
+
+Create a new workspace:
+
+.. code-block:: bash
+
+  mkdir -p raisin_ws/src
+  cd raisin_ws/src
+
+Download raisin files with appropriate ros2 version and architecture (``install_<ROS_DISTRO>_<ARCH>.zip``) from https://github.com/railabatkaist/raisin_release/releases/.
+
+unzip the raisin files under ``raisin_ws``
+
+.. code-block:: text
+
+  raisin_ws
+    └── install
+  
+Write your own code(``raisin_plugin``, ``raisin_controller``) under ``raisin_ws/src``
+
+.. code-block:: text
+
+  raisin_ws
+  └── src
+      └── raibo_plugin
+          ├── raibo_foo_plugin
+          ├── raibo_bar_plugin
+          └── ...
+      └── raibo_controller
+          ├── raibo_foo_controller
+          ├── raibo_bar_controller
+          └── ...
+
+build your own packages
+
+.. code-block:: bash
+  
+  cd $raisin_ws
+  source install/setup.bash
+  colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release 
+
+also, you can modify configurations for ``raisin_raibo2``, ``plugin``, ``controller``
+
+.. code-block:: bash
+  
+  cd $raisin_ws
+  vi install/raisin_raibo2/share/raisin_raibo2/params.yaml
+  vi install/raisin_{controller_name}_controller/share/raisin_{controller_name}_controller/params.yaml
+  vi install/raisin_{plugin_name}_plugin/share/raisin_{plugin_name}_plugin/params.yaml
+
+
+Firmware update
+***********************************************
+
+
+1. check firmware file name and location (In robot PC)
+=========================================================
+
+- filename: ``raibo2_driver_firmware_{version}.bin``
+- location: ``raisin_ws/install/resource/raisin_raibo2/resource/motor_firmware/raibo2_driver_firmware_xxx.bin``
+
+2. modify target firmware version in ``param.yaml`` (In robot PC)
+===================================================================
+
+- location: ``raisin_ws/install/raisin_raibo2/share/raisin_raibo2/params.yaml``
+
+.. code-block:: xml
+
+  motor_driver_firmware_version:
+    value: 122
+    dtype: string
+
+.. code-block:: xml
+
+  required_driver_version:
+    value: 122
+    dtype: int
+
+
+3. command for update firmware (In GUI Terminal)
+=========================================================
+
+.. warning::
+    Make sure that the node is turn off
+
+- location: ``raisin_ws``
+- command: ``AXIS``: ``ALL, FLR, FLP, FLK, FRR, FRP, FRK, RLR, RLP, RLK, RRR, RRP, RRK)``
+
+.. code-block:: bash
+
+  bash install/setup.bash
+  bash remote_firmware_update.sh $AXIS
+
+- Iterate for all 12 axes.
+
+- After all firmware updates are done, power off the robot(use the physical switch) and wait 5s -> power on , turn on the node
+
+4. calibrate all motor by ros service (In GUI Terminal)
+=========================================================
+
+.. warning::
+    Make sure that the node is turn on
+
+- before start calibrate, make motor freely move at least 60 degree in both direction
+- calibration takes within 5 sec, if motor rotation finish, move next axis
+
+- location: ``raisin_ws``
+- terminal command: (data list: ``FLR, FLP, FLN, FRR, FRP, FRN, RLR, RLP, RLN, RRR, RRP, RRN``)
+
+.. code-block:: bash
+
+  bash install/setup.bash
+  ros2 service call /railab_raibo/motor_commutation raisin_raibo2/srv/String {data: $AXIS}
+  
+- Iterate for all 12 axes.

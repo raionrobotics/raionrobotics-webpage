@@ -1,0 +1,54 @@
+#############################
+Plugin
+#############################
+
+For incorporating advanced features like state estimation and mapping, Raisin supports the use of plugins. These plugins are dynamically loaded and the ``advance()`` function is called periodically according to the specified frequency (Hz). There are three methods to load a plugin:
+
+#. Load by ``raisin_raibo2_node``: This method loads the plugin from the start of the executable.
+
+#. Load by ``controller``: This method loads the plugin concurrently when the controller is loaded.
+
+#. Load by ``plugin``: This method loads other plugin concurrently when the plugin is loaded.
+
+To load a plugin, details such as the plugin name and the desired frequency of updates must be specified in the params.yaml file located under the ``config`` directory of the package. Here’s how you can declare it in the ``params.yaml`` file:
+
+.. code-block:: xml
+
+  plugin:
+    raisin_foo: # plugin package name
+      rate:
+        value: 200 # loop frequency
+        dtype: double
+    raisin_bar:
+      rate:
+        value: 300
+        dtype: double
+
+In this configuration:
+
+* **name**: Specifies the unique identifier or name of the plugin.
+* **frequency**: Specifies how often, in Hertz (Hz), the ``advance()`` function of the plugin should be called.
+
+A plugin stores its subscribers, which are packages(can be ``raibo_node``, ``controller``, and ``plugin``) that configured the plugin.
+A plugin is unloaded if
+
+#. There's no subscriber anymore
+
+#. Another plugin with same pluginType is loaded(refer to the ``PluginType``)
+
+For implementing plugins in Raisin, it's important to adhere to the naming convention specified. Each plugin should be named following the pattern ``raisin_**_plugin``, where ** represents a descriptive part of the plugin's functionality. 
+
+For practical implementation examples, refer to the :download:`raisin_example_plugin.zip <../example/raisin_example_plugin.zip>`.
+
+API
+====
+
+.. doxygenclass:: raisin::plugin::PluginManager
+   :members:
+   :protected-members:
+
+.. doxygenclass:: raisin::plugin::Plugin
+   :members:
+   :protected-members:
+
+.. doxygenenum:: raisin::plugin::PluginType

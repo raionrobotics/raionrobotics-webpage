@@ -1,0 +1,30 @@
+#############################
+Raisin Gui
+#############################
+
+****************
+Introduction
+****************
+
+Raisin Gui is a modular GUI framework for raisin.
+When the executable runs, it loads all libraries prefixed ``raisin_gui_`` and suffixed ``_window``.
+The loaded windows can be launched from the menu bar, or you can launch them from the start.
+You can change these settings in the config file.
+
+You can easily create your own gui window.
+Raisin Gui is based on ImGui, a popular immediate gui library.
+Watch the following video to see how you can create your own gui window.
+
+.. only:: html
+
+    .. raw:: html
+
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/EDxzJGgsrDU?si=nnP3-r3j0qgm2qd5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+Other windows in raisin gui are made with identical process.
+
+We ship raisin gui with 13 windows.
+We will go over important windows.
+
+robot selection
+=================
