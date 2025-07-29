@@ -9,6 +9,7 @@
   <title>Controller &mdash; raisin 1.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=a5c4661c" />
       <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css?v=2a6c4383" />
       <link rel="stylesheet" type="text/css" href="../_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css?v=45cf7dbc" />
       <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css?v=d290406d" />
@@ -22,8 +23,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Plugin" href="Plugin.html" />
-    <link rel="prev" title="DataLogger" href="DataLogger.html" /> 
+    <link rel="next" title="Joy Interface" href="JoyInterface.html" />
+    <link rel="prev" title="Plugin" href="Plugin.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -36,6 +37,7 @@
           
           <a href="../index.html" class="icon icon-home">
             raisin
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -45,59 +47,28 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Chapters</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Get started</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="RaisinMaster.html">Raisin Master</a></li>
-<li class="toctree-l1"><a class="reference internal" href="RaisinNetwork.html">Raisin Network</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="RaisinGui.html">Raisin Gui</a></li>
-<li class="toctree-l1"><a class="reference internal" href="JoyInterface.html">Joy Interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="RaiboNode.html">RaiboNode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinMaster.html">Raisin Master</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinNetwork.html">Raisin Network</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Parameter.html">Parameter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DataLogger.html">DataLogger</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Controller</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#api">API</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6raisin10controller10ControllerE"><code class="docutils literal notranslate"><span class="pre">Controller</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller10ControllerERKNSt6stringERN6raisim5WorldERN6raisim12RaisimServerERN6raisim5WorldERN6raisim12RaisimServerER14GlobalResource"><code class="docutils literal notranslate"><span class="pre">Controller::Controller()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller6createEv"><code class="docutils literal notranslate"><span class="pre">Controller::create()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller4initEv"><code class="docutils literal notranslate"><span class="pre">Controller::init()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller7advanceEv"><code class="docutils literal notranslate"><span class="pre">Controller::advance()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller5resetEv"><code class="docutils literal notranslate"><span class="pre">Controller::reset()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller9terminateEv"><code class="docutils literal notranslate"><span class="pre">Controller::terminate()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller4stopEv"><code class="docutils literal notranslate"><span class="pre">Controller::stop()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller16setPluginManagerEPN6plugin13PluginManagerE"><code class="docutils literal notranslate"><span class="pre">Controller::setPluginManager()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller6isDoneEv"><code class="docutils literal notranslate"><span class="pre">Controller::isDone()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller9worldHub_E"><code class="docutils literal notranslate"><span class="pre">Controller::worldHub_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller10serverHub_E"><code class="docutils literal notranslate"><span class="pre">Controller::serverHub_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller9robotHub_E"><code class="docutils literal notranslate"><span class="pre">Controller::robotHub_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller9robotSim_E"><code class="docutils literal notranslate"><span class="pre">Controller::robotSim_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller9worldSim_E"><code class="docutils literal notranslate"><span class="pre">Controller::worldSim_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller10serverSim_E"><code class="docutils literal notranslate"><span class="pre">Controller::serverSim_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller10paramRoot_E"><code class="docutils literal notranslate"><span class="pre">Controller::paramRoot_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller11dataLogger_E"><code class="docutils literal notranslate"><span class="pre">Controller::dataLogger_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller14pluginManager_E"><code class="docutils literal notranslate"><span class="pre">Controller::pluginManager_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller10Controller7logIdx_E"><code class="docutils literal notranslate"><span class="pre">Controller::logIdx_</span></code></a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="RaiboNode.html">RaiboNode</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="RaiboNode.html#run">Run</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="RaiboNode.html#development">Development</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Plugin.html">Plugin</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Controller</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#api">API</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6raisin10controller17ControllerManagerE"><code class="docutils literal notranslate"><span class="pre">ControllerManager</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller17ControllerManager4loadERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">ControllerManager::load()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller17ControllerManager6unloadEv"><code class="docutils literal notranslate"><span class="pre">ControllerManager::unload()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller17ControllerManager4haltEv"><code class="docutils literal notranslate"><span class="pre">ControllerManager::halt()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller17ControllerManager15controllerResetEv"><code class="docutils literal notranslate"><span class="pre">ControllerManager::controllerReset()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller17ControllerManager7advanceEv"><code class="docutils literal notranslate"><span class="pre">ControllerManager::advance()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller17ControllerManager27advanceSafetyControllerOnlyEv"><code class="docutils literal notranslate"><span class="pre">ControllerManager::advanceSafetyControllerOnly()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller17ControllerManager9terminateEv"><code class="docutils literal notranslate"><span class="pre">ControllerManager::terminate()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK6raisin10controller17ControllerManager7isReadyEv"><code class="docutils literal notranslate"><span class="pre">ControllerManager::isReady()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK6raisin10controller17ControllerManager6isDoneEv"><code class="docutils literal notranslate"><span class="pre">ControllerManager::isDone()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin10controller17ControllerManager24getCurrentControllerNameEv"><code class="docutils literal notranslate"><span class="pre">ControllerManager::getCurrentControllerName()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="JoyInterface.html">Joy Interface</a></li>
 </ul>
 </li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="Plugin.html">Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinGui.html">Raisin Gui</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Reference.html">Reference</a></li>
 </ul>
 
@@ -115,6 +86,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="RaiboNode.html">RaiboNode</a></li>
       <li class="breadcrumb-item active">Controller</li>
       <li class="wy-breadcrumbs-aside">
       </li>
@@ -469,8 +441,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="DataLogger.html" class="btn btn-neutral float-left" title="DataLogger" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="Plugin.html" class="btn btn-neutral float-right" title="Plugin" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Plugin.html" class="btn btn-neutral float-left" title="Plugin" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="JoyInterface.html" class="btn btn-neutral float-right" title="Joy Interface" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

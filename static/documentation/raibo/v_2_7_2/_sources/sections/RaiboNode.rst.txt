@@ -2,26 +2,36 @@
 RaiboNode
 #############################
 
+This node primarily facilitates communication between ``worldHub_`` and other components.
+
+.. image:: ../image/raisin_diagram.png
+  :alt: raisin_diagram
+  :width: 600
+
 Run
 ***********************************************
 
 These commands can also be executed using the ``raisin_gui``
 
-Run In simulation
+Run in GUI
+======================
+
+.. code-block:: bash
+
+  source ld_prefix_path.sh
+  ./install/bin/raisin_gui
+
+
+Run in simulation
 ======================
 Open a new terminal, navigate to ``raisin_ws``, and source the setup files:
 
 .. code-block:: bash
 
-  source install/setup.bash
+  source ld_prefix_path.sh
+  ./install/bin/raisin_raibo2_node
 
-Now run the ``raisin_raibo2`` node:
-
-.. code-block:: bash
-
-  ros2 run raisin_raibo2 raisin_raibo2_node
-
-.. You can visualize it using `raisimUnity`.
+**For simulating sensors, please ensure that you use raisimUnreal on port 7000.**
 
 Run in real robot
 ======================
@@ -30,16 +40,12 @@ Open a new terminal, navigate to `raisin_ws`, and source the setup files:
 .. code-block:: bash
 
   source install/setup.bash
+  sudo ./install/bin/raisin_raibo2_node real
 
-Now run the `raisin_raibo2` node:
+Change Configuration
+======================
 
-.. code-block:: bash
-
-  ros2 run raisin_raibo2 raisin_raibo2_node real
-
-This node primarily facilitates communication between ``worldHub_`` and other components.
-
-Initially, it initiates communication based on settings from the configuration YAML file ``$raisin_ws/install/raisin_raibo2/share/raisin_raibo2/params.yaml``.
+Initially, it initiates communication based on settings from the configuration YAML file ``$raisin_ws/install/config/raisin_raibo2/config/params.yaml``.
 Ensure that the ``camera`` is properly configured, including settings for ``use_depth`` and ``use_rgb``, and ``serial_number``. This configuration is essential for the camera to function correctly according to your requirements.
 If a sensor is not connected on a real robot, make sure to set ``use_sensor`` false, otherwise the robot will not operate.
 
@@ -47,3 +53,12 @@ It subscribes to the topic ``raisin/joy``, which is published by a user, to rece
 Additionally, by subscribing to the service ``raibo/load_controller``, you can load a new controller and unload an existing one.
 
 The node also publishes several topics and logs data for further analysis and debugging.
+
+Development
+***********************************************
+.. toctree::
+   :maxdepth: 1
+
+   Plugin.rst
+   Controller.rst
+   JoyInterface.rst

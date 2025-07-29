@@ -9,8 +9,9 @@ In this tree, nodes can either be ``Parameter`` or ``ParameterContainer`` types.
 
 To set a parameter, you simply use the ``=`` operator followed by the appropriate type. When you need to use a parameter, ensure you cast it to the correct type using ``static_cast<DType>(parameter)``.
 
-The ``ParameterContainer`` can be initialized from a YAML file using the method ``loadFromPackageParameterFile``. This YAML file should be located in the directory ``install/$PACKAGE_NAME/share``.
+The ``ParameterContainer`` can be initialized from a YAML file using the method ``loadFromPackageParameterFile``. This YAML file should be located in ``install/config/$PACKAGE_NAME/config/params.yaml``.
 
+**The parameter can be overridden by the file located at $HOME/.raisin/$PACKAGE_NAME/params.yaml. When running the executable with sudo su, $HOME is /root.**
 
 Here's an example of how the syntax in the YAML file should look:
 
@@ -45,7 +46,7 @@ Here's an example of how the syntax in the YAML file should look:
 For practical implementation examples, refer to the :download:`test_raisin_parameter.cpp <../example/test_raisin_parameter.cpp>`.
 
 .. literalinclude:: ../example/test_raisin_parameter.cpp
-  :language: c
+  :language: cpp
 
 API
 ====

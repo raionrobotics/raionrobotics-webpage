@@ -9,6 +9,7 @@
   <title>RaiboNode &mdash; raisin 1.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=a5c4661c" />
       <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css?v=2a6c4383" />
       <link rel="stylesheet" type="text/css" href="../_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css?v=45cf7dbc" />
       <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css?v=d290406d" />
@@ -22,8 +23,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Parameter" href="Parameter.html" />
-    <link rel="prev" title="Joy Interface" href="JoyInterface.html" /> 
+    <link rel="next" title="Plugin" href="Plugin.html" />
+    <link rel="prev" title="DataLogger" href="DataLogger.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -36,6 +37,7 @@
           
           <a href="../index.html" class="icon icon-home">
             raisin
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -45,26 +47,31 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Chapters</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Get started</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="RaisinMaster.html">Raisin Master</a></li>
-<li class="toctree-l1"><a class="reference internal" href="RaisinNetwork.html">Raisin Network</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="RaisinGui.html">Raisin Gui</a></li>
-<li class="toctree-l1"><a class="reference internal" href="JoyInterface.html">Joy Interface</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">RaiboNode</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#run">Run</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#run-in-simulation">Run In simulation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#run-in-real-robot">Run in real robot</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinMaster.html">Raisin Master</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinNetwork.html">Raisin Network</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Parameter.html">Parameter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DataLogger.html">DataLogger</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Controller.html">Controller</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Plugin.html">Plugin</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">RaiboNode</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#run">Run</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#run-in-gui">Run in GUI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-in-simulation">Run in simulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-in-real-robot">Run in real robot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#change-configuration">Change Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#development">Development</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Plugin.html">Plugin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Controller.html">Controller</a></li>
+<li class="toctree-l3"><a class="reference internal" href="JoyInterface.html">Joy Interface</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinGui.html">Raisin Gui</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Reference.html">Reference</a></li>
 </ul>
 
@@ -93,32 +100,39 @@
              
   <section id="raibonode">
 <h1>RaiboNode<a class="headerlink" href="#raibonode" title="Link to this heading"></a></h1>
+<p>This node primarily facilitates communication between <code class="docutils literal notranslate"><span class="pre">worldHub_</span></code> and other components.</p>
+<a class="reference internal image-reference" href="../_images/raisin_diagram.png"><img alt="raisin_diagram" src="../_images/raisin_diagram.png" style="width: 600px;" />
+</a>
 <section id="run">
 <h2>Run<a class="headerlink" href="#run" title="Link to this heading"></a></h2>
 <p>These commands can also be executed using the <code class="docutils literal notranslate"><span class="pre">raisin_gui</span></code></p>
+<section id="run-in-gui">
+<h3>Run in GUI<a class="headerlink" href="#run-in-gui" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>ld_prefix_path.sh
+./install/bin/raisin_gui
+</pre></div>
+</div>
+</section>
 <section id="run-in-simulation">
-<h3>Run In simulation<a class="headerlink" href="#run-in-simulation" title="Link to this heading"></a></h3>
+<h3>Run in simulation<a class="headerlink" href="#run-in-simulation" title="Link to this heading"></a></h3>
 <p>Open a new terminal, navigate to <code class="docutils literal notranslate"><span class="pre">raisin_ws</span></code>, and source the setup files:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>install/setup.bash
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>ld_prefix_path.sh
+./install/bin/raisin_raibo2_node
 </pre></div>
 </div>
-<p>Now run the <code class="docutils literal notranslate"><span class="pre">raisin_raibo2</span></code> node:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>run<span class="w"> </span>raisin_raibo2<span class="w"> </span>raisin_raibo2_node
-</pre></div>
-</div>
+<p><strong>For simulating sensors, please ensure that you use raisimUnreal on port 7000.</strong></p>
 </section>
 <section id="run-in-real-robot">
 <h3>Run in real robot<a class="headerlink" href="#run-in-real-robot" title="Link to this heading"></a></h3>
 <p>Open a new terminal, navigate to <cite>raisin_ws</cite>, and source the setup files:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>install/setup.bash
+sudo<span class="w"> </span>./install/bin/raisin_raibo2_node<span class="w"> </span>real
 </pre></div>
 </div>
-<p>Now run the <cite>raisin_raibo2</cite> node:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>run<span class="w"> </span>raisin_raibo2<span class="w"> </span>raisin_raibo2_node<span class="w"> </span>real
-</pre></div>
-</div>
-<p>This node primarily facilitates communication between <code class="docutils literal notranslate"><span class="pre">worldHub_</span></code> and other components.</p>
-<p>Initially, it initiates communication based on settings from the configuration YAML file <code class="docutils literal notranslate"><span class="pre">$raisin_ws/install/raisin_raibo2/share/raisin_raibo2/params.yaml</span></code>.
+</section>
+<section id="change-configuration">
+<h3>Change Configuration<a class="headerlink" href="#change-configuration" title="Link to this heading"></a></h3>
+<p>Initially, it initiates communication based on settings from the configuration YAML file <code class="docutils literal notranslate"><span class="pre">$raisin_ws/install/config/raisin_raibo2/config/params.yaml</span></code>.
 Ensure that the <code class="docutils literal notranslate"><span class="pre">camera</span></code> is properly configured, including settings for <code class="docutils literal notranslate"><span class="pre">use_depth</span></code> and <code class="docutils literal notranslate"><span class="pre">use_rgb</span></code>, and <code class="docutils literal notranslate"><span class="pre">serial_number</span></code>. This configuration is essential for the camera to function correctly according to your requirements.
 If a sensor is not connected on a real robot, make sure to set <code class="docutils literal notranslate"><span class="pre">use_sensor</span></code> false, otherwise the robot will not operate.</p>
 <p>It subscribes to the topic <code class="docutils literal notranslate"><span class="pre">raisin/joy</span></code>, which is published by a user, to receive desired velocity inputs.
@@ -126,14 +140,24 @@ Additionally, by subscribing to the service <code class="docutils literal notran
 <p>The node also publishes several topics and logs data for further analysis and debugging.</p>
 </section>
 </section>
+<section id="development">
+<h2>Development<a class="headerlink" href="#development" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Plugin.html">Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Controller.html">Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="JoyInterface.html">Joy Interface</a></li>
+</ul>
+</div>
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="JoyInterface.html" class="btn btn-neutral float-left" title="Joy Interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="Parameter.html" class="btn btn-neutral float-right" title="Parameter" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="DataLogger.html" class="btn btn-neutral float-left" title="DataLogger" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Plugin.html" class="btn btn-neutral float-right" title="Plugin" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
