@@ -9,6 +9,7 @@
   <title>Raisin Master &mdash; raisin 1.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=a5c4661c" />
       <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css?v=2a6c4383" />
       <link rel="stylesheet" type="text/css" href="../_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css?v=45cf7dbc" />
       <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css?v=d290406d" />
@@ -23,7 +24,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Raisin Network" href="RaisinNetwork.html" />
-    <link rel="prev" title="Raisin v1.0.0" href="../index.html" /> 
+    <link rel="prev" title="Installation" href="Installation.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -36,6 +37,7 @@
           
           <a href="../index.html" class="icon icon-home">
             raisin
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -45,25 +47,23 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Chapters</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Get started</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Raisin Master</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#raisin-package">Raisin Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#cmakelists-file">CMakeLists file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build">Build</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#video-tutorial">Video Tutorial</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="RaisinNetwork.html">Raisin Network</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="RaisinGui.html">Raisin Gui</a></li>
-<li class="toctree-l1"><a class="reference internal" href="JoyInterface.html">Joy Interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="RaiboNode.html">RaiboNode</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Parameter.html">Parameter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DataLogger.html">DataLogger</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Controller.html">Controller</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Plugin.html">Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaiboNode.html">RaiboNode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinGui.html">Raisin Gui</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Reference.html">Reference</a></li>
 </ul>
 
@@ -112,7 +112,7 @@ The following directories are part of Raisin Master:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">include</span></code>: Contains header files for directory and time management.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">install</span></code>: All Raisin packages are installed in this folder. Raisin Master’s CMake configuration enforces that the CMAKE_INSTALL_PREFIX points to this directory.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">src</span></code>: Holds all Raisin packages.</p></li>
-<li><p><a href="#id1"><span class="problematic" id="id2">``</span></a>templates`: Contains templates for generating message, service, and CMake files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">templates</span></code>: Contains templates for generating message, service, and CMake files.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">messages</span></code>: Stores basic and common message and service definitions.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">generated</span></code>: Contains generated message and service files, which are produced from the definitions and used in C++ code.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">log</span></code>: Logging data from the packages will go here.</p></li>
@@ -120,7 +120,7 @@ The following directories are part of Raisin Master:</p>
 <blockquote>
 <div><ul class="simple">
 <li><p>Convert Message Definitions: Transforms message definitions into corresponding message header files.</p></li>
-<li><p>Generate the Master CMakeLists.txt File: Automatically adds all projects from the src directory to the CMakeLists.txt file using add_subdirectory(). The script organizes packages based on their dependencies by parsing each package’s CMakeLists.txt file.</p></li>
+<li><p>Generate the Master CMakeLists.txt File: Automatically adds all projects from the src directory to the CMakeLists.txt file using add_subdirectory(). The script organizes packages based on their dependencies by parsing each package’s CMakeLists.txt file. (It ignores the packages inside <strong>RAISIN_IGNORE</strong>)</p></li>
 <li><p>Create a Release File: Generates a release.txt file that lists the commit hash for each Git repository within the src directory.</p></li>
 <li><p>Copy Resource Directories: Copy the resource, config, and scripts directories from each package in the src directory to install directory.</p></li>
 </ul>
@@ -128,6 +128,7 @@ The following directories are part of Raisin Master:</p>
 </li>
 </ul>
 <p>Note that some directories are created during runtime and you might not see them at first.</p>
+<p><strong>The directory will be referred to as $RAISIN_WS throughout this documentation.</strong></p>
 </section>
 <section id="raisin-package">
 <h2>Raisin Package<a class="headerlink" href="#raisin-package" title="Link to this heading"></a></h2>
@@ -153,49 +154,61 @@ Note that subdirectories within a Raisin package cannot be treated as separate R
 Header files must reside in the <code class="docutils literal notranslate"><span class="pre">include/${PROJECT_NAME}/</span></code> directory.
 Source files should be placed in the <code class="docutils literal notranslate"><span class="pre">src</span></code> directory.</p>
 <p>2. <strong>Resource Organization</strong>:
-Resources should be stored in the <code class="docutils literal notranslate"><span class="pre">resource`</span></code> directory.
-Python and Bash scripts should be located in the <code class="docutils literal notranslate"><span class="pre">scripts`</span></code> directory.
-Parameter files should be placed in the <code class="docutils literal notranslate"><span class="pre">config`</span></code> directory.
+Resources should be stored in the <code class="docutils literal notranslate"><span class="pre">resource</span></code> directory.
+Python and Bash scripts should be located in the <code class="docutils literal notranslate"><span class="pre">scripts</span></code> directory.
+Parameter files should be placed in the <code class="docutils literal notranslate"><span class="pre">config</span></code> directory.
 Message files should be placed in the <code class="docutils literal notranslate"><span class="pre">msg</span></code> directory.
 Service files should be placed in the <code class="docutils literal notranslate"><span class="pre">srv</span></code> directory.
 Explanation about messages and services will be given in the Raisin Network section.</p>
 <p>3. <strong>Naming Conventions</strong>:
 The project name must match the name of the Raisin package directory.</p>
 <p>4. <strong>Dependency Management</strong>:
-Use <code class="docutils literal notranslate"><span class="pre">raisin_find_package`</span></code> (instead of the standard <code class="docutils literal notranslate"><span class="pre">find_package</span></code>) to locate other Raisin packages.
-<a href="#id3"><span class="problematic" id="id4">``</span></a>raisin_find_package``is explained further in the following section.</p>
+Use <code class="docutils literal notranslate"><span class="pre">raisin_find_package</span></code> (instead of the standard <code class="docutils literal notranslate"><span class="pre">find_package</span></code>) to locate other Raisin packages.
+<a href="#id1"><span class="problematic" id="id2">``</span></a>raisin_find_package``is explained further in the following section.</p>
 </section>
 <section id="cmakelists-file">
 <h2>CMakeLists file<a class="headerlink" href="#cmakelists-file" title="Link to this heading"></a></h2>
 <p>There are no constraints on the <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> file
-Below is an example of a typical <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt`</span></code> file for a Raisin package:</p>
+Below is an example of a typical <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> file for a Raisin package:</p>
 <div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span><span class="w"> </span><span class="s">3.5</span><span class="p">)</span>
+
+<span class="c">## write your package name</span>
 <span class="nb">project</span><span class="p">(</span><span class="s">raisin_package</span><span class="p">)</span>
 
-<span class="nb">find_package</span><span class="p">(</span><span class="s">Eigen3</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
-<span class="nb">find_package</span><span class="p">(</span><span class="s">yaml-cpp</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
-<span class="nb">raisin_find_package</span><span class="p">(</span><span class="s">raisin_dependencies</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">ENV{RAISIN_WS}</span><span class="w"> </span><span class="s2">&quot;../&quot;</span><span class="p">)</span><span class="w"> </span><span class="c">## set the path to your raisin workspace</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_PREFIX_PATH</span><span class="w"> </span><span class="o">$ENV{</span><span class="nv">RAISIN_WS</span><span class="o">}</span><span class="s">/install</span><span class="p">)</span>
 
+<span class="nb">raisin_find_package</span><span class="p">(</span><span class="s">raisin_network</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+
+<span class="c">## added your dependencies here</span>
 <span class="nb">add_library</span><span class="p">(</span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span><span class="w"> </span><span class="s">SHARED</span>
-<span class="w">  </span><span class="s">src/raisin_package.cpp</span>
+<span class="w">    </span><span class="s">src/raisin_package.cpp</span>
 <span class="p">)</span>
 
-<span class="nb">set_property</span><span class="p">(</span><span class="s">TARGET</span><span class="w"> </span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span><span class="w"> </span><span class="s">PROPERTY</span><span class="w"> </span><span class="s">POSITION_INDEPENDENT_CODE</span><span class="w"> </span><span class="s">ON</span><span class="p">)</span>
-
-<span class="nb">target_link_libraries</span><span class="p">(</span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span><span class="w"> </span><span class="s">yaml-cpp</span><span class="w"> </span><span class="s">raisim::raisim</span><span class="w"> </span><span class="s">raisin_dependencies</span><span class="p">)</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span><span class="w"> </span><span class="s">raisin_network</span><span class="p">)</span>
 <span class="nb">target_include_directories</span><span class="p">(</span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span><span class="w"> </span><span class="s">PUBLIC</span>
 <span class="w">        </span><span class="s2">&quot;$&lt;BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include&gt;&quot;</span>
 <span class="w">        </span><span class="s2">&quot;$&lt;INSTALL_INTERFACE:include&gt;&quot;</span><span class="p">)</span>
+<span class="nb">target_include_directories</span><span class="p">(</span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w">  </span><span class="o">$ENV{</span><span class="nv">RAISIN_WS</span><span class="o">}</span><span class="s">/install</span><span class="p">)</span>
 
-<span class="nb">raisin_install</span><span class="p">(</span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span><span class="w"> </span><span class="s">Eigen3</span><span class="w"> </span><span class="s">yaml-cpp</span><span class="w"> </span><span class="s">raisin_master</span><span class="p">)</span>
+<span class="nb">set_property</span><span class="p">(</span><span class="s">TARGET</span><span class="w"> </span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span><span class="w"> </span><span class="s">PROPERTY</span><span class="w"> </span><span class="s">POSITION_INDEPENDENT_CODE</span><span class="w"> </span><span class="s">ON</span><span class="p">)</span>
+
+<span class="nb">add_executable</span><span class="p">(</span><span class="s">ex</span><span class="w"> </span><span class="s">src/example.cpp</span><span class="p">)</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">ex</span><span class="w"> </span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span><span class="p">)</span>
+
+<span class="c">## write your install dependencies here</span>
+<span class="nb">raisin_install</span><span class="p">(</span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span><span class="w"> </span><span class="s">raisin_network</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>In this file, <code class="docutils literal notranslate"><span class="pre">raisin_find_package</span></code> runs <code class="docutils literal notranslate"><span class="pre">find_package</span></code> under the hood if the library is not part of the build targets, in other words, if it does nothing if the dependency is not part of the build.</p>
-<p><code class="docutils literal notranslate"><span class="pre">raisin_install</span></code> performs several commands necessary for install the package,
-like creating the config file, installing the <code class="docutils literal notranslate"><span class="pre">include</span></code> directory, defining the export set, etc.
-What follows after <code class="docutils literal notranslate"><span class="pre">${PROJECT_NAME}</span></code> are the dependencies.
-The auto-generated config file will call <code class="docutils literal notranslate"><span class="pre">find_package</span></code> for each dependencies.
-The definitions can be found in <code class="docutils literal notranslate"><span class="pre">cmake/raisin_helper</span></code></p>
+<p><strong>project:</strong> Defines the name of the project.</p>
+<p><strong>set:</strong> Sets the RAISIN_WS environment variable. ## It should point to the root of the raisin workspace (typically “../”). set(ENV{RAISIN_WS} “../”)</p>
+<p><strong>raisin_find_package:</strong> runs <a href="#id3"><span class="problematic" id="id4">``</span></a>find_package** under the hood if the library is not part of the build targets, in other words, if it does nothing if the dependency is not part of the build.</p>
+<p><strong>add_library:</strong> Creates a shared library containing the source code for the node.</p>
+<p><strong>target_link_libraries:</strong> inks the shared library to raisin_network.</p>
+<p><strong>target_include_directories:</strong> Adds additional private include path for dependencies from the Raisin workspace.</p>
+<p><strong>set_property:</strong> Enables position-independent code, which is required for shared libraries.</p>
+<p><strong>raisin_install:</strong> performs several commands necessary for install the package, like creating the config file, installing the <code class="docutils literal notranslate"><span class="pre">include</span></code> directory, defining the export set, etc.</p>
+<p><strong>{PROJECT_NAME}:</strong> are the dependencies. The auto-generated config file will call <code class="docutils literal notranslate"><span class="pre">find_package</span></code> for each dependencies. The definitions can be found in <code class="docutils literal notranslate"><span class="pre">cmake/raisin_helper</span></code></p>
 <p>There is also an expert version of <code class="docutils literal notranslate"><span class="pre">raisin_install</span></code>.
 An example follows:</p>
 <div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">raisin_install_config_string</span><span class="p">(</span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span><span class="w"> </span><span class="s2">&quot;</span>
@@ -209,6 +222,21 @@ An example follows:</p>
 <p><code class="docutils literal notranslate"><span class="pre">raisin_install_config_string</span></code> lets you customize the config file.
 The string will be added to the config file.</p>
 </section>
+<section id="build">
+<h2>Build<a class="headerlink" href="#build" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>raisin_workspace_setup.py
+
+mkdir<span class="w"> </span>build
+<span class="nb">cd</span><span class="w"> </span>build
+cmake<span class="w"> </span>..<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release<span class="w"> </span>-G<span class="w"> </span>Ninja
+ninja<span class="w"> </span>-j8<span class="w"> </span>install
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Avoid building the project using sudo su, as it may lead to permission issues.</p>
+</div>
+</section>
 <section id="video-tutorial">
 <h2>Video Tutorial<a class="headerlink" href="#video-tutorial" title="Link to this heading"></a></h2>
 <ol class="arabic simple">
@@ -221,7 +249,7 @@ The string will be added to the config file.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../index.html" class="btn btn-neutral float-left" title="Raisin v1.0.0" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="RaisinNetwork.html" class="btn btn-neutral float-right" title="Raisin Network" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

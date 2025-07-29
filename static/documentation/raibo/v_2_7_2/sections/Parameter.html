@@ -9,6 +9,7 @@
   <title>Parameter &mdash; raisin 1.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=a5c4661c" />
       <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css?v=2a6c4383" />
       <link rel="stylesheet" type="text/css" href="../_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css?v=45cf7dbc" />
       <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css?v=d290406d" />
@@ -23,7 +24,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="DataLogger" href="DataLogger.html" />
-    <link rel="prev" title="RaiboNode" href="RaiboNode.html" /> 
+    <link rel="prev" title="Raisin Network" href="RaisinNetwork.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -36,6 +37,7 @@
           
           <a href="../index.html" class="icon icon-home">
             raisin
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -45,15 +47,12 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Chapters</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Get started</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="RaisinMaster.html">Raisin Master</a></li>
-<li class="toctree-l1"><a class="reference internal" href="RaisinNetwork.html">Raisin Network</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="RaisinGui.html">Raisin Gui</a></li>
-<li class="toctree-l1"><a class="reference internal" href="JoyInterface.html">Joy Interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="RaiboNode.html">RaiboNode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinMaster.html">Raisin Master</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinNetwork.html">Raisin Network</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Parameter</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#api">API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6raisin9parameter18ParameterContainerE"><code class="docutils literal notranslate"><span class="pre">ParameterContainer</span></code></a><ul>
@@ -78,8 +77,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="DataLogger.html">DataLogger</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Controller.html">Controller</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Plugin.html">Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaiboNode.html">RaiboNode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinGui.html">Raisin Gui</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Reference.html">Reference</a></li>
 </ul>
 
@@ -112,7 +111,8 @@
 <p>In this tree, nodes can either be <code class="docutils literal notranslate"><span class="pre">Parameter</span></code> or <code class="docutils literal notranslate"><span class="pre">ParameterContainer</span></code> types. <code class="docutils literal notranslate"><span class="pre">Parameter</span></code> nodes are leaf nodes, while <code class="docutils literal notranslate"><span class="pre">ParameterContainer</span></code> nodes are not. To navigate to a child <code class="docutils literal notranslate"><span class="pre">ParameterContainer</span></code>, you use the <code class="docutils literal notranslate"><span class="pre">[]</span></code> operator. For a child <code class="docutils literal notranslate"><span class="pre">Parameter</span></code>, you use the <code class="docutils literal notranslate"><span class="pre">()</span></code> operator. Accessing a non-existent child node will automatically create that node.</p>
 <p><code class="docutils literal notranslate"><span class="pre">Parameter</span></code> nodes support various data types, including <code class="docutils literal notranslate"><span class="pre">STRING,</span> <span class="pre">DOUBLE,</span> <span class="pre">BOOL,</span> <span class="pre">VECTOR,</span> <span class="pre">and</span> <span class="pre">INT</span></code>.</p>
 <p>To set a parameter, you simply use the <code class="docutils literal notranslate"><span class="pre">=</span></code> operator followed by the appropriate type. When you need to use a parameter, ensure you cast it to the correct type using <code class="docutils literal notranslate"><span class="pre">static_cast&lt;DType&gt;(parameter)</span></code>.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">ParameterContainer</span></code> can be initialized from a YAML file using the method <code class="docutils literal notranslate"><span class="pre">loadFromPackageParameterFile</span></code>. This YAML file should be located in the directory <code class="docutils literal notranslate"><span class="pre">install/$PACKAGE_NAME/share</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ParameterContainer</span></code> can be initialized from a YAML file using the method <code class="docutils literal notranslate"><span class="pre">loadFromPackageParameterFile</span></code>. This YAML file should be located in <code class="docutils literal notranslate"><span class="pre">install/config/$PACKAGE_NAME/config/params.yaml</span></code>.</p>
+<p><strong>The parameter can be overridden by the file located at $HOME/.raisin/$PACKAGE_NAME/params.yaml. When running the executable with sudo su, $HOME is /root.</strong></p>
 <p>Here’s an example of how the syntax in the YAML file should look:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>test_string:
 <span class="w">  </span>value:<span class="w"> </span>hello
@@ -141,7 +141,7 @@ test_vec_int:
 </pre></div>
 </div>
 <p>For practical implementation examples, refer to the <a class="reference download internal" download="" href="../_downloads/642f7ce6e08fff978357455cab993b1e/test_raisin_parameter.cpp"><code class="xref download docutils literal notranslate"><span class="pre">test_raisin_parameter.cpp</span></code></a>.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Copyright (c) 2020 Robotics and Artificial Intelligence Lab, KAIST</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Copyright (c) 2020 Robotics and Artificial Intelligence Lab, KAIST</span>
 <span class="c1">//</span>
 <span class="c1">// Any unauthorized copying, alteration, distribution, transmission,</span>
 <span class="c1">// performance, display or use of this material is prohibited.</span>
@@ -159,10 +159,10 @@ test_vec_int:
 <span class="c1">// Tests</span>
 <span class="c1">//</span>
 
-<span class="n">class</span><span class="w"> </span><span class="n">Child</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Child</span>
 <span class="p">{</span>
-<span class="n">public</span><span class="o">:</span>
-<span class="w">  </span><span class="n">explicit</span><span class="w"> </span><span class="n">Child</span><span class="p">(</span><span class="n">raisin</span><span class="o">::</span><span class="n">parameter</span><span class="o">::</span><span class="n">ParameterContainer</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">param</span><span class="p">)</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">  </span><span class="k">explicit</span><span class="w"> </span><span class="n">Child</span><span class="p">(</span><span class="n">raisin</span><span class="o">::</span><span class="n">parameter</span><span class="o">::</span><span class="n">ParameterContainer</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">param</span><span class="p">)</span>
 <span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="n">param_</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="s">&quot;Child&quot;</span><span class="p">])</span>
 <span class="w">  </span><span class="p">{</span>
 <span class="w">    </span><span class="n">param_</span><span class="p">(</span><span class="s">&quot;param1&quot;</span><span class="p">).</span><span class="n">setOptions</span><span class="p">({</span><span class="s">&quot;hello&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;goodbye&quot;</span><span class="p">});</span>
@@ -176,13 +176,13 @@ test_vec_int:
 <span class="w">    </span><span class="n">param_</span><span class="p">(</span><span class="s">&quot;param4&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">testVecInt</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 
-<span class="n">private</span><span class="o">:</span>
+<span class="k">private</span><span class="o">:</span>
 <span class="w">  </span><span class="n">raisin</span><span class="o">::</span><span class="n">parameter</span><span class="o">::</span><span class="n">ParameterContainer</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">param_</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="n">class</span><span class="w"> </span><span class="n">Parent</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Parent</span>
 <span class="p">{</span>
-<span class="n">public</span><span class="o">:</span>
+<span class="k">public</span><span class="o">:</span>
 <span class="w">  </span><span class="n">Parent</span><span class="p">()</span>
 <span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="n">param_</span><span class="p">(</span><span class="n">raisin</span><span class="o">::</span><span class="n">parameter</span><span class="o">::</span><span class="n">ParameterContainer</span><span class="o">::</span><span class="n">getRoot</span><span class="p">()),</span>
 <span class="w">    </span><span class="n">child_</span><span class="p">(</span><span class="n">raisin</span><span class="o">::</span><span class="n">parameter</span><span class="o">::</span><span class="n">ParameterContainer</span><span class="o">::</span><span class="n">getRoot</span><span class="p">())</span>
@@ -191,7 +191,7 @@ test_vec_int:
 <span class="w">    </span><span class="n">param_</span><span class="p">(</span><span class="s">&quot;param2&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 
-<span class="n">private</span><span class="o">:</span>
+<span class="k">private</span><span class="o">:</span>
 <span class="w">  </span><span class="n">raisin</span><span class="o">::</span><span class="n">parameter</span><span class="o">::</span><span class="n">ParameterContainer</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">param_</span><span class="p">;</span>
 <span class="w">  </span><span class="n">Child</span><span class="w"> </span><span class="n">child_</span><span class="p">;</span>
 <span class="p">};</span>
@@ -448,7 +448,7 @@ test_vec_int:
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="RaiboNode.html" class="btn btn-neutral float-left" title="RaiboNode" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="RaisinNetwork.html" class="btn btn-neutral float-left" title="Raisin Network" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="DataLogger.html" class="btn btn-neutral float-right" title="DataLogger" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
