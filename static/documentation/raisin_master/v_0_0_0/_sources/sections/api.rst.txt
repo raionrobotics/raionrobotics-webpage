@@ -1,0 +1,5 @@
+.. automodule:: raisin
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:
