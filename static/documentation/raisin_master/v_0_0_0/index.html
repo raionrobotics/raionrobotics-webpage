@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Raisin Master - Build &amp; Package Management System! &mdash; Raisin Build &amp; Package Management 0.0.0 documentation</title>
+  <title>Raisin Master - Build &amp; Package Management System! &mdash; Raisin Master - Build &amp; Package Management 0.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -31,7 +31,8 @@
           
           
           <a href="#" class="icon icon-home">
-            Raisin Build & Package Management
+            Raisin Master - Build & Package Management
+              <img src="_static/logo_f2-02.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -54,7 +55,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">Raisin Build & Package Management</a>
+          <a href="#">Raisin Master - Build & Package Management</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -81,13 +82,13 @@ It handles dependency resolution, automatic C++ header generation from message f
 <section id="key-features">
 <h2>Key Features<a class="headerlink" href="#key-features" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p><strong>ROS-like Interface Generation</strong>: Automatically generates C++ header files (<code class="docutils literal notranslate"><span class="pre">.hpp</span></code>) from <code class="docutils literal notranslate"><span class="pre">.msg</span></code>, <code class="docutils literal notranslate"><span class="pre">.srv</span></code>, and <code class="docutils literal notranslate"><span class="pre">.action</span></code> interface definitions.</p></li>
-<li><p><strong>CMake-Based Build Orchestration</strong>: Discovers C++ subprojects, analyzes their dependencies, and generates a top-level <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> file for a topologically sorted build. You can probably use your existing cmake projects without any changes if they follow modern cmake guidelines.</p></li>
-<li><p><strong>Dependency Management</strong>: Parses custom <code class="docutils literal notranslate"><span class="pre">raisin_find_package</span></code> directives within CMake files to construct a precise build order.</p></li>
-<li><p><strong>Blazing-Fast Compilation</strong> 🚀: Bypasses the overhead of traditional meta-build tools. By orchestrating a single, unified build with raw Ninja, compile times are dramatically reduced. For large projects, this approach can be up to 5x faster than a standard colcon build.</p></li>
-<li><p><strong>Release Automation</strong>: Packages build artifacts into versioned, platform-specific <code class="docutils literal notranslate"><span class="pre">.zip</span></code> archives and can automatically upload them to GitHub Releases.</p></li>
-<li><p><strong>Package Installation</strong>: A recursive dependency resolver that can download and install pre-compiled packages from GitHub releases, streamlining environment setup.</p></li>
-<li><p><strong>Self-Contained</strong>: Everything is managed by a single, powerful Python script.</p></li>
+<li><p>🔄 <strong>ROS-like Interface Generation</strong>: Automatically generates C++ header files (<code class="docutils literal notranslate"><span class="pre">.hpp</span></code>) from <code class="docutils literal notranslate"><span class="pre">.msg</span></code>, <code class="docutils literal notranslate"><span class="pre">.srv</span></code>, and <code class="docutils literal notranslate"><span class="pre">.action</span></code> interface definitions.</p></li>
+<li><p>🏗️ <strong>CMake-Based Build Orchestration</strong>: Discovers C++ subprojects, analyzes their dependencies, and generates a top-level <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> file for a topologically sorted build. You can probably use your existing cmake projects without any changes if they follow modern cmake guidelines.</p></li>
+<li><p>🔗 <strong>Dependency Management</strong>: Parses custom <code class="docutils literal notranslate"><span class="pre">raisin_find_package</span></code> directives within CMake files to construct a precise build order.</p></li>
+<li><p>⚡ <strong>Blazing-Fast Compilation</strong> 🚀: Bypasses the overhead of traditional meta-build tools. By orchestrating a single, unified build with raw Ninja, compile times are dramatically reduced. For large projects, this approach can be up to 5x faster than a standard colcon build.</p></li>
+<li><p>📦 <strong>Release Automation</strong>: Packages build artifacts into versioned, platform-specific <code class="docutils literal notranslate"><span class="pre">.zip</span></code> archives and can automatically upload them to GitHub Releases.</p></li>
+<li><p>📥 <strong>Package Installation</strong>: A recursive dependency resolver that can download and install pre-compiled packages from GitHub releases, streamlining environment setup.</p></li>
+<li><p>💎 <strong>Self-Contained</strong>: Everything is managed by a single, powerful Python script.</p></li>
 </ul>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>

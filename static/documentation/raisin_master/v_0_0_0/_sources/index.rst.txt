@@ -15,13 +15,13 @@ This system is perfect for projects that require a structured build process, cle
 Key Features
 ------------
 
-* **ROS-like Interface Generation**: Automatically generates C++ header files (``.hpp``) from ``.msg``, ``.srv``, and ``.action`` interface definitions.
-* **CMake-Based Build Orchestration**: Discovers C++ subprojects, analyzes their dependencies, and generates a top-level ``CMakeLists.txt`` file for a topologically sorted build. You can probably use your existing cmake projects without any changes if they follow modern cmake guidelines.
-* **Dependency Management**: Parses custom ``raisin_find_package`` directives within CMake files to construct a precise build order.
-* **Blazing-Fast Compilation** 🚀: Bypasses the overhead of traditional meta-build tools. By orchestrating a single, unified build with raw Ninja, compile times are dramatically reduced. For large projects, this approach can be up to 5x faster than a standard colcon build.
-* **Release Automation**: Packages build artifacts into versioned, platform-specific ``.zip`` archives and can automatically upload them to GitHub Releases.
-* **Package Installation**: A recursive dependency resolver that can download and install pre-compiled packages from GitHub releases, streamlining environment setup.
-* **Self-Contained**: Everything is managed by a single, powerful Python script.
+* 🔄 **ROS-like Interface Generation**: Automatically generates C++ header files (``.hpp``) from ``.msg``, ``.srv``, and ``.action`` interface definitions.
+* 🏗️ **CMake-Based Build Orchestration**: Discovers C++ subprojects, analyzes their dependencies, and generates a top-level ``CMakeLists.txt`` file for a topologically sorted build. You can probably use your existing cmake projects without any changes if they follow modern cmake guidelines.
+* 🔗 **Dependency Management**: Parses custom ``raisin_find_package`` directives within CMake files to construct a precise build order.
+* ⚡ **Blazing-Fast Compilation** 🚀: Bypasses the overhead of traditional meta-build tools. By orchestrating a single, unified build with raw Ninja, compile times are dramatically reduced. For large projects, this approach can be up to 5x faster than a standard colcon build.
+* 📦 **Release Automation**: Packages build artifacts into versioned, platform-specific ``.zip`` archives and can automatically upload them to GitHub Releases.
+* 📥 **Package Installation**: A recursive dependency resolver that can download and install pre-compiled packages from GitHub releases, streamlining environment setup.
+* 💎 **Self-Contained**: Everything is managed by a single, powerful Python script.
 
 
 .. toctree::
