@@ -30,6 +30,7 @@ Key Features
 
    sections/concepts
    sections/structure
+   sections/raisin_package
    sections/usage
 
 
