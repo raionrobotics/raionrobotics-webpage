@@ -28,10 +28,9 @@ Key Features
    :maxdepth: 1
    :caption: Contents:
 
-   concepts
-   structure
-   usage
-   api
+   sections/concepts
+   sections/structure
+   sections/usage
 
 
 Indices and tables
