@@ -47,7 +47,16 @@
 								fill="#BDBDBD"
 							/>
 						</svg>
-						<a href="mailto:jhwangbo@raionrobotics.com">sales@raionrobotics.com</a>
+						<div class="flex flex-col">
+							<div class="mb-1">
+								<span class="text-sm">제품 문의: </span>
+								<a href="https://mail.google.com/mail/?view=cm&fs=1&to=sales@raionrobotics.com" target="_blank" class="hover:underline">sales@raionrobotics.com</a>
+							</div>
+							<div>
+								<span class="text-sm">홍보 문의: </span>
+								<a href="https://mail.google.com/mail/?view=cm&fs=1&to=pr@raionrobotics.com" target="_blank" class="hover:underline">pr@raionrobotics.com</a>
+							</div>
+						</div>
 					</li>
 				</ul>
 			</div>
@@ -69,7 +78,7 @@
 		<hr class="my-6 sm:mx-auto border-gray-700 lg:my-8" />
 		<div class="sm:flex sm:items-center sm:justify-between">
 			<span class="text-sm sm:text-center text-gray-400"
-				>© 2024 <a href="hoverun" class="font-noto hover:underline">(주)라이온로보틱스</a>. All Rights Reserved.
+				>© 2025 <a href="hoverun" class="font-noto hover:underline">(주)라이온로보틱스</a>. All Rights Reserved.
 			</span>
 		</div>
 	</div>
