@@ -3,7 +3,6 @@
 
 	// List of popup images
 	const popupImages = [
-		'PcWeb_640x360_ADEX.png',
 	];
 
 	let activePopups = [];
