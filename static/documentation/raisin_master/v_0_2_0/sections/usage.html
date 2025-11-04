@@ -1,0 +1,250 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Command-Line Usage &mdash; Raisin Master - Build &amp; Package Management 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Package Management" href="package_management.html" />
+    <link rel="prev" title="Repositories &amp; Raisin Packages" href="raisin_package.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Raisin Master - Build & Package Management
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Core Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Raisin master files and folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raisin_package.html">Repositories &amp; Raisin Packages</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Command-Line Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#global-options">Global Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-release-commands">Build &amp; Release Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#package-management-commands">Package Management Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#git-integration-commands">Git Integration Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#help">Help</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="package_management.html">Package Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_integration.html">Git Integration</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Raisin Master - Build & Package Management</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Command-Line Usage</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/sections/usage.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="command-line-usage">
+<h1>Command-Line Usage<a class="headerlink" href="#command-line-usage" title="Link to this heading"></a></h1>
+<p>The Raisin script is controlled via command-line arguments. This page provides a quick reference of all available commands.</p>
+<p>For detailed information, see:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="package_management.html"><span class="doc">Package Management</span></a> - Package installation and index commands</p></li>
+<li><p><a class="reference internal" href="git_integration.html"><span class="doc">Git Integration</span></a> - Git repository management commands</p></li>
+</ul>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>raisin.py<span class="w"> </span>&lt;command&gt;<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</pre></div>
+</div>
+<section id="global-options">
+<h2>Global Options<a class="headerlink" href="#global-options" title="Link to this heading"></a></h2>
+<dl class="std cmdoption">
+<dt class="sig sig-object std" id="cmdoption-raisin.py-yes">
+<span class="sig-name descname"><span class="pre">--yes</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-raisin.py-yes" title="Link to this definition"></a></dt>
+<dd><p>Answers ‘yes’ to all prompts, like overwriting release assets.</p>
+</dd></dl>
+
+</section>
+<section id="build-release-commands">
+<h2>Build &amp; Release Commands<a class="headerlink" href="#build-release-commands" title="Link to this heading"></a></h2>
+<dl class="std cmdoption">
+<dt class="sig sig-object std" id="cmdoption-raisin.py-arg-setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-prename descclassname"> <span class="pre">[target</span> <span class="pre">...]</span></span><a class="headerlink" href="#cmdoption-raisin.py-arg-setup" title="Link to this definition"></a></dt>
+<dd><p>Configures the project for a local development build.</p>
+<p>Running <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">raisin.py</span></code> with no arguments performs the same setup for all packages.</p>
+<p>This command performs the core setup tasks:
+1. Finds all <code class="docutils literal notranslate"><span class="pre">.msg</span></code>, <code class="docutils literal notranslate"><span class="pre">.srv</span></code>, and <code class="docutils literal notranslate"><span class="pre">.action</span></code> files.
+2. Generates the corresponding C++ header files in the <code class="docutils literal notranslate"><span class="pre">generated/</span></code> directory.
+3. Scans all projects in <code class="docutils literal notranslate"><span class="pre">src/</span></code> to build a dependency graph.
+4. Generates a top-level <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> with all projects included in the correct build order.</p>
+<p>If one or more <code class="docutils literal notranslate"><span class="pre">target</span></code> names are provided, it only configures the build for those specific targets and their dependencies. Target names map to entries in <code class="docutils literal notranslate"><span class="pre">RAISIN_BUILD_TARGETS.yaml</span></code> (see <a class="reference internal" href="raisin_package.html"><span class="doc">Repositories &amp; Raisin Packages</span></a>); each entry can expand to multiple glob patterns that control which packages are included. If no targets are provided, all projects discovered in <code class="docutils literal notranslate"><span class="pre">src/</span></code> are configured.</p>
+</dd></dl>
+
+<dl class="std cmdoption">
+<dt class="sig sig-object std" id="cmdoption-raisin.py-arg-build">
+<span class="sig-name descname"><span class="pre">build</span></span><span class="sig-prename descclassname"> <span class="pre">[target</span> <span class="pre">...]</span> <span class="pre">[debug|release</span> <span class="pre">...]</span> <span class="pre">[install]</span></span><a class="headerlink" href="#cmdoption-raisin.py-arg-build" title="Link to this definition"></a></dt>
+<dd><p>Compiles the project locally.</p>
+<p>This command runs the <code class="docutils literal notranslate"><span class="pre">setup</span></code> step with the same target filtering rules, then compiles the project using Ninja.
+* Omit build types to build in <code class="docutils literal notranslate"><span class="pre">debug</span></code> by default.
+* Provide one or both build types (<code class="docutils literal notranslate"><span class="pre">debug</span></code> and/or <code class="docutils literal notranslate"><span class="pre">release</span></code>) to run them sequentially.
+* Add <code class="docutils literal notranslate"><span class="pre">install</span></code> to run <code class="docutils literal notranslate"><span class="pre">ninja</span> <span class="pre">install</span></code> after each build.
+* When targets are provided, they must match entries in <code class="docutils literal notranslate"><span class="pre">RAISIN_BUILD_TARGETS.yaml</span></code>; otherwise all detected projects are built.</p>
+</dd></dl>
+
+<dl class="std cmdoption">
+<dt class="sig sig-object std" id="cmdoption-raisin.py-arg-release">
+<span class="sig-name descname"><span class="pre">release</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;target</span> <span class="pre">...&gt;</span> <span class="pre">[debug|release]</span></span><a class="headerlink" href="#cmdoption-raisin.py-arg-release" title="Link to this definition"></a></dt>
+<dd><p>Creates and distributes a formal release package.</p>
+<p>This command automates the entire release process for one or more targets. For each target, it:
+1. Reads the <code class="docutils literal notranslate"><span class="pre">release.yaml</span></code> file to get version and dependency information.
+2. Performs a clean build and installs the artifacts to a dedicated directory under <code class="docutils literal notranslate"><span class="pre">release/install/</span></code>.
+3. Compresses the installed artifacts into a <code class="docutils literal notranslate"><span class="pre">.zip</span></code> archive named with the convention: <code class="docutils literal notranslate"><span class="pre">{target}-{os}-{arch}-{build_type}-v{version}.zip</span></code>.
+4. Uploads the archive to the corresponding GitHub Release, creating the release if it doesn’t exist.</p>
+<ul class="simple">
+<li><p>Build type defaults to <code class="docutils literal notranslate"><span class="pre">release</span></code> if not specified.</p></li>
+</ul>
+</dd></dl>
+
+</section>
+<section id="package-management-commands">
+<h2>Package Management Commands<a class="headerlink" href="#package-management-commands" title="Link to this heading"></a></h2>
+<p>See <a class="reference internal" href="package_management.html"><span class="doc">Package Management</span></a> for detailed documentation.</p>
+<dl class="std cmdoption">
+<dt class="sig sig-object std" id="cmdoption-raisin.py-arg-install">
+<span class="sig-name descname"><span class="pre">install</span></span><span class="sig-prename descclassname"> <span class="pre">[pkg&gt;=1.0]</span> <span class="pre">[debug|release]</span></span><a class="headerlink" href="#cmdoption-raisin.py-arg-install" title="Link to this definition"></a></dt>
+<dd><p>Downloads and installs pre-compiled packages and their dependencies.</p>
+<p>This command functions as a package manager. It recursively resolves and installs all required packages.
+* A package specifier can be a simple name (e.g., <code class="docutils literal notranslate"><span class="pre">my_pkg</span></code>) or include a version constraint (e.g., <code class="docutils literal notranslate"><span class="pre">my_pkg&gt;=1.2.3</span></code>).
+* If no packages are specified, it automatically scans for projects in the <code class="docutils literal notranslate"><span class="pre">src/</span></code> directory and treats them as targets to be fulfilled.
+* Build type defaults to <code class="docutils literal notranslate"><span class="pre">release</span></code> if not specified.</p>
+</dd></dl>
+
+<dl class="std cmdoption">
+<dt class="sig sig-object std" id="cmdoption-raisin.py-arg-index">
+<span class="sig-name descname"><span class="pre">index</span></span><span class="sig-prename descclassname"> <span class="pre">local</span></span><a class="headerlink" href="#cmdoption-raisin.py-arg-index" title="Link to this definition"></a></dt>
+<dd><p>Scans local packages and validates their dependency graph.</p>
+<p>This command scans local <code class="docutils literal notranslate"><span class="pre">src/</span></code> and <code class="docutils literal notranslate"><span class="pre">release/install/</span></code> packages and validates their dependency graph, printing a colored report of the status.</p>
+</dd></dl>
+
+<dl class="std cmdoption">
+<dt class="sig sig-object std" id="cmdoption-raisin.py-arg-0">
+<span class="sig-name descname"><span class="pre">index</span></span><span class="sig-prename descclassname"> <span class="pre">release</span> <span class="pre">[&lt;package_name&gt;]</span></span><a class="headerlink" href="#cmdoption-raisin.py-arg-0" title="Link to this definition"></a></dt>
+<dd><p>Lists available remote packages from GitHub Releases.</p>
+<ul class="simple">
+<li><p>Without a package name, it lists all available packages.</p></li>
+<li><p>With a package name, it lists all available versions for that package.</p></li>
+</ul>
+</dd></dl>
+
+</section>
+<section id="git-integration-commands">
+<h2>Git Integration Commands<a class="headerlink" href="#git-integration-commands" title="Link to this heading"></a></h2>
+<p>See <a class="reference internal" href="git_integration.html"><span class="doc">Git Integration</span></a> for detailed documentation.</p>
+<dl class="std cmdoption">
+<dt class="sig sig-object std" id="cmdoption-raisin.py-arg-git">
+<span class="sig-name descname"><span class="pre">git</span></span><span class="sig-prename descclassname"> <span class="pre">status</span></span><a class="headerlink" href="#cmdoption-raisin.py-arg-git" title="Link to this definition"></a></dt>
+<dd><p>Fetches and shows the detailed sync status for all local repositories.</p>
+</dd></dl>
+
+<dl class="std cmdoption">
+<dt class="sig sig-object std" id="cmdoption-raisin.py-arg-1">
+<span class="sig-name descname"><span class="pre">git</span></span><span class="sig-prename descclassname"> <span class="pre">pull</span> <span class="pre">[remote]</span></span><a class="headerlink" href="#cmdoption-raisin.py-arg-1" title="Link to this definition"></a></dt>
+<dd><p>Pulls changes for all local repositories from the specified remote.</p>
+<ul class="simple">
+<li><p>Defaults to ‘origin’ if no remote is specified.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="std cmdoption">
+<dt class="sig sig-object std" id="cmdoption-raisin.py-arg-2">
+<span class="sig-name descname"><span class="pre">git</span></span><span class="sig-prename descclassname"> <span class="pre">setup</span> <span class="pre">&lt;remote:user</span> <span class="pre">...&gt;</span></span><a class="headerlink" href="#cmdoption-raisin.py-arg-2" title="Link to this definition"></a></dt>
+<dd><p>Clears all existing remotes and sets up new ones for all repos in <code class="docutils literal notranslate"><span class="pre">src/</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>raisin.py<span class="w"> </span>git<span class="w"> </span>setup<span class="w"> </span>origin:raisim<span class="w"> </span>raion:raionrobotics
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="help">
+<h2>Help<a class="headerlink" href="#help" title="Link to this heading"></a></h2>
+<dl class="std cmdoption">
+<dt class="sig sig-object std" id="cmdoption-raisin.py-arg-help">
+<span id="cmdoption-raisin.py-h"></span><span id="cmdoption-raisin.py-help"></span><span class="sig-name descname"><span class="pre">help</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">-h</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--help</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-raisin.py-arg-help" title="Link to this definition"></a></dt>
+<dd><p>Displays a detailed help message.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="raisin_package.html" class="btn btn-neutral float-left" title="Repositories &amp; Raisin Packages" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="package_management.html" class="btn btn-neutral float-right" title="Package Management" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Jemin Hwangbo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
