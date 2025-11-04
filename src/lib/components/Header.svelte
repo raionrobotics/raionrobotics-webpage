@@ -72,7 +72,12 @@
 			target = buildHref(path);
 		}
 		goto(target);
+		closeMobileMenu();
 	};
+
+	let mobileOpen = false;
+	const toggleMobileMenu = () => (mobileOpen = !mobileOpen);
+	const closeMobileMenu = () => (mobileOpen = false);
 
 	const navItems = [
 		{ href: '/', labelKey: 'home' },
@@ -92,7 +97,13 @@
 				<img src="/images/logo_f2-02.png" width="160" alt="Raion Robotics logo" class="drop-shadow-sm" />
 			</a>
 
-			<div class="hidden lg:flex items-center gap-6 xl:gap-8">
+			<button class="mobile-toggle lg:hidden" type="button" on:click={toggleMobileMenu} aria-label="Toggle navigation">
+				<span class:open={mobileOpen}></span>
+				<span class:open={mobileOpen}></span>
+				<span class:open={mobileOpen}></span>
+			</button>
+
+			<div class={`nav-links ${mobileOpen ? 'open' : ''}`}>
 				{#each navItems as item}
 					<a
 						href={buildHref(item.href)}
@@ -118,13 +129,14 @@
 				</Menu>
 			</div>
 
-			<div class="flex items-center gap-3">
+			<div class="lang-wrapper">
 				<a
 					class="lang-switch"
 					href={toggleHref}
 					on:click={(event) => {
 						event.preventDefault();
 						goto(toggleHref);
+						closeMobileMenu();
 					}}>
 					{labels.switchLabel}
 				</a>
@@ -177,6 +189,67 @@
 		color: var(--primary-500);
 	}
 
+	.mobile-toggle {
+		display: inline-flex;
+		flex-direction: column;
+		gap: 0.3rem;
+		background: transparent;
+		border: none;
+		padding: 0.25rem;
+		cursor: pointer;
+	}
+
+	.mobile-toggle span {
+		display: block;
+		width: 22px;
+		height: 2px;
+		background: var(--text-primary);
+		transition: transform 0.2s ease, opacity 0.2s ease;
+	}
+
+	.mobile-toggle span.open:nth-child(1) {
+		transform: translateY(6px) rotate(45deg);
+	}
+
+	.mobile-toggle span.open:nth-child(2) {
+		opacity: 0;
+	}
+
+	.mobile-toggle span.open:nth-child(3) {
+		transform: translateY(-6px) rotate(-45deg);
+	}
+
+	.nav-links {
+		display: none;
+	}
+
+	.nav-links.open {
+		display: grid;
+		gap: 1rem;
+		position: absolute;
+		top: calc(100% + 0.75rem);
+		left: 1.5rem;
+		right: 1.5rem;
+		padding: 1.5rem;
+		border-radius: 1.5rem;
+		background: #fff;
+		box-shadow: 0 25px 50px rgba(15, 23, 42, 0.2);
+		border: 1px solid rgba(15, 23, 42, 0.06);
+		z-index: 20;
+	}
+
+	.nav-links.open .nav-link {
+		font-size: 1rem;
+	}
+
+	.lang-wrapper {
+		display: none;
+	}
+
+	.lang-wrapper .lang-switch {
+		margin-left: auto;
+	}
+
 	.lang-switch {
 		display: inline-flex;
 		align-items: center;
@@ -202,6 +275,35 @@
 	@media (max-width: 1024px) {
 		nav {
 			position: sticky;
+		}
+
+		.lang-wrapper {
+			display: inline-flex;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.mobile-toggle {
+			display: none;
+		}
+
+		.nav-links {
+			display: flex;
+			align-items: center;
+			gap: 1.75rem;
+			position: static;
+			padding: 0;
+			box-shadow: none;
+			border: none;
+		}
+
+		.lang-wrapper {
+			display: flex;
+			align-items: center;
+		}
+
+		.nav-links.open {
+			display: flex;
 		}
 	}
 </style>
