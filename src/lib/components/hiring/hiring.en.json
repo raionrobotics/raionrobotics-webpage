@@ -1,0 +1,28 @@
+{
+	"news": [
+		{
+			"title": "Robotics Mechanical Engineer",
+			"duty": "Robot hardware development and production design",
+			"number": "Multiple openings",
+			"requirements": "Degree in mechanical engineering or related field, experience in robot or mechanical design, proficiency with CAD tools such as SolidWorks, experience with structural analysis (FEM), experience with mass production design, experience designing for CNC machining",
+			"advantages": "Experience with die casting or plastic injection, experience designing with motors, gears, and bearings",
+			"link": "https://www.jobkorea.co.kr/Recruit/GI_Read/44359648?Oem_Code=C1"
+		},
+		{
+			"title": "Robotics Software Engineer",
+			"duty": "Robot management software development",
+			"number": "Multiple openings",
+			"requirements": "Proficient in C/C++, comfortable developing in Linux environments",
+			"advantages": "Experience with ROS2, Python proficiency, graphics experience (OpenGL, GLFW, SDL), Android app development experience, web server or VPN development experience",
+			"link": "https://www.jobkorea.co.kr/Recruit/GI_Read/44359214?Oem_Code=C1"
+		},
+		{
+			"title": "Electronic Hardware Engineer",
+			"duty": "Motor driver PCB design and power system design",
+			"number": "Multiple openings",
+			"requirements": "Degree in electrical/electronic engineering, circuit design and PCB layout experience, embedded C/C++ development proficiency, strong MCU knowledge (interrupts, PWM, ADC, SPI, UART, etc.)",
+			"advantages": "Experience developing EtherCAT slaves, EMI certification experience, experience developing motor drivers over 1kW, experience taking robots into production",
+			"link": "https://www.jobkorea.co.kr/Recruit/GI_Read/44359044?Oem_Code=C1"
+		}
+	]
+}

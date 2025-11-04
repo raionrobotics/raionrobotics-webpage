@@ -1,0 +1,69 @@
+{
+	"news": [
+		{
+			"image": "/news/marathon_raibo2.png",
+			"text": "Raibo 2 completes the world's first full marathon by a quadruped robot without recharging (4h 19m 52s)",
+			"url": "https://zdnet.co.kr/view/?no=20241117194122"
+		},
+		{
+			"image": "/news/CES2025_Raibo2.png",
+			"text": "CES 2025: Raion Robotics unveils the second-generation quadruped ‘Raibo 2’",
+			"url": "https://kr.aving.net/news/articleView.html?idxno=1796249"
+		},
+		{
+			"image": "/news/neubility.jpg",
+			"text": "Signed MOU with Neubility to co-develop next-generation quadruped robot services",
+			"url": "https://heraldk.com/2025/05/19/%EB%89%B4%EB%B9%8C%EB%A6%AC%ED%8B%B0-%EB%9D%BC%EC%9D%B4%EC%98%A8%EB%A1%9C%EB%B3%B4%ED%8B%B1%EC%8A%A4%EC%99%80-4%EC%A1%B1%EB%B3%B4%ED%96%89-%EB%A1%9C%EB%B4%87-%EC%84%9C%EB%B9%84%EC%8A%A4-%EA%B3%B5/"
+		},
+		{
+			"image": "/news/gukbang.jpg",
+			"text": "Targeting defense and security robot markets with technology beyond Spot",
+			"url": "https://www.irobotnews.com/news/articleView.html?idxno=38200"
+		},
+		{
+			"image": "/images/Raibo2.JPG",
+			"text": "Raion Robotics secures investment from Company K Partners and FuturePlay",
+			"url": "https://www.mk.co.kr/news/it/10981069"
+		},
+		{
+			"image": "/news/CNN.png",
+			"text": "CNN Bold Pursuits: How robots are about to impact our lives",
+			"url": "https://edition.cnn.com/videos/tv/2023/11/06/bold-pursuits-robots-spc.cnn"
+		},
+		{
+			"image": "/news/한동훈장관방문.jpg",
+			"text": "Minister Han Dong-hoon of the Ministry of Justice visits RAILAB",
+			"url": "https://www.lawtimes.co.kr/news/193441?serial=193441"
+		},
+		{
+			"image": "/news/K스타트업_라이온로보틱스.jpg",
+			"text": "Challenge! K-Startup 2023: Grand champion of the Pre-startup League",
+			"url": "https://www.news1.kr/articles/?5216606"
+		},
+		{
+			"image": "/news/과학기술대전2023.jpg",
+			"text": "Korea Science & Technology Exhibition 2023: Raibo demonstration",
+			"url": "https://www.etnews.com/20231109000335"
+		},
+		{
+			"image": "/news/innovate.png",
+			"text": "Innovate Korea 2023: Raibo live demonstration",
+			"url": "https://news.heraldcorp.com/view.php?ud=20230628000382"
+		},
+		{
+			"image": "/news/nature_raibo.gif",
+			"text": "Nature: Swift progress for robots over complex terrain",
+			"url": "https://www.nature.com/articles/d41586-023-00710-0"
+		},
+		{
+			"image": "/news/YTN사이언스.jpg",
+			"text": "YTN Science: [Master of Science] Raibo, the robot that runs everywhere",
+			"url": "https://www.youtube.com/watch?v=f_nXTHReTFA&ab_channel=YTN%EC%82%AC%EC%9D%B4%EC%96%B8%EC%8A%A4%ED%88%AC%EB%8D%B0%EC%9D%B4"
+		},
+		{
+			"image": "/news/SBS8시뉴스.jpg",
+			"text": "SBS News: Korean researchers develop a robot that runs where people struggle",
+			"url": "https://www.youtube.com/watch?v=86dtiv1Z3Qk&ab_channel=SBS%EB%89%B4%EC%8A%A4"
+		}
+	]
+}

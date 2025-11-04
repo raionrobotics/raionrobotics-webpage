@@ -6,19 +6,19 @@
 <section class="page-shell about-hero">
 	<div class="about-copy">
 		<span class="eyebrow">About Raion Robotics</span>
-		<h1>우리는 로봇이 사람과 함께 더 많은 길을 갈 수 있도록 합니다.</h1>
+		<h1>We build robots that travel the hardest paths alongside people.</h1>
 		<p>
-			라이온로보틱스는 KAIST 기계공학과 RAILAB에서 스핀오프하여 2023년 창업한 로봇 기술 기업입니다. 세계 최고 수준의
-			보행 제어 기술과 내재화된 로봇 설계 역량을 결합해, 험지를 두려워하지 않고 자율적으로 임무를 수행하는 사족보행 로봇
-			플랫폼을 개발하고 있습니다.
+			Raion Robotics spun out of the RAILAB at KAIST in 2023 to bring state-of-the-art locomotion research into the
+			field. By combining world-class control algorithms with fully in-house hardware design, we deliver quadruped
+			platforms that can operate where traditional automation cannot.
 		</p>
 	</div>
 	<div class="about-highlight card">
-		<h3>우리의 미션</h3>
+		<h3>Our mission</h3>
 		<ul>
-			<li>사람이 접근하기 어려운 현장을 대신하는 자율 로봇 솔루션</li>
-			<li>극한 환경에서도 신뢰할 수 있는 하드웨어와 제어 알고리즘</li>
-			<li>산업 안전과 생산성 향상에 기여하는 로봇 생태계</li>
+			<li>Deploy autonomous robots to handle complex and hazardous site operations</li>
+			<li>Provide reliable hardware and control software for extreme environments</li>
+			<li>Enhance industrial safety and productivity through advanced robotics</li>
 		</ul>
 	</div>
 </section>
@@ -27,28 +27,28 @@
 	<div class="card-grid timeline-grid">
 		<div class="card timeline-card">
 			<span class="pill">2023.10</span>
-			<h4>법인 설립</h4>
-			<p>대전 유성구 본사를 설립하고 RAILAB의 연구 성과를 산업 현장으로 확장하기 시작했습니다.</p>
+			<h4>Incorporation</h4>
+			<p>Established headquarters in Daejeon, expanding RAILAB research into industry-ready products.</p>
 		</div>
 		<div class="card timeline-card">
 			<span class="pill">2023.10</span>
-			<h4>도전! K-스타트업 대상</h4>
-			<p>예비창업리그 왕중왕전에서 국무총리상을 수상하며 기술력과 가능성을 인정받았습니다.</p>
+			<h4>K-Startup Grand Champion</h4>
+			<p>Won the Prime Minister’s Award at Challenge! K-Startup 2023, recognising our technological potential.</p>
 		</div>
 		<div class="card timeline-card">
 			<span class="pill">2024.03</span>
-			<h4>기업부설연구소 설립</h4>
-			<p>자체 연구 조직을 갖추고 핵심 기술 내재화와 장기 R&D 로드맵을 추진하고 있습니다.</p>
+			<h4>Corporate R&D Center</h4>
+			<p>Established an internal research organisation to accelerate core technology development.</p>
 		</div>
 		<div class="card timeline-card">
 			<span class="pill">2024.04</span>
-			<h4>시드 투자 유치</h4>
-			<p>컴퍼니케이파트너스, 퓨쳐플레이로부터 투자를 유치하며 제품 개발 및 양산 기반을 강화했습니다.</p>
+			<h4>Seed Investment</h4>
+			<p>Secured funding from Company K Partners and FuturePlay to strengthen product development and production.</p>
 		</div>
 		<div class="card timeline-card">
 			<span class="pill">2024.11</span>
-			<h4>라이보2 마라톤 완주</h4>
-			<p>세계 최초로 사족보행 로봇이 충전 없이 마라톤 풀코스를 완주(4시간 19분 52초)하는 기록을 달성했습니다.</p>
+			<h4>Marathon Milestone</h4>
+			<p>Raibo 2 became the first quadruped robot to finish a full marathon without recharging (4h 19m 52s).</p>
 		</div>
 	</div>
 </section>
@@ -56,26 +56,26 @@
 <section class="office-section">
 	<div class="office-card">
 		<div class="office-info">
-			<h3>서울 오피스</h3>
-			<p>서울 강남구에서 고객 미팅과 협력 프로젝트를 지원합니다.</p>
+			<h3>Seoul Office</h3>
+			<p>Our Seoul hub supports customer meetings, demos, and strategic partnerships.</p>
 		</div>
 		<div class="map-wrapper">
-			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2685.0428849179393!2d127.03148057863716!3d37.499588246247356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca1b7e60f557d%3A0xe73f82339d58eeef!2z7JaR7ZmU67mM65Sp!5e0!3m2!1sen!2skr!4v1751923479331!5m2!1sen!2skr" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="서울 오피스 위치"></iframe>
+			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2685.0428849179393!2d127.03148057863716!3d37.499588246247356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca1b7e60f557d%3A0xe73f82339d58eeef!2z7JaR7ZmU67mM65Sp!5e0!3m2!1sen!2skr!4v1751923479331!5m2!1sen!2skr" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Seoul office location"></iframe>
 		</div>
 	</div>
 	<div class="office-card">
 		<div class="office-info">
-			<h3>대전 본사</h3>
-			<p>연구·개발·생산을 한 곳에서 수행하는 라이온로보틱스의 중심입니다.</p>
+			<h3>Daejeon Headquarters</h3>
+			<p>The heart of Raion Robotics, where research, development, and production come together.</p>
 		</div>
 		<div class="map-wrapper">
-			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3211.736324027796!2d127.40649461342935!3d36.3913766722514!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3565490038f58d51%3A0x4a2a61ffb6aba551!2z65287J207JioIOuhnOuztO2LseyKpA!5e0!3m2!1sen!2skr!4v1751923393503!5m2!1sen!2skr" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="대전 본사 위치"></iframe>
+			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3211.736324027796!2d127.40649461342935!3d36.3913766722514!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3565490038f58d51%3A0x4a2a61ffb6aba551!2z65287J207JioIOuhnOuztO2LseyKpA!5e0!3m2!1sen!2skr!4v1751923393503!5m2!1sen!2skr" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Daejeon HQ location"></iframe>
 		</div>
 	</div>
 </section>
 
 <style>
-	@import "../../styles/main_style.css";
+	@import "../../../styles/main_style.css";
 
 	.about-hero {
 		display: grid;

@@ -3,13 +3,8 @@
 
 <svelte:head>
 	<title>Raion Robotics Inc.</title>
-	<meta
-		name="home"
-		content="home"
-	/>
+	<meta name="home" content="home" />
 </svelte:head>
-
-<!-- Optional: some overlay text to describe the video -->
 <section class="hero">
 	<video class="hero-video" playsinline autoplay muted loop>
 		<source src="/video/raibo_parkour.mp4" type="video/mp4" />
@@ -17,15 +12,15 @@
 	</video>
 	<div class="hero-overlay"></div>
 	<div class="hero-content page-shell">
-		<span class="eyebrow">Raion Robotics</span>
-		<h1>험지를 두려워하지 않는 사족보행 로봇, 라이보</h1>
+		<span class="eyebrow">Quadruped Robotics</span>
+		<h1>Raibo, the agile legged robot built for the real world</h1>
 		<p>
-			라이온로보틱스는 극한 환경에서도 자율적으로 임무를 수행하는 차세대 사족보행 로봇 솔루션을 제공합니다.
-			현장의 가장 복잡한 작업을 함께 해결해보세요.
+			Raion Robotics delivers next-generation quadruped platforms that stay sure-footed on the toughest terrain.
+			Deploy Raibo to take on demanding industrial inspections, logistics, and first-response operations.
 		</p>
 		<div class="hero-actions">
-			<a class="btn-primary" href="/product/Raibo2">제품 살펴보기</a>
-			<a class="btn-ghost" href="/documentation">기술 문서</a>
+			<a class="btn-primary" href="/en/product/Raibo2">Explore products</a>
+			<a class="btn-ghost" href="/en/documentation">View documentation</a>
 		</div>
 	</div>
 </section>

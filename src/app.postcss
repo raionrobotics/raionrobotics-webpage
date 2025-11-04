@@ -1,4 +1,56 @@
-/* Write your global styles here, in PostCSS syntax */
+/* Global styles */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+	--primary-500: #3754ff;
+	--primary-600: #2543f0;
+	--primary-100: #eef2ff;
+	--surface-50: #f7f8fb;
+	--surface-100: #eef1f6;
+	--text-primary: #0f172a;
+	--text-secondary: #475569;
+	--gradient-primary: radial-gradient(circle at top, rgba(55, 84, 255, 0.12), transparent 55%);
+}
+
+body {
+	min-height: 100vh;
+	background: var(--surface-50);
+	color: var(--text-primary);
+	font-family: 'Noto Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
+	-webkit-font-smoothing: antialiased;
+}
+
+main {
+	min-height: 60vh;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+a:hover,
+a:focus-visible {
+	color: var(--primary-600);
+}
+
+.page-shell {
+	width: min(1200px, 92vw);
+	margin: 0 auto;
+}
+
+.eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	padding: 0.2rem 0.75rem;
+	border-radius: 999px;
+	font-size: 0.75rem;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	background: rgba(55, 84, 255, 0.12);
+	color: var(--primary-600);
+	font-weight: 600;
+}

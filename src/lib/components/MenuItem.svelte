@@ -1,21 +1,31 @@
-<li><slot /></li>
+<li class="menu-item">
+	<slot />
+</li>
 
 <style>
-  li {
-		font-family: "Noto Sans";
-		font-size: larger;
+	.menu-item {
+		list-style: none;
+		font-family: 'Noto Sans';
+		font-size: 0.95rem;
 		font-weight: 600;
-		color: rgb(12, 12, 105);
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    transition-duration: 0.5s;    
-  }
+		color: var(--text-primary);
+		padding: 0.6rem 0.85rem;
+		border-radius: 0.85rem;
+		transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+		cursor: pointer;
+	}
 
-  li:hover,
-  li:focus {
-    background-color: rgb(175, 175, 175);
-    cursor: pointer;
-  }
+	.menu-item:hover,
+	.menu-item:focus-visible {
+		background: var(--primary-100);
+		color: var(--primary-600);
+		transform: translateX(4px);
+	}
+
+	:global(.menu-wrapper a) {
+		color: inherit;
+		text-decoration: none;
+		display: block;
+		width: 100%;
+	}
 </style>

@@ -1,81 +1,77 @@
 <svelte:head>
 	<title>Raion Robotics Inc.</title>
-	<meta
-		name="hiring"
-		content="hiring"
-	/>
+	<meta name="hiring" content="hiring" />
 </svelte:head>
 
 <script>
-	import { onMount } from 'svelte';
-	import hiring_data from "$lib/components/hiring/hiring.json"
-	
-	let hiring_data_shown = []
+	import hiring_data from "$lib/components/hiring/hiring.en.json";
+
+	let hiring_data_shown = [];
 	let currentItems = 0;
 
-	addMoreNews();
+	addMore();
 
-	function addMoreNews() {
+	function addMore() {
 		currentItems += 6;
-		for (let i = currentItems-6; i < Math.min(hiring_data.news.length, currentItems); i++) {
+		for (let i = currentItems - 6; i < Math.min(hiring_data.news.length, currentItems); i++) {
 			hiring_data_shown.push(hiring_data.news[i]);
 		}
 		hiring_data_shown = hiring_data_shown;
-	}	
+	}
 </script>
 
 <div class="section_title">
-	<h1>채용공고
-		<span>라이온로보틱스와 함께 기술로 미래를 만들 분을 모십니다.</span>
+	<h1>Careers
+		<span>Join Raion Robotics and help build the future with technology.</span>
 	</h1>
 </div>
 
 <section class="page-shell hiring-section">
 	<div class="hiring-intro card">
-		<h2>도전적인 환경을 즐길 팀원을 기다립니다.</h2>
+		<h2>Let’s build robots that change how the world moves.</h2>
 		<p>
-			라이온로보틱스는 실험실의 한계를 넘어 실제 현장에서 문제를 해결할 수 있는 로봇을 만듭니다.
-			늘 새로운 아이디어와 실행력을 가진 동료와 함께 성장하고 싶습니다.
+			We are engineers and makers who thrive on solving tough, real-world problems. If you enjoy rapid iteration and
+			field-ready innovation, we’d love to meet you.
 		</p>
-		<a class="cta-link" href="mailto:hr@raionrobotics.com">채용 문의 메일 보내기 →</a>
+		<a class="cta-link" href="mailto:hr@raionrobotics.com">Email our recruiting team →</a>
 	</div>
 
 	<div class="hiring-grid">
 		{#each hiring_data_shown as item}
 			<article class="hiring-card">
 				<header>
-					<span class="pill">채용중</span>
+					<span class="pill">Open role</span>
 					<h3>{item.title}</h3>
 					<p class="openings">{item.number}</p>
 				</header>
 				<ul class="detail-list">
 					<li>
-						<strong>주요 업무</strong>
+						<strong>What you’ll do</strong>
 						<p>{item.duty}</p>
 					</li>
 					<li>
-						<strong>자격 요건</strong>
+						<strong>What we’re looking for</strong>
 						<p>{item.requirements}</p>
 					</li>
 					<li>
-						<strong>우대 사항</strong>
+						<strong>Nice to have</strong>
 						<p>{item.advantages}</p>
 					</li>
 				</ul>
-				<a href={item.link} class="btn-outline" target="_blank" rel="noopener noreferrer">상세 공고 보기</a>
+				<a href={item.link} class="btn-outline" target="_blank" rel="noopener noreferrer">View full posting</a>
 			</article>
 		{/each}
 	</div>
 
 	{#if currentItems < hiring_data.news.length}
 		<div class="load-more">
-			<button on:click={addMoreNews} type="button" class="btn-primary ghost">더 많은 포지션 보기</button>
+			<button on:click={addMore} type="button" class="btn-primary ghost">Show more roles</button>
 		</div>
 	{/if}
 </section>
 
 <style>
-	@import "../../styles/main_style.css";
+	@import "../../../styles/main_style.css";
 
 	.hiring-section {
 		display: grid;

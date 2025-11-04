@@ -6,43 +6,46 @@
 <section class="product-hero">
 	<div class="product-hero__background"></div>
 	<div class="product-hero__media">
-		<img src="/images/Raibo2.JPG" alt="Raibo 2 navigating terrain" loading="lazy" />
+		<img src="/images/Raibo2.JPG" alt="Raibo 2 navigating challenging terrain" loading="lazy" />
 	</div>
 	<div class="product-hero__content page-shell">
 		<span class="eyebrow">Product Lineup</span>
-		<h1>로봇이 갈 수 있는 모든 길을 열다</h1>
+		<h1>Unlock every path with agile quadruped robotics</h1>
 		<p>
-			라이온로보틱스의 사족 보행 로봇 제품군은 산업 현장의 다양한 시나리오에 대응하도록 설계되었습니다.
-			라이보 시리즈는 뛰어난 기동성과 내구성, 그리고 정밀한 제어 기술로 현장에서 검증된 퍼포먼스를 제공합니다.
+			Raion Robotics delivers a family of legged robots engineered for complex field missions. The Raibo series
+			combines all-terrain mobility, endurance, and precise control to help teams operate in places wheels cannot go.
 		</p>
 		<div class="hero-actions">
-			<a class="btn-primary" href="/product/Raibo2">제품 사양 보기</a>
-			<a class="btn-ghost" href="/media">현장 영상</a>
+			<a class="btn-primary" href="/en/product/Raibo2">View specifications</a>
+			<a class="btn-ghost" href="/en/media">Watch Raibo in action</a>
 		</div>
 	</div>
 </section>
 
 <section class="page-shell">
 	<div class="card-grid">
-		<a class="card" href="/product/Raibo2">
+		<a class="card" href="/en/product/Raibo2">
 			<span class="pill">Flagship</span>
-			<h2>라이보 2</h2>
+			<h2>Raibo 2</h2>
 			<p>
-				실외 임무를 위해 설계된 산업용 사족 보행 로봇. 뛰어난 지형 대응력과 스마트 페이로드 확장성을 갖춘 주력 모델입니다.
+				Our industrial-grade quadruped robot built for outdoor deployments. Superior terrain handling and smart
+				payload integration for mission-critical operations.
 			</p>
 		</a>
-		<a class="card" href="/product/Raibo1">
+		<a class="card" href="/en/product/Raibo1">
 			<span class="pill">Research</span>
-			<h2>라이보 1</h2>
+			<h2>Raibo 1</h2>
 			<p>
-				제어 알고리즘 연구와 실험을 위한 내부용 플랫폼. 경량 구조와 모듈형 설계로 빠른 연구 반복을 지원합니다.
+				The internal research platform for locomotion control experiments. Lightweight, modular, and ideal for rapid
+				iteration in labs.
 			</p>
 		</a>
-		<a class="card" href="/product/RaiboOnWheel">
+		<a class="card" href="/en/product/RaiboOnWheel">
 			<span class="pill">Inspection</span>
-			<h2>라이웨이</h2>
+			<h2>Raiway</h2>
 			<p>
-				휠과 레그의 장점을 결합한 하이브리드 검사 솔루션. 넓은 산업 시설에서 효율적인 순찰과 데이터 수집을 제공합니다.
+				A hybrid wheel-leg inspection solution. Efficient for large facility patrols and data capture with adaptable
+				mobility.
 			</p>
 		</a>
 	</div>
