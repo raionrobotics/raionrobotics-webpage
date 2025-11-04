@@ -39,9 +39,9 @@
 </script>
 
 {#if activePopups.length > 0}
-	<div class="popup-overlay">
+	<div class="popup-overlay" role="presentation">
 		{#each activePopups as imageName}
-			<div class="popup-content" on:click|stopPropagation>
+			<div class="popup-content">
 				<button class="close-button" on:click={() => closePopup(imageName)}>×</button>
 				<img src="/popup-image/{imageName}" alt="Popup" class="popup-image" />
 				<button class="hide-button" on:click={() => hideForOneDay(imageName)}>Don't show for 1 day</button>

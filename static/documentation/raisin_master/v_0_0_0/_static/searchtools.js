@@ -215,8 +215,31 @@ const Search = {
     if (query) Search.performSearch(query);
   },
 
-  loadIndex: (url) =>
-    (document.body.appendChild(document.createElement("script")).src = url),
+  loadIndex: (url) => {
+    const script = document.createElement("script");
+    script.src = url;
+    script.async = true;
+    script.onerror = async () => {
+      if (typeof fetch !== "function") {
+        console.error("Unable to hydrate search index", new Error("fetch is not available in this environment"));
+        return;
+      }
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch search index: ${response.status}`);
+        }
+        const payload = (await response.text()).trim();
+        const json = payload
+          .replace(/^Search\.setIndex\(/, "")
+          .replace(/\);\s*$/, "");
+        Search.setIndex(JSON.parse(json));
+      } catch (error) {
+        console.error("Unable to hydrate search index", error);
+      }
+    };
+    (document.body || document.head).appendChild(script);
+  },
 
   setIndex: (index) => {
     Search._index = index;

@@ -5,10 +5,19 @@
       {
         "version": "2_7_2",
         "path": "/documentation/raibo/v_2_7_2/index.html"
+      }
+    ]
+  },
+  {
+    "groupName": "raisin_master",
+    "manuals": [
+      {
+        "version": "0_2_0",
+        "path": "/documentation/raisin_master/v_0_2_0/index.html"
       },
       {
-        "version": "1_1_1",
-        "path": "/documentation/raibo/v_1_1_1/index.html"
+        "version": "0_0_0",
+        "path": "/documentation/raisin_master/v_0_0_0/index.html"
       }
     ]
   }

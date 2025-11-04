@@ -64,7 +64,7 @@
 
 
 <style>
-@import "src/styles/main_style.css";
+@import "../../styles/main_style.css";
 
 .hiring {
 	width: 80vw;

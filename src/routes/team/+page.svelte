@@ -55,20 +55,20 @@
 <section style="width: 100%; max-width: 1024px; margin: 50px auto;">
 	<h2 style="font-weight: bold; margin-bottom: 10px; font-size: 24px; text-align: center;">서울 오피스</h2>
 	<div style="position: relative; width: 100%; height: 0; padding-bottom: 56.25%;">
-		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2685.0428849179393!2d127.03148057863716!3d37.499588246247356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca1b7e60f557d%3A0xe73f82339d58eeef!2z7JaR7ZmU67mM65Sp!5e0!3m2!1sen!2skr!4v1751923479331!5m2!1sen!2skr" width="100%" height="100%" style="border:0; position: absolute; top: 0; left: 0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2685.0428849179393!2d127.03148057863716!3d37.499588246247356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca1b7e60f557d%3A0xe73f82339d58eeef!2z7JaR7ZmU67mM65Sp!5e0!3m2!1sen!2skr!4v1751923479331!5m2!1sen!2skr" width="100%" height="100%" style="border:0; position: absolute; top: 0; left: 0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map showing the Seoul office location"></iframe>
 	</div>
 </section>
 
 <section style="width: 100%; max-width: 1024px; margin: 50px auto;">
 	<h2 style="font-weight: bold; margin-bottom: 10px; font-size: 24px; text-align: center;">대전 본사</h2>
 	<div style="position: relative; width: 100%; height: 0; padding-bottom: 56.25%;">
-		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3211.736324027796!2d127.40649461342935!3d36.3913766722514!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3565490038f58d51%3A0x4a2a61ffb6aba551!2z65287J207JioIOuhnOuztO2LseyKpA!5e0!3m2!1sen!2skr!4v1751923393503!5m2!1sen!2skr" width="100%" height="100%" style="border:0; position: absolute; top: 0; left: 0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3211.736324027796!2d127.40649461342935!3d36.3913766722514!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3565490038f58d51%3A0x4a2a61ffb6aba551!2z65287J207JioIOuhnOuztO2LseyKpA!5e0!3m2!1sen!2skr!4v1751923393503!5m2!1sen!2skr" width="100%" height="100%" style="border:0; position: absolute; top: 0; left: 0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map showing the Daejeon headquarters location"></iframe>
 	</div>
 </section>
 
 
 <style>
-    @import "src/styles/main_style.css";
+    @import "../../styles/main_style.css";
 
     .font-noto {
         font-family: "Noto Sans";

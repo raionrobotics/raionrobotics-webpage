@@ -56,7 +56,7 @@
 </div>
 
 <style>
-	@import "src/styles/main_style.css";
+	@import "../../styles/main_style.css";
 
 	.news {
 		width: 80vw;
