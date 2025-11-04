@@ -7,7 +7,7 @@ This project is a real estate template built using SvelteKit and styled with Tai
 
 [Live Preview](https://svelte-real-state-landing.vercel.app/)
 
-## Requirements
+## Requirements 
 
 - Node.js (v14.0.0 or newer)
 - npm, pnpm, or yarn
