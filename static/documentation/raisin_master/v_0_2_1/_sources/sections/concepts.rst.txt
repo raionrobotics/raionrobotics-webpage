@@ -1,0 +1,44 @@
+Core Concepts
+=============
+
+Understanding the core concepts of the Raisin system is key to using it effectively. This system is built around several key ideas that govern how projects are structured, built, and distributed.
+
+Interface Generation
+--------------------
+Raisin automates the creation of C++ header files from ROS-style interface definitions. This allows you to define data structures and service contracts in simple text files and have the corresponding C++ code generated automatically.
+
+* **.msg Files**: Define data structures. Each line in a ``.msg`` file represents a member variable. Raisin converts these into a C++ ``struct``.
+* **.srv Files**: Define a request/response service. A ``---`` separator divides the request fields from the response fields. Raisin generates a service class with nested ``Request`` and ``Response`` structs.
+* **.action Files**: Define a complex, long-running task with a goal, result, and feedback. A ``---`` separator is used twice to delineate the three sections. Raisin decomposes an action file into several ``.msg`` and ``.srv`` files, which are then processed.
+
+The system uses templates (e.g., ``MessageTemplate.hpp``) to generate these headers, ensuring consistency and including serialization/deserialization logic.
+
+Dependency Management & Build Order
+-----------------------------------
+Correctly building a multi-package project requires compiling dependencies before the packages that use them. Raisin handles this automatically.
+
+1.  **Project Discovery**: Raisin scans the ``src/`` directory for subdirectories containing a ``CMakeLists.txt`` file, identifying them as projects.
+2.  **Dependency Parsing**: It reads each project's ``CMakeLists.txt`` and looks for a custom function: ``raisin_find_package(DependencyName)``. This explicitly declares a dependency on another project.
+3.  **Graph Construction**: It builds a directed graph where each project is a node and each dependency is an edge.
+4.  **Topological Sort**: It performs a topological sort on the graph to produce a linear ordering of projects. This ensures that every project is built only after all of its dependencies have been built.
+5.  **CMake Generation**: Finally, it uses the sorted list to generate a root ``CMakeLists.txt`` that calls ``add_subdirectory()`` for each project in the correct order.
+
+Builds and Releases
+-------------------
+Raisin distinguishes between a local development build and a formal release.
+
+* **Development Build** (``build`` command): This is for local testing. It creates a ``cmake-build-<type>`` directory and compiles the code there. The output can optionally be installed to the ``install/`` directory using the ``--install`` flag.
+* **Release** (``publish`` command): This is for creating distributable packages. It performs a clean build and installs the artifacts into a structured directory: ``release/install/{target}/{os}/{arch}/{build_type}``. It then archives this directory into a ``.zip`` file and can upload it to a corresponding GitHub Release.
+
+Package Installation
+--------------------
+The ``install`` command turns Raisin into a package manager. Given a list of required packages (e.g., ``"my_package>=1.2.0"``), it recursively resolves and installs all dependencies.
+
+.. note::
+    When using version constraints with operators like ``>=``, ``<=``, or ``<``, you must enclose the package specifier in double quotes to prevent shell interpretation.
+
+The installation priority is:
+
+1.  **Check for existing pre-compiled package**: Looks in ``release/install/``.
+2.  **Check for existing local source**: Looks in ``src/``.
+3.  **Download from GitHub Releases**: If not found locally, it queries the GitHub API for a matching release artifact and downloads it.

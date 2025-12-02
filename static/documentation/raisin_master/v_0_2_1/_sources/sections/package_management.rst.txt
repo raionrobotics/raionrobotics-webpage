@@ -1,0 +1,623 @@
+Package Management
+==================
+
+Raisin includes a powerful package management system that can download, install, and manage pre-compiled C++ packages from GitHub Releases. It provides dependency resolution, version management, and local package indexing.
+
+Overview
+--------
+
+The package management system allows you to:
+
+* Install pre-compiled packages from GitHub Releases
+* Recursively resolve and install package dependencies
+* Specify version constraints (e.g., ``>=1.2.3``, ``==2.0.0``)
+* List available packages and their versions
+* Validate local package dependencies
+
+Package management integrates with:
+
+* :doc:`configuration` - Stores GitHub authentication tokens and maps package names to GitHub repository URLs
+* **release.yaml** - Defines package metadata (version, dependencies)
+
+Install Command
+---------------
+
+The ``install`` command downloads and installs pre-compiled packages and their dependencies.
+
+**Command:**
+
+.. code-block:: shell
+
+    python raisin.py install [packages...] [--type <debug|release>]
+
+**Parameters:**
+
+* ``packages`` (optional) - One or more package specifications with optional version constraints
+* ``--type, -t`` (optional) - Build type: ``debug`` or ``release`` (default: ``release``)
+
+**Package specification format:**
+
+Packages can be specified in several ways:
+
+.. code-block:: shell
+
+    # Latest version (no quotes needed)
+    python raisin.py install package_name
+
+    # With version constraints (quotes required!)
+    python raisin.py install "package_name==1.2.3"       # Exact version
+    python raisin.py install "package_name>=1.0.0"       # Minimum version
+    python raisin.py install "package_name<=2.0.0"       # Maximum version
+    python raisin.py install "package_name>=1.0,<2.0"    # Version range
+
+How it works
+^^^^^^^^^^^^
+
+The install process follows this workflow:
+
+1. **Queue setup**
+
+   * Start with the packages passed on the command line (can be empty).
+   * Automatically append every package directory found under ``src/`` (except ones listed in ``repos_to_ignore``).
+
+2. **Process each package**
+
+   * Parse the version specifier (defaults to ``>=0.0.0``). Pre-releases are skipped unless ``user_type`` is ``devel``.
+   * Look for an already-installed package at ``release/install/<pkg>/<os>/<os_version>/<arch>/<build_type>/``. If a ``release.yaml`` is present and matches the spec, its dependencies are enqueued.
+   * Next, check ``src/<pkg>/release.yaml``. If the version satisfies the spec, dependencies are added and the package is considered satisfied. If the file is missing, versioned specs cannot be met from source.
+   * Otherwise, download the newest GitHub release that matches the spec and has a compatible asset.
+
+3. **Download & deploy**
+
+   * Remote assets are expected to be named ``{package}-{os}-{os_version}-{arch}-{build_type}-{version}.zip``.
+   * The existing install folder is removed, the archive is downloaded to ``install/``, extracted into ``release/install/<pkg>/<os>/<os_version>/<arch>/<build_type>/``, and dependencies from the bundled ``release.yaml`` are appended to the queue.
+
+Installation modes
+^^^^^^^^^^^^^^^^^^
+
+Packages found in ``src/`` are always part of the install queue; specifying package names adds to that list.
+
+**Mode 1: Install specific packages**
+
+Install one or more named packages:
+
+.. code-block:: shell
+
+    # Install a single package (latest version)
+    python raisin.py install raisin_core
+
+    # Install with version constraint (note the quotes!)
+    python raisin.py install "raisin_core>=1.2.3"
+
+    # Install multiple packages
+    python raisin.py install raisin_core raisin_gui raisin_network
+
+    # Install with debug build
+    python raisin.py install raisin_core --type debug
+
+**Mode 2: Install all local packages**
+
+If no packages are specified, automatically installs dependencies for all packages in ``src/``:
+
+.. code-block:: shell
+
+    # Install all dependencies for local packages
+    python raisin.py install
+
+    # Install debug versions of all dependencies
+    python raisin.py install --type debug
+
+This mode is useful when setting up a new development environment.
+
+Version resolution
+^^^^^^^^^^^^^^^^^^
+
+Each package specifier is handled independently:
+
+* Missing specifiers are treated as ``>=0.0.0``.
+* Pre-releases are included only when ``user_type`` is ``devel``.
+* If a package was already installed at a newer version during the same run, the installer will not downgrade it.
+* Constraints from different dependents are not merged automatically; reconcile conflicting requirements manually in ``release.yaml`` files.
+
+Package structure
+^^^^^^^^^^^^^^^^^
+
+Downloaded packages are expected to use these archive names:
+
+.. code-block:: text
+
+    {package_name}-{os}-{os_version}-{arch}-{build_type}-{version}.zip   # pulled by install
+    {package_name}-{os}-{os_version}-{arch}-{build_type}-v{version}.zip  # produced by publish
+
+For example:
+
+.. code-block:: text
+
+    raisin_core-ubuntu-22.04-x86_64-release-1.2.3.zip
+    raisin_gui-ubuntu-22.04-arm64-debug-2.0.1.zip
+
+The archive contains the complete install tree structure:
+
+.. code-block:: text
+
+    package_name/
+    ├── bin/               # Executables
+    ├── lib/               # Libraries
+    ├── include/           # Headers
+    ├── scripts/           # Helper scripts
+    ├── config/            # Configuration files
+    ├── resource/          # Resources
+    └── messages/          # Interface definitions
+
+Authentication
+^^^^^^^^^^^^^^
+
+Package installation requires GitHub authentication when accessing:
+
+* Private repositories
+* Release assets from private repos
+* Rate-limited public API endpoints
+
+Configure tokens in ``configuration_setting.yaml`` (see :doc:`configuration`):
+
+.. code-block:: yaml
+
+    gh_tokens:
+      your-org: "ghp_xxxxxxxxxxxxxxxxxxxx"
+      another-org: "ghp_yyyyyyyyyyyyyyyy"
+
+The system automatically selects the appropriate token based on the repository owner.
+
+Usage examples
+^^^^^^^^^^^^^^
+
+**Example 1: Fresh workspace setup**
+
+.. code-block:: shell
+
+    # Clone main project
+    git clone https://github.com/myorg/my-project.git
+    cd my-project
+
+    # Install all dependencies for packages in src/
+    python raisin.py install
+
+**Example 2: Install specific package with dependencies**
+
+.. code-block:: shell
+
+    # Installs raisin_gui and all its dependencies
+    python raisin.py install raisin_gui
+
+**Example 3: Install with version constraints**
+
+.. code-block:: shell
+
+    # Install specific version
+    python raisin.py install "raisin_core==1.5.0"
+
+    # Install minimum version
+    python raisin.py install "raisin_network>=2.0.0"
+
+.. important::
+    Always enclose package specifications with version operators in double quotes. Shell interprets ``>``, ``<``, ``>=``, ``<=`` as redirection operators.
+
+**Example 4: Debug builds**
+
+.. code-block:: shell
+
+    # Install debug version
+    python raisin.py install raisin_core --type debug
+
+    # Install multiple packages with debug builds
+    python raisin.py install raisin_core raisin_gui --type debug
+
+Index Commands
+--------------
+
+The ``index`` commands help you discover available packages and validate dependency graphs.
+
+index local
+^^^^^^^^^^^
+
+**Command:**
+
+.. code-block:: shell
+
+    python raisin.py index local
+
+**Description:**
+
+Scans local ``src/`` and ``release/install/`` directories for packages with ``release.yaml`` files, validates their dependency graph, and prints a colored status report.
+
+**What it does:**
+
+1. **Package Discovery**
+
+   * Scans ``src/`` for packages with ``release.yaml``
+   * Scans ``release/install/`` for downloaded packages
+   * Reads version and dependency information from each ``release.yaml``
+
+2. **Dependency Validation**
+
+   For each package, checks if all dependencies:
+
+   * Exist (either in ``src/`` or ``release/install/``)
+   * Meet version requirements
+   * Are properly configured
+
+3. **Status Report**
+
+   Displays a color-coded table with:
+
+   * Package name
+   * Version
+   * Origin (``src/`` or ``release/install/``)
+   * Dependency status
+
+**Output format:**
+
+.. code-block:: text
+
+    📦 Scanning local packages...
+
+    Package Name          Version    Origin    Dependencies
+    ─────────────────────────────────────────────────────────
+    raisin_core           1.2.3      src       ✅ All satisfied
+    raisin_network        2.0.1      src       ✅ All satisfied
+    raisin_gui            1.5.0      release   ⚠️  raisin_core>=1.3.0 not satisfied
+    raisin_plugin         0.9.0      src       ❌ raisin_engine not found
+
+**Status indicators:**
+
+* ✅ **Green** - All dependencies satisfied
+* ⚠️ **Yellow** - Dependencies found but version constraints not satisfied
+* ❌ **Red** - Dependencies not found
+
+**Use cases:**
+
+* Verify your local environment before building
+* Check which packages need to be installed
+* Diagnose dependency issues
+* Review package versions in your workspace
+
+index release
+^^^^^^^^^^^^^
+
+**Command:**
+
+.. code-block:: shell
+
+    python raisin.py index release [<package_name>]
+
+**Description:**
+
+Lists available packages and versions from GitHub Releases. Results are filtered to releases that publish assets matching your OS, OS version, architecture, and build type naming scheme.
+
+**Mode 1: List all packages**
+
+Without a package name, shows up to the three newest matching versions for every configured package:
+
+.. code-block:: shell
+
+    python raisin.py index release
+
+Stable releases are printed in green; prereleases appear in yellow.
+
+**Mode 2: List package versions**
+
+With a package name, lists all non-prerelease versions that ship compatible assets:
+
+.. code-block:: shell
+
+    python raisin.py index release raisin_core
+
+**Output:**
+
+.. code-block:: text
+
+    🔍 Finding available versions with assets for 'raisin_core'...
+    ℹ️  Checking for assets compatible with: ubuntu-22.04-x86_64
+    Available versions for raisin_core (owner/repo):
+      1.2.3
+      1.2.2
+      1.2.1
+
+**Asset compatibility:**
+
+The command only shows versions that have a compatible release asset for your system. Assets are matched by:
+
+* Operating system (e.g., ``linux``, ``windows``, ``macos``)
+* OS version (e.g., ``22.04``)
+* Architecture (e.g., ``x86_64``, ``aarch64``)
+* Build type (``release`` or ``debug`` encoded in the filename)
+
+**Version types:**
+
+* All-package listing shows both stable and prerelease builds (color-coded) if assets exist.
+* Package-specific listing excludes prereleases.
+
+**Configuration requirements:**
+
+Both index release commands require:
+
+1. **repositories.yaml** - Package to repository URL mappings:
+
+   .. code-block:: yaml
+
+       raisin_core:
+         url: git@github.com:myorg/raisin_core.git
+       raisin_gui:
+         url: git@github.com:myorg/raisin_gui.git
+
+2. **configuration_setting.yaml** - GitHub authentication (see :doc:`configuration`):
+
+   .. code-block:: yaml
+
+       gh_tokens:
+         myorg: "ghp_xxxxxxxxxxxxxxxxxxxx"
+
+**Use cases:**
+
+* Discover available packages before installation
+* Check which versions are available for your platform
+* Verify that a package has been released
+* Plan version upgrades
+
+Dependency Management
+---------------------
+
+Understanding dependencies
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Raisin uses ``release.yaml`` files to define package metadata:
+
+.. code-block:: yaml
+
+    # release.yaml
+    version: 1.2.3
+    dependencies:
+      - raisin_core>=1.0.0
+      - raisin_network>=2.0.0,<3.0.0
+      - raisin_gui==1.5.0
+
+**Dependency format:**
+
+Dependencies follow Python's version specifier format:
+
+.. code-block:: text
+
+    package_name              # Any version
+    package_name==1.2.3       # Exact version (pinned)
+    package_name>=1.0.0       # Minimum version
+    package_name<=2.0.0       # Maximum version
+    package_name>=1.0,<2.0    # Version range
+    package_name!=1.5.0       # Exclude specific version
+
+**Semantic versioning:**
+
+Raisin follows semantic versioning (``major.minor.patch``):
+
+* **Major** - Breaking changes
+* **Minor** - New features (backward compatible)
+* **Patch** - Bug fixes (backward compatible)
+
+Best practices:
+
+* Use ``>=`` for minimum compatible version
+* Use ``<`` to exclude incompatible major versions
+* Example: ``raisin_core>=1.2.0,<2.0.0`` (compatible with 1.x series)
+
+Dependency resolution algorithm
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The installer walks dependencies breadth-first:
+
+1. Pop the next package specifier from the queue.
+2. Resolve it using the priority order above (release/install → source → GitHub).
+3. When a ``release.yaml`` is found, append its ``dependencies`` entries to the queue.
+
+Constraint intersection is not performed; each spec is evaluated independently. If two packages demand incompatible versions of the same dependency, adjust the constraints in their ``release.yaml`` files so they agree.
+
+Handling missing dependencies
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If a dependency is not found:
+
+1. **Check local source** - Look in ``src/``
+2. **Check installed packages** - Look in ``release/install/``
+3. **Attempt download** - Query GitHub Releases
+4. **Fail with error** - If none of the above succeed
+
+Error messages indicate:
+
+* Which package is missing
+* Which package requires it
+* Suggested actions
+
+Circular dependencies
+^^^^^^^^^^^^^^^^^^^^^
+
+Raisin detects circular dependencies during resolution:
+
+.. code-block:: text
+
+    ❌ Error: Circular dependency detected!
+       package_a -> package_b -> package_c -> package_a
+
+**Solution:** Refactor packages to break the cycle.
+
+User Types
+----------
+
+Raisin supports two user types configured in ``configuration_setting.yaml``:
+
+.. code-block:: yaml
+
+    user_type: devel  # or 'user'
+
+**User type: 'user'**
+
+* Typical end-user or consumer
+* Installs pre-compiled packages
+* Does not build from source (usually)
+* Limited access to development features
+
+**User type: 'devel'**
+
+* Developer or maintainer
+* Can build from source
+* Can create releases
+* Full access to all features
+
+The user type affects:
+
+* Available commands
+* Installation behavior
+* Build permissions
+
+Advanced Topics
+---------------
+
+Package caching
+^^^^^^^^^^^^^^^
+
+Downloaded packages are cached in ``release/install/``:
+
+.. code-block:: text
+
+    release/install/
+    └── raisin_core/
+        └── linux/
+            └── x86_64/
+                ├── release/
+                │   ├── bin/
+                │   ├── lib/
+                │   └── ...
+                └── debug/
+                    ├── bin/
+                    ├── lib/
+                    └── ...
+
+Once downloaded, packages are reused for subsequent builds.
+
+**Clearing cache:**
+
+.. code-block:: shell
+
+    # Remove all downloaded packages
+    rm -rf release/install/
+
+    # Remove specific package
+    rm -rf release/install/raisin_core/
+
+Mixed source and binary
+^^^^^^^^^^^^^^^^^^^^^^^
+
+You can mix source packages (in ``src/``) with pre-compiled packages (in ``release/install/``):
+
+* Source packages take priority during ``setup``
+* Pre-compiled packages are used if source is not available
+* This allows partial source builds while using binaries for dependencies
+
+**Example workflow:**
+
+.. code-block:: shell
+
+    # Install all dependencies as binaries
+    python raisin.py install
+
+    # Clone source for packages you want to modify
+    cd src/
+    git clone https://github.com/myorg/raisin_gui.git
+
+    # Build: raisin_gui from source, others use binaries
+    python raisin.py build --type release --install
+
+Offline mode
+^^^^^^^^^^^^
+
+If you have all required packages in ``release/install/``:
+
+1. No network connection needed
+2. ``install`` command uses cached packages
+3. ``setup`` deploys cached packages
+
+To prepare for offline use:
+
+.. code-block:: shell
+
+    # While online: download all dependencies
+    python raisin.py install
+
+    # Now you can work offline
+    python raisin.py setup
+    python raisin.py build --type release
+
+Troubleshooting
+---------------
+
+**Problem:** "Package not found"
+
+**Solutions:**
+
+* Check package name spelling
+* Verify package exists in ``repositories.yaml``
+* Run ``python raisin.py index release`` to see available packages
+* Check GitHub repository has releases
+
+**Problem:** "No compatible asset found"
+
+**Solutions:**
+
+* Package may not be released for your OS/architecture
+* Check available versions: ``python raisin.py index release <package>``
+* Build from source instead of using pre-compiled package
+* Contact package maintainer to request your platform
+
+**Problem:** "Version constraint conflict"
+
+**Solutions:**
+
+* Review dependency versions in ``release.yaml`` files
+* Update package versions to compatible ranges
+* Use ``python raisin.py index local`` to diagnose conflicts
+
+**Problem:** "Authentication failed"
+
+**Solutions:**
+
+* Verify GitHub token in ``configuration_setting.yaml``
+* Check token has required scopes (``repo``, ``read:org``)
+* Ensure token is not expired
+* Verify token matches repository owner
+
+**Problem:** "Download failed"
+
+**Solutions:**
+
+* Check network connection
+* Verify GitHub is accessible
+* Check disk space
+* Try again (temporary network issues)
+
+**Problem:** "Extraction failed"
+
+**Solutions:**
+
+* Check disk space
+* Verify write permissions in ``release/install/``
+* Check zip file integrity
+* Re-download the package
+
+Best Practices
+--------------
+
+1. **Pin critical dependencies**: Use exact versions (``==``) for critical dependencies to ensure reproducibility
+2. **Use version ranges**: Use ranges (``>=,<``) for flexible compatibility
+3. **Cache packages**: Keep ``release/install/`` to avoid repeated downloads
+4. **Validate before building**: Run ``python raisin.py index local`` before building
+5. **Regular updates**: Periodically check for updates with ``python raisin.py index release``
+6. **Document dependencies**: Keep ``release.yaml`` up-to-date in all packages
+7. **Test version constraints**: Ensure your version constraints are not too restrictive
+8. **Security**: Keep authentication tokens secure, use read-only tokens when possible

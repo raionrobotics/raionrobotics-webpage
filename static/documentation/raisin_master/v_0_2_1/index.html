@@ -1,0 +1,208 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raisin Master - Build &amp; Package Management System! &mdash; Raisin Master - Build &amp; Package Management 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=7026087e"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Quick Start" href="sections/quickstart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Raisin Master - Build & Package Management
+              <img src="_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sections/quickstart.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sections/configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sections/concepts.html">Core Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sections/structure.html">Raisin master files and folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sections/raisin_package.html">Repositories &amp; Raisin Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sections/usage.html">Command-Line Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sections/package_management.html">Package Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sections/git_integration.html">Git Integration</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Raisin Master - Build & Package Management</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Raisin Master - Build &amp; Package Management System!</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="raisin-master-build-package-management-system">
+<h1>Raisin Master - Build &amp; Package Management System!<a class="headerlink" href="#raisin-master-build-package-management-system" title="Link to this heading"></a></h1>
+<p><strong>Raisin Master</strong> is a comprehensive, self-contained C++ package build and management system designed to manage the entire lifecycle of a C++ project.
+Inspired by robotics build systems like ROS/colcon, it provides a powerful yet easy-to-use toolkit for developers.
+It handles dependency resolution, automatic C++ header generation from message files, building, packaging, and distributing releases via GitHub.</p>
+<p>This system is perfect for projects that require a structured build process, clear dependency management, and automated release workflows, without the overhead of larger frameworks.</p>
+<section id="key-features">
+<h2>Key Features<a class="headerlink" href="#key-features" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>🔄 <strong>ROS-like Interface Generation</strong>: Automatically generates C++ header files (<code class="docutils literal notranslate"><span class="pre">.hpp</span></code>) from <code class="docutils literal notranslate"><span class="pre">.msg</span></code>, <code class="docutils literal notranslate"><span class="pre">.srv</span></code>, and <code class="docutils literal notranslate"><span class="pre">.action</span></code> interface definitions.</p></li>
+<li><p>🏗️ <strong>CMake-Based Build Orchestration</strong>: Discovers C++ subprojects, analyzes their dependencies, and generates a top-level <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> file for a topologically sorted build. You can probably use your existing cmake projects without any changes if they follow modern cmake guidelines.</p></li>
+<li><p>🔗 <strong>Dependency Management</strong>: Parses custom <code class="docutils literal notranslate"><span class="pre">raisin_find_package</span></code> directives within CMake files to construct a precise build order.</p></li>
+<li><p>⚡ <strong>Blazing-Fast Compilation</strong> 🚀: Bypasses the overhead of traditional meta-build tools. By orchestrating a single, unified build with raw Ninja, compile times are dramatically reduced. For large projects, this approach can be up to 5x faster than a standard colcon build.</p></li>
+<li><p>📦 <strong>Release Automation</strong>: Packages build artifacts into versioned, platform-specific <code class="docutils literal notranslate"><span class="pre">.zip</span></code> archives and can automatically upload them to GitHub Releases.</p></li>
+<li><p>📥 <strong>Package Installation</strong>: A recursive dependency resolver that can download and install pre-compiled packages from GitHub releases, streamlining environment setup.</p></li>
+<li><p>💎 <strong>Self-Contained</strong>: Everything is managed by a single, powerful Python script.</p></li>
+</ul>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sections/quickstart.html">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sections/quickstart.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/quickstart.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/quickstart.html#basic-workflow">Basic Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/quickstart.html#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sections/configuration.html">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sections/configuration.html#configuration-setting-yaml">configuration_setting.yaml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/configuration.html#repositories-yaml">repositories.yaml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/configuration.html#deprecated-configuration">Deprecated Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sections/concepts.html">Core Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sections/concepts.html#interface-generation">Interface Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/concepts.html#dependency-management-build-order">Dependency Management &amp; Build Order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/concepts.html#builds-and-releases">Builds and Releases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/concepts.html#package-installation">Package Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sections/structure.html">Raisin master files and folders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sections/structure.html#directory-layout">Directory Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/structure.html#configuration-files">Configuration Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sections/raisin_package.html">Repositories &amp; Raisin Packages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sections/raisin_package.html#key-terms">Key terms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/raisin_package.html#repo-package-discovery">Repo &amp; package discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/raisin_package.html#typical-layouts">Typical layouts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/raisin_package.html#where-things-get-installed-copied">Where things get installed/copied</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/raisin_package.html#global-messages-directory-optional-toplevel">Global <code class="docutils literal notranslate"><span class="pre">messages/</span></code> directory (optional, top‑level)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/raisin_package.html#build-packaging-with-cmake">Build &amp; packaging with CMake</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/raisin_package.html#cmake-helper-functions-full-reference">CMake helper functions (full reference)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/raisin_package.html#deployed-releases">Deployed releases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/raisin_package.html#frequently-asked-questions">Frequently asked questions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sections/usage.html">Command-Line Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sections/usage.html#global-options">Global Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/usage.html#build-release-commands">Build &amp; Release Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/usage.html#package-management-commands">Package Management Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/usage.html#git-integration-commands">Git Integration Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/usage.html#help">Help</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sections/package_management.html">Package Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sections/package_management.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/package_management.html#install-command">Install Command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/package_management.html#index-commands">Index Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/package_management.html#dependency-management">Dependency Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/package_management.html#user-types">User Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/package_management.html#advanced-topics">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/package_management.html#troubleshooting">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/package_management.html#best-practices">Best Practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sections/git_integration.html">Git Integration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sections/git_integration.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/git_integration.html#git-commands">Git Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/git_integration.html#authentication">Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/git_integration.html#best-practices">Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sections/git_integration.html#workflow-examples">Workflow Examples</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sections/quickstart.html" class="btn btn-neutral float-right" title="Quick Start" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Jemin Hwangbo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

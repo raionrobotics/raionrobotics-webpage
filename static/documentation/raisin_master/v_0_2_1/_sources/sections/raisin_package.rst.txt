@@ -1,0 +1,524 @@
+===============================
+Repositories & Raisin Packages
+===============================
+
+This page defines how code under ``src/`` is structured and how the Raisin
+tooling discovers packages, computes build order, and copies resources into the
+install trees.
+
+Key terms
+=========
+
+- **Repository (repo)**: Any **direct subdirectory of** ``src/``. A repo can be:
+
+  1) a **single** Raisin package (if it has its own ``CMakeLists.txt``), or
+  2) a **container** that holds **multiple** packages (no ``CMakeLists.txt`` at the repo root; each child package has one).
+
+- **Raisin package**: A directory that contains a ``CMakeLists.txt`` and the
+  following conventional subfolders:
+
+  ``src/`` (sources), ``include/`` (public headers), ``msg/`` (optional),
+  ``srv/`` (optional), ``action/`` (optional), ``scripts/`` (optional),
+  ``config/`` (optional).
+
+  The **package name** is the **directory name** of this folder.
+
+Repo & package discovery
+========================
+
+The tool walks under ``src/``:
+
+* When it finds a directory with **``CMakeLists.txt``**, it treats **that directory
+  as one package** and **does not descend further** into its children.
+  (This is why a multi‑package repo **must not** have a ``CMakeLists.txt`` at
+  the repo root—put one inside each child package directory instead.)
+
+* Build order is computed from dependencies declared with:
+
+  .. code-block:: cmake
+
+     raisin_find_package(other_pkg)
+
+  **One dependency per line; single argument; lowercase macro name.** This is
+  parsed to form a dependency graph for topological sorting.
+
+Typical layouts
+===============
+
+Single‑package repo
+-------------------
+
+.. code-block:: text
+
+   src/
+   └─ my_pkg/                       # this repo is a single-package repo
+      ├─ CMakeLists.txt             # package CMake file
+      ├─ release.yaml               # optional, package release metadata
+      ├─ RAISIN_BUILD_TARGETS.yaml  # optional, for defining build targets
+      ├─ install_dependencies.sh    # optional, bash script for installing install_dependencies
+      ├─ src/                       # C++ sources
+      ├─ include/my_pkg/...         # public headers
+      ├─ msg/                       # optional, message definitions
+      ├─ srv/                       # optional, service definitions
+      ├─ action/                    # optional, action definitions
+      ├─ scripts/                   # optional, helper scripts
+      ├─ resource/                  # optional, arbitrary resources
+      └─ config/                    # optional, runtime configuration files
+
+Multi‑package repo (container)
+-------------------------------
+
+.. code-block:: text
+
+   src/
+   └─ robotics/                # repo (NO CMakeLists.txt here)
+      ├─ planning/             # package
+      │  ├─ CMakeLists.txt
+      │  ├─ src/ include/ ...
+      │  └─ msg/ srv/ action/ ...
+      └─ perception/           # package
+         ├─ CMakeLists.txt
+         ├─ src/ include/ ...
+         └─ msg/ srv/ action/ ...
+
+
+Configuration Files
+-----------------------------
+
+**RAISIN_BUILD_TARGETS.yaml**
+  Defines raisin build targets.
+
+  .. code-block:: yaml
+
+    raidrive: [raisin_gui, raisin_gui_raidrive_window, raisin_*_encryption]
+    gui: [raisin_gui*, raisin_*_encryption]
+    raibo: [raisin_raibo2, raisin_*_plugin, raisin_*_encryption]
+
+  You can build or setup for specific targets by passing the target names.
+  Examples:
+
+  .. code-block:: bash
+
+    # Configure only the raidrive group
+    python3 raisin.py setup raidrive
+
+    # Build the raidrive group (defaults to a debug build)
+    python3 raisin.py build raidrive
+
+    # Build raidrive in release mode and run ninja install
+    python3 raisin.py build raidrive release install
+
+**release.yaml**
+  Contains metadata for the package release, such as version and dependencies
+
+  .. code-block:: yaml
+
+    version: 0.0.0
+    dependencies: [raisin, raisin_gui]
+
+
+
+Where things get installed/copied
+=================================
+
+Raisin has two main flows:
+
+* **Dev setup** (``python raisin.py setup`` or implicit via ``build``):
+  - The **install root** is ``./install``.
+  - Generated headers go to ``./generated/include``.
+
+* **Per‑target release** (``python raisin.py release <target> [build_type]``):
+
+  - The **install root** is ``./release/install/<target>/<os>/<arch>/<build_type>``.
+  - Generated headers still go to ``./generated/include`` (project‑level).
+
+The table below shows how each package folder is used and where it lands.
+
+.. list-table::
+   :header-rows: 1
+   :widths: 16 29 27 28
+
+   * - Source folder
+     - Purpose
+     - Where it lands (Dev ``setup``)
+     - Where it lands (Per‑target ``release``)
+   * - ``src/``
+     - C++ sources compiled into your targets.
+     - Installed by CMake (via ``install(TARGETS ...)``) into ``install/bin`` and ``install/lib`` (when you run a build+install).
+     - Installed by CMake into ``release/install/<target>/<os>/<arch>/<build_type>/bin`` and ``.../lib``.
+   * - ``include/``
+     - Public headers for consumers.
+     - Installed by CMake (``install(DIRECTORY include/ DESTINATION include)``) → ``install/include/<...>``.
+     - Same rule → ``release/install/<...>/include/<...>``.
+   * - ``msg/``
+     - Interface definitions for message types.
+     - **Original files** are copied to ``install/messages/<pkg>/msg/``.
+       **Generated C++** headers go to ``generated/include/<pkg>/msg/*.hpp``.
+     - **Same as dev** for originals (copied to project‑level ``install/messages``).
+       Generated headers remain in ``generated/include``.
+   * - ``srv/``
+     - Interface definitions for services.
+     - Originals → ``install/messages/<pkg>/srv/``.
+       Generated C++ → ``generated/include/<pkg>/srv/*.hpp``.
+     - Same as dev (originals to project‑level ``install/messages``; generated to ``generated/include``).
+   * - ``action/``
+     - Interface definitions for actions (goal/result/feedback).
+     - Originals → ``install/messages/<pkg>/action/``.
+       Generated C++ → ``generated/include/<pkg>/action/*.hpp``.
+       (The tool also synthesizes extra ``.msg``/``.srv`` in a temp area and generates headers for them.)
+     - Same as dev (originals to project‑level ``install/messages``; generated to ``generated/include``).
+   * - ``scripts/``  (*use plural*)
+     - Helper scripts shipped with the package.
+     - Copied by the tool to **``install/scripts/<pkg>/scripts/``** (note the extra ``/scripts`` level).
+     - Copied to **``release/install/<target>/<os>/<arch>/<build_type>/scripts/<pkg>/scripts/``**.
+   * - ``config/``
+     - Runtime configuration files.
+     - Copied by the tool to **``install/config/<pkg>/config/``**.
+     - Copied to **``release/install/<target>/<os>/<arch>/<build_type>/config/<pkg>/config/``**.
+   * - ``resource/``
+     - Arbitrary package resources.
+     - Copied by the tool to **``install/resource/<pkg>/resource/``**.
+     - Copied to **``release/install/<target>/<os>/<arch>/<build_type>/resource/<pkg>/resource/``**.
+   * - ``install_dependencies.sh`` (file at package root)
+     - Optional per‑package dependency installer.
+     - Copied to ``install/dependencies/<pkg>/install_dependencies.sh``.
+     - Same as dev (goes into project‑level ``install/dependencies``).
+
+.. note::
+
+   The current copier nests the folder name for ``resource/``, ``config/`` and
+   ``scripts/`` (e.g. ``.../resource/<pkg>/resource/...``). This is intentional
+   in the present layout so consumers can reliably glob by the inner folder
+   name.
+
+Generated code & support headers
+--------------------------------
+
+* For every ``.msg``/``.srv``/``.action``, the tool writes C++ headers under
+  ``generated/include/<pkg>/{msg,srv,action}/``.
+* A common support header ``raisin_serialization_base.hpp`` is added under
+  ``generated/include/``.
+* The **original** interface files are preserved for reference under
+  ``install/messages/<pkg>/{msg,srv,action}/`` (always under the **project‑level**
+  ``install/`` tree).
+
+Global ``messages/`` directory (optional, top‑level)
+====================================================
+
+You can also place shared interfaces under ``./messages``:
+
+.. code-block:: text
+
+   messages/
+   └─ my_interfaces/
+      ├─ include/my_interfaces/...    # copied to install/include & generated/include
+      ├─ msg/ ...                     # treated like package msg/
+      ├─ srv/ ...
+      └─ action/ ...
+
+Behavior:
+
+* ``messages/*/include`` is copied to **both** ``install/include/<name>`` and
+  ``generated/include/<name>``.
+* ``messages/*/{msg,srv,action}`` files are handled like package interfaces:
+  originals go into ``install/messages/<name>/...``, and generated headers go
+  into ``generated/include/<name>/...``.
+
+Build & packaging with CMake
+============================
+
+Use the helper macros in your ``CMakeLists.txt``:
+
+.. code-block:: cmake
+
+   cmake_minimum_required(VERSION 3.16)
+   project(my_pkg LANGUAGES CXX)
+
+   add_library(my_pkg src/my_pkg.cpp)
+   target_include_directories(my_pkg PUBLIC include)
+
+   # Local repo dependency (another package under src/)
+   raisin_find_package(other_pkg)
+   target_link_libraries(my_pkg PUBLIC other_pkg)
+
+   # External dependency (standard CMake)
+   find_package(fmt REQUIRED)
+   target_link_libraries(my_pkg PUBLIC fmt::fmt)
+
+   # Install + export: list deps so consumers get proper find_package() lines
+   raisin_install(my_pkg other_pkg fmt)
+
+**Conventions that matter for discovery**
+
+* **Package name = directory name**. Prefer your **CMake target** to also be named
+  that way. If not, provide an **ALIAS**:
+
+  .. code-block:: cmake
+
+     add_library(core_impl ...)
+     add_library(my_pkg ALIAS core_impl)
+
+* Declare local deps with exactly **``raisin_find_package(<dep>)``** on **one line**.
+  This is how the dependency graph is parsed for build ordering.
+
+CMake helper functions (full reference)
+=======================================
+
+This section documents the Raisin helper functions that your packages use in
+their ``CMakeLists.txt`` files. They are made available by the main ``CMakeLists.txt``
+file in the project root, so you don't need to include them explicitly.
+
+Quick index
+-----------
+
+- :ref:`raisin_find_package`
+- :ref:`raisin_install_without_config`
+- :ref:`raisin_install`
+- :ref:`raisin_install_config_string`
+- :ref:`raisin_recommended_clang_tidy`
+
+.. _raisin_find_package:
+
+=== ``raisin_find_package(<package_name>)`` ===
+---------------------------------------------------
+
+**Purpose.** Declare a *local* dependency on another Raisin package (a sibling
+under ``src/``). If a CMake **target** with that exact name already exists in
+the current configure (meaning the dependency was added via
+``add_library(<name> ...)`` or an ``ALIAS``), the call becomes a **no‑op**. If
+no such target exists, it falls back to a normal CMake
+``find_package(<package_name> REQUIRED)``.
+
+**Why it matters.** The Raisin Python tool parses these calls to build the
+dependency graph and compute **topological build order**. It looks for the exact
+text pattern:
+
+.. code-block:: cmake
+
+   raisin_find_package(dep_name)
+
+.. warning::
+
+   The parser is **case‑ and form‑sensitive**. Use exactly
+   ``raisin_find_package(<name>)`` on **one line**. Do **not** write multi‑line
+   variants or add extra arguments (``REQUIRED``, ``COMPONENTS``, etc.), as they
+   will not be detected by the parser.
+
+**Parameters.**
+
+- ``package_name`` — must equal the **directory name** of the dependent package
+  under ``src/``. It should also match the dependent package’s **CMake target**
+  (or an ``ALIAS`` you define) so that the “target exists” optimization works.
+
+**Example.**
+
+.. code-block:: cmake
+
+   # in src/navigation/CMakeLists.txt
+   add_library(navigation src/nav.cpp)
+   target_include_directories(navigation PUBLIC include)
+
+   # Depend on sibling package 'geometry'
+   raisin_find_package(geometry)
+   target_link_libraries(navigation PUBLIC geometry)
+
+**Common mistakes.**
+
+- Passing imported target names (e.g. ``fmt::fmt``). This helper is for **local**
+  packages. For external libs, use plain CMake ``find_package()`` as usual and
+  link their imported targets directly.
+
+- Target name mismatch. If the dependent package’s real target is different, add
+  an alias so the name exists:
+
+  .. code-block:: cmake
+
+     add_library(geometry_core ...)
+     add_library(geometry ALIAS geometry_core)
+
+.. _raisin_install_without_config:
+
+=== ``raisin_install_without_config(<PROJECT_NAME>)`` ===
+-------------------------------------------------------------
+
+**Purpose.** Install a target and its headers, and write an **export set**
+(``<PROJECT_NAME>Targets.cmake``), **without** generating a package
+``*Config.cmake``.
+
+**What it installs.**
+
+- ``install(DIRECTORY include/ DESTINATION include)`` → copies the entire
+  ``include/`` tree into the install prefix (Raisin’s dev: ``install/``,
+  release: ``release/install/<target>/<os>/<arch>/<build_type>/``).
+
+- ``install(TARGETS ...)`` → installs libs/binaries to the conventional
+  ``lib``/``bin`` dirs and exports the targets as ``export_<PROJECT_NAME>``.
+
+- ``install(EXPORT ...)`` → writes
+  ``lib/cmake/<PROJECT_NAME>/<PROJECT_NAME>Targets.cmake``.
+
+**When to use.** For internal components that are consumed only through a parent
+meta‑package that will provide its own ``*Config.cmake``, or when you want full
+control over your package config generation.
+
+**Example.**
+
+.. code-block:: cmake
+
+   add_library(io_utils src/io.cpp)
+   target_include_directories(io_utils PUBLIC include)
+   raisin_install_without_config(io_utils)
+
+.. _raisin_install:
+
+=== ``raisin_install(<PROJECT_NAME> [deps...])`` ===
+--------------------------------------------------------
+
+**Purpose.** Everything from
+:ref:`raisin_install_without_config <raisin_install_without_config>` **plus**
+generate and install a **``<PROJECT_NAME>Config.cmake``** so downstream projects
+can do ``find_package(<PROJECT_NAME>)``.
+
+**How the config is generated.**
+
+- For each item in ``[deps...]`` the helper injects:
+
+  .. code-block:: cmake
+
+     find_package(<dep> REQUIRED)
+
+  into the generated ``<PROJECT_NAME>Config.cmake``, then appends:
+
+  .. code-block:: cmake
+
+     include("${CMAKE_CURRENT_LIST_DIR}/<PROJECT_NAME>Targets.cmake")
+
+- This keeps the config minimal and relies on each dep to provide its own
+  package config.
+
+.. tip::
+
+   **Pass package names, not imported target names.** For example, pass
+   ``fmt`` (not ``fmt::fmt``), ``Eigen3`` (not ``Eigen3::Eigen``). The helper
+   writes ``find_package(<name>)`` lines directly.
+
+**Effects on the install tree.**
+
+- Headers → ``include/`` (same as without_config).
+- Binaries/libraries → ``bin/``, ``lib/``.
+- Config + targets → ``lib/cmake/<PROJECT_NAME>/{<PROJECT_NAME>Config.cmake,<PROJECT_NAME>Targets.cmake}``.
+
+**Example.**
+
+.. code-block:: cmake
+
+   add_library(robot_core src/core.cpp)
+   target_include_directories(robot_core PUBLIC include)
+
+   # Local dep 'math_utils' (Raisin package) and external 'Eigen3'
+   raisin_find_package(math_utils)
+   find_package(Eigen3 REQUIRED)
+   target_link_libraries(robot_core PUBLIC math_utils Eigen3::Eigen)
+
+   # Generate a package config that requires both dependencies
+   raisin_install(robot_core math_utils Eigen3)
+
+**Downstream consumption.**
+
+.. code-block:: cmake
+
+   raisin_find_package(robot_core REQUIRED) # find_package is not a good idea here because you don't know if you are using robot_core from source or from binary
+   add_executable(app main.cpp)
+   target_link_libraries(app PRIVATE robot_core)
+
+.. _raisin_install_config_string:
+
+=== ``raisin_install_config_string(<PROJECT_NAME> "<CONFIG_STRING>")`` ===
+------------------------------------------------------------------------------------
+
+**Purpose.** Like :ref:`raisin_install`, but lets you **inject custom CMake
+content** straight into ``<PROJECT_NAME>Config.cmake`` instead of auto‑writing
+``find_package(...)`` lines from a list.
+
+Use this when you need special logic—e.g. optional features, variables, or
+non‑standard dependency discovery.
+
+**Parameters.**
+
+- ``PROJECT_NAME`` — your exported target name.
+- ``CONFIG_STRING`` — literal CMake code to embed in the config file **before**
+  including ``<PROJECT_NAME>Targets.cmake``.
+
+**Example: optional dependency with a toggle.**
+
+.. code-block:: cmake
+
+   set(_cfg [=[
+     set(FOO_WITH_GPU ON CACHE BOOL "Enable GPU")
+     if(FOO_WITH_GPU)
+       find_package(CUDA REQUIRED)
+     endif()
+   ]=])
+
+   raisin_install_config_string(foo "${_cfg}")
+
+.. _raisin_recommended_clang_tidy:
+
+=== ``raisin_recommended_clang_tidy()`` ===
+--------------------------------------------------------
+
+**Purpose.** Enable a strict, project‑wide **clang‑tidy** configuration for C++
+compiles by setting ``CMAKE_CXX_CLANG_TIDY`` in the **parent scope**.
+
+**Behaviour.**
+
+- Searches for ``clang-tidy`` (several versioned names supported). If not found,
+  prints a warning and returns without failing config.
+- Builds a checks string (``clang-analyzer-*``, several ``bugprone-``/``security.`` rules)
+  and turns **all warnings into errors** (``-warnings-as-errors=*``).
+- Detects the GCC **major version** via ``${CMAKE_CXX_COMPILER}`` and adds
+  standard library include paths (Linux defaults) via ``--extra-arg-before=-I...``.
+- Exposes the setting through ``CMAKE_CXX_CLANG_TIDY`` so it applies to
+  subsequently configured C++ targets.
+
+**Example.**
+
+.. code-block:: cmake
+
+   project(vision LANGUAGES CXX)
+   add_library(vision src/vision.cpp)
+   target_include_directories(vision PUBLIC include)
+
+   # Opt-in to strict static analysis
+   raisin_recommended_clang_tidy()
+
+.. note::
+
+   clang‑tidy can **slow down builds**. Consider enabling it only in CI, or
+   behind a CMake option.
+
+
+Deployed releases
+=========================================
+
+* ``release/install/*/<os>/<arch>/<build_type>``: after you install one or more
+  raisin package releases, running ``setup`` will **deploy** those artifacts into
+  the project‑level ``install/`` tree (merging) **unless** a local source
+  package with the same name exists (to avoid clobbering local builds).
+
+Frequently asked questions
+==========================
+
+**Q: Can a repo be both a package and contain sub‑packages?**
+No. As soon as a directory under ``src/`` contains a ``CMakeLists.txt``, it is
+treated as **one package** and the scanner doesn’t recurse further.
+
+**Q: Why aren’t my scripts/config/resources appearing?**
+Make sure the folder names are exactly ``scripts/`` (plural), ``config/``, and
+``resource/`` under the **package directory**. The copier is case‑sensitive and
+only scans those exact names.
+
+**Q: Where do compiled binaries and libraries go?**
+Those are installed by **CMake** (not by the Python copier): into ``install/``
+for dev or into ``release/install/<target>/<os>/<arch>/<build_type>/`` for
+per‑target releases, when you run the appropriate build+install commands.

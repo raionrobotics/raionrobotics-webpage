@@ -1,0 +1,176 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configuration &mdash; Raisin Master - Build &amp; Package Management 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Core Concepts" href="concepts.html" />
+    <link rel="prev" title="Quick Start" href="quickstart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Raisin Master - Build & Package Management
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-setting-yaml">configuration_setting.yaml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#repositories-yaml">repositories.yaml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deprecated-configuration">Deprecated Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Core Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Raisin master files and folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raisin_package.html">Repositories &amp; Raisin Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Command-Line Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="package_management.html">Package Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_integration.html">Git Integration</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Raisin Master - Build & Package Management</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Configuration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/sections/configuration.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="configuration">
+<h1>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h1>
+<p>Raisin Master uses YAML configuration files to manage user settings, authentication, and repositories.</p>
+<section id="configuration-setting-yaml">
+<h2>configuration_setting.yaml<a class="headerlink" href="#configuration-setting-yaml" title="Link to this heading"></a></h2>
+<p>This is the main configuration file. <strong>It should never be committed to version control</strong> as it contains sensitive tokens.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># configuration_setting.yaml</span>
+<span class="nt">user_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">devel</span><span class="w">  </span><span class="c1"># Required: either &#39;user&#39; or &#39;devel&#39;</span>
+
+<span class="nt">gh_tokens</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">your-org</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ghp_xxxxxxxxxxxxxxxxxxxxxxxx&quot;</span>
+<span class="w">  </span><span class="nt">another-org</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ghp_yyyyyyyyyyyyyyyyyyyyyyyy&quot;</span>
+
+<span class="nt">packages_to_ignore</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">experimental_package</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">broken_package</span>
+</pre></div>
+</div>
+<p><strong>Fields:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">user_type</span></code> (Required):
+*   <code class="docutils literal notranslate"><span class="pre">'user'</span></code>: For consumers who mostly install pre-compiled packages.
+*   <code class="docutils literal notranslate"><span class="pre">'devel'</span></code>: For developers who build from source and create releases.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gh_tokens</span></code> (Optional): GitHub Personal Access Tokens (PATs). Keys are organization/owner names, values are the tokens. Required for accessing private repos and uploading releases.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">packages_to_ignore</span></code> (Optional): A list of package names in <code class="docutils literal notranslate"><span class="pre">src/</span></code> to exclude from the build.</p></li>
+</ul>
+</section>
+<section id="repositories-yaml">
+<h2>repositories.yaml<a class="headerlink" href="#repositories-yaml" title="Link to this heading"></a></h2>
+<p>This file maps package names to their source Git repository URLs. It is essential for <code class="docutils literal notranslate"><span class="pre">publish</span></code> and <code class="docutils literal notranslate"><span class="pre">install</span></code> commands.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># repositories.yaml</span>
+<span class="nt">project_a</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">git@github.com:your-org/project_a.git</span>
+<span class="nt">project_b</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">git@github.com:your-org/project_b.git</span>
+</pre></div>
+</div>
+</section>
+<section id="deprecated-configuration">
+<h2>Deprecated Configuration<a class="headerlink" href="#deprecated-configuration" title="Link to this heading"></a></h2>
+<p>The following files are supported for backward compatibility but should not be used in new projects.</p>
+<p><strong>secrets.yaml</strong> (Deprecated)</p>
+<p>Legacy file for GitHub tokens. Use <code class="docutils literal notranslate"><span class="pre">configuration_setting.yaml</span></code> instead.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># secrets.yaml</span>
+<span class="nt">gh_tokens</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">your-org</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ghp_xxxxxxxxxxxxxxxxxxxxxxxx&quot;</span>
+<span class="nt">user_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">devel</span>
+</pre></div>
+</div>
+<p><strong>RAISIN_IGNORE</strong> (Deprecated)</p>
+<p>Legacy file for ignoring packages. Use <code class="docutils literal notranslate"><span class="pre">packages_to_ignore</span></code> in <code class="docutils literal notranslate"><span class="pre">configuration_setting.yaml</span></code> instead.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span># RAISIN_IGNORE
+experimental_package
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quickstart.html" class="btn btn-neutral float-left" title="Quick Start" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="concepts.html" class="btn btn-neutral float-right" title="Core Concepts" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Jemin Hwangbo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

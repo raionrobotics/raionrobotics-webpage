@@ -1,0 +1,210 @@
+Command-Line Usage
+==================
+
+The Raisin script is controlled via command-line arguments. This page provides a quick reference of all available commands.
+
+For detailed information, see:
+
+* :doc:`package_management` - Package installation and index commands
+* :doc:`git_integration` - Git repository management commands
+
+.. program:: raisin.py
+
+.. code-block:: shell
+
+    python raisin.py <command> [options]
+
+Global Options
+--------------
+
+.. cmdoption:: --yes
+
+    Answers 'yes' to all prompts, like overwriting release assets.
+
+Build & Release Commands
+-------------------------
+
+.. cmdoption:: setup [target ...]
+
+    Configures the project for a local development build.
+
+    Running ``python raisin.py`` with no arguments performs the same setup for all packages.
+
+    This command performs the core setup tasks:
+    1. Finds all ``.msg``, ``.srv``, and ``.action`` files.
+    2. Generates the corresponding C++ header files in the ``generated/`` directory.
+    3. Scans all projects in ``src/`` to build a dependency graph.
+    4. Generates a top-level ``CMakeLists.txt`` with all projects included in the correct build order.
+
+    If one or more ``target`` names are provided, it only configures the build for those specific targets and their dependencies. Target names map to entries in ``RAISIN_BUILD_TARGETS.yaml`` (see :doc:`raisin_package`); each entry can expand to multiple glob patterns that control which packages are included. If no targets are provided, all projects discovered in ``src/`` are configured.
+
+.. cmdoption:: build --type <debug|release> [--install] [target ...]
+
+    Compiles the project locally.
+
+    This command runs the ``setup`` step with the same target filtering rules, then compiles the project using Ninja.
+
+    **Options:**
+
+    * ``--type, -t`` - Build type: ``debug`` or ``release`` (required, can specify multiple times)
+    * ``--install, -i`` - Install artifacts to ``install/`` directory after building
+    * ``target`` - Optional target names matching entries in ``RAISIN_BUILD_TARGETS.yaml``
+
+    **Examples:**
+
+    .. code-block:: shell
+
+        python raisin.py build --type release
+        python raisin.py build -t debug -t release --install
+        python raisin.py build --type release my_package
+
+.. cmdoption:: publish <target> [--type <debug|release>]
+
+    Creates and distributes a formal release package.
+
+    This command automates the entire release process for the specified target:
+
+    1. Reads the ``release.yaml`` file to get version and dependency information.
+    2. Performs a clean build and installs the artifacts to a dedicated directory under ``release/install/``.
+    3. Compresses the installed artifacts into a ``.zip`` archive named: ``{target}-{os}-{os_version}-{arch}-{build_type}-v{version}.zip``
+    4. Uploads the archive to the corresponding GitHub Release, creating the release if it doesn't exist.
+
+    **Options:**
+
+    * ``--type, -t`` - Build type: ``debug`` or ``release`` (default: ``release``)
+    * ``target`` - Package name to publish (required)
+
+    The release step reuses the setup logic, writes install outputs to
+    ``release/install/<target>/<os>/<os_version>/<arch>/<build_type>/``, then archives that folder as
+    ``{target}-{os}-{os_version}-{arch}-{build_type}-v{version}.zip`` before uploading with the GitHub CLI.
+    A version bump is required for any packages found under ``src/``.
+
+    **Examples:**
+
+    .. code-block:: shell
+
+        python raisin.py publish my_package
+        python raisin.py publish my_package --type debug
+        python raisin.py publish my_package -y  # Auto-confirm overwrites
+
+Package Management Commands
+----------------------------
+
+See :doc:`package_management` for detailed documentation.
+
+.. cmdoption:: install [packages...] [--type <debug|release>]
+
+    Downloads and installs pre-compiled packages and their dependencies.
+
+    This command functions as a package manager. It recursively resolves and installs all required packages.
+
+    **Options:**
+
+    * ``--type, -t`` - Build type: ``debug`` or ``release`` (default: ``release``)
+    * ``packages`` - Package specifiers (optional). Can be simple names (e.g., ``my_pkg``) or include version constraints (e.g., ``my_pkg>=1.2.3``)
+
+    **Behavior:**
+
+    * Always enqueues packages discovered in ``src/`` (unless excluded in configuration), even when specific package names are provided.
+    * Resolves each package by checking ``release/install/<pkg>/<os>/<os_version>/<arch>/<type>/`` first, then the local ``src/<pkg>/`` folder, then GitHub Releases.
+    * Downloads the asset named ``{package}-{os}-{os_version}-{arch}-{build_type}-{version}.zip`` when pulling from a release and installs it under ``release/install``. Dependencies from any discovered ``release.yaml`` files are added to the queue.
+
+    **Examples:**
+
+    .. code-block:: shell
+
+        python raisin.py install
+        python raisin.py install my_package
+        python raisin.py install my_package --type debug
+        python raisin.py install "my_pkg>=1.2.3" another_pkg
+
+    .. note::
+        When using version constraints (``>=``, ``<=``, ``<``, ``>``, ``==``), enclose the package specifier in double quotes to prevent shell interpretation of operators.
+
+.. cmdoption:: index local
+
+    Scans local packages and validates their dependency graph.
+
+    This command scans local ``src/`` and ``release/install/`` packages and validates their dependency graph, printing a colored report of the status.
+
+.. cmdoption:: index release [<package_name>]
+
+    Lists available remote packages from GitHub Releases.
+
+    * Without a package name, it lists all available packages.
+    * With a package name, it lists all available versions for that package.
+    * Listings only include releases that provide assets matching the current OS, OS version, architecture, and build type naming scheme (``{package}-{os}-{os_version}-{arch}-<type>-<tag>.zip``). Up to the three newest versions are shown, with prereleases highlighted.
+
+Git Integration Commands
+-------------------------
+
+See :doc:`git_integration` for detailed documentation.
+
+.. cmdoption:: git status
+
+    Fetches and shows the detailed sync status for all local repositories.
+
+.. cmdoption:: git pull [--remote <name>]
+
+    Pulls changes for all local repositories from the specified remote.
+
+    **Options:**
+
+    * ``--remote, -r`` - Remote name to pull from (default: ``origin``)
+
+    **Examples:**
+
+    .. code-block:: shell
+
+        python raisin.py git pull
+        python raisin.py git pull --remote upstream
+        python raisin.py git pull -r origin
+
+.. cmdoption:: git fetch [--remote <name>]
+
+    Fetches updates (without merging) for all repositories under ``src/`` from the specified remote (default: ``origin``).
+
+.. cmdoption:: git checkout --branch <branch>
+
+    Checks out an existing branch across repositories in ``src/``. The branch must already exist locally.
+
+.. cmdoption:: git delete-branch --branch <branch> [--force]
+
+    Deletes a local branch across repositories in ``src/``. Use ``--force`` (``-f``) to remove unmerged branches.
+
+.. cmdoption:: git list-branches
+
+    Lists all local branches for each repository in ``src/``, highlighting the current branch.
+
+.. cmdoption:: git push-current [--remote <name>]
+
+    Pushes the currently checked-out branch to the same branch name on the specified remote (default: ``origin``) for all repositories in ``src/``.
+
+.. cmdoption:: git setup <remote:user ...>
+
+    Clears all existing remotes and sets up new ones for all repos in ``src/``.
+
+    Example:
+
+    .. code-block:: shell
+
+        python raisin.py git setup origin:raisim raion:raionrobotics
+
+Help
+----
+
+.. cmdoption:: -h, --help
+
+    Displays help message.
+
+    Use with any command for command-specific help:
+
+    .. code-block:: shell
+
+        python raisin.py --help
+        python raisin.py build --help
+        python raisin.py install -h
+
+.. cmdoption:: help
+
+    Displays a comprehensive help message with all commands.

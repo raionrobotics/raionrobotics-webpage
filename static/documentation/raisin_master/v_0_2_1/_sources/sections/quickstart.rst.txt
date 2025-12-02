@@ -1,0 +1,67 @@
+Quick Start
+===========
+
+This guide will help you get up and running with Raisin Master quickly.
+
+Prerequisites
+-------------
+
+Before you begin, ensure you have the following installed on your system:
+
+*   **Operating System**: Linux (Ubuntu 20.04+ recommended)
+*   **Python**: 3.8 or higher
+*   **C++ Compiler**: GCC 9+ or Clang 10+
+*   **Build Tools**:
+    *   CMake (3.16+)
+    *   Ninja
+*   **Version Control**: Git
+
+Installation
+------------
+
+1.  **Clone the repository**:
+
+    .. code-block:: bash
+
+        git clone https://github.com/your-org/raisin_master.git
+        cd raisin_master
+
+2.  **Install Python dependencies**:
+
+    .. code-block:: bash
+
+        pip install -r requirements.txt
+
+Basic Workflow
+--------------
+
+1.  **Setup the workspace**:
+
+    This command scans your ``src/`` directory, generates headers, and configures the build system.
+
+    .. code-block:: bash
+
+        python raisin.py setup
+
+2.  **Build the project**:
+
+    Compile all packages in your workspace.
+
+    .. code-block:: bash
+
+        python raisin.py build --type release
+
+3.  **Source the environment** (if applicable):
+
+    After building, you may need to source the setup script to add built binaries to your path.
+
+    .. code-block:: bash
+
+        source install/setup.bash  # (If generated)
+
+Next Steps
+----------
+
+*   :doc:`configuration` - Configure your environment and tokens.
+*   :doc:`structure` - Understand the project structure.
+*   :doc:`raisin_package` - Learn how to create and manage packages.

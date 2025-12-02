@@ -1,0 +1,45 @@
+.. Raisin Build & Package Management documentation master file, created by
+   sphinx-quickstart on Thu Aug 14 03:16:54 2025.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Raisin Master - Build & Package Management System!
+====================================================================
+
+**Raisin Master** is a comprehensive, self-contained C++ package build and management system designed to manage the entire lifecycle of a C++ project.
+Inspired by robotics build systems like ROS/colcon, it provides a powerful yet easy-to-use toolkit for developers.
+It handles dependency resolution, automatic C++ header generation from message files, building, packaging, and distributing releases via GitHub.
+
+This system is perfect for projects that require a structured build process, clear dependency management, and automated release workflows, without the overhead of larger frameworks.
+
+Key Features
+------------
+
+* 🔄 **ROS-like Interface Generation**: Automatically generates C++ header files (``.hpp``) from ``.msg``, ``.srv``, and ``.action`` interface definitions.
+* 🏗️ **CMake-Based Build Orchestration**: Discovers C++ subprojects, analyzes their dependencies, and generates a top-level ``CMakeLists.txt`` file for a topologically sorted build. You can probably use your existing cmake projects without any changes if they follow modern cmake guidelines.
+* 🔗 **Dependency Management**: Parses custom ``raisin_find_package`` directives within CMake files to construct a precise build order.
+* ⚡ **Blazing-Fast Compilation** 🚀: Bypasses the overhead of traditional meta-build tools. By orchestrating a single, unified build with raw Ninja, compile times are dramatically reduced. For large projects, this approach can be up to 5x faster than a standard colcon build.
+* 📦 **Release Automation**: Packages build artifacts into versioned, platform-specific ``.zip`` archives and can automatically upload them to GitHub Releases.
+* 📥 **Package Installation**: A recursive dependency resolver that can download and install pre-compiled packages from GitHub releases, streamlining environment setup.
+* 💎 **Self-Contained**: Everything is managed by a single, powerful Python script.
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   sections/quickstart
+   sections/configuration
+   sections/concepts
+   sections/structure
+   sections/raisin_package
+   sections/usage
+   sections/package_management
+   sections/git_integration
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

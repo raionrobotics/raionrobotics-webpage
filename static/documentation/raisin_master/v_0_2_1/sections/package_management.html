@@ -1,0 +1,697 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Package Management &mdash; Raisin Master - Build &amp; Package Management 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Git Integration" href="git_integration.html" />
+    <link rel="prev" title="Command-Line Usage" href="usage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Raisin Master - Build & Package Management
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Core Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Raisin master files and folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raisin_package.html">Repositories &amp; Raisin Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Command-Line Usage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Package Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-command">Install Command</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#how-it-works">How it works</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installation-modes">Installation modes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#version-resolution">Version resolution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#package-structure">Package structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#authentication">Authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usage-examples">Usage examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#index-commands">Index Commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#index-local">index local</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#index-release">index release</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#dependency-management">Dependency Management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#understanding-dependencies">Understanding dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dependency-resolution-algorithm">Dependency resolution algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#handling-missing-dependencies">Handling missing dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#circular-dependencies">Circular dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#user-types">User Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#advanced-topics">Advanced Topics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#package-caching">Package caching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mixed-source-and-binary">Mixed source and binary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#offline-mode">Offline mode</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#best-practices">Best Practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="git_integration.html">Git Integration</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Raisin Master - Build & Package Management</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Package Management</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/sections/package_management.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="package-management">
+<h1>Package Management<a class="headerlink" href="#package-management" title="Link to this heading"></a></h1>
+<p>Raisin includes a powerful package management system that can download, install, and manage pre-compiled C++ packages from GitHub Releases. It provides dependency resolution, version management, and local package indexing.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The package management system allows you to:</p>
+<ul class="simple">
+<li><p>Install pre-compiled packages from GitHub Releases</p></li>
+<li><p>Recursively resolve and install package dependencies</p></li>
+<li><p>Specify version constraints (e.g., <code class="docutils literal notranslate"><span class="pre">&gt;=1.2.3</span></code>, <code class="docutils literal notranslate"><span class="pre">==2.0.0</span></code>)</p></li>
+<li><p>List available packages and their versions</p></li>
+<li><p>Validate local package dependencies</p></li>
+</ul>
+<p>Package management integrates with:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="configuration.html"><span class="doc">Configuration</span></a> - Stores GitHub authentication tokens and maps package names to GitHub repository URLs</p></li>
+<li><p><strong>release.yaml</strong> - Defines package metadata (version, dependencies)</p></li>
+</ul>
+</section>
+<section id="install-command">
+<h2>Install Command<a class="headerlink" href="#install-command" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">install</span></code> command downloads and installs pre-compiled packages and their dependencies.</p>
+<p><strong>Command:</strong></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>raisin.py<span class="w"> </span>install<span class="w"> </span><span class="o">[</span>packages...<span class="o">]</span><span class="w"> </span><span class="o">[</span>--type<span class="w"> </span>&lt;debug<span class="p">|</span>release&gt;<span class="o">]</span>
+</pre></div>
+</div>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">packages</span></code> (optional) - One or more package specifications with optional version constraints</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--type,</span> <span class="pre">-t</span></code> (optional) - Build type: <code class="docutils literal notranslate"><span class="pre">debug</span></code> or <code class="docutils literal notranslate"><span class="pre">release</span></code> (default: <code class="docutils literal notranslate"><span class="pre">release</span></code>)</p></li>
+</ul>
+<p><strong>Package specification format:</strong></p>
+<p>Packages can be specified in several ways:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Latest version (no quotes needed)</span>
+python<span class="w"> </span>raisin.py<span class="w"> </span>install<span class="w"> </span>package_name
+
+<span class="c1"># With version constraints (quotes required!)</span>
+python<span class="w"> </span>raisin.py<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;package_name==1.2.3&quot;</span><span class="w">       </span><span class="c1"># Exact version</span>
+python<span class="w"> </span>raisin.py<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;package_name&gt;=1.0.0&quot;</span><span class="w">       </span><span class="c1"># Minimum version</span>
+python<span class="w"> </span>raisin.py<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;package_name&lt;=2.0.0&quot;</span><span class="w">       </span><span class="c1"># Maximum version</span>
+python<span class="w"> </span>raisin.py<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;package_name&gt;=1.0,&lt;2.0&quot;</span><span class="w">    </span><span class="c1"># Version range</span>
+</pre></div>
+</div>
+<section id="how-it-works">
+<h3>How it works<a class="headerlink" href="#how-it-works" title="Link to this heading"></a></h3>
+<p>The install process follows this workflow:</p>
+<ol class="arabic simple">
+<li><p><strong>Queue setup</strong></p>
+<ul class="simple">
+<li><p>Start with the packages passed on the command line (can be empty).</p></li>
+<li><p>Automatically append every package directory found under <code class="docutils literal notranslate"><span class="pre">src/</span></code> (except ones listed in <code class="docutils literal notranslate"><span class="pre">repos_to_ignore</span></code>).</p></li>
+</ul>
+</li>
+<li><p><strong>Process each package</strong></p>
+<ul class="simple">
+<li><p>Parse the version specifier (defaults to <code class="docutils literal notranslate"><span class="pre">&gt;=0.0.0</span></code>). Pre-releases are skipped unless <code class="docutils literal notranslate"><span class="pre">user_type</span></code> is <code class="docutils literal notranslate"><span class="pre">devel</span></code>.</p></li>
+<li><p>Look for an already-installed package at <code class="docutils literal notranslate"><span class="pre">release/install/&lt;pkg&gt;/&lt;os&gt;/&lt;os_version&gt;/&lt;arch&gt;/&lt;build_type&gt;/</span></code>. If a <code class="docutils literal notranslate"><span class="pre">release.yaml</span></code> is present and matches the spec, its dependencies are enqueued.</p></li>
+<li><p>Next, check <code class="docutils literal notranslate"><span class="pre">src/&lt;pkg&gt;/release.yaml</span></code>. If the version satisfies the spec, dependencies are added and the package is considered satisfied. If the file is missing, versioned specs cannot be met from source.</p></li>
+<li><p>Otherwise, download the newest GitHub release that matches the spec and has a compatible asset.</p></li>
+</ul>
+</li>
+<li><p><strong>Download &amp; deploy</strong></p>
+<ul class="simple">
+<li><p>Remote assets are expected to be named <code class="docutils literal notranslate"><span class="pre">{package}-{os}-{os_version}-{arch}-{build_type}-{version}.zip</span></code>.</p></li>
+<li><p>The existing install folder is removed, the archive is downloaded to <code class="docutils literal notranslate"><span class="pre">install/</span></code>, extracted into <code class="docutils literal notranslate"><span class="pre">release/install/&lt;pkg&gt;/&lt;os&gt;/&lt;os_version&gt;/&lt;arch&gt;/&lt;build_type&gt;/</span></code>, and dependencies from the bundled <code class="docutils literal notranslate"><span class="pre">release.yaml</span></code> are appended to the queue.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="installation-modes">
+<h3>Installation modes<a class="headerlink" href="#installation-modes" title="Link to this heading"></a></h3>
+<p>Packages found in <code class="docutils literal notranslate"><span class="pre">src/</span></code> are always part of the install queue; specifying package names adds to that list.</p>
+<p><strong>Mode 1: Install specific packages</strong></p>
+<p>Install one or more named packages:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install a single package (latest version)</span>
+python<span class="w"> </span>raisin.py<span class="w"> </span>install<span class="w"> </span>raisin_core
+
+<span class="c1"># Install with version constraint (note the quotes!)</span>
+python<span class="w"> </span>raisin.py<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;raisin_core&gt;=1.2.3&quot;</span>
+
+<span class="c1"># Install multiple packages</span>
+python<span class="w"> </span>raisin.py<span class="w"> </span>install<span class="w"> </span>raisin_core<span class="w"> </span>raisin_gui<span class="w"> </span>raisin_network
+
+<span class="c1"># Install with debug build</span>
+python<span class="w"> </span>raisin.py<span class="w"> </span>install<span class="w"> </span>raisin_core<span class="w"> </span>--type<span class="w"> </span>debug
+</pre></div>
+</div>
+<p><strong>Mode 2: Install all local packages</strong></p>
+<p>If no packages are specified, automatically installs dependencies for all packages in <code class="docutils literal notranslate"><span class="pre">src/</span></code>:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install all dependencies for local packages</span>
+python<span class="w"> </span>raisin.py<span class="w"> </span>install
+
+<span class="c1"># Install debug versions of all dependencies</span>
+python<span class="w"> </span>raisin.py<span class="w"> </span>install<span class="w"> </span>--type<span class="w"> </span>debug
+</pre></div>
+</div>
+<p>This mode is useful when setting up a new development environment.</p>
+</section>
+<section id="version-resolution">
+<h3>Version resolution<a class="headerlink" href="#version-resolution" title="Link to this heading"></a></h3>
+<p>Each package specifier is handled independently:</p>
+<ul class="simple">
+<li><p>Missing specifiers are treated as <code class="docutils literal notranslate"><span class="pre">&gt;=0.0.0</span></code>.</p></li>
+<li><p>Pre-releases are included only when <code class="docutils literal notranslate"><span class="pre">user_type</span></code> is <code class="docutils literal notranslate"><span class="pre">devel</span></code>.</p></li>
+<li><p>If a package was already installed at a newer version during the same run, the installer will not downgrade it.</p></li>
+<li><p>Constraints from different dependents are not merged automatically; reconcile conflicting requirements manually in <code class="docutils literal notranslate"><span class="pre">release.yaml</span></code> files.</p></li>
+</ul>
+</section>
+<section id="package-structure">
+<h3>Package structure<a class="headerlink" href="#package-structure" title="Link to this heading"></a></h3>
+<p>Downloaded packages are expected to use these archive names:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>{package_name}-{os}-{os_version}-{arch}-{build_type}-{version}.zip   # pulled by install
+{package_name}-{os}-{os_version}-{arch}-{build_type}-v{version}.zip  # produced by publish
+</pre></div>
+</div>
+<p>For example:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>raisin_core-ubuntu-22.04-x86_64-release-1.2.3.zip
+raisin_gui-ubuntu-22.04-arm64-debug-2.0.1.zip
+</pre></div>
+</div>
+<p>The archive contains the complete install tree structure:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>package_name/
+├── bin/               # Executables
+├── lib/               # Libraries
+├── include/           # Headers
+├── scripts/           # Helper scripts
+├── config/            # Configuration files
+├── resource/          # Resources
+└── messages/          # Interface definitions
+</pre></div>
+</div>
+</section>
+<section id="authentication">
+<h3>Authentication<a class="headerlink" href="#authentication" title="Link to this heading"></a></h3>
+<p>Package installation requires GitHub authentication when accessing:</p>
+<ul class="simple">
+<li><p>Private repositories</p></li>
+<li><p>Release assets from private repos</p></li>
+<li><p>Rate-limited public API endpoints</p></li>
+</ul>
+<p>Configure tokens in <code class="docutils literal notranslate"><span class="pre">configuration_setting.yaml</span></code> (see <a class="reference internal" href="configuration.html"><span class="doc">Configuration</span></a>):</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">gh_tokens</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">your-org</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ghp_xxxxxxxxxxxxxxxxxxxx&quot;</span>
+<span class="w">  </span><span class="nt">another-org</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ghp_yyyyyyyyyyyyyyyy&quot;</span>
+</pre></div>
+</div>
+<p>The system automatically selects the appropriate token based on the repository owner.</p>
+</section>
+<section id="usage-examples">
+<h3>Usage examples<a class="headerlink" href="#usage-examples" title="Link to this heading"></a></h3>
+<p><strong>Example 1: Fresh workspace setup</strong></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Clone main project</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/myorg/my-project.git
+<span class="nb">cd</span><span class="w"> </span>my-project
+
+<span class="c1"># Install all dependencies for packages in src/</span>
+python<span class="w"> </span>raisin.py<span class="w"> </span>install
+</pre></div>
+</div>
+<p><strong>Example 2: Install specific package with dependencies</strong></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Installs raisin_gui and all its dependencies</span>
+python<span class="w"> </span>raisin.py<span class="w"> </span>install<span class="w"> </span>raisin_gui
+</pre></div>
+</div>
+<p><strong>Example 3: Install with version constraints</strong></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install specific version</span>
+python<span class="w"> </span>raisin.py<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;raisin_core==1.5.0&quot;</span>
+
+<span class="c1"># Install minimum version</span>
+python<span class="w"> </span>raisin.py<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;raisin_network&gt;=2.0.0&quot;</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Always enclose package specifications with version operators in double quotes. Shell interprets <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code> as redirection operators.</p>
+</div>
+<p><strong>Example 4: Debug builds</strong></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install debug version</span>
+python<span class="w"> </span>raisin.py<span class="w"> </span>install<span class="w"> </span>raisin_core<span class="w"> </span>--type<span class="w"> </span>debug
+
+<span class="c1"># Install multiple packages with debug builds</span>
+python<span class="w"> </span>raisin.py<span class="w"> </span>install<span class="w"> </span>raisin_core<span class="w"> </span>raisin_gui<span class="w"> </span>--type<span class="w"> </span>debug
+</pre></div>
+</div>
+</section>
+</section>
+<section id="index-commands">
+<h2>Index Commands<a class="headerlink" href="#index-commands" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">index</span></code> commands help you discover available packages and validate dependency graphs.</p>
+<section id="index-local">
+<h3>index local<a class="headerlink" href="#index-local" title="Link to this heading"></a></h3>
+<p><strong>Command:</strong></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>raisin.py<span class="w"> </span>index<span class="w"> </span><span class="nb">local</span>
+</pre></div>
+</div>
+<p><strong>Description:</strong></p>
+<p>Scans local <code class="docutils literal notranslate"><span class="pre">src/</span></code> and <code class="docutils literal notranslate"><span class="pre">release/install/</span></code> directories for packages with <code class="docutils literal notranslate"><span class="pre">release.yaml</span></code> files, validates their dependency graph, and prints a colored status report.</p>
+<p><strong>What it does:</strong></p>
+<ol class="arabic">
+<li><p><strong>Package Discovery</strong></p>
+<ul class="simple">
+<li><p>Scans <code class="docutils literal notranslate"><span class="pre">src/</span></code> for packages with <code class="docutils literal notranslate"><span class="pre">release.yaml</span></code></p></li>
+<li><p>Scans <code class="docutils literal notranslate"><span class="pre">release/install/</span></code> for downloaded packages</p></li>
+<li><p>Reads version and dependency information from each <code class="docutils literal notranslate"><span class="pre">release.yaml</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>Dependency Validation</strong></p>
+<p>For each package, checks if all dependencies:</p>
+<ul class="simple">
+<li><p>Exist (either in <code class="docutils literal notranslate"><span class="pre">src/</span></code> or <code class="docutils literal notranslate"><span class="pre">release/install/</span></code>)</p></li>
+<li><p>Meet version requirements</p></li>
+<li><p>Are properly configured</p></li>
+</ul>
+</li>
+<li><p><strong>Status Report</strong></p>
+<p>Displays a color-coded table with:</p>
+<ul class="simple">
+<li><p>Package name</p></li>
+<li><p>Version</p></li>
+<li><p>Origin (<code class="docutils literal notranslate"><span class="pre">src/</span></code> or <code class="docutils literal notranslate"><span class="pre">release/install/</span></code>)</p></li>
+<li><p>Dependency status</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Output format:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>📦 Scanning local packages...
+
+Package Name          Version    Origin    Dependencies
+─────────────────────────────────────────────────────────
+raisin_core           1.2.3      src       ✅ All satisfied
+raisin_network        2.0.1      src       ✅ All satisfied
+raisin_gui            1.5.0      release   ⚠️  raisin_core&gt;=1.3.0 not satisfied
+raisin_plugin         0.9.0      src       ❌ raisin_engine not found
+</pre></div>
+</div>
+<p><strong>Status indicators:</strong></p>
+<ul class="simple">
+<li><p>✅ <strong>Green</strong> - All dependencies satisfied</p></li>
+<li><p>⚠️ <strong>Yellow</strong> - Dependencies found but version constraints not satisfied</p></li>
+<li><p>❌ <strong>Red</strong> - Dependencies not found</p></li>
+</ul>
+<p><strong>Use cases:</strong></p>
+<ul class="simple">
+<li><p>Verify your local environment before building</p></li>
+<li><p>Check which packages need to be installed</p></li>
+<li><p>Diagnose dependency issues</p></li>
+<li><p>Review package versions in your workspace</p></li>
+</ul>
+</section>
+<section id="index-release">
+<h3>index release<a class="headerlink" href="#index-release" title="Link to this heading"></a></h3>
+<p><strong>Command:</strong></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>raisin.py<span class="w"> </span>index<span class="w"> </span>release<span class="w"> </span><span class="o">[</span>&lt;package_name&gt;<span class="o">]</span>
+</pre></div>
+</div>
+<p><strong>Description:</strong></p>
+<p>Lists available packages and versions from GitHub Releases. Results are filtered to releases that publish assets matching your OS, OS version, architecture, and build type naming scheme.</p>
+<p><strong>Mode 1: List all packages</strong></p>
+<p>Without a package name, shows up to the three newest matching versions for every configured package:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>raisin.py<span class="w"> </span>index<span class="w"> </span>release
+</pre></div>
+</div>
+<p>Stable releases are printed in green; prereleases appear in yellow.</p>
+<p><strong>Mode 2: List package versions</strong></p>
+<p>With a package name, lists all non-prerelease versions that ship compatible assets:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>raisin.py<span class="w"> </span>index<span class="w"> </span>release<span class="w"> </span>raisin_core
+</pre></div>
+</div>
+<p><strong>Output:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>🔍 Finding available versions with assets for &#39;raisin_core&#39;...
+ℹ️  Checking for assets compatible with: ubuntu-22.04-x86_64
+Available versions for raisin_core (owner/repo):
+  1.2.3
+  1.2.2
+  1.2.1
+</pre></div>
+</div>
+<p><strong>Asset compatibility:</strong></p>
+<p>The command only shows versions that have a compatible release asset for your system. Assets are matched by:</p>
+<ul class="simple">
+<li><p>Operating system (e.g., <code class="docutils literal notranslate"><span class="pre">linux</span></code>, <code class="docutils literal notranslate"><span class="pre">windows</span></code>, <code class="docutils literal notranslate"><span class="pre">macos</span></code>)</p></li>
+<li><p>OS version (e.g., <code class="docutils literal notranslate"><span class="pre">22.04</span></code>)</p></li>
+<li><p>Architecture (e.g., <code class="docutils literal notranslate"><span class="pre">x86_64</span></code>, <code class="docutils literal notranslate"><span class="pre">aarch64</span></code>)</p></li>
+<li><p>Build type (<code class="docutils literal notranslate"><span class="pre">release</span></code> or <code class="docutils literal notranslate"><span class="pre">debug</span></code> encoded in the filename)</p></li>
+</ul>
+<p><strong>Version types:</strong></p>
+<ul class="simple">
+<li><p>All-package listing shows both stable and prerelease builds (color-coded) if assets exist.</p></li>
+<li><p>Package-specific listing excludes prereleases.</p></li>
+</ul>
+<p><strong>Configuration requirements:</strong></p>
+<p>Both index release commands require:</p>
+<ol class="arabic">
+<li><p><strong>repositories.yaml</strong> - Package to repository URL mappings:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">raisin_core</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">git@github.com:myorg/raisin_core.git</span>
+<span class="nt">raisin_gui</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">git@github.com:myorg/raisin_gui.git</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>configuration_setting.yaml</strong> - GitHub authentication (see <a class="reference internal" href="configuration.html"><span class="doc">Configuration</span></a>):</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">gh_tokens</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">myorg</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ghp_xxxxxxxxxxxxxxxxxxxx&quot;</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p><strong>Use cases:</strong></p>
+<ul class="simple">
+<li><p>Discover available packages before installation</p></li>
+<li><p>Check which versions are available for your platform</p></li>
+<li><p>Verify that a package has been released</p></li>
+<li><p>Plan version upgrades</p></li>
+</ul>
+</section>
+</section>
+<section id="dependency-management">
+<h2>Dependency Management<a class="headerlink" href="#dependency-management" title="Link to this heading"></a></h2>
+<section id="understanding-dependencies">
+<h3>Understanding dependencies<a class="headerlink" href="#understanding-dependencies" title="Link to this heading"></a></h3>
+<p>Raisin uses <code class="docutils literal notranslate"><span class="pre">release.yaml</span></code> files to define package metadata:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># release.yaml</span>
+<span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.2.3</span>
+<span class="nt">dependencies</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">raisin_core&gt;=1.0.0</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">raisin_network&gt;=2.0.0,&lt;3.0.0</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">raisin_gui==1.5.0</span>
+</pre></div>
+</div>
+<p><strong>Dependency format:</strong></p>
+<p>Dependencies follow Python’s version specifier format:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>package_name              # Any version
+package_name==1.2.3       # Exact version (pinned)
+package_name&gt;=1.0.0       # Minimum version
+package_name&lt;=2.0.0       # Maximum version
+package_name&gt;=1.0,&lt;2.0    # Version range
+package_name!=1.5.0       # Exclude specific version
+</pre></div>
+</div>
+<p><strong>Semantic versioning:</strong></p>
+<p>Raisin follows semantic versioning (<code class="docutils literal notranslate"><span class="pre">major.minor.patch</span></code>):</p>
+<ul class="simple">
+<li><p><strong>Major</strong> - Breaking changes</p></li>
+<li><p><strong>Minor</strong> - New features (backward compatible)</p></li>
+<li><p><strong>Patch</strong> - Bug fixes (backward compatible)</p></li>
+</ul>
+<p>Best practices:</p>
+<ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code> for minimum compatible version</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">&lt;</span></code> to exclude incompatible major versions</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">raisin_core&gt;=1.2.0,&lt;2.0.0</span></code> (compatible with 1.x series)</p></li>
+</ul>
+</section>
+<section id="dependency-resolution-algorithm">
+<h3>Dependency resolution algorithm<a class="headerlink" href="#dependency-resolution-algorithm" title="Link to this heading"></a></h3>
+<p>The installer walks dependencies breadth-first:</p>
+<ol class="arabic simple">
+<li><p>Pop the next package specifier from the queue.</p></li>
+<li><p>Resolve it using the priority order above (release/install → source → GitHub).</p></li>
+<li><p>When a <code class="docutils literal notranslate"><span class="pre">release.yaml</span></code> is found, append its <code class="docutils literal notranslate"><span class="pre">dependencies</span></code> entries to the queue.</p></li>
+</ol>
+<p>Constraint intersection is not performed; each spec is evaluated independently. If two packages demand incompatible versions of the same dependency, adjust the constraints in their <code class="docutils literal notranslate"><span class="pre">release.yaml</span></code> files so they agree.</p>
+</section>
+<section id="handling-missing-dependencies">
+<h3>Handling missing dependencies<a class="headerlink" href="#handling-missing-dependencies" title="Link to this heading"></a></h3>
+<p>If a dependency is not found:</p>
+<ol class="arabic simple">
+<li><p><strong>Check local source</strong> - Look in <code class="docutils literal notranslate"><span class="pre">src/</span></code></p></li>
+<li><p><strong>Check installed packages</strong> - Look in <code class="docutils literal notranslate"><span class="pre">release/install/</span></code></p></li>
+<li><p><strong>Attempt download</strong> - Query GitHub Releases</p></li>
+<li><p><strong>Fail with error</strong> - If none of the above succeed</p></li>
+</ol>
+<p>Error messages indicate:</p>
+<ul class="simple">
+<li><p>Which package is missing</p></li>
+<li><p>Which package requires it</p></li>
+<li><p>Suggested actions</p></li>
+</ul>
+</section>
+<section id="circular-dependencies">
+<h3>Circular dependencies<a class="headerlink" href="#circular-dependencies" title="Link to this heading"></a></h3>
+<p>Raisin detects circular dependencies during resolution:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>❌ Error: Circular dependency detected!
+   package_a -&gt; package_b -&gt; package_c -&gt; package_a
+</pre></div>
+</div>
+<p><strong>Solution:</strong> Refactor packages to break the cycle.</p>
+</section>
+</section>
+<section id="user-types">
+<h2>User Types<a class="headerlink" href="#user-types" title="Link to this heading"></a></h2>
+<p>Raisin supports two user types configured in <code class="docutils literal notranslate"><span class="pre">configuration_setting.yaml</span></code>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">user_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">devel</span><span class="w">  </span><span class="c1"># or &#39;user&#39;</span>
+</pre></div>
+</div>
+<p><strong>User type: ‘user’</strong></p>
+<ul class="simple">
+<li><p>Typical end-user or consumer</p></li>
+<li><p>Installs pre-compiled packages</p></li>
+<li><p>Does not build from source (usually)</p></li>
+<li><p>Limited access to development features</p></li>
+</ul>
+<p><strong>User type: ‘devel’</strong></p>
+<ul class="simple">
+<li><p>Developer or maintainer</p></li>
+<li><p>Can build from source</p></li>
+<li><p>Can create releases</p></li>
+<li><p>Full access to all features</p></li>
+</ul>
+<p>The user type affects:</p>
+<ul class="simple">
+<li><p>Available commands</p></li>
+<li><p>Installation behavior</p></li>
+<li><p>Build permissions</p></li>
+</ul>
+</section>
+<section id="advanced-topics">
+<h2>Advanced Topics<a class="headerlink" href="#advanced-topics" title="Link to this heading"></a></h2>
+<section id="package-caching">
+<h3>Package caching<a class="headerlink" href="#package-caching" title="Link to this heading"></a></h3>
+<p>Downloaded packages are cached in <code class="docutils literal notranslate"><span class="pre">release/install/</span></code>:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>release/install/
+└── raisin_core/
+    └── linux/
+        └── x86_64/
+            ├── release/
+            │   ├── bin/
+            │   ├── lib/
+            │   └── ...
+            └── debug/
+                ├── bin/
+                ├── lib/
+                └── ...
+</pre></div>
+</div>
+<p>Once downloaded, packages are reused for subsequent builds.</p>
+<p><strong>Clearing cache:</strong></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Remove all downloaded packages</span>
+rm<span class="w"> </span>-rf<span class="w"> </span>release/install/
+
+<span class="c1"># Remove specific package</span>
+rm<span class="w"> </span>-rf<span class="w"> </span>release/install/raisin_core/
+</pre></div>
+</div>
+</section>
+<section id="mixed-source-and-binary">
+<h3>Mixed source and binary<a class="headerlink" href="#mixed-source-and-binary" title="Link to this heading"></a></h3>
+<p>You can mix source packages (in <code class="docutils literal notranslate"><span class="pre">src/</span></code>) with pre-compiled packages (in <code class="docutils literal notranslate"><span class="pre">release/install/</span></code>):</p>
+<ul class="simple">
+<li><p>Source packages take priority during <code class="docutils literal notranslate"><span class="pre">setup</span></code></p></li>
+<li><p>Pre-compiled packages are used if source is not available</p></li>
+<li><p>This allows partial source builds while using binaries for dependencies</p></li>
+</ul>
+<p><strong>Example workflow:</strong></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install all dependencies as binaries</span>
+python<span class="w"> </span>raisin.py<span class="w"> </span>install
+
+<span class="c1"># Clone source for packages you want to modify</span>
+<span class="nb">cd</span><span class="w"> </span>src/
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/myorg/raisin_gui.git
+
+<span class="c1"># Build: raisin_gui from source, others use binaries</span>
+python<span class="w"> </span>raisin.py<span class="w"> </span>build<span class="w"> </span>--type<span class="w"> </span>release<span class="w"> </span>--install
+</pre></div>
+</div>
+</section>
+<section id="offline-mode">
+<h3>Offline mode<a class="headerlink" href="#offline-mode" title="Link to this heading"></a></h3>
+<p>If you have all required packages in <code class="docutils literal notranslate"><span class="pre">release/install/</span></code>:</p>
+<ol class="arabic simple">
+<li><p>No network connection needed</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install</span></code> command uses cached packages</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">setup</span></code> deploys cached packages</p></li>
+</ol>
+<p>To prepare for offline use:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># While online: download all dependencies</span>
+python<span class="w"> </span>raisin.py<span class="w"> </span>install
+
+<span class="c1"># Now you can work offline</span>
+python<span class="w"> </span>raisin.py<span class="w"> </span>setup
+python<span class="w"> </span>raisin.py<span class="w"> </span>build<span class="w"> </span>--type<span class="w"> </span>release
+</pre></div>
+</div>
+</section>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h2>
+<p><strong>Problem:</strong> “Package not found”</p>
+<p><strong>Solutions:</strong></p>
+<ul class="simple">
+<li><p>Check package name spelling</p></li>
+<li><p>Verify package exists in <code class="docutils literal notranslate"><span class="pre">repositories.yaml</span></code></p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">raisin.py</span> <span class="pre">index</span> <span class="pre">release</span></code> to see available packages</p></li>
+<li><p>Check GitHub repository has releases</p></li>
+</ul>
+<p><strong>Problem:</strong> “No compatible asset found”</p>
+<p><strong>Solutions:</strong></p>
+<ul class="simple">
+<li><p>Package may not be released for your OS/architecture</p></li>
+<li><p>Check available versions: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">raisin.py</span> <span class="pre">index</span> <span class="pre">release</span> <span class="pre">&lt;package&gt;</span></code></p></li>
+<li><p>Build from source instead of using pre-compiled package</p></li>
+<li><p>Contact package maintainer to request your platform</p></li>
+</ul>
+<p><strong>Problem:</strong> “Version constraint conflict”</p>
+<p><strong>Solutions:</strong></p>
+<ul class="simple">
+<li><p>Review dependency versions in <code class="docutils literal notranslate"><span class="pre">release.yaml</span></code> files</p></li>
+<li><p>Update package versions to compatible ranges</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">raisin.py</span> <span class="pre">index</span> <span class="pre">local</span></code> to diagnose conflicts</p></li>
+</ul>
+<p><strong>Problem:</strong> “Authentication failed”</p>
+<p><strong>Solutions:</strong></p>
+<ul class="simple">
+<li><p>Verify GitHub token in <code class="docutils literal notranslate"><span class="pre">configuration_setting.yaml</span></code></p></li>
+<li><p>Check token has required scopes (<code class="docutils literal notranslate"><span class="pre">repo</span></code>, <code class="docutils literal notranslate"><span class="pre">read:org</span></code>)</p></li>
+<li><p>Ensure token is not expired</p></li>
+<li><p>Verify token matches repository owner</p></li>
+</ul>
+<p><strong>Problem:</strong> “Download failed”</p>
+<p><strong>Solutions:</strong></p>
+<ul class="simple">
+<li><p>Check network connection</p></li>
+<li><p>Verify GitHub is accessible</p></li>
+<li><p>Check disk space</p></li>
+<li><p>Try again (temporary network issues)</p></li>
+</ul>
+<p><strong>Problem:</strong> “Extraction failed”</p>
+<p><strong>Solutions:</strong></p>
+<ul class="simple">
+<li><p>Check disk space</p></li>
+<li><p>Verify write permissions in <code class="docutils literal notranslate"><span class="pre">release/install/</span></code></p></li>
+<li><p>Check zip file integrity</p></li>
+<li><p>Re-download the package</p></li>
+</ul>
+</section>
+<section id="best-practices">
+<h2>Best Practices<a class="headerlink" href="#best-practices" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Pin critical dependencies</strong>: Use exact versions (<code class="docutils literal notranslate"><span class="pre">==</span></code>) for critical dependencies to ensure reproducibility</p></li>
+<li><p><strong>Use version ranges</strong>: Use ranges (<code class="docutils literal notranslate"><span class="pre">&gt;=,&lt;</span></code>) for flexible compatibility</p></li>
+<li><p><strong>Cache packages</strong>: Keep <code class="docutils literal notranslate"><span class="pre">release/install/</span></code> to avoid repeated downloads</p></li>
+<li><p><strong>Validate before building</strong>: Run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">raisin.py</span> <span class="pre">index</span> <span class="pre">local</span></code> before building</p></li>
+<li><p><strong>Regular updates</strong>: Periodically check for updates with <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">raisin.py</span> <span class="pre">index</span> <span class="pre">release</span></code></p></li>
+<li><p><strong>Document dependencies</strong>: Keep <code class="docutils literal notranslate"><span class="pre">release.yaml</span></code> up-to-date in all packages</p></li>
+<li><p><strong>Test version constraints</strong>: Ensure your version constraints are not too restrictive</p></li>
+<li><p><strong>Security</strong>: Keep authentication tokens secure, use read-only tokens when possible</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="usage.html" class="btn btn-neutral float-left" title="Command-Line Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="git_integration.html" class="btn btn-neutral float-right" title="Git Integration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Jemin Hwangbo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
