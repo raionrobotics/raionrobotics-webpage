@@ -1,0 +1,400 @@
+Git Integration
+===============
+
+Raisin provides powerful Git integration commands to manage multiple repositories in your project workspace. These commands help you keep all your source repositories synchronized and properly configured.
+
+Overview
+--------
+
+The Git integration features allow you to:
+
+* Check the status of all repositories in your workspace
+* Pull updates from remote repositories
+* Fetch remote updates or push the current branch across all repositories
+* Configure remotes for all repositories at once
+* Manage branches in bulk (checkout existing, delete, list)
+* Track synchronization state across multiple remotes
+
+All git commands automatically discover repositories in:
+
+1. The project root directory (if it's a git repository)
+2. All subdirectories under ``src/`` that contain a ``.git`` folder
+
+Git Commands
+------------
+
+git status
+^^^^^^^^^^
+
+**Command:**
+
+.. code-block:: shell
+
+    python raisin.py git status
+
+**Description:**
+
+Fetches and displays a detailed synchronization status for all local repositories. This command provides a comprehensive view of how each repository compares to its remote counterparts.
+
+**What it does:**
+
+1. Discovers all git repositories in the current directory and ``src/``
+2. For each repository, fetches the latest data from all remotes
+3. Compares the local branch with each remote's corresponding branch
+4. Displays a formatted table showing:
+
+   * Repository name
+   * Current branch
+   * Status for each remote (synced, ahead, behind, or diverged)
+   * Commit count differences
+
+**Output format:**
+
+Each remote gets its own column in a single table. Cells include the remote owner, sync status, and the local change summary for that repo.
+
+* **Up-to-date** - Local matches the remote
+* **Ahead/Behind/Diverged** - Shows commit count differences
+* ``-`` - The repository does not have that remote
+
+**Example output:**
+
+.. code-block:: text
+
+    REPOSITORY  | BRANCH | ORIGIN                          | UPSTREAM
+    ------------------------------------------------------------------
+    core_lib    | main   | myorg - Up-to-date, No changes  | -
+    gui_client  | main   | myorg - Ahead 1, No changes     | upstream_org - Behind 2, No changes
+    tools       | dev    | myorg - Diverged (A 1, B 1), Modified files
+
+git pull
+^^^^^^^^
+
+**Command:**
+
+.. code-block:: shell
+
+    python raisin.py git pull [--remote <name>]
+
+**Description:**
+
+Pulls changes for all local repositories from the specified remote. This command helps you quickly update all repositories in your workspace.
+
+**Parameters:**
+
+* ``--remote, -r`` (optional) - The name of the remote to pull from (default: ``origin``)
+
+**What it does:**
+
+1. Discovers all git repositories in the current directory and ``src/``
+2. For each repository:
+
+   a. Fetches updates from the specified remote
+   b. Attempts to pull changes for the current branch
+   c. Reports success or failure
+
+3. Provides a summary of all pull operations
+
+**Output format:**
+
+.. code-block:: text
+
+    --- Pull Summary ---
+    ✅ project_a            -> Already up to date.
+    ✅ project_b            -> Updating 123abc..456def
+    ❌ project_c            -> origin: not found
+
+**Usage examples:**
+
+.. code-block:: shell
+
+    # Pull from the default 'origin' remote
+    python raisin.py git pull
+
+    # Pull from an 'upstream' remote
+    python raisin.py git pull --remote upstream
+
+    # Pull from a custom remote
+    python raisin.py git pull -r raion
+
+**Important notes:**
+
+* This command will fail gracefully if there are merge conflicts
+* It does not automatically resolve conflicts - you must resolve them manually
+* Authentication uses your normal git configuration (SSH keys, credential helper, etc.)
+
+git setup
+^^^^^^^^^
+
+**Command:**
+
+.. code-block:: shell
+
+    python raisin.py git setup <remote:user> [remote:user ...]
+
+**Description:**
+
+Clears all existing remotes and sets up new ones for all repositories in ``src/``. This command is particularly useful when you need to reconfigure remotes across multiple repositories, such as when forking projects or changing organizational structure.
+
+**Parameters:**
+
+* ``<remote:user>`` - One or more remote specifications in the format ``remotename:username``
+
+  * ``remotename`` - The name of the remote (e.g., ``origin``, ``upstream``, ``fork``)
+  * ``username`` - The GitHub username or organization name
+
+**What it does:**
+
+1. Scans all subdirectories in ``src/`` for git repositories
+2. For each repository:
+
+   a. Discovers the actual GitHub repository name from the existing ``origin`` remote URL
+   b. **Removes all existing remotes** (this is a destructive operation)
+   c. Adds new remotes based on the provided specifications
+   d. Constructs remote URLs using SSH format: ``git@github.com:username/reponame.git``
+
+3. Reports success or failure for each repository
+
+**URL format:**
+
+All remotes are configured using SSH URLs in the format:
+
+.. code-block:: text
+
+    git@github.com:<username>/<repository_name>.git
+
+**Usage examples:**
+
+**Example 1: Single remote**
+
+Set up only an ``origin`` remote pointing to ``myusername``:
+
+.. code-block:: shell
+
+    python raisin.py git setup origin:myusername
+
+Result for a repository named ``project_a``:
+
+.. code-block:: text
+
+    origin -> git@github.com:myusername/project_a.git
+
+**Example 2: Multiple remotes**
+
+Set up ``origin`` pointing to your fork and ``upstream`` pointing to the original:
+
+.. code-block:: shell
+
+    python raisin.py git setup origin:myusername upstream:originalorg
+
+Results:
+
+.. code-block:: text
+
+    origin -> git@github.com:myusername/project_a.git
+    upstream -> git@github.com:originalorg/project_a.git
+
+**Example 3: Organization remotes**
+
+Set up remotes for organization collaboration:
+
+.. code-block:: shell
+
+    python raisin.py git setup origin:raisim raion:raionrobotics
+
+Results:
+
+.. code-block:: text
+
+    origin -> git@github.com:raisim/project_a.git
+    raion -> git@github.com:raionrobotics/project_a.git
+
+**Output format:**
+
+.. code-block:: text
+
+    Scanning for git repositories in '/path/to/project/src'...
+
+    --- Configuring repository: project_a ---
+      - Discovered GitHub repo name: 'project_a'
+    Checking for existing remotes...
+      - Removing existing remote: 'origin'
+      - Removing existing remote: 'fork'
+      - Adding new remote: 'origin' -> git@github.com:myusername/project_a.git
+      - Adding new remote: 'upstream' -> git@github.com:originalorg/project_a.git
+
+    --- Configuring repository: project_b ---
+      - Discovered GitHub repo name: 'project_b'
+    Checking for existing remotes...
+      - No existing remotes found.
+      - Adding new remote: 'origin' -> git@github.com:myusername/project_b.git
+
+**Important warnings:**
+
+.. warning::
+
+   This command is **destructive**! It removes ALL existing remotes before adding new ones. Make sure you have the correct remote specifications before running this command.
+
+.. warning::
+
+   This command uses SSH URLs. Ensure your SSH keys are properly configured with GitHub before using this command. See `GitHub's SSH key documentation <https://docs.github.com/en/authentication/connecting-to-github-with-ssh>`_ for setup instructions.
+
+**Common use cases:**
+
+1. **After forking repositories**: Reconfigure remotes to point to your fork as ``origin`` and the original as ``upstream``
+2. **Changing organizations**: Update all remotes when transferring projects between organizations
+3. **Standardizing remote names**: Ensure all repositories use consistent remote naming conventions
+4. **Team onboarding**: Quickly configure a new developer's workspace with the correct remotes
+
+**Troubleshooting:**
+
+**Problem**: "Could not discover GitHub repository name"
+
+**Solution**: The command couldn't parse the existing ``origin`` remote URL. This can happen if:
+
+* The repository has no ``origin`` remote
+* The ``origin`` URL is not a GitHub URL
+* The URL format is non-standard
+
+**Problem**: "Failed to add remote"
+
+**Solution**: Check that:
+
+* Your SSH keys are properly configured with GitHub
+* The repository exists at the specified username/organization
+* You have network connectivity to GitHub
+
+**Problem**: "Permission denied (publickey)"
+
+**Solution**: Your SSH keys are not properly configured. Follow GitHub's guide to add your SSH key to your GitHub account.
+
+git fetch
+^^^^^^^^^
+
+**Command:**
+
+.. code-block:: shell
+
+    python raisin.py git fetch [--remote <name>]
+
+Fetches updates from the specified remote (default: ``origin``) for every repository under ``src/`` without merging any changes. Helpful when you want up-to-date refs before deciding to pull or push.
+
+git checkout
+^^^^^^^^^^^^
+
+**Command:**
+
+.. code-block:: shell
+
+    python raisin.py git checkout --branch <branch>
+
+Checks out a branch across repositories in ``src/``.
+
+If the branch does not exist locally in a repository, the command creates it.
+
+git delete-branch
+^^^^^^^^^^^^^^^^^
+
+**Command:**
+
+.. code-block:: shell
+
+    python raisin.py git delete-branch --branch <branch> [--force]
+
+Deletes a local branch across repositories in ``src/`` using ``git branch -d``. When ``--force`` (``-f``) is provided, uses ``-D`` to delete even if the branch is not fully merged. The currently checked-out branch in each repository is never removed.
+
+git list-branches
+^^^^^^^^^^^^^^^^^
+
+**Command:**
+
+.. code-block:: shell
+
+    python raisin.py git list-branches
+
+Lists all local branches for each repository in ``src/`` and highlights the current branch so you can quickly scan what is checked out where.
+
+git push-current
+^^^^^^^^^^^^^^^^
+
+**Command:**
+
+.. code-block:: shell
+
+    python raisin.py git push-current [--remote <name>]
+
+Pushes the currently checked-out branch to a branch of the same name on the specified remote (default: ``origin``) for every repository in ``src/``. Repositories without the requested remote or with detached HEADs are skipped.
+
+Authentication
+--------------
+
+Git commands rely on your normal git authentication (SSH keys or HTTPS credential helper).
+
+.. note::
+   ``configuration_setting.yaml`` tokens are used by RAISIN's GitHub API/CLI features (e.g., ``install``, ``index release``, and ``publish``), not by the underlying ``git`` commands.
+
+Best Practices
+--------------
+
+1. **Regular status checks**: Run ``git status`` frequently to stay aware of synchronization state
+2. **Pull before pushing**: Always run ``git pull`` before pushing to avoid merge conflicts
+3. **Consistent naming**: Use standard remote names (``origin``, ``upstream``, ``fork``) across all repositories
+4. **Backup before setup**: The ``git setup`` command is destructive - ensure you have backups or know your remote URLs
+5. **Use SSH for write operations**: SSH is more secure and convenient for push operations
+6. **Keep tokens secure**: Never commit ``configuration_setting.yaml`` to version control
+
+Workflow Examples
+-----------------
+
+**Daily development workflow:**
+
+.. code-block:: shell
+
+    # Check status of all repositories
+    python raisin.py git status
+
+    # Pull latest changes
+    python raisin.py git pull
+
+    # ... make your changes ...
+
+    # Check status again before committing
+    python raisin.py git status
+
+**Setting up a new workspace:**
+
+.. code-block:: shell
+
+    # Clone the main project
+    git clone git@github.com:myorg/main-project.git
+    cd main-project
+
+    # Set up remotes for all repositories in src/
+    python raisin.py git setup origin:myusername upstream:myorg
+
+    # Pull all latest changes
+    python raisin.py git pull
+
+**Contributing to open source:**
+
+.. code-block:: shell
+
+    # Fork all repositories, then configure remotes
+    python raisin.py git setup origin:myusername upstream:original-org
+
+    # Create feature branch in each repo (manual)
+    # Make changes
+    # Push to your fork
+    # Create pull requests to upstream
+
+**Working with multiple organizations:**
+
+.. code-block:: shell
+
+    # Set up multiple remotes
+    python raisin.py git setup origin:myusername company:mycompany upstream:original-org
+
+    # Check status across all remotes
+    python raisin.py git status
+
+    # Pull from company remote
+    python raisin.py git pull --remote company

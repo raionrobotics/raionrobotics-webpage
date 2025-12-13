@@ -1,0 +1,77 @@
+Configuration
+=============
+
+Raisin Master uses YAML configuration files to manage user settings, authentication, and repositories.
+
+configuration_setting.yaml
+--------------------------
+
+This is the main configuration file. **It should never be committed to version control** as it contains sensitive tokens.
+
+.. code-block:: yaml
+
+    # configuration_setting.yaml
+    user_type: devel  # Required: either 'user' or 'devel'
+
+    gh_tokens:
+      your-org: "ghp_xxxxxxxxxxxxxxxxxxxxxxxx"
+      another-org: "ghp_yyyyyyyyyyyyyyyyyyyyyyyy"
+
+    packages_to_ignore:
+      - experimental_package
+      - broken_package
+
+    repos_to_ignore:
+      - third_party_vendor_repo
+
+    # build directories, which will be updated by CMakeLists.txt
+    release_build_dir: "None"
+    debug_build_dir: "None"
+
+**Fields:**
+
+*   ``user_type`` (Required):
+    *   ``'user'``: For consumers who mostly install pre-compiled packages.
+    *   ``'devel'``: For developers who build from source and create releases.
+*   ``gh_tokens`` (Optional): GitHub Personal Access Tokens (PATs). Keys are organization/owner names, values are the tokens. Required for accessing private repos and uploading releases.
+*   ``packages_to_ignore`` (Optional): A list of package names in ``src/`` to exclude from the build.
+*   ``repos_to_ignore`` (Optional): A list of repository directory names under ``src/`` to skip entirely (both for setup/build and for local scanning in install/index).
+*   ``release_build_dir`` / ``debug_build_dir``: Updated by CMake; used by ``raisin test`` to locate the correct build folder.
+
+repositories.yaml
+-----------------
+
+This file maps package names to their source Git repository URLs. It is essential for ``publish`` and ``install`` commands.
+
+.. code-block:: yaml
+
+    # repositories.yaml
+    project_a:
+      url: git@github.com:your-org/project_a.git
+    project_b:
+      url: git@github.com:your-org/project_b.git
+
+Deprecated Configuration
+------------------------
+
+The following files are supported for backward compatibility but should not be used in new projects.
+
+**secrets.yaml** (Deprecated)
+
+Legacy file for GitHub tokens. Use ``configuration_setting.yaml`` instead.
+
+.. code-block:: yaml
+
+    # secrets.yaml
+    gh_tokens:
+      your-org: "ghp_xxxxxxxxxxxxxxxxxxxxxxxx"
+    user_type: devel
+
+**RAISIN_IGNORE** (Optional)
+
+Some workflows use an optional ``RAISIN_IGNORE`` text file (one package name per line) to skip packages during setup/build. Prefer ``packages_to_ignore`` / ``repos_to_ignore`` in ``configuration_setting.yaml`` when available.
+
+.. code-block:: text
+
+    # RAISIN_IGNORE
+    experimental_package

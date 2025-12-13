@@ -1,0 +1,167 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Core Concepts &mdash; Raisin Master - Build &amp; Package Management 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Raisin master files and folders" href="structure.html" />
+    <link rel="prev" title="Configuration" href="configuration.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Raisin Master - Build & Package Management
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Core Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#interface-generation">Interface Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dependency-management-build-order">Dependency Management &amp; Build Order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#builds-and-releases">Builds and Releases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#package-installation">Package Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Raisin master files and folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raisin_package.html">Repositories &amp; Raisin Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Command-Line Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="package_management.html">Package Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_integration.html">Git Integration</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Raisin Master - Build & Package Management</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Core Concepts</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/sections/concepts.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="core-concepts">
+<h1>Core Concepts<a class="headerlink" href="#core-concepts" title="Link to this heading"></a></h1>
+<p>Understanding the core concepts of the Raisin system is key to using it effectively. This system is built around several key ideas that govern how projects are structured, built, and distributed.</p>
+<section id="interface-generation">
+<h2>Interface Generation<a class="headerlink" href="#interface-generation" title="Link to this heading"></a></h2>
+<p>Raisin automates the creation of C++ header files from ROS-style interface definitions. This allows you to define data structures and service contracts in simple text files and have the corresponding C++ code generated automatically.</p>
+<ul class="simple">
+<li><p><strong>.msg Files</strong>: Define data structures. Each line in a <code class="docutils literal notranslate"><span class="pre">.msg</span></code> file represents a member variable. Raisin converts these into a C++ <code class="docutils literal notranslate"><span class="pre">struct</span></code>.</p></li>
+<li><p><strong>.srv Files</strong>: Define a request/response service. A <code class="docutils literal notranslate"><span class="pre">---</span></code> separator divides the request fields from the response fields. Raisin generates a service class with nested <code class="docutils literal notranslate"><span class="pre">Request</span></code> and <code class="docutils literal notranslate"><span class="pre">Response</span></code> structs.</p></li>
+<li><p><strong>.action Files</strong>: Define a complex, long-running task with a goal, result, and feedback. A <code class="docutils literal notranslate"><span class="pre">---</span></code> separator is used twice to delineate the three sections. Raisin decomposes an action file into several <code class="docutils literal notranslate"><span class="pre">.msg</span></code> and <code class="docutils literal notranslate"><span class="pre">.srv</span></code> files, which are then processed.</p></li>
+</ul>
+<p>The system uses templates (e.g., <code class="docutils literal notranslate"><span class="pre">MessageTemplate.hpp</span></code>) to generate these headers, ensuring consistency and including serialization/deserialization logic.</p>
+</section>
+<section id="dependency-management-build-order">
+<h2>Dependency Management &amp; Build Order<a class="headerlink" href="#dependency-management-build-order" title="Link to this heading"></a></h2>
+<p>Correctly building a multi-package project requires compiling dependencies before the packages that use them. Raisin handles this automatically.</p>
+<ol class="arabic simple">
+<li><p><strong>Project Discovery</strong>: Raisin scans the <code class="docutils literal notranslate"><span class="pre">src/</span></code> directory for subdirectories containing a <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> file, identifying them as projects.</p></li>
+<li><p><strong>Dependency Parsing</strong>: It reads each project’s <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> and looks for a custom function: <code class="docutils literal notranslate"><span class="pre">raisin_find_package(DependencyName)</span></code>. This explicitly declares a dependency on another project.</p></li>
+<li><p><strong>Graph Construction</strong>: It builds a directed graph where each project is a node and each dependency is an edge.</p></li>
+<li><p><strong>Topological Sort</strong>: It performs a topological sort on the graph to produce a linear ordering of projects. This ensures that every project is built only after all of its dependencies have been built.</p></li>
+<li><p><strong>CMake Generation</strong>: Finally, it uses the sorted list to generate a root <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> that calls <code class="docutils literal notranslate"><span class="pre">add_subdirectory()</span></code> for each project in the correct order.</p></li>
+</ol>
+</section>
+<section id="builds-and-releases">
+<h2>Builds and Releases<a class="headerlink" href="#builds-and-releases" title="Link to this heading"></a></h2>
+<p>Raisin distinguishes between a local development build and a formal release.</p>
+<ul class="simple">
+<li><p><strong>Development Build</strong> (<code class="docutils literal notranslate"><span class="pre">build</span></code> command): This is for local testing. It creates a <code class="docutils literal notranslate"><span class="pre">cmake-build-&lt;type&gt;</span></code> directory and compiles the code there. The output can optionally be installed to the <code class="docutils literal notranslate"><span class="pre">install/</span></code> directory using the <code class="docutils literal notranslate"><span class="pre">--install</span></code> flag.</p></li>
+<li><p><strong>Release</strong> (<code class="docutils literal notranslate"><span class="pre">publish</span></code> command): This is for creating distributable packages. It performs a clean build and installs the artifacts into a structured directory: <code class="docutils literal notranslate"><span class="pre">release/install/{target}/{os}/{arch}/{build_type}</span></code>. It then archives this directory into a <code class="docutils literal notranslate"><span class="pre">.zip</span></code> file and can upload it to a corresponding GitHub Release.</p></li>
+</ul>
+</section>
+<section id="package-installation">
+<h2>Package Installation<a class="headerlink" href="#package-installation" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">install</span></code> command turns Raisin into a package manager. Given a list of required packages (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;my_package&gt;=1.2.0&quot;</span></code>), it recursively resolves and installs all dependencies.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When using version constraints with operators like <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code>, or <code class="docutils literal notranslate"><span class="pre">&lt;</span></code>, you must enclose the package specifier in double quotes to prevent shell interpretation.</p>
+</div>
+<p>The installation priority is:</p>
+<ol class="arabic simple">
+<li><p><strong>Check for existing pre-compiled package</strong>: Looks in <code class="docutils literal notranslate"><span class="pre">release/install/</span></code>.</p></li>
+<li><p><strong>Check for existing local source</strong>: Looks in <code class="docutils literal notranslate"><span class="pre">src/</span></code>.</p></li>
+<li><p><strong>Download from GitHub Releases</strong>: If not found locally, it queries the GitHub API for a matching release artifact and downloads it.</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="configuration.html" class="btn btn-neutral float-left" title="Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="structure.html" class="btn btn-neutral float-right" title="Raisin master files and folders" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Jemin Hwangbo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

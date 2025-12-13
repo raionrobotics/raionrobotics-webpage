@@ -1,0 +1,193 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick Start &mdash; Raisin Master - Build &amp; Package Management 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Configuration" href="configuration.html" />
+    <link rel="prev" title="Raisin Master - Build &amp; Package Management System!" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Raisin Master - Build & Package Management
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#basic-workflow">Basic Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Core Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Raisin master files and folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raisin_package.html">Repositories &amp; Raisin Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Command-Line Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="package_management.html">Package Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_integration.html">Git Integration</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Raisin Master - Build & Package Management</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Quick Start</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/sections/quickstart.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="quick-start">
+<h1>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h1>
+<p>This guide will help you get up and running with Raisin Master quickly.</p>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading"></a></h2>
+<p>Before you begin, ensure you have the following installed on your system:</p>
+<ul class="simple">
+<li><p><strong>Operating System</strong>: Linux (Ubuntu 20.04+ recommended)</p></li>
+<li><p><strong>Python</strong>: 3.8 or higher</p></li>
+<li><p><strong>C++ Compiler</strong>: GCC 9+ or Clang 10+</p></li>
+<li><p><strong>Build Tools</strong>:
+*   CMake (3.16+)
+*   Ninja</p></li>
+<li><p><strong>Version Control</strong>: Git</p></li>
+</ul>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<ol class="arabic">
+<li><p><strong>Clone the repository</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/raionrobotics/raisin_master.git
+<span class="nb">cd</span><span class="w"> </span>raisin_master
+</pre></div>
+</div>
+</li>
+<li><p><strong>Install Python dependencies</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</pre></div>
+</div>
+</li>
+<li><p><strong>Create configuration</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp<span class="w"> </span>configuration_setting_example.yaml<span class="w"> </span>configuration_setting.yaml
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="basic-workflow">
+<h2>Basic Workflow<a class="headerlink" href="#basic-workflow" title="Link to this heading"></a></h2>
+<ol class="arabic">
+<li><p><strong>Setup the workspace</strong>:</p>
+<p>This command scans your <code class="docutils literal notranslate"><span class="pre">src/</span></code> directory, generates headers, and configures the build system.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./raisin.sh<span class="w"> </span>setup
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can also call Python directly: <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">raisin.py</span> <span class="pre">setup</span></code>.</p>
+</div>
+</li>
+<li><p><strong>Build the project</strong>:</p>
+<p>Compile all packages in your workspace.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./raisin.sh<span class="w"> </span>build<span class="w"> </span>--type<span class="w"> </span>release
+</pre></div>
+</div>
+</li>
+<li><p><strong>Source the environment</strong> (if applicable):</p>
+<p>After building, you may need to source the setup script to add built binaries to your path.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>install/setup.bash<span class="w">  </span><span class="c1"># (If generated)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="configuration.html"><span class="doc">Configuration</span></a> - Configure your environment and tokens.</p></li>
+<li><p><a class="reference internal" href="structure.html"><span class="doc">Raisin master files and folders</span></a> - Understand the project structure.</p></li>
+<li><p><a class="reference internal" href="raisin_package.html"><span class="doc">Repositories &amp; Raisin Packages</span></a> - Learn how to create and manage packages.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Raisin Master - Build &amp; Package Management System!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="configuration.html" class="btn btn-neutral float-right" title="Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Jemin Hwangbo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
