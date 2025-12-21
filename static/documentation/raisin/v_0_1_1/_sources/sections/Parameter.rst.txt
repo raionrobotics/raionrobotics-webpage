@@ -1,0 +1,84 @@
+#############################
+Parameter
+#############################
+Raisin provides a global parameter tree. The root is available via
+``ParameterContainer::getRoot()``. Controllers and plugins that are dynamically loaded should use
+their injected ``paramRoot_`` instead of calling ``getRoot()`` directly.
+
+In the tree, nodes are either ``ParameterContainer`` (non-leaf) or ``Parameter`` (leaf) nodes.
+Use ``[]`` to navigate to a child ``ParameterContainer`` and ``()`` to access a ``Parameter``.
+Missing nodes are created on first access.
+
+Access patterns
+================
+
+* ``container("name")`` creates or returns a parameter by name.
+* ``container("name", default_value)`` sets a default only if the parameter does not exist yet.
+* ``const container("name")`` requires the parameter to exist and will raise a fatal error if it
+  does not, so use the default-value overload for optional parameters.
+
+YAML format
+============
+
+``loadFromPackageParameterFile(package_name, param_file_name)`` reads a YAML file from
+``install/config/<package_name>/config/<param_file_name>`` and then overlays
+``~/.raisin/<package_name>/<param_file_name>`` if it exists. This allows local overrides without
+modifying installed files.
+
+Parameters can be declared with ``value`` and ``dtype`` fields, with optional ``min``, ``max``,
+and ``options`` for validation:
+
+.. code-block:: xml
+
+  test_string:
+    value: hello
+    dtype: string
+    options: [hello, goodbye]
+  test_double:
+    value: 5.3
+    dtype: double
+    min: 3
+    max: 5
+  test_int:
+    value: 3
+    dtype: int
+  test_bool:
+    value: true
+    dtype: bool
+  test_vec_double:
+    value: [1,2,3]
+    dtype: vector<double>
+  test_vec_string:
+    value: ["hello", "world"]
+    dtype: vector<string>
+  test_vec_int:
+    value: [1,2,3]
+    dtype: vector<int>
+
+Accepted dtype strings are ``string``, ``double``, ``bool``, ``int``, ``vector``,
+``vector<double>``, ``vector<string>``, and ``vector<int>``. If you omit ``dtype`` and provide a
+plain scalar or sequence, the parameter uses ``UNDEFINED`` and can be cast to a compatible type at
+runtime, but you should be explicit for safety.
+
+Validation notes
+=================
+
+* ``min`` and ``max`` must be specified together for scalar values; otherwise a fatal error is
+  raised.
+* ``options`` are checked against the stringified value when assigning the parameter (``operator=``).
+* Validation is enforced during assignment; loading from YAML only sets the stored value.
+
+
+For practical implementation examples, refer to the :download:`test_raisin_parameter.cpp <../example/test_raisin_parameter.cpp>`.
+
+.. literalinclude:: ../example/test_raisin_parameter.cpp
+  :language: cpp
+
+API
+====
+
+.. doxygenclass:: raisin::parameter::ParameterContainer
+   :members:
+
+.. doxygenclass:: raisin::parameter::Parameter
+   :members:

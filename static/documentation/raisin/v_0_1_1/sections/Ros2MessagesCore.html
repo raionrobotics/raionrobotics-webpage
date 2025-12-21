@@ -1,0 +1,1457 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Core ROS2 Message Types &mdash; raisin 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css?v=2a6c4383" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css?v=45cf7dbc" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css?v=d290406d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ROS2 Runtime and Introspection Message Types" href="Ros2MessagesRuntime.html" />
+    <link rel="prev" title="Raisin Test Message Types" href="Ros2MessagesRaisinTests.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            raisin
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Chapters</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinNetwork.html">Raisin Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Plugin.html">Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Parameter.html">Parameter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DataLogger.html">DataLogger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaiboNode.html">RaiboNode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinGui.html">Raisin Gui</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Ros2Messages.html">ROS2 Message Types</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesRaisinInterfaces.html">Raisin Interfaces Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesRaisinPlugins.html">Raisin Plugin Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesRaisinTests.html">Raisin Test Message Types</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Core ROS2 Message Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#messages">Messages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#builtin-interfaces">builtin_interfaces</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#std-msgs">std_msgs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#geometry-msgs">geometry_msgs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sensor-msgs">sensor_msgs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nav-msgs">nav_msgs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#trajectory-msgs">trajectory_msgs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tf2-msgs">tf2_msgs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#unique-identifier-msgs">unique_identifier_msgs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rosgraph-msgs">rosgraph_msgs</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#services">Services</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#std-srvs">std_srvs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">sensor_msgs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">nav_msgs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">tf2_msgs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesRuntime.html">ROS2 Runtime and Introspection Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesVisualization.html">Visualization and Diagnostics Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesGnss.html">GNSS and RTCM Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesTestMsgs.html">ROS2 Test Message Types</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Reference.html">Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">raisin</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="Ros2Messages.html">ROS2 Message Types</a></li>
+      <li class="breadcrumb-item active">Core ROS2 Message Types</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="core-ros2-message-types">
+<h1>Core ROS2 Message Types<a class="headerlink" href="#core-ros2-message-types" title="Link to this heading"></a></h1>
+<p>Definitions are sourced from <code class="docutils literal notranslate"><span class="pre">release/install/raisin_ros2_messages/ubuntu/22.04/x86_64/release/messages</span></code>. Only the public message schemas are documented here.</p>
+<section id="messages">
+<h2>Messages<a class="headerlink" href="#messages" title="Link to this heading"></a></h2>
+<section id="builtin-interfaces">
+<h3>builtin_interfaces<a class="headerlink" href="#builtin-interfaces" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Duration</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">sec</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">nanosec</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Time</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">sec</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">nanosec</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="std-msgs">
+<h3>std_msgs<a class="headerlink" href="#std-msgs" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Bool</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Byte</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">byte</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ByteMultiArray</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MultiArrayLayout</span> <span class="pre">layout</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">byte[]</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Char</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">char</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ColorRGBA</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">r</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">g</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">b</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">a</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Empty</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(none)</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Float32</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Float32MultiArray</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MultiArrayLayout</span> <span class="pre">layout</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32[]</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Float64</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Float64MultiArray</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MultiArrayLayout</span> <span class="pre">layout</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[]</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Header</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">builtin_interfaces/Time</span> <span class="pre">stamp</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">frame_id</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Int16</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">int16</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Int16MultiArray</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MultiArrayLayout</span> <span class="pre">layout</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int16[]</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Int32</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Int32MultiArray</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MultiArrayLayout</span> <span class="pre">layout</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int32[]</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Int64</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">int64</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Int64MultiArray</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MultiArrayLayout</span> <span class="pre">layout</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int64[]</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Int8</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">int8</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Int8MultiArray</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MultiArrayLayout</span> <span class="pre">layout</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int8[]</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MultiArrayDimension</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">label</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">size</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">stride</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MultiArrayLayout</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MultiArrayDimension[]</span> <span class="pre">dim</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">data_offset</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">String</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UInt16</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uint16</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UInt16MultiArray</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MultiArrayLayout</span> <span class="pre">layout</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint16[]</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UInt32</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UInt32MultiArray</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MultiArrayLayout</span> <span class="pre">layout</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32[]</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UInt64</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uint64</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UInt64MultiArray</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MultiArrayLayout</span> <span class="pre">layout</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint64[]</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UInt8</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UInt8MultiArray</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MultiArrayLayout</span> <span class="pre">layout</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8[]</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="geometry-msgs">
+<h3>geometry_msgs<a class="headerlink" href="#geometry-msgs" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Accel</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Vector3</span> <span class="pre">linear</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Vector3</span> <span class="pre">angular</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AccelStamped</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Accel</span> <span class="pre">accel</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AccelWithCovariance</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Accel</span> <span class="pre">accel</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[36]</span> <span class="pre">covariance</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AccelWithCovarianceStamped</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AccelWithCovariance</span> <span class="pre">accel</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Inertia</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">m</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Vector3</span> <span class="pre">com</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">ixx</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">ixy</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">ixz</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">iyy</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">iyz</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">izz</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">InertiaStamped</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Inertia</span> <span class="pre">inertia</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Point</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">x</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">y</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">z</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Point32</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">x</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">y</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">z</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PointStamped</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Point</span> <span class="pre">point</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Polygon</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Point32[]</span> <span class="pre">points</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PolygonInstance</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Polygon</span> <span class="pre">polygon</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int64</span> <span class="pre">id</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PolygonInstanceStamped</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/PolygonInstance</span> <span class="pre">polygon</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PolygonStamped</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Polygon</span> <span class="pre">polygon</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Pose</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Point</span> <span class="pre">position</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Quaternion</span> <span class="pre">orientation</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Pose2D</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">x</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">y</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">theta</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PoseArray</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Pose[]</span> <span class="pre">poses</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PoseStamped</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Pose</span> <span class="pre">pose</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PoseWithCovariance</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Pose</span> <span class="pre">pose</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[36]</span> <span class="pre">covariance</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PoseWithCovarianceStamped</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PoseWithCovariance</span> <span class="pre">pose</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Quaternion</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">x</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">y</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">z</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">w</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">QuaternionStamped</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Quaternion</span> <span class="pre">quaternion</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Transform</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Vector3</span> <span class="pre">translation</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Quaternion</span> <span class="pre">rotation</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TransformStamped</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">child_frame_id</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Transform</span> <span class="pre">transform</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Twist</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Vector3</span> <span class="pre">linear</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Vector3</span> <span class="pre">angular</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TwistStamped</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Twist</span> <span class="pre">twist</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TwistWithCovariance</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Twist</span> <span class="pre">twist</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[36]</span> <span class="pre">covariance</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TwistWithCovarianceStamped</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TwistWithCovariance</span> <span class="pre">twist</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Vector3</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">x</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">y</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">z</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Vector3Stamped</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Vector3</span> <span class="pre">vector</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VelocityStamped</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">body_frame_id</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">reference_frame_id</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Twist</span> <span class="pre">velocity</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wrench</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Vector3</span> <span class="pre">force</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Vector3</span> <span class="pre">torque</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">WrenchStamped</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Wrench</span> <span class="pre">wrench</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="sensor-msgs">
+<h3>sensor_msgs<a class="headerlink" href="#sensor-msgs" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">BatteryState</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">voltage</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">temperature</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">current</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">charge</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">capacity</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">design_capacity</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">percentage</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">power_supply_status</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">power_supply_health</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">power_supply_technology</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">present</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32[]</span> <span class="pre">cell_voltage</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32[]</span> <span class="pre">cell_temperature</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">location</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">serial_number</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Constants:
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">POWER_SUPPLY_STATUS_UNKNOWN=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">POWER_SUPPLY_STATUS_CHARGING=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">POWER_SUPPLY_STATUS_DISCHARGING=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">POWER_SUPPLY_STATUS_NOT_CHARGING=3</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">POWER_SUPPLY_STATUS_FULL=4</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">POWER_SUPPLY_HEALTH_UNKNOWN=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">POWER_SUPPLY_HEALTH_GOOD=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">POWER_SUPPLY_HEALTH_OVERHEAT=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">POWER_SUPPLY_HEALTH_DEAD=3</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">POWER_SUPPLY_HEALTH_OVERVOLTAGE=4</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">POWER_SUPPLY_HEALTH_UNSPEC_FAILURE=5</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">POWER_SUPPLY_HEALTH_COLD=6</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">POWER_SUPPLY_HEALTH_WATCHDOG_TIMER_EXPIRE=7</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">POWER_SUPPLY_HEALTH_SAFETY_TIMER_EXPIRE=8</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">POWER_SUPPLY_TECHNOLOGY_UNKNOWN=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">POWER_SUPPLY_TECHNOLOGY_NIMH=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">POWER_SUPPLY_TECHNOLOGY_LION=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">POWER_SUPPLY_TECHNOLOGY_LIPO=3</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">POWER_SUPPLY_TECHNOLOGY_LIFE=4</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">POWER_SUPPLY_TECHNOLOGY_NICD=5</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">POWER_SUPPLY_TECHNOLOGY_LIMN=6</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">POWER_SUPPLY_TECHNOLOGY_TERNARY=7</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">POWER_SUPPLY_TECHNOLOGY_VRLA=8</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CameraInfo</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">height</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">width</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">distortion_model</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[]</span> <span class="pre">d</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[9]</span> <span class="pre">k</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[9]</span> <span class="pre">r</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[12]</span> <span class="pre">p</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">binning_x</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">binning_y</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RegionOfInterest</span> <span class="pre">roi</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ChannelFloat32</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32[]</span> <span class="pre">values</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CompressedImage</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">format</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8[]</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FluidPressure</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">fluid_pressure</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">variance</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Illuminance</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">illuminance</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">variance</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Image</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">height</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">width</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">encoding</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">is_bigendian</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">step</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8[]</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Imu</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Quaternion</span> <span class="pre">orientation</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[9]</span> <span class="pre">orientation_covariance</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Vector3</span> <span class="pre">angular_velocity</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[9]</span> <span class="pre">angular_velocity_covariance</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Vector3</span> <span class="pre">linear_acceleration</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[9]</span> <span class="pre">linear_acceleration_covariance</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JointState</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string[]</span> <span class="pre">name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[]</span> <span class="pre">position</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[]</span> <span class="pre">velocity</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[]</span> <span class="pre">effort</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Joy</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32[]</span> <span class="pre">axes</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int32[]</span> <span class="pre">buttons</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JoyFeedback</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">type</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">id</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">intensity</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Constants:
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TYPE_LED=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TYPE_RUMBLE=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TYPE_BUZZER=2</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JoyFeedbackArray</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">JoyFeedback[]</span> <span class="pre">array</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LaserEcho</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float32[]</span> <span class="pre">echoes</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LaserScan</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">angle_min</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">angle_max</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">angle_increment</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">time_increment</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">scan_time</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">range_min</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">range_max</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32[]</span> <span class="pre">ranges</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32[]</span> <span class="pre">intensities</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MagneticField</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Vector3</span> <span class="pre">magnetic_field</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[9]</span> <span class="pre">magnetic_field_covariance</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MultiDOFJointState</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string[]</span> <span class="pre">joint_names</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Transform[]</span> <span class="pre">transforms</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Twist[]</span> <span class="pre">twist</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Wrench[]</span> <span class="pre">wrench</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MultiEchoLaserScan</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">angle_min</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">angle_max</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">angle_increment</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">time_increment</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">scan_time</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">range_min</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">range_max</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LaserEcho[]</span> <span class="pre">ranges</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LaserEcho[]</span> <span class="pre">intensities</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NavSatFix</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NavSatStatus</span> <span class="pre">status</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">latitude</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">longitude</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">altitude</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[9]</span> <span class="pre">position_covariance</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">position_covariance_type</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Constants:
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">COVARIANCE_TYPE_UNKNOWN=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">COVARIANCE_TYPE_APPROXIMATED=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">COVARIANCE_TYPE_DIAGONAL_KNOWN=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">COVARIANCE_TYPE_KNOWN=3</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NavSatStatus</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">int8</span> <span class="pre">status</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint16</span> <span class="pre">service</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Constants:
+- <code class="docutils literal notranslate"><span class="pre">int8</span> <span class="pre">STATUS_UNKNOWN=-2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int8</span> <span class="pre">STATUS_NO_FIX=-1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int8</span> <span class="pre">STATUS_FIX=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int8</span> <span class="pre">STATUS_SBAS_FIX=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int8</span> <span class="pre">STATUS_GBAS_FIX=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint16</span> <span class="pre">SERVICE_UNKNOWN=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint16</span> <span class="pre">SERVICE_GPS=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint16</span> <span class="pre">SERVICE_GLONASS=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint16</span> <span class="pre">SERVICE_COMPASS=4</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint16</span> <span class="pre">SERVICE_GALILEO=8</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PointCloud</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Point32[]</span> <span class="pre">points</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ChannelFloat32[]</span> <span class="pre">channels</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PointCloud2</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">height</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">width</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PointField[]</span> <span class="pre">fields</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">is_bigendian</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">point_step</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">row_step</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8[]</span> <span class="pre">data</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">is_dense</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PointField</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">offset</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">datatype</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">count</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Constants:
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">INT8=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">UINT8=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">INT16=3</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">UINT16=4</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">INT32=5</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">UINT32=6</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FLOAT32=7</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FLOAT64=8</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Range</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">radiation_type</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">field_of_view</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">min_range</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">max_range</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">range</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">variance</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Constants:
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">ULTRASOUND=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">INFRARED=1</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RegionOfInterest</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">x_offset</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">y_offset</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">height</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">width</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">do_rectify</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RelativeHumidity</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">relative_humidity</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">variance</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Temperature</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">temperature</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">variance</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TimeReference</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">builtin_interfaces/Time</span> <span class="pre">time_ref</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">source</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="nav-msgs">
+<h3>nav_msgs<a class="headerlink" href="#nav-msgs" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">GridCells</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">cell_width</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">cell_height</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Point[]</span> <span class="pre">cells</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MapMetaData</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">builtin_interfaces/Time</span> <span class="pre">map_load_time</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">resolution</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">width</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">height</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Pose</span> <span class="pre">origin</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">OccupancyGrid</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MapMetaData</span> <span class="pre">info</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int8[]</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Odometry</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">child_frame_id</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/PoseWithCovariance</span> <span class="pre">pose</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/TwistWithCovariance</span> <span class="pre">twist</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Path</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/PoseStamped[]</span> <span class="pre">poses</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="trajectory-msgs">
+<h3>trajectory_msgs<a class="headerlink" href="#trajectory-msgs" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">JointTrajectory</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string[]</span> <span class="pre">joint_names</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JointTrajectoryPoint[]</span> <span class="pre">points</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JointTrajectoryPoint</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[]</span> <span class="pre">positions</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[]</span> <span class="pre">velocities</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[]</span> <span class="pre">accelerations</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[]</span> <span class="pre">effort</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">builtin_interfaces/Duration</span> <span class="pre">time_from_start</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MultiDOFJointTrajectory</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string[]</span> <span class="pre">joint_names</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MultiDOFJointTrajectoryPoint[]</span> <span class="pre">points</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MultiDOFJointTrajectoryPoint</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Transform[]</span> <span class="pre">transforms</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Twist[]</span> <span class="pre">velocities</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Twist[]</span> <span class="pre">accelerations</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">builtin_interfaces/Duration</span> <span class="pre">time_from_start</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="tf2-msgs">
+<h3>tf2_msgs<a class="headerlink" href="#tf2-msgs" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">TF2Error</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">error</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">error_string</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Constants:
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">NO_ERROR=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">LOOKUP_ERROR=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">CONNECTIVITY_ERROR=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">EXTRAPOLATION_ERROR=3</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">INVALID_ARGUMENT_ERROR=4</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TIMEOUT_ERROR=5</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSFORM_ERROR=6</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TFMessage</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/TransformStamped[]</span> <span class="pre">transforms</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="unique-identifier-msgs">
+<h3>unique_identifier_msgs<a class="headerlink" href="#unique-identifier-msgs" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">UUID</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8[16]</span> <span class="pre">uuid</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="rosgraph-msgs">
+<h3>rosgraph_msgs<a class="headerlink" href="#rosgraph-msgs" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Clock</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">builtin_interfaces/Time</span> <span class="pre">clock</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+</section>
+<section id="services">
+<h2>Services<a class="headerlink" href="#services" title="Link to this heading"></a></h2>
+<section id="std-srvs">
+<h3>std_srvs<a class="headerlink" href="#std-srvs" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Empty</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(none)</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- (none)</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SetBool</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">message</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Trigger</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(none)</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">message</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id1">
+<h3>sensor_msgs<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">SetCameraInfo</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/CameraInfo</span> <span class="pre">camera_info</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">status_message</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id2">
+<h3>nav_msgs<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">GetMap</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(none)</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">OccupancyGrid</span> <span class="pre">map</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GetPlan</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/PoseStamped</span> <span class="pre">start</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/PoseStamped</span> <span class="pre">goal</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">tolerance</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">Path</span> <span class="pre">plan</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LoadMap</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">map_url</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">nav_msgs/OccupancyGrid</span> <span class="pre">map</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">result</span></code></p></li>
+<li><p>Response constants:
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">RESULT_SUCCESS=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">RESULT_MAP_DOES_NOT_EXIST=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">RESULT_INVALID_MAP_DATA=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">RESULT_INVALID_MAP_METADATA=3</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">RESULT_UNDEFINED_FAILURE=255</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SetMap</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nav_msgs/OccupancyGrid</span> <span class="pre">map</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/PoseWithCovarianceStamped</span> <span class="pre">initial_pose</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id3">
+<h3>tf2_msgs<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">FrameGraph</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(none)</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">frame_yaml</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Ros2MessagesRaisinTests.html" class="btn btn-neutral float-left" title="Raisin Test Message Types" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Ros2MessagesRuntime.html" class="btn btn-neutral float-right" title="ROS2 Runtime and Introspection Message Types" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Raion Robotics..</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

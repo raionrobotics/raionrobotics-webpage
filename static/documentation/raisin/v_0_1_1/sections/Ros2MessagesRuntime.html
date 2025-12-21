@@ -1,0 +1,938 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROS2 Runtime and Introspection Message Types &mdash; raisin 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css?v=2a6c4383" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css?v=45cf7dbc" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css?v=d290406d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Visualization and Diagnostics Message Types" href="Ros2MessagesVisualization.html" />
+    <link rel="prev" title="Core ROS2 Message Types" href="Ros2MessagesCore.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            raisin
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Chapters</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinNetwork.html">Raisin Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Plugin.html">Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Parameter.html">Parameter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DataLogger.html">DataLogger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaiboNode.html">RaiboNode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinGui.html">Raisin Gui</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Ros2Messages.html">ROS2 Message Types</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesRaisinInterfaces.html">Raisin Interfaces Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesRaisinPlugins.html">Raisin Plugin Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesRaisinTests.html">Raisin Test Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesCore.html">Core ROS2 Message Types</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ROS2 Runtime and Introspection Message Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#messages">Messages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rcl-interfaces">rcl_interfaces</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#type-description-interfaces">type_description_interfaces</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lifecycle-msgs">lifecycle_msgs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#service-msgs">service_msgs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#action-msgs">action_msgs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#actionlib-msgs">actionlib_msgs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#statistics-msgs">statistics_msgs</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#services">Services</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">rcl_interfaces</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">type_description_interfaces</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">lifecycle_msgs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#composition-interfaces">composition_interfaces</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">action_msgs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesVisualization.html">Visualization and Diagnostics Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesGnss.html">GNSS and RTCM Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesTestMsgs.html">ROS2 Test Message Types</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Reference.html">Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">raisin</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="Ros2Messages.html">ROS2 Message Types</a></li>
+      <li class="breadcrumb-item active">ROS2 Runtime and Introspection Message Types</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ros2-runtime-and-introspection-message-types">
+<h1>ROS2 Runtime and Introspection Message Types<a class="headerlink" href="#ros2-runtime-and-introspection-message-types" title="Link to this heading"></a></h1>
+<p>Definitions are sourced from <code class="docutils literal notranslate"><span class="pre">release/install/raisin_ros2_messages/ubuntu/22.04/x86_64/release/messages</span></code>. Only the public message schemas are documented here.</p>
+<section id="messages">
+<h2>Messages<a class="headerlink" href="#messages" title="Link to this heading"></a></h2>
+<section id="rcl-interfaces">
+<h3>rcl_interfaces<a class="headerlink" href="#rcl-interfaces" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">FloatingPointRange</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">from_value</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">to_value</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">step</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">IntegerRange</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">int64</span> <span class="pre">from_value</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int64</span> <span class="pre">to_value</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint64</span> <span class="pre">step</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ListParametersResult</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string[]</span> <span class="pre">names</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string[]</span> <span class="pre">prefixes</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Log</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">builtin_interfaces/Time</span> <span class="pre">stamp</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">level</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">msg</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">file</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">function</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">line</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Constants:
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">DEBUG=10</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">INFO=20</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">WARN=30</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">ERROR=40</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FATAL=50</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Parameter</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ParameterValue</span> <span class="pre">value</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ParameterDescriptor</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">type</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">description</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">additional_constraints</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">read_only</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">dynamic_typing</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FloatingPointRange[&lt;=1]</span> <span class="pre">floating_point_range</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">IntegerRange[&lt;=1]</span> <span class="pre">integer_range</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ParameterEvent</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">builtin_interfaces/Time</span> <span class="pre">stamp</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">node</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Parameter[]</span> <span class="pre">new_parameters</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Parameter[]</span> <span class="pre">changed_parameters</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Parameter[]</span> <span class="pre">deleted_parameters</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ParameterEventDescriptors</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ParameterDescriptor[]</span> <span class="pre">new_parameters</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ParameterDescriptor[]</span> <span class="pre">changed_parameters</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ParameterDescriptor[]</span> <span class="pre">deleted_parameters</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ParameterType</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(none)</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Constants:
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">PARAMETER_NOT_SET=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">PARAMETER_BOOL=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">PARAMETER_INTEGER=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">PARAMETER_DOUBLE=3</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">PARAMETER_STRING=4</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">PARAMETER_BYTE_ARRAY=5</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">PARAMETER_BOOL_ARRAY=6</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">PARAMETER_INTEGER_ARRAY=7</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">PARAMETER_DOUBLE_ARRAY=8</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">PARAMETER_STRING_ARRAY=9</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ParameterValue</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">type</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">bool_value</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int64</span> <span class="pre">integer_value</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">double_value</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">string_value</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">byte[]</span> <span class="pre">byte_array_value</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool[]</span> <span class="pre">bool_array_value</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int64[]</span> <span class="pre">integer_array_value</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[]</span> <span class="pre">double_array_value</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string[]</span> <span class="pre">string_array_value</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SetParametersResult</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">successful</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">reason</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="type-description-interfaces">
+<h3>type_description_interfaces<a class="headerlink" href="#type-description-interfaces" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Field</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FieldType</span> <span class="pre">type</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">default_value</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FieldType</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">type_id</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint64</span> <span class="pre">capacity</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint64</span> <span class="pre">string_capacity</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string&lt;=255</span> <span class="pre">nested_type_name</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Constants:
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_NOT_SET=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_NESTED_TYPE=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_INT8=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_UINT8=3</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_INT16=4</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_UINT16=5</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_INT32=6</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_UINT32=7</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_INT64=8</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_UINT64=9</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_FLOAT=10</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_DOUBLE=11</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_LONG_DOUBLE=12</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_CHAR=13</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_WCHAR=14</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_BOOLEAN=15</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_BYTE=16</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_STRING=17</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_WSTRING=18</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_FIXED_STRING=19</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_FIXED_WSTRING=20</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_BOUNDED_STRING=21</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_BOUNDED_WSTRING=22</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_NESTED_TYPE_ARRAY=49</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_INT8_ARRAY=50</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_UINT8_ARRAY=51</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_INT16_ARRAY=52</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_UINT16_ARRAY=53</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_INT32_ARRAY=54</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_UINT32_ARRAY=55</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_INT64_ARRAY=56</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_UINT64_ARRAY=57</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_FLOAT_ARRAY=58</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_DOUBLE_ARRAY=59</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_LONG_DOUBLE_ARRAY=60</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_CHAR_ARRAY=61</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_WCHAR_ARRAY=62</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_BOOLEAN_ARRAY=63</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_BYTE_ARRAY=64</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_STRING_ARRAY=65</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_WSTRING_ARRAY=66</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_FIXED_STRING_ARRAY=67</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_FIXED_WSTRING_ARRAY=68</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_BOUNDED_STRING_ARRAY=69</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_BOUNDED_WSTRING_ARRAY=70</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_NESTED_TYPE_BOUNDED_SEQUENCE=97</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_INT8_BOUNDED_SEQUENCE=98</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_UINT8_BOUNDED_SEQUENCE=99</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_INT16_BOUNDED_SEQUENCE=100</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_UINT16_BOUNDED_SEQUENCE=101</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_INT32_BOUNDED_SEQUENCE=102</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_UINT32_BOUNDED_SEQUENCE=103</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_INT64_BOUNDED_SEQUENCE=104</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_UINT64_BOUNDED_SEQUENCE=105</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_FLOAT_BOUNDED_SEQUENCE=106</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_DOUBLE_BOUNDED_SEQUENCE=107</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_LONG_DOUBLE_BOUNDED_SEQUENCE=108</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_CHAR_BOUNDED_SEQUENCE=109</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_WCHAR_BOUNDED_SEQUENCE=110</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_BOOLEAN_BOUNDED_SEQUENCE=111</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_BYTE_BOUNDED_SEQUENCE=112</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_STRING_BOUNDED_SEQUENCE=113</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_WSTRING_BOUNDED_SEQUENCE=114</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_FIXED_STRING_BOUNDED_SEQUENCE=115</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_FIXED_WSTRING_BOUNDED_SEQUENCE=116</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_BOUNDED_STRING_BOUNDED_SEQUENCE=117</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_BOUNDED_WSTRING_BOUNDED_SEQUENCE=118</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_NESTED_TYPE_UNBOUNDED_SEQUENCE=145</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_INT8_UNBOUNDED_SEQUENCE=146</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_UINT8_UNBOUNDED_SEQUENCE=147</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_INT16_UNBOUNDED_SEQUENCE=148</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_UINT16_UNBOUNDED_SEQUENCE=149</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_INT32_UNBOUNDED_SEQUENCE=150</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_UINT32_UNBOUNDED_SEQUENCE=151</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_INT64_UNBOUNDED_SEQUENCE=152</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_UINT64_UNBOUNDED_SEQUENCE=153</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_FLOAT_UNBOUNDED_SEQUENCE=154</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_DOUBLE_UNBOUNDED_SEQUENCE=155</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_LONG_DOUBLE_UNBOUNDED_SEQUENCE=156</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_CHAR_UNBOUNDED_SEQUENCE=157</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_WCHAR_UNBOUNDED_SEQUENCE=158</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_BOOLEAN_UNBOUNDED_SEQUENCE=159</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_BYTE_UNBOUNDED_SEQUENCE=160</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_STRING_UNBOUNDED_SEQUENCE=161</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_WSTRING_UNBOUNDED_SEQUENCE=162</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_FIXED_STRING_UNBOUNDED_SEQUENCE=163</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_FIXED_WSTRING_UNBOUNDED_SEQUENCE=164</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_BOUNDED_STRING_UNBOUNDED_SEQUENCE=165</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIELD_TYPE_BOUNDED_WSTRING_UNBOUNDED_SEQUENCE=166</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">IndividualTypeDescription</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string&lt;=255</span> <span class="pre">type_name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Field[]</span> <span class="pre">fields</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">KeyValue</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">key</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">value</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TypeDescription</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">IndividualTypeDescription</span> <span class="pre">type_description</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">IndividualTypeDescription[]</span> <span class="pre">referenced_type_descriptions</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TypeSource</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">type_name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">encoding</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">raw_file_contents</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="lifecycle-msgs">
+<h3>lifecycle_msgs<a class="headerlink" href="#lifecycle-msgs" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">State</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">id</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">label</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Constants:
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">PRIMARY_STATE_UNKNOWN=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">PRIMARY_STATE_UNCONFIGURED=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">PRIMARY_STATE_INACTIVE=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">PRIMARY_STATE_ACTIVE=3</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">PRIMARY_STATE_FINALIZED=4</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_STATE_CONFIGURING=10</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_STATE_CLEANINGUP=11</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_STATE_SHUTTINGDOWN=12</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_STATE_ACTIVATING=13</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_STATE_DEACTIVATING=14</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_STATE_ERRORPROCESSING=15</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Transition</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">id</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">label</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Constants:
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_CREATE=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_CONFIGURE=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_CLEANUP=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_ACTIVATE=3</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_DEACTIVATE=4</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_UNCONFIGURED_SHUTDOWN=5</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_INACTIVE_SHUTDOWN=6</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_ACTIVE_SHUTDOWN=7</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_DESTROY=8</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_ON_CONFIGURE_SUCCESS=10</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_ON_CONFIGURE_FAILURE=11</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_ON_CONFIGURE_ERROR=12</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_ON_CLEANUP_SUCCESS=20</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_ON_CLEANUP_FAILURE=21</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_ON_CLEANUP_ERROR=22</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_ON_ACTIVATE_SUCCESS=30</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_ON_ACTIVATE_FAILURE=31</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_ON_ACTIVATE_ERROR=32</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_ON_DEACTIVATE_SUCCESS=40</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_ON_DEACTIVATE_FAILURE=41</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_ON_DEACTIVATE_ERROR=42</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_ON_SHUTDOWN_SUCCESS=50</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_ON_SHUTDOWN_FAILURE=51</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_ON_SHUTDOWN_ERROR=52</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_ON_ERROR_SUCCESS=60</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_ON_ERROR_FAILURE=61</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_ON_ERROR_ERROR=62</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_CALLBACK_SUCCESS=97</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_CALLBACK_FAILURE=98</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">TRANSITION_CALLBACK_ERROR=99</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TransitionDescription</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Transition</span> <span class="pre">transition</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">State</span> <span class="pre">start_state</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">State</span> <span class="pre">goal_state</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TransitionEvent</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uint64</span> <span class="pre">timestamp</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Transition</span> <span class="pre">transition</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">State</span> <span class="pre">start_state</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">State</span> <span class="pre">goal_state</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="service-msgs">
+<h3>service_msgs<a class="headerlink" href="#service-msgs" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">ServiceEventInfo</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">event_type</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">builtin_interfaces/Time</span> <span class="pre">stamp</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">char[16]</span> <span class="pre">client_gid</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int64</span> <span class="pre">sequence_number</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Constants:
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">REQUEST_SENT=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">REQUEST_RECEIVED=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">RESPONSE_SENT=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">RESPONSE_RECEIVED=3</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="action-msgs">
+<h3>action_msgs<a class="headerlink" href="#action-msgs" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">GoalInfo</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">unique_identifier_msgs/UUID</span> <span class="pre">goal_id</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">builtin_interfaces/Time</span> <span class="pre">stamp</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GoalStatus</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">GoalInfo</span> <span class="pre">goal_info</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int8</span> <span class="pre">status</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Constants:
+- <code class="docutils literal notranslate"><span class="pre">int8</span> <span class="pre">STATUS_UNKNOWN=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int8</span> <span class="pre">STATUS_ACCEPTED=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int8</span> <span class="pre">STATUS_EXECUTING=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int8</span> <span class="pre">STATUS_CANCELING=3</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int8</span> <span class="pre">STATUS_SUCCEEDED=4</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int8</span> <span class="pre">STATUS_CANCELED=5</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int8</span> <span class="pre">STATUS_ABORTED=6</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GoalStatusArray</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">GoalStatus[]</span> <span class="pre">status_list</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="actionlib-msgs">
+<h3>actionlib_msgs<a class="headerlink" href="#actionlib-msgs" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">GoalID</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">builtin_interfaces/Time</span> <span class="pre">stamp</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">id</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GoalStatus</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">GoalID</span> <span class="pre">goal_id</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">status</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">text</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Constants:
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">PENDING=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">ACTIVE=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">PREEMPTED=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">SUCCEEDED=3</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">ABORTED=4</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">REJECTED=5</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">PREEMPTING=6</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">RECALLING=7</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">RECALLED=8</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">LOST=9</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GoalStatusArray</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GoalStatus[]</span> <span class="pre">status_list</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="statistics-msgs">
+<h3>statistics_msgs<a class="headerlink" href="#statistics-msgs" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">MetricsMessage</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">measurement_source_name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">metrics_source</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">unit</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">builtin_interfaces/Time</span> <span class="pre">window_start</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">builtin_interfaces/Time</span> <span class="pre">window_stop</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">StatisticDataPoint[]</span> <span class="pre">statistics</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">StatisticDataPoint</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">data_type</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">StatisticDataType</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(none)</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Constants:
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">STATISTICS_DATA_TYPE_UNINITIALIZED=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">STATISTICS_DATA_TYPE_AVERAGE=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">STATISTICS_DATA_TYPE_MINIMUM=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">STATISTICS_DATA_TYPE_MAXIMUM=3</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">STATISTICS_DATA_TYPE_STDDEV=4</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">STATISTICS_DATA_TYPE_SAMPLE_COUNT=5</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="services">
+<h2>Services<a class="headerlink" href="#services" title="Link to this heading"></a></h2>
+<section id="id1">
+<h3>rcl_interfaces<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">DescribeParameters</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string[]</span> <span class="pre">names</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">ParameterDescriptor[]</span> <span class="pre">descriptors</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GetParameterTypes</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string[]</span> <span class="pre">names</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">uint8[]</span> <span class="pre">types</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GetParameters</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string[]</span> <span class="pre">names</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">ParameterValue[]</span> <span class="pre">values</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ListParameters</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string[]</span> <span class="pre">prefixes</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint64</span> <span class="pre">depth</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Request constants:
+- <code class="docutils literal notranslate"><span class="pre">uint64</span> <span class="pre">DEPTH_RECURSIVE=0</span></code></p></li>
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">ListParametersResult</span> <span class="pre">result</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SetParameters</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Parameter[]</span> <span class="pre">parameters</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">SetParametersResult[]</span> <span class="pre">results</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SetParametersAtomically</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Parameter[]</span> <span class="pre">parameters</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">SetParametersResult</span> <span class="pre">result</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id2">
+<h3>type_description_interfaces<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">GetTypeDescription</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">type_name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">type_hash</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">include_type_sources</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">successful</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">failure_reason</span></code>
+- <code class="docutils literal notranslate"><span class="pre">TypeDescription</span> <span class="pre">type_description</span></code>
+- <code class="docutils literal notranslate"><span class="pre">TypeSource[]</span> <span class="pre">type_sources</span></code>
+- <code class="docutils literal notranslate"><span class="pre">KeyValue[]</span> <span class="pre">extra_information</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id3">
+<h3>lifecycle_msgs<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">ChangeState</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Transition</span> <span class="pre">transition</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GetAvailableStates</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(none)</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">State[]</span> <span class="pre">available_states</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GetAvailableTransitions</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(none)</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">TransitionDescription[]</span> <span class="pre">available_transitions</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GetState</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(none)</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">State</span> <span class="pre">current_state</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="composition-interfaces">
+<h3>composition_interfaces<a class="headerlink" href="#composition-interfaces" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">ListNodes</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(none)</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">string[]</span> <span class="pre">full_node_names</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint64[]</span> <span class="pre">unique_ids</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LoadNode</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">package_name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">plugin_name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">node_name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">node_namespace</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">log_level</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string[]</span> <span class="pre">remap_rules</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rcl_interfaces/Parameter[]</span> <span class="pre">parameters</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rcl_interfaces/Parameter[]</span> <span class="pre">extra_arguments</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">error_message</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">full_node_name</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint64</span> <span class="pre">unique_id</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UnloadNode</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uint64</span> <span class="pre">unique_id</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">error_message</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id4">
+<h3>action_msgs<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">CancelGoal</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">GoalInfo</span> <span class="pre">goal_info</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">int8</span> <span class="pre">return_code</span></code>
+- <code class="docutils literal notranslate"><span class="pre">GoalInfo[]</span> <span class="pre">goals_canceling</span></code></p></li>
+<li><p>Response constants:
+- <code class="docutils literal notranslate"><span class="pre">int8</span> <span class="pre">ERROR_NONE=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int8</span> <span class="pre">ERROR_REJECTED=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int8</span> <span class="pre">ERROR_UNKNOWN_GOAL_ID=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int8</span> <span class="pre">ERROR_GOAL_TERMINATED=3</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Ros2MessagesCore.html" class="btn btn-neutral float-left" title="Core ROS2 Message Types" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Ros2MessagesVisualization.html" class="btn btn-neutral float-right" title="Visualization and Diagnostics Message Types" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Raion Robotics..</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,303 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raisin Plugin Message Types &mdash; raisin 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css?v=2a6c4383" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css?v=45cf7dbc" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css?v=d290406d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Raisin Test Message Types" href="Ros2MessagesRaisinTests.html" />
+    <link rel="prev" title="Raisin Interfaces Message Types" href="Ros2MessagesRaisinInterfaces.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            raisin
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Chapters</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinNetwork.html">Raisin Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Plugin.html">Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Parameter.html">Parameter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DataLogger.html">DataLogger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaiboNode.html">RaiboNode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinGui.html">Raisin Gui</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Ros2Messages.html">ROS2 Message Types</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesRaisinInterfaces.html">Raisin Interfaces Message Types</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Raisin Plugin Message Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#messages">Messages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#raisin-fast-lio-plugin">raisin_fast_lio_plugin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raisin-ffmpeg-image-transport">raisin_ffmpeg_image_transport</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raisin-livox-lidar-plugin">raisin_livox_lidar_plugin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raisin-thread-pool">raisin_thread_pool</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raisin-yolov8-msg">raisin_yolov8_msg</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#services">Services</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#raisin-grid-mapping-plugin">raisin_grid_mapping_plugin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">raisin_yolov8_msg</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesRaisinTests.html">Raisin Test Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesCore.html">Core ROS2 Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesRuntime.html">ROS2 Runtime and Introspection Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesVisualization.html">Visualization and Diagnostics Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesGnss.html">GNSS and RTCM Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesTestMsgs.html">ROS2 Test Message Types</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Reference.html">Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">raisin</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="Ros2Messages.html">ROS2 Message Types</a></li>
+      <li class="breadcrumb-item active">Raisin Plugin Message Types</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="raisin-plugin-message-types">
+<h1>Raisin Plugin Message Types<a class="headerlink" href="#raisin-plugin-message-types" title="Link to this heading"></a></h1>
+<p>Definitions are sourced from <code class="docutils literal notranslate"><span class="pre">release/install/raisin_ros2_messages/ubuntu/22.04/x86_64/release/messages</span></code>. Only the public message schemas are documented here.</p>
+<section id="messages">
+<h2>Messages<a class="headerlink" href="#messages" title="Link to this heading"></a></h2>
+<section id="raisin-fast-lio-plugin">
+<h3>raisin_fast_lio_plugin<a class="headerlink" href="#raisin-fast-lio-plugin" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Pose6D</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">offset_time</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[3]</span> <span class="pre">acc</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[3]</span> <span class="pre">gyr</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[3]</span> <span class="pre">vel</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[3]</span> <span class="pre">pos</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[9]</span> <span class="pre">rot</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="raisin-ffmpeg-image-transport">
+<h3>raisin_ffmpeg_image_transport<a class="headerlink" href="#raisin-ffmpeg-image-transport" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">FFMPEGPacket</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8[]</span> <span class="pre">data</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">width</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">height</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">encoding</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint64</span> <span class="pre">pts</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">flags</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">is_bigendian</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="raisin-livox-lidar-plugin">
+<h3>raisin_livox_lidar_plugin<a class="headerlink" href="#raisin-livox-lidar-plugin" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">CustomMsg</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint64</span> <span class="pre">timebase</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">point_num</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">lidar_id</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8[3]</span> <span class="pre">rsvd</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CustomPoint[]</span> <span class="pre">points</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CustomPoint</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">offset_time</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">x</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">y</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">z</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">reflectivity</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">tag</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">line</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="raisin-thread-pool">
+<h3>raisin_thread_pool<a class="headerlink" href="#raisin-thread-pool" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">ThreadPoolProfile</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(none)</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ThreadProfile</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(none)</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="raisin-yolov8-msg">
+<h3>raisin_yolov8_msg<a class="headerlink" href="#raisin-yolov8-msg" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">DetectedObject</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">class_name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">confidence</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">x</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">y</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">width</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">height</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+</section>
+<section id="services">
+<h2>Services<a class="headerlink" href="#services" title="Link to this heading"></a></h2>
+<section id="raisin-grid-mapping-plugin">
+<h3>raisin_grid_mapping_plugin<a class="headerlink" href="#raisin-grid-mapping-plugin" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">GetInpaintmap</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(none)</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">message</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">sample_x</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">sample_y</span></code>
+- <code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">size_x</span></code>
+- <code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">size_y</span></code>
+- <code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">center_x</span></code>
+- <code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">center_y</span></code>
+- <code class="docutils literal notranslate"><span class="pre">float64[]</span> <span class="pre">inpaint_height_vec</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id1">
+<h3>raisin_yolov8_msg<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Detection</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/Image</span> <span class="pre">image</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">DetectedObject[]</span> <span class="pre">detection</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Ros2MessagesRaisinInterfaces.html" class="btn btn-neutral float-left" title="Raisin Interfaces Message Types" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Ros2MessagesRaisinTests.html" class="btn btn-neutral float-right" title="Raisin Test Message Types" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Raion Robotics..</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

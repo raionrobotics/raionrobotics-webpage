@@ -1,0 +1,17 @@
+#######################
+ROS2 Test Message Types
+#######################
+
+Definitions are sourced from ``release/install/raisin_ros2_messages/ubuntu/22.04/x86_64/release/messages``. Only the public message schemas are documented here.
+
+Messages
+********
+
+test_msgs
+=========
+
+- ``Builtins``:
+  - Fields:
+    - ``builtin_interfaces/Duration duration_value``
+    - ``builtin_interfaces/Time time_value``
+

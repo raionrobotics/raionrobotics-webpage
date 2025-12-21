@@ -1,0 +1,72 @@
+#############################
+DataLogger
+#############################
+Raisin provides a buffered data logger with CSV export support.
+
+The global logger is accessed via ``raisin::DataLogger::getInstance()``. Dynamically loaded
+controllers and plugins should use their injected ``dataLogger_`` instead of the global singleton.
+
+Creating a log directory
+=========================
+
+Initialize the logger once with ``createALogFile(deviceType, directory)``:
+
+.. code-block:: cpp
+
+  raisin::DataLogger::getInstance().createALogFile(
+    "raibo2", raisin::getLogDirectory("raisin_data_logger"));
+
+This creates a directory named ``<deviceType>_YYYY-mm-dd-hh-mm-ss`` under the provided base
+directory and writes ``log_0.raisin_data`` (rotating across up to 4 files as size grows). In
+``raisin_raibo2_node`` this call is already handled at startup, so you should not call it again
+from plugins or controllers.
+
+Logging data groups
+====================
+
+Logging starts by declaring a data group with ``initializeAnotherDataGroup``. The ``ownersName``
+becomes the CSV file prefix, and the ``args`` are pairs of ``std::string label`` and data values.
+Supported data types include:
+
+* **Eigen::Matrix<T, S1, S2>**: A matrix type from the Eigen library, useful for handling mathematical matrices with specific dimensions.
+* **std::vector<T>**: A standard vector, which can contain elements of any type T.
+* **raisim::VecDyn**: A dynamic vector type specific to the Raisim library, typically used in robotics and simulation.
+* **raisim::Mat<n, m>**: A matrix type from the Raisim library, defined by its dimensions n and m.
+* **T**: A generic placeholder representing a variable of any basic data type (e.g., int, float, double).
+
+The method returns a ``size_t logIdx`` that identifies the group. Use the same order and shapes
+when calling ``append``; otherwise the reader will warn about mismatched lengths.
+
+For vectors and matrices, the values must be initialized before calling
+``initializeAnotherDataGroup`` because the logger captures the shape in the label row.
+
+To complete the logging process and export the data to a CSV file, the following steps should be taken:
+
+.. code-block:: cpp
+
+  raisin::DataLogger::getInstance().flush();
+  raisin::DataReader file(raisin::DataLogger::getInstance().getDataDirectory());
+  file.exportToCsv();
+
+These steps are also managed within ``raisin_raibo2_node``, so there is no need to repeat them in
+other parts of the application. ``exportToCsv`` writes ``<ownersName>_<index>.csv`` files into the
+same log directory.
+
+To control rotation size, call ``setAllowedDataSize`` (bytes). ``raisin_raibo2_node`` sets this
+from ``max_logging_volume`` (MB).
+
+For data visualization, you can use tools like PlotJuggler, as detailed in the operation manual.
+
+For practical implementation examples, refer to the :download:`test_raisin_data_logger.cpp <../example/test_raisin_data_logger.cpp>`.
+
+.. literalinclude:: ../example/test_raisin_data_logger.cpp
+  :language: cpp
+
+API
+====
+
+.. doxygenclass:: raisin::DataLogger
+   :members:
+   
+.. doxygenclass:: raisin::DataReader
+   :members:

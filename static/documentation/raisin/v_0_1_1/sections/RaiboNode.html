@@ -1,0 +1,537 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RaiboNode &mdash; raisin 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css?v=2a6c4383" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css?v=45cf7dbc" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css?v=d290406d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Controller" href="Controller.html" />
+    <link rel="prev" title="DataLogger" href="DataLogger.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            raisin
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Chapters</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinNetwork.html">Raisin Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Plugin.html">Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Parameter.html">Parameter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DataLogger.html">DataLogger</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">RaiboNode</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#run">Run</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#run-in-simulation">Run In simulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#change-configuration">Change Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#interfaces">Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#publishers">Publishers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#robot-state"><code class="docutils literal notranslate"><span class="pre">robot_state</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-list"><code class="docutils literal notranslate"><span class="pre">module_list</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#profile"><code class="docutils literal notranslate"><span class="pre">profile</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#threadpool"><code class="docutils literal notranslate"><span class="pre">threadpool</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#joint-states"><code class="docutils literal notranslate"><span class="pre">joint_states</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#init-motor"><code class="docutils literal notranslate"><span class="pre">init_motor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stop-motor"><code class="docutils literal notranslate"><span class="pre">stop_motor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#d430-front-grid-map-depth-data"><code class="docutils literal notranslate"><span class="pre">d430_front/grid_map_depth_data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#d430-rear-grid-map-depth-data"><code class="docutils literal notranslate"><span class="pre">d430_rear/grid_map_depth_data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#d455-front-grid-map-depth-data"><code class="docutils literal notranslate"><span class="pre">d455_front/grid_map_depth_data</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#subscribers">Subscribers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#command"><code class="docutils literal notranslate"><span class="pre">command</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#joy-sig"><code class="docutils literal notranslate"><span class="pre">joy_sig</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#d430-front-depth"><code class="docutils literal notranslate"><span class="pre">d430_front/depth</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#d430-rear-depth"><code class="docutils literal notranslate"><span class="pre">d430_rear/depth</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#d455-front-depth"><code class="docutils literal notranslate"><span class="pre">d455_front/depth</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#odometry-state-estimator"><code class="docutils literal notranslate"><span class="pre">/Odometry/state_estimator</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#base-imu-imu"><code class="docutils literal notranslate"><span class="pre">base_imu/imu</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#services">Services</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#turn-on"><code class="docutils literal notranslate"><span class="pre">turn_on</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#turn-off"><code class="docutils literal notranslate"><span class="pre">turn_off</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#list-log-tree"><code class="docutils literal notranslate"><span class="pre">list_log_tree</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#describe-robot"><code class="docutils literal notranslate"><span class="pre">describe_robot</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1"><code class="docutils literal notranslate"><span class="pre">init_motor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2"><code class="docutils literal notranslate"><span class="pre">stop_motor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#set-home-with-type"><code class="docutils literal notranslate"><span class="pre">set_home_with_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#joint-test"><code class="docutils literal notranslate"><span class="pre">joint_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stand-up"><code class="docutils literal notranslate"><span class="pre">stand_up</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sit-down"><code class="docutils literal notranslate"><span class="pre">sit_down</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#load-controller"><code class="docutils literal notranslate"><span class="pre">load_controller</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#motor-commutation"><code class="docutils literal notranslate"><span class="pre">motor_commutation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#load-plugin"><code class="docutils literal notranslate"><span class="pre">load_plugin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#set-home"><code class="docutils literal notranslate"><span class="pre">set_home</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#clients">Clients</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3"><code class="docutils literal notranslate"><span class="pre">load_controller</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#development">Development</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Plugin.html">Plugin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Controller.html">Controller</a></li>
+<li class="toctree-l3"><a class="reference internal" href="JoyInterface.html">Joy Interface</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinGui.html">Raisin Gui</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Ros2Messages.html">ROS2 Message Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Reference.html">Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">raisin</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">RaiboNode</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="raibonode">
+<h1>RaiboNode<a class="headerlink" href="#raibonode" title="Link to this heading"></a></h1>
+<p>The source code for Raibo Node can be found in <code class="docutils literal notranslate"><span class="pre">src/raisin_raibo2</span></code>.</p>
+<p>This node primarily facilitates communication between <code class="docutils literal notranslate"><span class="pre">worldHub_</span></code> and other components. It
+initializes a <code class="docutils literal notranslate"><span class="pre">raisin::Network</span></code> instance, launches both TCP and WebSocket servers, and manages
+logging and plugin/controller lifecycles.</p>
+<a class="reference internal image-reference" href="../_images/raisin_diagram.png"><img alt="raisin_diagram" src="../_images/raisin_diagram.png" style="width: 600px;" />
+</a>
+<section id="run">
+<h2>Run<a class="headerlink" href="#run" title="Link to this heading"></a></h2>
+<p>These commands can also be executed using the <code class="docutils literal notranslate"><span class="pre">raisin_gui</span></code></p>
+<section id="run-in-simulation">
+<h3>Run In simulation<a class="headerlink" href="#run-in-simulation" title="Link to this heading"></a></h3>
+<p>If you installed the binary package, simply run the executable after <code class="docutils literal notranslate"><span class="pre">raisin</span> <span class="pre">setup</span></code></p>
+<p>The executable is <code class="docutils literal notranslate"><span class="pre">install/bin/raisin_raibo2_node</span></code>.</p>
+</section>
+<section id="change-configuration">
+<h3>Change Configuration<a class="headerlink" href="#change-configuration" title="Link to this heading"></a></h3>
+<p>Configuration is loaded from <code class="docutils literal notranslate"><span class="pre">$raisin_ws/install/config/raisin_raibo2/config/params.yaml</span></code> and
+overrides in <code class="docutils literal notranslate"><span class="pre">~/.raisin/raisin_raibo2/params.yaml</span></code>. Key settings include:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">threads</span></code>: defines thread groups (<code class="docutils literal notranslate"><span class="pre">thread_0</span></code>, <code class="docutils literal notranslate"><span class="pre">thread_1</span></code>, …) that must be consecutive.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">network_interface</span></code>: list of network interface names for discovery (<code class="docutils literal notranslate"><span class="pre">lo</span></code> is added by default).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plugin</span></code>: plugin list with <code class="docutils literal notranslate"><span class="pre">rate</span></code> and optional <code class="docutils literal notranslate"><span class="pre">instances</span></code> /
+<code class="docutils literal notranslate"><span class="pre">active_instances_at_start</span></code> values.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">modules</span></code> and <code class="docutils literal notranslate"><span class="pre">raisim_config</span></code>: module list and simulation config file for Raisim.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_logging_volume</span></code> (MB): forwarded to <code class="docutils literal notranslate"><span class="pre">DataLogger::setAllowedDataSize</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">~/.raisin/raisin_raibo2/modules</span></code> files are copied into the installed resource directory at
+startup to make custom modules available.</p></li>
+</ul>
+<p>Logs are stored under <code class="docutils literal notranslate"><span class="pre">log/raisin_data_logger/&lt;deviceType&gt;_YYYY-mm-dd-hh-mm-ss/</span></code> in the workspace.</p>
+<p>Ensure that the <code class="docutils literal notranslate"><span class="pre">camera</span></code> is properly configured, including settings for <code class="docutils literal notranslate"><span class="pre">use_depth</span></code> and <code class="docutils literal notranslate"><span class="pre">use_rgb</span></code>, and <code class="docutils literal notranslate"><span class="pre">serial_number</span></code>. This configuration is essential for the camera to function correctly according to your requirements.
+If a sensor is not connected on a real robot, make sure to set <code class="docutils literal notranslate"><span class="pre">use_sensor</span></code> false, otherwise the robot will not operate.</p>
+<p>It subscribes to the <code class="docutils literal notranslate"><span class="pre">joy_sig</span></code> topic to receive joystick state changes and to <code class="docutils literal notranslate"><span class="pre">command</span></code> for
+high-level velocity/body commands. Controllers and plugins can be loaded through services listed
+below.</p>
+</section>
+</section>
+<section id="interfaces">
+<h2>Interfaces<a class="headerlink" href="#interfaces" title="Link to this heading"></a></h2>
+<section id="publishers">
+<h3>Publishers<a class="headerlink" href="#publishers" title="Link to this heading"></a></h3>
+<section id="robot-state">
+<h4><code class="docutils literal notranslate"><span class="pre">robot_state</span></code><a class="headerlink" href="#robot-state" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::raisin_interfaces::msg::RobotState</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">raisin_interfaces/msg/robot_state.hpp</span></code></p></li>
+<li><p>Members: <code class="docutils literal notranslate"><span class="pre">actuator_states[]</span></code>, <code class="docutils literal notranslate"><span class="pre">base_pos[3]</span></code>, <code class="docutils literal notranslate"><span class="pre">base_quat[4]</span></code>, <code class="docutils literal notranslate"><span class="pre">base_lin_vel[3]</span></code>,
+<code class="docutils literal notranslate"><span class="pre">base_ang_vel[3]</span></code>, <code class="docutils literal notranslate"><span class="pre">imu</span></code>, <code class="docutils literal notranslate"><span class="pre">max_voltage</span></code>, <code class="docutils literal notranslate"><span class="pre">min_voltage</span></code>, <code class="docutils literal notranslate"><span class="pre">max_current</span></code>, <code class="docutils literal notranslate"><span class="pre">voltage</span></code>,
+<code class="docutils literal notranslate"><span class="pre">current</span></code>, <code class="docutils literal notranslate"><span class="pre">body_temperature</span></code>, <code class="docutils literal notranslate"><span class="pre">state</span></code>, <code class="docutils literal notranslate"><span class="pre">joy_listen_type</span></code>, <code class="docutils literal notranslate"><span class="pre">joy_listen_state[]</span></code></p></li>
+<li><p>Notes: <code class="docutils literal notranslate"><span class="pre">actuator_states</span></code> holds <code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">position</span></code>, <code class="docutils literal notranslate"><span class="pre">velocity</span></code>, <code class="docutils literal notranslate"><span class="pre">effort</span></code>, <code class="docutils literal notranslate"><span class="pre">status</span></code>,
+<code class="docutils literal notranslate"><span class="pre">temperature</span></code> for each joint.</p></li>
+</ul>
+</section>
+<section id="module-list">
+<h4><code class="docutils literal notranslate"><span class="pre">module_list</span></code><a class="headerlink" href="#module-list" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::raisin_interfaces::msg::ModuleList</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">raisin_interfaces/msg/module_list.hpp</span></code></p></li>
+<li><p>Members: <code class="docutils literal notranslate"><span class="pre">controllers[]</span></code>, <code class="docutils literal notranslate"><span class="pre">loaded_controller</span></code>, <code class="docutils literal notranslate"><span class="pre">plugin_states[]</span></code></p></li>
+<li><p>Notes: <code class="docutils literal notranslate"><span class="pre">plugin_states</span></code> includes <code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">instances[]</span></code>, <code class="docutils literal notranslate"><span class="pre">is_loadable</span></code>, <code class="docutils literal notranslate"><span class="pre">is_unloadable</span></code>.</p></li>
+</ul>
+</section>
+<section id="profile">
+<h4><code class="docutils literal notranslate"><span class="pre">profile</span></code><a class="headerlink" href="#profile" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::raisin_interfaces::msg::TimeProfile</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">raisin_interfaces/msg/time_profile.hpp</span></code></p></li>
+<li><p>Members: <code class="docutils literal notranslate"><span class="pre">cpu_usage</span></code>, <code class="docutils literal notranslate"><span class="pre">memory_usage</span></code>, <code class="docutils literal notranslate"><span class="pre">disk_usage</span></code>, <code class="docutils literal notranslate"><span class="pre">cpu_temperature</span></code>,
+<code class="docutils literal notranslate"><span class="pre">scope_measurements[]</span></code> (<code class="docutils literal notranslate"><span class="pre">id</span></code>, <code class="docutils literal notranslate"><span class="pre">total_time</span></code>, <code class="docutils literal notranslate"><span class="pre">count</span></code>)</p></li>
+</ul>
+</section>
+<section id="threadpool">
+<h4><code class="docutils literal notranslate"><span class="pre">threadpool</span></code><a class="headerlink" href="#threadpool" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::raisin_interfaces::msg::ThreadPoolProfile</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">raisin_interfaces/msg/thread_pool_profile.hpp</span></code></p></li>
+<li><p>Members: <code class="docutils literal notranslate"><span class="pre">thread_pool_profiles[]</span></code> (each includes <code class="docutils literal notranslate"><span class="pre">event_task_profiles[]</span></code> and
+<code class="docutils literal notranslate"><span class="pre">periodic_task_profiles[]</span></code> with <code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">execute_count</span></code>, <code class="docutils literal notranslate"><span class="pre">delay_sum</span></code>, <code class="docutils literal notranslate"><span class="pre">execution_time</span></code>)</p></li>
+</ul>
+</section>
+<section id="joint-states">
+<h4><code class="docutils literal notranslate"><span class="pre">joint_states</span></code><a class="headerlink" href="#joint-states" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::raisin_interfaces::msg::JointStates</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">raisin_interfaces/msg/joint_states.hpp</span></code></p></li>
+<li><p>Members: <code class="docutils literal notranslate"><span class="pre">timestamp</span></code>, <code class="docutils literal notranslate"><span class="pre">num_joints</span></code>, <code class="docutils literal notranslate"><span class="pre">joint_states[]</span></code> (<code class="docutils literal notranslate"><span class="pre">joint_position</span></code>, <code class="docutils literal notranslate"><span class="pre">joint_velocity</span></code>)</p></li>
+</ul>
+</section>
+<section id="init-motor">
+<h4><code class="docutils literal notranslate"><span class="pre">init_motor</span></code><a class="headerlink" href="#init-motor" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::std_msgs::msg::String</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">std_msgs/msg/string.hpp</span></code></p></li>
+<li><p>Members: <code class="docutils literal notranslate"><span class="pre">data</span></code></p></li>
+<li><p>Notes: Status updates for motor initialization.</p></li>
+</ul>
+</section>
+<section id="stop-motor">
+<h4><code class="docutils literal notranslate"><span class="pre">stop_motor</span></code><a class="headerlink" href="#stop-motor" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::std_msgs::msg::String</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">std_msgs/msg/string.hpp</span></code></p></li>
+<li><p>Members: <code class="docutils literal notranslate"><span class="pre">data</span></code></p></li>
+<li><p>Notes: Status updates for motor shutdown.</p></li>
+</ul>
+</section>
+<section id="d430-front-grid-map-depth-data">
+<h4><code class="docutils literal notranslate"><span class="pre">d430_front/grid_map_depth_data</span></code><a class="headerlink" href="#d430-front-grid-map-depth-data" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::raisin_grid_mapping_plugin::msg::GridMapDepthData</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">raisin_grid_mapping_plugin/msg/grid_map_depth_data.hpp</span></code></p></li>
+<li><p>Notes: Republishes depth frames for grid mapping. Published only when the grid mapping plugin is
+available.</p></li>
+</ul>
+</section>
+<section id="d430-rear-grid-map-depth-data">
+<h4><code class="docutils literal notranslate"><span class="pre">d430_rear/grid_map_depth_data</span></code><a class="headerlink" href="#d430-rear-grid-map-depth-data" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::raisin_grid_mapping_plugin::msg::GridMapDepthData</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">raisin_grid_mapping_plugin/msg/grid_map_depth_data.hpp</span></code></p></li>
+<li><p>Notes: Republishes depth frames for grid mapping.</p></li>
+</ul>
+</section>
+<section id="d455-front-grid-map-depth-data">
+<h4><code class="docutils literal notranslate"><span class="pre">d455_front/grid_map_depth_data</span></code><a class="headerlink" href="#d455-front-grid-map-depth-data" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::raisin_grid_mapping_plugin::msg::GridMapDepthData</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">raisin_grid_mapping_plugin/msg/grid_map_depth_data.hpp</span></code></p></li>
+<li><p>Notes: Republishes depth frames for grid mapping.</p></li>
+</ul>
+</section>
+</section>
+<section id="subscribers">
+<h3>Subscribers<a class="headerlink" href="#subscribers" title="Link to this heading"></a></h3>
+<section id="command">
+<h4><code class="docutils literal notranslate"><span class="pre">command</span></code><a class="headerlink" href="#command" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::raisin_interfaces::msg::Command</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">raisin_interfaces/msg/command.hpp</span></code></p></li>
+<li><p>Members: <code class="docutils literal notranslate"><span class="pre">x_pos</span></code>, <code class="docutils literal notranslate"><span class="pre">y_pos</span></code>, <code class="docutils literal notranslate"><span class="pre">x_vel</span></code>, <code class="docutils literal notranslate"><span class="pre">y_vel</span></code>, <code class="docutils literal notranslate"><span class="pre">yaw_rate</span></code>, <code class="docutils literal notranslate"><span class="pre">pitch_angle</span></code>,
+<code class="docutils literal notranslate"><span class="pre">body_height</span></code>, <code class="docutils literal notranslate"><span class="pre">pan_dir</span></code>, <code class="docutils literal notranslate"><span class="pre">tilt_dir</span></code></p></li>
+<li><p>Notes: High-level body and velocity command input.</p></li>
+</ul>
+</section>
+<section id="joy-sig">
+<h4><code class="docutils literal notranslate"><span class="pre">joy_sig</span></code><a class="headerlink" href="#joy-sig" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::std_msgs::msg::Int16</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">std_msgs/msg/int16.hpp</span></code></p></li>
+<li><p>Members: <code class="docutils literal notranslate"><span class="pre">data</span></code></p></li>
+<li><p>Notes: Joystick signal for state changes (stand/sit/stop).</p></li>
+</ul>
+</section>
+<section id="d430-front-depth">
+<h4><code class="docutils literal notranslate"><span class="pre">d430_front/depth</span></code><a class="headerlink" href="#d430-front-depth" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::sensor_msgs::msg::Image</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">sensor_msgs/msg/image.hpp</span></code></p></li>
+<li><p>Members: <code class="docutils literal notranslate"><span class="pre">header</span></code>, <code class="docutils literal notranslate"><span class="pre">height</span></code>, <code class="docutils literal notranslate"><span class="pre">width</span></code>, <code class="docutils literal notranslate"><span class="pre">encoding</span></code>, <code class="docutils literal notranslate"><span class="pre">is_bigendian</span></code>, <code class="docutils literal notranslate"><span class="pre">step</span></code>, <code class="docutils literal notranslate"><span class="pre">data</span></code></p></li>
+<li><p>Notes: Forwarded to grid mapping when enabled.</p></li>
+</ul>
+</section>
+<section id="d430-rear-depth">
+<h4><code class="docutils literal notranslate"><span class="pre">d430_rear/depth</span></code><a class="headerlink" href="#d430-rear-depth" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::sensor_msgs::msg::Image</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">sensor_msgs/msg/image.hpp</span></code></p></li>
+<li><p>Members: <code class="docutils literal notranslate"><span class="pre">header</span></code>, <code class="docutils literal notranslate"><span class="pre">height</span></code>, <code class="docutils literal notranslate"><span class="pre">width</span></code>, <code class="docutils literal notranslate"><span class="pre">encoding</span></code>, <code class="docutils literal notranslate"><span class="pre">is_bigendian</span></code>, <code class="docutils literal notranslate"><span class="pre">step</span></code>, <code class="docutils literal notranslate"><span class="pre">data</span></code></p></li>
+<li><p>Notes: Forwarded to grid mapping when enabled.</p></li>
+</ul>
+</section>
+<section id="d455-front-depth">
+<h4><code class="docutils literal notranslate"><span class="pre">d455_front/depth</span></code><a class="headerlink" href="#d455-front-depth" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::sensor_msgs::msg::Image</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">sensor_msgs/msg/image.hpp</span></code></p></li>
+<li><p>Members: <code class="docutils literal notranslate"><span class="pre">header</span></code>, <code class="docutils literal notranslate"><span class="pre">height</span></code>, <code class="docutils literal notranslate"><span class="pre">width</span></code>, <code class="docutils literal notranslate"><span class="pre">encoding</span></code>, <code class="docutils literal notranslate"><span class="pre">is_bigendian</span></code>, <code class="docutils literal notranslate"><span class="pre">step</span></code>, <code class="docutils literal notranslate"><span class="pre">data</span></code></p></li>
+<li><p>Notes: Forwarded to grid mapping when enabled.</p></li>
+</ul>
+</section>
+<section id="odometry-state-estimator">
+<h4><code class="docutils literal notranslate"><span class="pre">/Odometry/state_estimator</span></code><a class="headerlink" href="#odometry-state-estimator" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::nav_msgs::msg::Odometry</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">nav_msgs/msg/odometry.hpp</span></code></p></li>
+<li><p>Members: <code class="docutils literal notranslate"><span class="pre">header</span></code>, <code class="docutils literal notranslate"><span class="pre">child_frame_id</span></code>, <code class="docutils literal notranslate"><span class="pre">pose</span></code> (position + orientation + covariance),
+<code class="docutils literal notranslate"><span class="pre">twist</span></code> (linear + angular velocity + covariance)</p></li>
+<li><p>Notes: Used for base state estimation and sensor pose updates.</p></li>
+</ul>
+</section>
+<section id="base-imu-imu">
+<h4><code class="docutils literal notranslate"><span class="pre">base_imu/imu</span></code><a class="headerlink" href="#base-imu-imu" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::sensor_msgs::msg::Imu</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">sensor_msgs/msg/imu.hpp</span></code></p></li>
+<li><p>Members: <code class="docutils literal notranslate"><span class="pre">header</span></code>, <code class="docutils literal notranslate"><span class="pre">orientation</span></code>, <code class="docutils literal notranslate"><span class="pre">orientation_covariance</span></code>, <code class="docutils literal notranslate"><span class="pre">angular_velocity</span></code>,
+<code class="docutils literal notranslate"><span class="pre">angular_velocity_covariance</span></code>, <code class="docutils literal notranslate"><span class="pre">linear_acceleration</span></code>, <code class="docutils literal notranslate"><span class="pre">linear_acceleration_covariance</span></code></p></li>
+<li><p>Notes: Used for state estimation and logging.</p></li>
+</ul>
+</section>
+</section>
+<section id="services">
+<h3>Services<a class="headerlink" href="#services" title="Link to this heading"></a></h3>
+<section id="turn-on">
+<h4><code class="docutils literal notranslate"><span class="pre">turn_on</span></code><a class="headerlink" href="#turn-on" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::std_srvs::srv::Trigger</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">std_srvs/srv/trigger.hpp</span></code></p></li>
+<li><p>Request members used: none</p></li>
+<li><p>Response members used: <code class="docutils literal notranslate"><span class="pre">success</span></code>, <code class="docutils literal notranslate"><span class="pre">message</span></code></p></li>
+<li><p>Notes: Starts the robot loop if not already running.</p></li>
+</ul>
+</section>
+<section id="turn-off">
+<h4><code class="docutils literal notranslate"><span class="pre">turn_off</span></code><a class="headerlink" href="#turn-off" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::std_srvs::srv::Trigger</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">std_srvs/srv/trigger.hpp</span></code></p></li>
+<li><p>Request members used: none</p></li>
+<li><p>Response members used: <code class="docutils literal notranslate"><span class="pre">success</span></code>, <code class="docutils literal notranslate"><span class="pre">message</span></code></p></li>
+<li><p>Notes: Stops the robot loop if running.</p></li>
+</ul>
+</section>
+<section id="list-log-tree">
+<h4><code class="docutils literal notranslate"><span class="pre">list_log_tree</span></code><a class="headerlink" href="#list-log-tree" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::raisin_interfaces::srv::LogTree</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">raisin_interfaces/srv/log_tree.hpp</span></code></p></li>
+<li><p>Response members used: <code class="docutils literal notranslate"><span class="pre">username</span></code>, <code class="docutils literal notranslate"><span class="pre">prefix</span></code>, <code class="docutils literal notranslate"><span class="pre">ssh_port</span></code>, <code class="docutils literal notranslate"><span class="pre">dirs[]</span></code>, <code class="docutils literal notranslate"><span class="pre">sizes[]</span></code></p></li>
+<li><p>Notes: Lists log directories and sizes for the current robot.</p></li>
+</ul>
+</section>
+<section id="describe-robot">
+<h4><code class="docutils literal notranslate"><span class="pre">describe_robot</span></code><a class="headerlink" href="#describe-robot" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::raisin_interfaces::srv::RobotDescription</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">raisin_interfaces/srv/robot_description.hpp</span></code></p></li>
+<li><p>Response members used: <code class="docutils literal notranslate"><span class="pre">success</span></code>, <code class="docutils literal notranslate"><span class="pre">is_real_robot</span></code>, <code class="docutils literal notranslate"><span class="pre">robot_model</span></code>, <code class="docutils literal notranslate"><span class="pre">robot_nickname</span></code>,
+<code class="docutils literal notranslate"><span class="pre">serial_number</span></code>, <code class="docutils literal notranslate"><span class="pre">driver_version</span></code>, <code class="docutils literal notranslate"><span class="pre">robot_software_version</span></code>, <code class="docutils literal notranslate"><span class="pre">max_voltage</span></code>,
+<code class="docutils literal notranslate"><span class="pre">min_voltage</span></code>, <code class="docutils literal notranslate"><span class="pre">max_current</span></code></p></li>
+</ul>
+</section>
+<section id="id1">
+<h4><code class="docutils literal notranslate"><span class="pre">init_motor</span></code><a class="headerlink" href="#id1" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::std_srvs::srv::Trigger</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">std_srvs/srv/trigger.hpp</span></code></p></li>
+<li><p>Request members used: none</p></li>
+<li><p>Response members used: <code class="docutils literal notranslate"><span class="pre">success</span></code>, <code class="docutils literal notranslate"><span class="pre">message</span></code></p></li>
+<li><p>Notes: Initializes EtherCAT and motor drivers.</p></li>
+</ul>
+</section>
+<section id="id2">
+<h4><code class="docutils literal notranslate"><span class="pre">stop_motor</span></code><a class="headerlink" href="#id2" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::std_srvs::srv::Trigger</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">std_srvs/srv/trigger.hpp</span></code></p></li>
+<li><p>Request members used: none</p></li>
+<li><p>Response members used: <code class="docutils literal notranslate"><span class="pre">success</span></code>, <code class="docutils literal notranslate"><span class="pre">message</span></code></p></li>
+</ul>
+</section>
+<section id="set-home-with-type">
+<h4><code class="docutils literal notranslate"><span class="pre">set_home_with_type</span></code><a class="headerlink" href="#set-home-with-type" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::raisin_interfaces::srv::String</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">raisin_interfaces/srv/string.hpp</span></code></p></li>
+<li><p>Request members used: <code class="docutils literal notranslate"><span class="pre">data</span></code></p></li>
+<li><p>Response members used: <code class="docutils literal notranslate"><span class="pre">success</span></code>, <code class="docutils literal notranslate"><span class="pre">message</span></code></p></li>
+<li><p>Notes: Sets home offsets using the provided mode string.</p></li>
+</ul>
+</section>
+<section id="joint-test">
+<h4><code class="docutils literal notranslate"><span class="pre">joint_test</span></code><a class="headerlink" href="#joint-test" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::std_srvs::srv::Trigger</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">std_srvs/srv/trigger.hpp</span></code></p></li>
+<li><p>Request members used: none</p></li>
+<li><p>Response members used: <code class="docutils literal notranslate"><span class="pre">success</span></code>, <code class="docutils literal notranslate"><span class="pre">message</span></code></p></li>
+</ul>
+</section>
+<section id="stand-up">
+<h4><code class="docutils literal notranslate"><span class="pre">stand_up</span></code><a class="headerlink" href="#stand-up" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::std_srvs::srv::Trigger</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">std_srvs/srv/trigger.hpp</span></code></p></li>
+<li><p>Request members used: none</p></li>
+<li><p>Response members used: <code class="docutils literal notranslate"><span class="pre">success</span></code>, <code class="docutils literal notranslate"><span class="pre">message</span></code></p></li>
+</ul>
+</section>
+<section id="sit-down">
+<h4><code class="docutils literal notranslate"><span class="pre">sit_down</span></code><a class="headerlink" href="#sit-down" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::std_srvs::srv::Trigger</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">std_srvs/srv/trigger.hpp</span></code></p></li>
+<li><p>Request members used: none</p></li>
+<li><p>Response members used: <code class="docutils literal notranslate"><span class="pre">success</span></code>, <code class="docutils literal notranslate"><span class="pre">message</span></code></p></li>
+</ul>
+</section>
+<section id="load-controller">
+<h4><code class="docutils literal notranslate"><span class="pre">load_controller</span></code><a class="headerlink" href="#load-controller" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::raisin_interfaces::srv::String</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">raisin_interfaces/srv/string.hpp</span></code></p></li>
+<li><p>Request members used: <code class="docutils literal notranslate"><span class="pre">data</span></code></p></li>
+<li><p>Response members used: <code class="docutils literal notranslate"><span class="pre">success</span></code>, <code class="docutils literal notranslate"><span class="pre">message</span></code></p></li>
+<li><p>Notes: Loads a controller by name and unloads the current controller if needed.</p></li>
+</ul>
+</section>
+<section id="motor-commutation">
+<h4><code class="docutils literal notranslate"><span class="pre">motor_commutation</span></code><a class="headerlink" href="#motor-commutation" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::raisin_interfaces::srv::String</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">raisin_interfaces/srv/string.hpp</span></code></p></li>
+<li><p>Request members used: <code class="docutils literal notranslate"><span class="pre">data</span></code></p></li>
+<li><p>Response members used: <code class="docutils literal notranslate"><span class="pre">success</span></code>, <code class="docutils literal notranslate"><span class="pre">message</span></code></p></li>
+</ul>
+</section>
+<section id="load-plugin">
+<h4><code class="docutils literal notranslate"><span class="pre">load_plugin</span></code><a class="headerlink" href="#load-plugin" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::raisin_interfaces::srv::LoadPlugin</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">raisin_interfaces/srv/load_plugin.hpp</span></code></p></li>
+<li><p>Request members used: <code class="docutils literal notranslate"><span class="pre">plugin_name</span></code>, <code class="docutils literal notranslate"><span class="pre">title</span></code>, <code class="docutils literal notranslate"><span class="pre">flag</span></code></p></li>
+<li><p>Response members used: <code class="docutils literal notranslate"><span class="pre">success</span></code>, <code class="docutils literal notranslate"><span class="pre">message</span></code></p></li>
+</ul>
+</section>
+<section id="set-home">
+<h4><code class="docutils literal notranslate"><span class="pre">set_home</span></code><a class="headerlink" href="#set-home" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::std_srvs::srv::Trigger</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">std_srvs/srv/trigger.hpp</span></code></p></li>
+<li><p>Request members used: none</p></li>
+<li><p>Response members used: <code class="docutils literal notranslate"><span class="pre">success</span></code>, <code class="docutils literal notranslate"><span class="pre">message</span></code></p></li>
+<li><p>Notes: Deprecated in favor of <code class="docutils literal notranslate"><span class="pre">set_home_with_type</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section id="clients">
+<h3>Clients<a class="headerlink" href="#clients" title="Link to this heading"></a></h3>
+<section id="id3">
+<h4><code class="docutils literal notranslate"><span class="pre">load_controller</span></code><a class="headerlink" href="#id3" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">raisin::raisin_interfaces::srv::String</span></code></p></li>
+<li><p>Header: <code class="docutils literal notranslate"><span class="pre">raisin_interfaces/srv/string.hpp</span></code></p></li>
+<li><p>Notes: Internal polling client used to load the default locomotion controller after standing.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="development">
+<h2>Development<a class="headerlink" href="#development" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Plugin.html">Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Controller.html">Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="JoyInterface.html">Joy Interface</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="DataLogger.html" class="btn btn-neutral float-left" title="DataLogger" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Controller.html" class="btn btn-neutral float-right" title="Controller" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Raion Robotics..</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

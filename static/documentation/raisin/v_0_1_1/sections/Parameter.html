@@ -1,0 +1,502 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parameter &mdash; raisin 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css?v=2a6c4383" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css?v=45cf7dbc" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css?v=d290406d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="DataLogger" href="DataLogger.html" />
+    <link rel="prev" title="Plugin" href="Plugin.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            raisin
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Chapters</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinNetwork.html">Raisin Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Plugin.html">Plugin</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Parameter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#access-patterns">Access patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#yaml-format">YAML format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#validation-notes">Validation notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#api">API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6raisin9parameter18ParameterContainerE"><code class="docutils literal notranslate"><span class="pre">ParameterContainer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin9parameter18ParameterContainerclERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">ParameterContainer::operator()()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin9parameter18ParameterContainerclERKNSt6stringERKNSt7variantIidPKcNSt6stringEbN5Eigen8VectorXdENSt6vectorIdEENSt6vectorINSt6stringEEENSt6vectorIiEEEE"><code class="docutils literal notranslate"><span class="pre">ParameterContainer::operator()()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK6raisin9parameter18ParameterContainerclERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">ParameterContainer::operator()()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin9parameter18ParameterContainerixERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">ParameterContainer::operator[]()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin9parameter18ParameterContainer21getChildSharedPointerERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">ParameterContainer::getChildSharedPointer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin9parameter18ParameterContainer28loadFromPackageParameterFileERKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">ParameterContainer::loadFromPackageParameterFile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin9parameter18ParameterContainer21getParamContainerListEv"><code class="docutils literal notranslate"><span class="pre">ParameterContainer::getParamContainerList()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin9parameter18ParameterContainer7getRootEv"><code class="docutils literal notranslate"><span class="pre">ParameterContainer::getRoot()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6raisin9parameter9ParameterE"><code class="docutils literal notranslate"><span class="pre">Parameter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin9parameter9Parameter5DtypeE"><code class="docutils literal notranslate"><span class="pre">Parameter::Dtype</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin9parameter9Parameter13dTypeToStringE5Dtype"><code class="docutils literal notranslate"><span class="pre">Parameter::dTypeToString()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin9parameter9Parameter13stringToDtypeERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">Parameter::stringToDtype()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="DataLogger.html">DataLogger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaiboNode.html">RaiboNode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinGui.html">Raisin Gui</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Ros2Messages.html">ROS2 Message Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Reference.html">Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">raisin</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Parameter</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="parameter">
+<h1>Parameter<a class="headerlink" href="#parameter" title="Link to this heading"></a></h1>
+<p>Raisin provides a global parameter tree. The root is available via
+<code class="docutils literal notranslate"><span class="pre">ParameterContainer::getRoot()</span></code>. Controllers and plugins that are dynamically loaded should use
+their injected <code class="docutils literal notranslate"><span class="pre">paramRoot_</span></code> instead of calling <code class="docutils literal notranslate"><span class="pre">getRoot()</span></code> directly.</p>
+<p>In the tree, nodes are either <code class="docutils literal notranslate"><span class="pre">ParameterContainer</span></code> (non-leaf) or <code class="docutils literal notranslate"><span class="pre">Parameter</span></code> (leaf) nodes.
+Use <code class="docutils literal notranslate"><span class="pre">[]</span></code> to navigate to a child <code class="docutils literal notranslate"><span class="pre">ParameterContainer</span></code> and <code class="docutils literal notranslate"><span class="pre">()</span></code> to access a <code class="docutils literal notranslate"><span class="pre">Parameter</span></code>.
+Missing nodes are created on first access.</p>
+<section id="access-patterns">
+<h2>Access patterns<a class="headerlink" href="#access-patterns" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">container(&quot;name&quot;)</span></code> creates or returns a parameter by name.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">container(&quot;name&quot;,</span> <span class="pre">default_value)</span></code> sets a default only if the parameter does not exist yet.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">container(&quot;name&quot;)</span></code> requires the parameter to exist and will raise a fatal error if it
+does not, so use the default-value overload for optional parameters.</p></li>
+</ul>
+</section>
+<section id="yaml-format">
+<h2>YAML format<a class="headerlink" href="#yaml-format" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">loadFromPackageParameterFile(package_name,</span> <span class="pre">param_file_name)</span></code> reads a YAML file from
+<code class="docutils literal notranslate"><span class="pre">install/config/&lt;package_name&gt;/config/&lt;param_file_name&gt;</span></code> and then overlays
+<code class="docutils literal notranslate"><span class="pre">~/.raisin/&lt;package_name&gt;/&lt;param_file_name&gt;</span></code> if it exists. This allows local overrides without
+modifying installed files.</p>
+<p>Parameters can be declared with <code class="docutils literal notranslate"><span class="pre">value</span></code> and <code class="docutils literal notranslate"><span class="pre">dtype</span></code> fields, with optional <code class="docutils literal notranslate"><span class="pre">min</span></code>, <code class="docutils literal notranslate"><span class="pre">max</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">options</span></code> for validation:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>test_string:
+<span class="w">  </span>value:<span class="w"> </span>hello
+<span class="w">  </span>dtype:<span class="w"> </span>string
+<span class="w">  </span>options:<span class="w"> </span>[hello,<span class="w"> </span>goodbye]
+test_double:
+<span class="w">  </span>value:<span class="w"> </span>5.3
+<span class="w">  </span>dtype:<span class="w"> </span>double
+<span class="w">  </span>min:<span class="w"> </span>3
+<span class="w">  </span>max:<span class="w"> </span>5
+test_int:
+<span class="w">  </span>value:<span class="w"> </span>3
+<span class="w">  </span>dtype:<span class="w"> </span>int
+test_bool:
+<span class="w">  </span>value:<span class="w"> </span>true
+<span class="w">  </span>dtype:<span class="w"> </span>bool
+test_vec_double:
+<span class="w">  </span>value:<span class="w"> </span>[1,2,3]
+<span class="w">  </span>dtype:<span class="w"> </span>vector<span class="nt">&lt;double&gt;</span>
+test_vec_string:
+<span class="w">  </span>value:<span class="w"> </span>[&quot;hello&quot;,<span class="w"> </span>&quot;world&quot;]
+<span class="w">  </span>dtype:<span class="w"> </span>vector<span class="nt">&lt;string&gt;</span>
+test_vec_int:
+<span class="w">  </span>value:<span class="w"> </span>[1,2,3]
+<span class="w">  </span>dtype:<span class="w"> </span>vector<span class="nt">&lt;int&gt;</span>
+</pre></div>
+</div>
+<p>Accepted dtype strings are <code class="docutils literal notranslate"><span class="pre">string</span></code>, <code class="docutils literal notranslate"><span class="pre">double</span></code>, <code class="docutils literal notranslate"><span class="pre">bool</span></code>, <code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">vector</span></code>,
+<code class="docutils literal notranslate"><span class="pre">vector&lt;double&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">vector&lt;string&gt;</span></code>, and <code class="docutils literal notranslate"><span class="pre">vector&lt;int&gt;</span></code>. If you omit <code class="docutils literal notranslate"><span class="pre">dtype</span></code> and provide a
+plain scalar or sequence, the parameter uses <code class="docutils literal notranslate"><span class="pre">UNDEFINED</span></code> and can be cast to a compatible type at
+runtime, but you should be explicit for safety.</p>
+</section>
+<section id="validation-notes">
+<h2>Validation notes<a class="headerlink" href="#validation-notes" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">min</span></code> and <code class="docutils literal notranslate"><span class="pre">max</span></code> must be specified together for scalar values; otherwise a fatal error is
+raised.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">options</span></code> are checked against the stringified value when assigning the parameter (<code class="docutils literal notranslate"><span class="pre">operator=</span></code>).</p></li>
+<li><p>Validation is enforced during assignment; loading from YAML only sets the stored value.</p></li>
+</ul>
+<p>For practical implementation examples, refer to the <a class="reference download internal" download="" href="../_downloads/642f7ce6e08fff978357455cab993b1e/test_raisin_parameter.cpp"><code class="xref download docutils literal notranslate"><span class="pre">test_raisin_parameter.cpp</span></code></a>.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Copyright (c) 2020 Robotics and Artificial Intelligence Lab, KAIST</span>
+<span class="c1">//</span>
+<span class="c1">// Any unauthorized copying, alteration, distribution, transmission,</span>
+<span class="c1">// performance, display or use of this material is prohibited.</span>
+<span class="c1">//</span>
+<span class="c1">// All rights reserved.</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;gtest/gtest.h&gt;</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;../include/raisin_parameter/parameter_container.hpp&quot;</span>
+
+<span class="c1">//</span>
+<span class="c1">// Tests</span>
+<span class="c1">//</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Child</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="k">public</span><span class="o">:</span>
+<span class="w">  </span><span class="k">explicit</span><span class="w"> </span><span class="n">Child</span><span class="p">(</span><span class="n">raisin</span><span class="o">::</span><span class="n">parameter</span><span class="o">::</span><span class="n">ParameterContainer</span><span class="o">&amp;</span><span class="w"> </span><span class="n">param</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="n">param_</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="s">&quot;Child&quot;</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">param_</span><span class="p">(</span><span class="s">&quot;param1&quot;</span><span class="p">).</span><span class="n">setOptions</span><span class="p">({</span><span class="s">&quot;hello&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;goodbye&quot;</span><span class="p">});</span>
+<span class="w">    </span><span class="n">param_</span><span class="p">(</span><span class="s">&quot;param1&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="w"> </span><span class="nf">testVec</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="w">    </span><span class="n">testVec</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<span class="w">    </span><span class="n">param_</span><span class="p">(</span><span class="s">&quot;param2&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">testVec</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">testVecString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s">&quot;hello&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;world&quot;</span><span class="p">};</span>
+<span class="w">    </span><span class="n">param_</span><span class="p">(</span><span class="s">&quot;param3&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">testVecString</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">testVecInt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">};</span>
+<span class="w">    </span><span class="n">param_</span><span class="p">(</span><span class="s">&quot;param4&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">testVecInt</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w"> </span><span class="k">private</span><span class="o">:</span>
+<span class="w">  </span><span class="n">raisin</span><span class="o">::</span><span class="n">parameter</span><span class="o">::</span><span class="n">ParameterContainer</span><span class="o">&amp;</span><span class="w"> </span><span class="n">param_</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Parent</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="k">public</span><span class="o">:</span>
+<span class="w">  </span><span class="n">Parent</span><span class="p">()</span>
+<span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="n">param_</span><span class="p">(</span><span class="n">raisin</span><span class="o">::</span><span class="n">parameter</span><span class="o">::</span><span class="n">ParameterContainer</span><span class="o">::</span><span class="n">getRoot</span><span class="p">()),</span>
+<span class="w">        </span><span class="n">child_</span><span class="p">(</span><span class="n">raisin</span><span class="o">::</span><span class="n">parameter</span><span class="o">::</span><span class="n">ParameterContainer</span><span class="o">::</span><span class="n">getRoot</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">param_</span><span class="p">(</span><span class="s">&quot;param1&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<span class="w">    </span><span class="n">param_</span><span class="p">(</span><span class="s">&quot;param2&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w"> </span><span class="k">private</span><span class="o">:</span>
+<span class="w">  </span><span class="n">raisin</span><span class="o">::</span><span class="n">parameter</span><span class="o">::</span><span class="n">ParameterContainer</span><span class="o">&amp;</span><span class="w"> </span><span class="n">param_</span><span class="p">;</span>
+<span class="w">  </span><span class="n">Child</span><span class="w"> </span><span class="n">child_</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">ParameterTest</span><span class="p">,</span><span class="w"> </span><span class="n">ParameterTest1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">Parent</span><span class="w"> </span><span class="n">parent</span><span class="p">;</span>
+<span class="w">  </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">rootParamContainer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">raisin</span><span class="o">::</span><span class="n">parameter</span><span class="o">::</span><span class="n">ParameterContainer</span><span class="o">::</span><span class="n">getRoot</span><span class="p">();</span>
+<span class="w">  </span><span class="n">EXPECT_EQ</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">rootParamContainer</span><span class="p">[</span><span class="s">&quot;Child&quot;</span><span class="p">](</span><span class="s">&quot;param1&quot;</span><span class="p">)));</span>
+<span class="w">  </span><span class="n">EXPECT_EQ</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">(</span><span class="n">rootParamContainer</span><span class="p">(</span><span class="s">&quot;param1&quot;</span><span class="p">)));</span>
+<span class="w">  </span><span class="n">EXPECT_EQ</span><span class="p">(</span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="p">(</span><span class="n">rootParamContainer</span><span class="p">(</span><span class="s">&quot;param2&quot;</span><span class="p">)));</span>
+<span class="w">  </span><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="w"> </span><span class="n">testVec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rootParamContainer</span><span class="p">[</span><span class="s">&quot;Child&quot;</span><span class="p">](</span><span class="s">&quot;param2&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">EXPECT_EQ</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="n">testVec</span><span class="p">.</span><span class="n">sum</span><span class="p">());</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">testVecString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rootParamContainer</span><span class="p">[</span><span class="s">&quot;Child&quot;</span><span class="p">](</span><span class="s">&quot;param3&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">EXPECT_EQ</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">testVecString</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="w">  </span><span class="n">EXPECT_EQ</span><span class="p">(</span><span class="s">&quot;world&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">testVecString</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">testVecInt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rootParamContainer</span><span class="p">[</span><span class="s">&quot;Child&quot;</span><span class="p">](</span><span class="s">&quot;param4&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">EXPECT_EQ</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="n">testVecInt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">testVecInt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">testVecInt</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+
+<span class="w">  </span><span class="n">rootParamContainer</span><span class="p">[</span><span class="s">&quot;file&quot;</span><span class="p">].</span><span class="n">loadFromPackageParameterFile</span><span class="p">(</span><span class="s">&quot;raisin_parameter&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;params.yaml&quot;</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">EXPECT_EQ</span><span class="p">(</span><span class="mf">5.3</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="p">(</span><span class="n">rootParamContainer</span><span class="p">[</span><span class="s">&quot;file&quot;</span><span class="p">](</span><span class="s">&quot;test_double&quot;</span><span class="p">)));</span>
+<span class="w">  </span><span class="n">EXPECT_EQ</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">rootParamContainer</span><span class="p">[</span><span class="s">&quot;file&quot;</span><span class="p">](</span><span class="s">&quot;test_string&quot;</span><span class="p">)));</span>
+<span class="w">  </span><span class="n">EXPECT_EQ</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">(</span><span class="n">rootParamContainer</span><span class="p">[</span><span class="s">&quot;file&quot;</span><span class="p">](</span><span class="s">&quot;test_int&quot;</span><span class="p">)));</span>
+<span class="w">  </span><span class="n">EXPECT_EQ</span><span class="p">(</span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="p">(</span><span class="n">rootParamContainer</span><span class="p">[</span><span class="s">&quot;file&quot;</span><span class="p">](</span><span class="s">&quot;test_bool&quot;</span><span class="p">)));</span>
+<span class="w">  </span><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span><span class="w"> </span><span class="nf">test_vec_true</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="n">test_vec_read</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="w">  </span><span class="n">test_vec_true</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<span class="w">  </span><span class="n">test_vec_read</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rootParamContainer</span><span class="p">[</span><span class="s">&quot;file&quot;</span><span class="p">](</span><span class="s">&quot;test_vec_double&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">EXPECT_NEAR</span><span class="p">((</span><span class="n">test_vec_true</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">test_vec_read</span><span class="p">).</span><span class="n">sum</span><span class="p">(),</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1e-15</span><span class="p">);</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">test_vec_double_true</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">};</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">test_vec_double_read</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rootParamContainer</span><span class="p">[</span><span class="s">&quot;file&quot;</span><span class="p">](</span><span class="s">&quot;test_vec_double&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">EXPECT_NEAR</span><span class="p">(</span><span class="n">test_vec_double_true</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">test_vec_double_read</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="mf">1e-15</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">test_vec_string_true</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s">&quot;hello&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;world&quot;</span><span class="p">};</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">test_vec_string_read</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rootParamContainer</span><span class="p">[</span><span class="s">&quot;file&quot;</span><span class="p">](</span><span class="s">&quot;test_vec_string&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">test_vec_string_true</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">test_vec_string_read</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">test_vec_int_true</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">};</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">test_vec_int_read</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rootParamContainer</span><span class="p">[</span><span class="s">&quot;file&quot;</span><span class="p">](</span><span class="s">&quot;test_vec_int&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">test_vec_int_true</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">test_vec_int_read</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="api">
+<h2>API<a class="headerlink" href="#api" title="Link to this heading"></a></h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin9parameter18ParameterContainerE">
+<span id="_CPPv3N6raisin9parameter18ParameterContainerE"></span><span id="_CPPv2N6raisin9parameter18ParameterContainerE"></span><span id="raisin::parameter::ParameterContainer"></span><span class="target" id="classraisin_1_1parameter_1_1ParameterContainer"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ParameterContainer</span></span></span><a class="headerlink" href="#_CPPv4N6raisin9parameter18ParameterContainerE" title="Link to this definition"></a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin9parameter18ParameterContainerclERKNSt6stringE">
+<span id="_CPPv3N6raisin9parameter18ParameterContainerclERKNSt6stringE"></span><span id="_CPPv2N6raisin9parameter18ParameterContainerclERKNSt6stringE"></span><span id="raisin::parameter::ParameterContainer::call-operator__ssCR"></span><span class="target" id="classraisin_1_1parameter_1_1ParameterContainer_1a4efe4660018ffa9f6d095ef760e928d9"></span><a class="reference internal" href="#_CPPv4N6raisin9parameter9ParameterE" title="raisin::parameter::Parameter"><span class="n"><span class="pre">Parameter</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin9parameter18ParameterContainerclERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>write version </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> – name of the <a class="reference internal" href="#classraisin_1_1parameter_1_1Parameter"><span class="std std-ref">Parameter</span></a></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#classraisin_1_1parameter_1_1Parameter"><span class="std std-ref">Parameter</span></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin9parameter18ParameterContainerclERKNSt6stringERKNSt7variantIidPKcNSt6stringEbN5Eigen8VectorXdENSt6vectorIdEENSt6vectorINSt6stringEEENSt6vectorIiEEEE">
+<span id="_CPPv3N6raisin9parameter18ParameterContainerclERKNSt6stringERKNSt7variantIidPKcNSt6stringEbN5Eigen8VectorXdENSt6vectorIdEENSt6vectorINSt6stringEEENSt6vectorIiEEEE"></span><span id="_CPPv2N6raisin9parameter18ParameterContainerclERKNSt6stringERKNSt7variantIidPKcNSt6stringEbN5Eigen8VectorXdENSt6vectorIdEENSt6vectorINSt6stringEEENSt6vectorIiEEEE"></span><span id="raisin::parameter::ParameterContainer::call-operator__ssCR.std::variant:i.double.cCP.ss.b.Eigen::VectorXd.std::vector:double:.std::vector:ss:.std::vector:i::CR"></span><span class="target" id="classraisin_1_1parameter_1_1ParameterContainer_1ab99ee5d76ddfdcbfbe2b8957b2ac36a9"></span><a class="reference internal" href="#_CPPv4N6raisin9parameter9ParameterE" title="raisin::parameter::Parameter"><span class="n"><span class="pre">Parameter</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">name</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">variant</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">int</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">Eigen</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">VectorXd</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">int</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">default_value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin9parameter18ParameterContainerclERKNSt6stringERKNSt7variantIidPKcNSt6stringEbN5Eigen8VectorXdENSt6vectorIdEENSt6vectorINSt6stringEEENSt6vectorIiEEEE" title="Link to this definition"></a><br /></dt>
+<dd><p>write version with default value </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – name of the <a class="reference internal" href="#classraisin_1_1parameter_1_1Parameter"><span class="std std-ref">Parameter</span></a></p></li>
+<li><p><strong>default_value</strong> – default value </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#classraisin_1_1parameter_1_1Parameter"><span class="std std-ref">Parameter</span></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6raisin9parameter18ParameterContainerclERKNSt6stringE">
+<span id="_CPPv3NK6raisin9parameter18ParameterContainerclERKNSt6stringE"></span><span id="_CPPv2NK6raisin9parameter18ParameterContainerclERKNSt6stringE"></span><span id="raisin::parameter::ParameterContainer::call-operator__ssCRC"></span><span class="target" id="classraisin_1_1parameter_1_1ParameterContainer_1a7ebb7a35fff6fa9e573d754a3c683f47"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6raisin9parameter9ParameterE" title="raisin::parameter::Parameter"><span class="n"><span class="pre">Parameter</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6raisin9parameter18ParameterContainerclERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>read only version </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> – name of the <a class="reference internal" href="#classraisin_1_1parameter_1_1Parameter"><span class="std std-ref">Parameter</span></a></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#classraisin_1_1parameter_1_1Parameter"><span class="std std-ref">Parameter</span></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin9parameter18ParameterContainerixERKNSt6stringE">
+<span id="_CPPv3N6raisin9parameter18ParameterContainerixERKNSt6stringE"></span><span id="_CPPv2N6raisin9parameter18ParameterContainerixERKNSt6stringE"></span><span id="raisin::parameter::ParameterContainer::subscript-operator__ssCR"></span><span class="target" id="classraisin_1_1parameter_1_1ParameterContainer_1aba6f1be6d05e5a35f08b1f3833c9ba8d"></span><a class="reference internal" href="#_CPPv4N6raisin9parameter18ParameterContainerE" title="raisin::parameter::ParameterContainer"><span class="n"><span class="pre">ParameterContainer</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">[]</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin9parameter18ParameterContainerixERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> – name of the child <a class="reference internal" href="#classraisin_1_1parameter_1_1ParameterContainer"><span class="std std-ref">ParameterContainer</span></a></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>child <a class="reference internal" href="#classraisin_1_1parameter_1_1ParameterContainer"><span class="std std-ref">ParameterContainer</span></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin9parameter18ParameterContainer21getChildSharedPointerERKNSt6stringE">
+<span id="_CPPv3N6raisin9parameter18ParameterContainer21getChildSharedPointerERKNSt6stringE"></span><span id="_CPPv2N6raisin9parameter18ParameterContainer21getChildSharedPointerERKNSt6stringE"></span><span id="raisin::parameter::ParameterContainer::getChildSharedPointer__ssCR"></span><span class="target" id="classraisin_1_1parameter_1_1ParameterContainer_1aa88185d1c6d59b0deada750588ea1369"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N6raisin9parameter18ParameterContainerE" title="raisin::parameter::ParameterContainer"><span class="n"><span class="pre">ParameterContainer</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getChildSharedPointer</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin9parameter18ParameterContainer21getChildSharedPointerERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> – name of the child <a class="reference internal" href="#classraisin_1_1parameter_1_1ParameterContainer"><span class="std std-ref">ParameterContainer</span></a></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>shared pointer of child <a class="reference internal" href="#classraisin_1_1parameter_1_1ParameterContainer"><span class="std std-ref">ParameterContainer</span></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin9parameter18ParameterContainer28loadFromPackageParameterFileERKNSt6stringERKNSt6stringE">
+<span id="_CPPv3N6raisin9parameter18ParameterContainer28loadFromPackageParameterFileERKNSt6stringERKNSt6stringE"></span><span id="_CPPv2N6raisin9parameter18ParameterContainer28loadFromPackageParameterFileERKNSt6stringERKNSt6stringE"></span><span id="raisin::parameter::ParameterContainer::loadFromPackageParameterFile__ssCR.ssCR"></span><span class="target" id="classraisin_1_1parameter_1_1ParameterContainer_1a24a4232a33d5e62b9b0b0ba4aec50af7"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">loadFromPackageParameterFile</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">package_name</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">param_file_name</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="s"><span class="pre">&quot;params.yaml&quot;</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin9parameter18ParameterContainer28loadFromPackageParameterFileERKNSt6stringERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>load parameters from yaml file </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>package_name</strong> – name of the package </p></li>
+<li><p><strong>package_file_name</strong> – name of the file inside the package(default is “params.yaml”) </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin9parameter18ParameterContainer21getParamContainerListEv">
+<span id="_CPPv3N6raisin9parameter18ParameterContainer21getParamContainerListEv"></span><span id="_CPPv2N6raisin9parameter18ParameterContainer21getParamContainerListEv"></span><span id="raisin::parameter::ParameterContainer::getParamContainerList"></span><span class="target" id="classraisin_1_1parameter_1_1ParameterContainer_1a83cb3b445f1296b34a877adb709475d0"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">unordered_map</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N6raisin9parameter18ParameterContainerE" title="raisin::parameter::ParameterContainer"><span class="n"><span class="pre">ParameterContainer</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">getParamContainerList</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin9parameter18ParameterContainer21getParamContainerListEv" title="Link to this definition"></a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>names of the child <a class="reference internal" href="#classraisin_1_1parameter_1_1ParameterContainer"><span class="std std-ref">ParameterContainer</span></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin9parameter18ParameterContainer7getRootEv">
+<span id="_CPPv3N6raisin9parameter18ParameterContainer7getRootEv"></span><span id="_CPPv2N6raisin9parameter18ParameterContainer7getRootEv"></span><span id="raisin::parameter::ParameterContainer::getRoot"></span><span class="target" id="classraisin_1_1parameter_1_1ParameterContainer_1a8dbedb0b05f2e79ce7d751cb04eb4661"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6raisin9parameter18ParameterContainerE" title="raisin::parameter::ParameterContainer"><span class="n"><span class="pre">ParameterContainer</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">getRoot</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin9parameter18ParameterContainer7getRootEv" title="Link to this definition"></a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>unique root of the parameterContainer </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin9parameter9ParameterE">
+<span id="_CPPv3N6raisin9parameter9ParameterE"></span><span id="_CPPv2N6raisin9parameter9ParameterE"></span><span id="raisin::parameter::Parameter"></span><span class="target" id="classraisin_1_1parameter_1_1Parameter"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Parameter</span></span></span><a class="headerlink" href="#_CPPv4N6raisin9parameter9ParameterE" title="Link to this definition"></a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp enum-class">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin9parameter9Parameter5DtypeE">
+<span id="_CPPv3N6raisin9parameter9Parameter5DtypeE"></span><span id="_CPPv2N6raisin9parameter9Parameter5DtypeE"></span><span class="target" id="classraisin_1_1parameter_1_1Parameter_1a431dec19e8e136069a4a2b202e902686"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Dtype</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><a class="headerlink" href="#_CPPv4N6raisin9parameter9Parameter5DtypeE" title="Link to this definition"></a><br /></dt>
+<dd><p>parameter data types </p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin9parameter9Parameter5Dtype6STRINGE">
+<span id="_CPPv3N6raisin9parameter9Parameter5Dtype6STRINGE"></span><span id="_CPPv2N6raisin9parameter9Parameter5Dtype6STRINGE"></span><span class="target" id="classraisin_1_1parameter_1_1Parameter_1a431dec19e8e136069a4a2b202e902686a63b588d5559f64f89a416e656880b949"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">STRING</span></span></span><a class="headerlink" href="#_CPPv4N6raisin9parameter9Parameter5Dtype6STRINGE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin9parameter9Parameter5Dtype6DOUBLEE">
+<span id="_CPPv3N6raisin9parameter9Parameter5Dtype6DOUBLEE"></span><span id="_CPPv2N6raisin9parameter9Parameter5Dtype6DOUBLEE"></span><span class="target" id="classraisin_1_1parameter_1_1Parameter_1a431dec19e8e136069a4a2b202e902686afd3e4ece78a7d422280d5ed379482229"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DOUBLE</span></span></span><a class="headerlink" href="#_CPPv4N6raisin9parameter9Parameter5Dtype6DOUBLEE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin9parameter9Parameter5Dtype4BOOLE">
+<span id="_CPPv3N6raisin9parameter9Parameter5Dtype4BOOLE"></span><span id="_CPPv2N6raisin9parameter9Parameter5Dtype4BOOLE"></span><span class="target" id="classraisin_1_1parameter_1_1Parameter_1a431dec19e8e136069a4a2b202e902686aa97b2c144243b2b9d2c593ec268b62f5"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BOOL</span></span></span><a class="headerlink" href="#_CPPv4N6raisin9parameter9Parameter5Dtype4BOOLE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin9parameter9Parameter5Dtype3INTE">
+<span id="_CPPv3N6raisin9parameter9Parameter5Dtype3INTE"></span><span id="_CPPv2N6raisin9parameter9Parameter5Dtype3INTE"></span><span class="target" id="classraisin_1_1parameter_1_1Parameter_1a431dec19e8e136069a4a2b202e902686a53f93baa3057821107c750323892fa92"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">INT</span></span></span><a class="headerlink" href="#_CPPv4N6raisin9parameter9Parameter5Dtype3INTE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin9parameter9Parameter5Dtype13VECTOR_DOUBLEE">
+<span id="_CPPv3N6raisin9parameter9Parameter5Dtype13VECTOR_DOUBLEE"></span><span id="_CPPv2N6raisin9parameter9Parameter5Dtype13VECTOR_DOUBLEE"></span><span class="target" id="classraisin_1_1parameter_1_1Parameter_1a431dec19e8e136069a4a2b202e902686a55f4f06495b127b6c682b37a3fc0c6fe"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">VECTOR_DOUBLE</span></span></span><a class="headerlink" href="#_CPPv4N6raisin9parameter9Parameter5Dtype13VECTOR_DOUBLEE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin9parameter9Parameter5Dtype13VECTOR_STRINGE">
+<span id="_CPPv3N6raisin9parameter9Parameter5Dtype13VECTOR_STRINGE"></span><span id="_CPPv2N6raisin9parameter9Parameter5Dtype13VECTOR_STRINGE"></span><span class="target" id="classraisin_1_1parameter_1_1Parameter_1a431dec19e8e136069a4a2b202e902686a219b21cd758507e5d42f31c313507f20"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">VECTOR_STRING</span></span></span><a class="headerlink" href="#_CPPv4N6raisin9parameter9Parameter5Dtype13VECTOR_STRINGE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin9parameter9Parameter5Dtype10VECTOR_INTE">
+<span id="_CPPv3N6raisin9parameter9Parameter5Dtype10VECTOR_INTE"></span><span id="_CPPv2N6raisin9parameter9Parameter5Dtype10VECTOR_INTE"></span><span class="target" id="classraisin_1_1parameter_1_1Parameter_1a431dec19e8e136069a4a2b202e902686a362a4017764d73191ac058f04f55ebf8"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">VECTOR_INT</span></span></span><a class="headerlink" href="#_CPPv4N6raisin9parameter9Parameter5Dtype10VECTOR_INTE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin9parameter9Parameter5Dtype9UNDEFINEDE">
+<span id="_CPPv3N6raisin9parameter9Parameter5Dtype9UNDEFINEDE"></span><span id="_CPPv2N6raisin9parameter9Parameter5Dtype9UNDEFINEDE"></span><span class="target" id="classraisin_1_1parameter_1_1Parameter_1a431dec19e8e136069a4a2b202e902686a0db45d2a4141101bdfe48e3314cfbca3"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">UNDEFINED</span></span></span><a class="headerlink" href="#_CPPv4N6raisin9parameter9Parameter5Dtype9UNDEFINEDE" title="Link to this definition"></a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin9parameter9Parameter13dTypeToStringE5Dtype">
+<span id="_CPPv3N6raisin9parameter9Parameter13dTypeToStringE5Dtype"></span><span id="_CPPv2N6raisin9parameter9Parameter13dTypeToStringE5Dtype"></span><span id="raisin::parameter::Parameter::dTypeToString__Dtype"></span><span class="target" id="classraisin_1_1parameter_1_1Parameter_1ab7f52aa0f7b6f1f002d21c6f3a8414d0"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dTypeToString</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N6raisin9parameter9Parameter5DtypeE" title="raisin::parameter::Parameter::Dtype"><span class="n"><span class="pre">Dtype</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">dtype</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin9parameter9Parameter13dTypeToStringE5Dtype" title="Link to this definition"></a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dtype</strong> – data type </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>data type in string </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin9parameter9Parameter13stringToDtypeERKNSt6stringE">
+<span id="_CPPv3N6raisin9parameter9Parameter13stringToDtypeERKNSt6stringE"></span><span id="_CPPv2N6raisin9parameter9Parameter13stringToDtypeERKNSt6stringE"></span><span id="raisin::parameter::Parameter::stringToDtype__ssCR"></span><span class="target" id="classraisin_1_1parameter_1_1Parameter_1aba9088956b5f5a7e9e49fc48e6a40ec9"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6raisin9parameter9Parameter5DtypeE" title="raisin::parameter::Parameter::Dtype"><span class="n"><span class="pre">Dtype</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">stringToDtype</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">type</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin9parameter9Parameter13stringToDtypeERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>type</strong> – data type in string </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>data type in Dtype </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Plugin.html" class="btn btn-neutral float-left" title="Plugin" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="DataLogger.html" class="btn btn-neutral float-right" title="DataLogger" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Raion Robotics..</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
