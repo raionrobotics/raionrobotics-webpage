@@ -12,7 +12,7 @@ Key Features
 ------------
 
 * **LiDAR Support**: Drivers for Ouster OS-1-32 and Livox Mid-360 LiDAR sensors
-* **Depth Camera**: D455 depth camera for terrain perception
+* **Depth Camera**: Support for Intel RealSense depth cameras (e.g., D430, D455) for terrain perception
 * **SLAM**: FAST-LIO LiDAR-Inertial Odometry for real-time localization and mapping
 * **Terrain Mapping**: Grid mapping for terrain heightmap generation
 * **Autonomous Navigation**: Waypoint navigation with terrain analysis and obstacle avoidance

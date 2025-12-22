@@ -13,6 +13,7 @@ The Map Window is part of the RAISIN GUI and provides:
 * Real-time robot position tracking
 * Path visualization
 * Point cloud overlay
+* Autonomy graph visualization
 
 Map Layers
 ----------
@@ -44,6 +45,7 @@ Point Cloud Layer
 Overlays LiDAR point cloud data on the map:
 
 * Real-time point cloud from sensors
+* Saved PCD maps loaded from file
 * Color-coded by height or intensity
 * Adjustable point size and opacity
 

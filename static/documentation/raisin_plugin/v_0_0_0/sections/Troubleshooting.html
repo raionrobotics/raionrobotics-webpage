@@ -135,7 +135,7 @@ ping<span class="w"> </span><span class="m">192</span>.168.1.100<span class="w">
 list<span class="w">                  </span><span class="c1"># Check available servers and get server_id</span>
 con<span class="w"> </span>&lt;server_id&gt;<span class="w">       </span><span class="c1"># Connect using server_id from list output</span>
 list<span class="w">                  </span><span class="c1"># List all available topics</span>
-sub<span class="w"> </span>ouster_points<span class="w"> </span><span class="nb">time</span><span class="w">  </span><span class="c1"># Check if ouster points are being published</span>
+sub<span class="w"> </span>&lt;topic&gt;<span class="w"> </span>&lt;time&gt;<span class="w">    </span><span class="c1"># e.g., sub /ouster/points 10</span>
 </pre></div>
 </div>
 </li>
@@ -182,17 +182,14 @@ sub<span class="w"> </span>ouster_points<span class="w"> </span><span class="nb"
 <ol class="arabic">
 <li><p><strong>Calibrate Extrinsics</strong></p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">mapping</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">extrinsic_est_en</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">  </span><span class="c1"># Enable online calibration</span>
+<span class="w">  </span><span class="nt">extrinsic_est_en</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">  </span><span class="c1"># Enable online calibration</span>
 </pre></div>
 </div>
 </li>
 <li><p><strong>Tune Noise Parameters</strong></p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">mapping</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">acc_cov</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span><span class="w">  </span><span class="c1"># Increase if accelerometer noisy</span>
-<span class="w">  </span><span class="nt">gyr_cov</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span><span class="w">  </span><span class="c1"># Increase if gyroscope noisy</span>
+<span class="w">  </span><span class="nt">acc_cov</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span><span class="w">  </span><span class="c1"># Increase if accelerometer noisy</span>
+<span class="w">  </span><span class="nt">gyr_cov</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span><span class="w">  </span><span class="c1"># Increase if gyroscope noisy</span>
 </pre></div>
 </div>
 </li>
@@ -218,8 +215,7 @@ sub<span class="w"> </span>ouster_points<span class="w"> </span><span class="nb"
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># In raisin_cli</span>
 list<span class="w">                       </span><span class="c1"># Check available servers and get server_id</span>
 con<span class="w"> </span>&lt;server_id&gt;<span class="w">            </span><span class="c1"># Connect using server_id from list output</span>
-sub<span class="w"> </span>ouster_points<span class="w"> </span><span class="nb">time</span><span class="w">     </span><span class="c1"># Check LiDAR point cloud rate</span>
-sub<span class="w"> </span>ouster_imu<span class="w"> </span><span class="nb">time</span><span class="w">        </span><span class="c1"># Check IMU data rate</span>
+sub<span class="w"> </span>&lt;topic&gt;<span class="w"> </span>&lt;time&gt;<span class="w">         </span><span class="c1"># e.g., sub /ouster/points 10</span>
 </pre></div>
 </div>
 </li>
@@ -250,8 +246,7 @@ sub<span class="w"> </span>ouster_imu<span class="w"> </span><span class="nb">ti
 <p><strong>Solutions:</strong></p>
 <ol class="arabic">
 <li><p><strong>Check Autonomy Mode</strong></p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">autonomyMode</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">autonomyMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </pre></div>
 </div>
 </li>
@@ -260,7 +255,7 @@ sub<span class="w"> </span>ouster_imu<span class="w"> </span><span class="nb">ti
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># In raisin_cli</span>
 list<span class="w">                   </span><span class="c1"># Check available servers and get server_id</span>
 con<span class="w"> </span>&lt;server_id&gt;<span class="w">        </span><span class="c1"># Connect using server_id from list output</span>
-sub<span class="w"> </span>odometry_base<span class="w"> </span><span class="nb">time</span><span class="w"> </span><span class="c1"># Check if odometry is being published</span>
+sub<span class="w"> </span>&lt;topic&gt;<span class="w"> </span>&lt;time&gt;<span class="w">     </span><span class="c1"># e.g., sub /Odometry/base 10</span>
 </pre></div>
 </div>
 </li>
@@ -283,19 +278,15 @@ sub<span class="w"> </span>odometry_base<span class="w"> </span><span class="nb"
 <ol class="arabic">
 <li><p><strong>Adjust Height Thresholds</strong></p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">localPlanner</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">heightGapThre</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.3</span><span class="w">  </span><span class="c1"># Increase for rougher terrain</span>
-<span class="w">  </span><span class="nt">obstacleHeightThre</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.25</span>
+<span class="w">  </span><span class="nt">heightGapThre</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.3</span><span class="w">       </span><span class="c1"># Increase for rougher terrain</span>
+<span class="w">  </span><span class="nt">obstacleHeightThre</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.25</span>
 </pre></div>
 </div>
 </li>
 <li><p><strong>Tune Terrain Analysis</strong></p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">terrainAnalysis</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">minRelZ</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-2.0</span><span class="w">  </span><span class="c1"># Allow lower terrain</span>
-<span class="w">  </span><span class="nt">maxRelZ</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">   </span><span class="c1"># Allow higher terrain</span>
+<span class="w">  </span><span class="nt">minRelZ</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-2.0</span><span class="w">  </span><span class="c1"># Allow lower terrain</span>
+<span class="w">  </span><span class="nt">maxRelZ</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">   </span><span class="c1"># Allow higher terrain</span>
 </pre></div>
 </div>
 </li>
@@ -306,17 +297,14 @@ sub<span class="w"> </span>odometry_base<span class="w"> </span><span class="nb"
 <p><strong>Solutions:</strong></p>
 <ol class="arabic">
 <li><p><strong>Increase Speed Limits</strong></p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">maxSpeed</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4.0</span>
-<span class="nt">autonomySpeed</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">maxSpeed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4.0</span>
+<span class="nt">autonomySpeed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span>
 </pre></div>
 </div>
 </li>
 <li><p><strong>Adjust Slowdown Distance</strong></p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">pathFollower</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">slowDwnDisThre</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">  </span><span class="c1"># Reduce to slow later</span>
+<span class="w">  </span><span class="nt">slowDwnDisThre</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">  </span><span class="c1"># Reduce to slow later</span>
 </pre></div>
 </div>
 </li>
@@ -376,7 +364,7 @@ Server        192.168.10.21  railab_raibo-2781268307830    raibo2%ouster32 d455_
 </pre></div>
 </div>
 <p>Connect using the <code class="docutils literal notranslate"><span class="pre">server_id</span></code>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>con<span class="w"> </span>railab_raibo-2781268307830<span class="w">    </span><span class="c1"># Connect using server_id from list</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>con<span class="w"> </span>&lt;server_id&gt;<span class="w">    </span><span class="c1"># Connect using server_id from list</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -398,9 +386,7 @@ sub<span class="w"> </span>&lt;topic_name&gt;<span class="w">           </span><
 list<span class="w">                       </span><span class="c1"># Check available servers and get server_id</span>
 con<span class="w"> </span>&lt;server_id&gt;<span class="w">            </span><span class="c1"># Connect using server_id from list output</span>
 list<span class="w">                       </span><span class="c1"># List all available topics</span>
-sub<span class="w"> </span>odometry_base<span class="w"> </span><span class="nb">time</span><span class="w">     </span><span class="c1"># Check odometry rate</span>
-sub<span class="w"> </span>ouster_points<span class="w"> </span><span class="nb">time</span><span class="w">     </span><span class="c1"># Check LiDAR point cloud rate</span>
-sub<span class="w"> </span>livox_lidar<span class="w"> </span><span class="nb">time</span><span class="w">       </span><span class="c1"># Check Livox LiDAR rate (if using Mid-360)</span>
+sub<span class="w"> </span>&lt;topic&gt;<span class="w"> </span>&lt;time&gt;<span class="w">         </span><span class="c1"># e.g., sub /Odometry/base 10</span>
 </pre></div>
 </div>
 <p><strong>Monitor System Load:</strong></p>
@@ -412,8 +398,7 @@ sub<span class="w"> </span>livox_lidar<span class="w"> </span><span class="nb">t
 <section id="logging">
 <h3>Logging<a class="headerlink" href="#logging" title="Link to this heading"></a></h3>
 <p>Enable detailed logging for debugging:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">runtime_pos_log_enable</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">runtime_pos_log_enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </pre></div>
 </div>
 <p>Check logs for error messages and warnings.</p>

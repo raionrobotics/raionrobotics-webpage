@@ -33,7 +33,7 @@ No Point Cloud Data
        list                  # Check available servers and get server_id
        con <server_id>       # Connect using server_id from list output
        list                  # List all available topics
-       sub ouster_points time  # Check if ouster points are being published
+       sub <topic> <time>    # e.g., sub /ouster/points 10
 
 3. **Check IP Configuration**
 
@@ -78,18 +78,15 @@ High Odometry Drift
    .. code-block:: yaml
 
        mapping:
-         extrinsic_est_en:
-           value: true  # Enable online calibration
+         extrinsic_est_en: true  # Enable online calibration
 
 2. **Tune Noise Parameters**
 
    .. code-block:: yaml
 
        mapping:
-         acc_cov:
-           value: 0.1  # Increase if accelerometer noisy
-         gyr_cov:
-           value: 0.1  # Increase if gyroscope noisy
+         acc_cov: 0.1  # Increase if accelerometer noisy
+         gyr_cov: 0.1  # Increase if gyroscope noisy
 
 3. **Check IMU Quality**
 
@@ -115,8 +112,7 @@ SLAM Fails to Initialize
        # In raisin_cli
        list                       # Check available servers and get server_id
        con <server_id>            # Connect using server_id from list output
-       sub ouster_points time     # Check LiDAR point cloud rate
-       sub ouster_imu time        # Check IMU data rate
+       sub <topic> <time>         # e.g., sub /ouster/points 10
 
 2. **Check Configuration**
 
@@ -145,8 +141,7 @@ Robot Doesn't Move to Waypoint
 
    .. code-block:: yaml
 
-       autonomyMode:
-         value: true
+       autonomyMode: true
 
 2. **Verify Odometry**
 
@@ -157,7 +152,7 @@ Robot Doesn't Move to Waypoint
        # In raisin_cli
        list                   # Check available servers and get server_id
        con <server_id>        # Connect using server_id from list output
-       sub odometry_base time # Check if odometry is being published
+       sub <topic> <time>     # e.g., sub /Odometry/base 10
 
 3. **Check Waypoint Service**
 
@@ -179,20 +174,16 @@ Robot Avoids Valid Paths
    .. code-block:: yaml
 
        localPlanner:
-         heightGapThre:
-           value: 0.3  # Increase for rougher terrain
-         obstacleHeightThre:
-           value: 0.25
+         heightGapThre: 0.3       # Increase for rougher terrain
+         obstacleHeightThre: 0.25
 
 2. **Tune Terrain Analysis**
 
    .. code-block:: yaml
 
        terrainAnalysis:
-         minRelZ:
-           value: -2.0  # Allow lower terrain
-         maxRelZ:
-           value: 1.0   # Allow higher terrain
+         minRelZ: -2.0  # Allow lower terrain
+         maxRelZ: 1.0   # Allow higher terrain
 
 Robot Moves Too Slow
 ^^^^^^^^^^^^^^^^^^^^
@@ -203,18 +194,15 @@ Robot Moves Too Slow
 
    .. code-block:: yaml
 
-       maxSpeed:
-         value: 4.0
-       autonomySpeed:
-         value: 2.0
+       maxSpeed: 4.0
+       autonomySpeed: 2.0
 
 2. **Adjust Slowdown Distance**
 
    .. code-block:: yaml
 
        pathFollower:
-         slowDwnDisThre:
-           value: 1.0  # Reduce to slow later
+         slowDwnDisThre: 1.0  # Reduce to slow later
 
 Map Window Issues
 -----------------
@@ -280,7 +268,7 @@ Connect using the ``server_id``:
 
 .. code-block:: bash
 
-    con railab_raibo-2781268307830    # Connect using server_id from list
+    con <server_id>    # Connect using server_id from list
 
 .. note::
     The ``server_id`` (e.g., ``railab_raibo-2781268307830``) is assigned dynamically and may change between sessions.
@@ -305,9 +293,7 @@ Use ``raisin_cli`` to verify system health:
     list                       # Check available servers and get server_id
     con <server_id>            # Connect using server_id from list output
     list                       # List all available topics
-    sub odometry_base time     # Check odometry rate
-    sub ouster_points time     # Check LiDAR point cloud rate
-    sub livox_lidar time       # Check Livox LiDAR rate (if using Mid-360)
+    sub <topic> <time>         # e.g., sub /Odometry/base 10
 
 **Monitor System Load:**
 
@@ -321,8 +307,7 @@ Enable detailed logging for debugging:
 
 .. code-block:: yaml
 
-    runtime_pos_log_enable:
-      value: true
+    runtime_pos_log_enable: true
 
 Check logs for error messages and warnings.
 

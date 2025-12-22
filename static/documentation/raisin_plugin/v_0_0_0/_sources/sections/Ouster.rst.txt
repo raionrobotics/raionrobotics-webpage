@@ -23,37 +23,14 @@ Location: ``raisin_ouster_plugin/config/ouster32.yaml``
 
 .. code-block:: yaml
 
-    sensor_hostname:
-      value: "169.254.16.143"
-      dtype: string
-
-    lidar_mode:
-      value: "1024x10"
-      dtype: string
-
-    lidar_port:
-      value: 0
-      dtype: int
-
-    imu_port:
-      value: 0
-      dtype: int
-
-    sensor_frame:
-      value: "os_sensor"
-      dtype: string
-
-    lidar_frame:
-      value: "os_lidar"
-      dtype: string
-
-    imu_frame:
-      value: "os_imu"
-      dtype: string
-
-    publish_rate:
-      value: 10.0
-      dtype: double
+    sensor_hostname: "169.254.16.143"
+    lidar_mode: "1024x10"
+    lidar_port: 0
+    imu_port: 0
+    sensor_frame: "os_sensor"
+    lidar_frame: "os_lidar"
+    imu_frame: "os_imu"
+    publish_rate: 10.0
 
 Parameter Reference
 ^^^^^^^^^^^^^^^^^^^
@@ -166,15 +143,17 @@ Add to your ``params.yaml``:
 
     plugin:
       raisin_ouster_plugin:
-        rate:
-          value: 10
-          dtype: double
+        rate: 10
 
 Verifying Connection
 ^^^^^^^^^^^^^^^^^^^^
 
-Check that point clouds are being published:
+Check that point clouds are being published using ``raisin_cli`` (see :ref:`using-raisin-cli` for details):
 
 .. code-block:: bash
 
-    ros2 topic hz /ouster/points
+    # In raisin_cli
+    list                    # Check available servers and get server_id
+    con <server_id>         # Connect using server_id from list output
+    list                    # List all available topics
+    sub <topic> <time>      # e.g., sub /ouster/points 10

@@ -88,9 +88,7 @@ Add to your ``params.yaml``:
 
     plugin:
       raisin_d455_plugin:
-        rate:
-          value: 30
-          dtype: double
+        rate: 30
 
 Camera Mounting
 ^^^^^^^^^^^^^^^

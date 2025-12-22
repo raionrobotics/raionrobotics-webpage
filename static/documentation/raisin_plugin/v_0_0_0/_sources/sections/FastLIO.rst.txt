@@ -40,56 +40,28 @@ Example Configuration (Ouster)
 .. code-block:: yaml
 
     common:
-      lid_topic:
-        value: /ouster/points
-        dtype: string
-      imu_topic:
-        value: /ouster/imu
-        dtype: string
-      time_sync_en:
-        value: false
-        dtype: bool
+      lid_topic: /ouster/points
+      imu_topic: /ouster/imu
+      time_sync_en: false
 
     preprocess:
-      lidar_type:
-        value: 3  # 1=Livox, 2=Velodyne, 3=Ouster
-        dtype: int
-      scan_line:
-        value: 32
-        dtype: int
-      blind:
-        value: 0.5
-        dtype: double
+      lidar_type: 3  # 1=Livox, 2=Velodyne, 3=Ouster
+      scan_line: 32
+      blind: 0.5
 
     mapping:
-      acc_cov:
-        value: 0.1
-        dtype: double
-      gyr_cov:
-        value: 0.1
-        dtype: double
-      extrinsic_est_en:
-        value: false
-        dtype: bool
-      extrinsic_T:
-        value: [0.002441, 0.009725, 0.030662]
-        dtype: vector<double>
-      extrinsic_R:
-        value: [-1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0]
-        dtype: vector<double>
+      acc_cov: 0.1
+      gyr_cov: 0.1
+      extrinsic_est_en: false
+      extrinsic_T: [0.002441, 0.009725, 0.030662]
+      extrinsic_R: [-1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0]
 
     publish:
-      scan_publish_en:
-        value: true
-        dtype: bool
-      dense_publish_en:
-        value: true
-        dtype: bool
+      scan_publish_en: true
+      dense_publish_en: true
 
     pcd_save:
-      pcd_save_en:
-        value: true
-        dtype: bool
+      pcd_save_en: true
 
 Parameter Reference
 ^^^^^^^^^^^^^^^^^^^

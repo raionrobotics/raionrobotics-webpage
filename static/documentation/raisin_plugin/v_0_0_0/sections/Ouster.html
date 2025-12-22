@@ -120,37 +120,14 @@
 <section id="configuration-file">
 <h3>Configuration File<a class="headerlink" href="#configuration-file" title="Link to this heading"></a></h3>
 <p>Location: <code class="docutils literal notranslate"><span class="pre">raisin_ouster_plugin/config/ouster32.yaml</span></code></p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">sensor_hostname</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;169.254.16.143&quot;</span>
-<span class="w">  </span><span class="nt">dtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-
-<span class="nt">lidar_mode</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1024x10&quot;</span>
-<span class="w">  </span><span class="nt">dtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-
-<span class="nt">lidar_port</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
-<span class="w">  </span><span class="nt">dtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">int</span>
-
-<span class="nt">imu_port</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
-<span class="w">  </span><span class="nt">dtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">int</span>
-
-<span class="nt">sensor_frame</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;os_sensor&quot;</span>
-<span class="w">  </span><span class="nt">dtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-
-<span class="nt">lidar_frame</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;os_lidar&quot;</span>
-<span class="w">  </span><span class="nt">dtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-
-<span class="nt">imu_frame</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;os_imu&quot;</span>
-<span class="w">  </span><span class="nt">dtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-
-<span class="nt">publish_rate</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0</span>
-<span class="w">  </span><span class="nt">dtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">double</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">sensor_hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;169.254.16.143&quot;</span>
+<span class="nt">lidar_mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1024x10&quot;</span>
+<span class="nt">lidar_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="nt">imu_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="nt">sensor_frame</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;os_sensor&quot;</span>
+<span class="nt">lidar_frame</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;os_lidar&quot;</span>
+<span class="nt">imu_frame</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;os_imu&quot;</span>
+<span class="nt">publish_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0</span>
 </pre></div>
 </div>
 </section>
@@ -298,16 +275,18 @@
 <p>Add to your <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code>:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">plugin</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">raisin_ouster_plugin</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">rate</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
-<span class="w">      </span><span class="nt">dtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">double</span>
+<span class="w">    </span><span class="nt">rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
 </pre></div>
 </div>
 </section>
 <section id="verifying-connection">
 <h3>Verifying Connection<a class="headerlink" href="#verifying-connection" title="Link to this heading"></a></h3>
-<p>Check that point clouds are being published:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>topic<span class="w"> </span>hz<span class="w"> </span>/ouster/points
+<p>Check that point clouds are being published using <code class="docutils literal notranslate"><span class="pre">raisin_cli</span></code> (see <a class="reference internal" href="Troubleshooting.html#using-raisin-cli"><span class="std std-ref">Using raisin_cli</span></a> for details):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># In raisin_cli</span>
+list<span class="w">                    </span><span class="c1"># Check available servers and get server_id</span>
+con<span class="w"> </span>&lt;server_id&gt;<span class="w">         </span><span class="c1"># Connect using server_id from list output</span>
+list<span class="w">                    </span><span class="c1"># List all available topics</span>
+sub<span class="w"> </span>&lt;topic&gt;<span class="w"> </span>&lt;time&gt;<span class="w">      </span><span class="c1"># e.g., sub /ouster/points 10</span>
 </pre></div>
 </div>
 </section>

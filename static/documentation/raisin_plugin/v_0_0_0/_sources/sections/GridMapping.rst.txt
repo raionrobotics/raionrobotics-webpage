@@ -33,69 +33,29 @@ Location: ``raisin_grid_mapping_plugin/config/params.yaml``
 
 .. code-block:: yaml
 
-    rate:
-      value: 500
-      dtype: double
-
-    heightmap_publish_rate:
-      value: 5
-      dtype: double
-
-    map_resolution:
-      value: 0.025
-      dtype: double
-
-    local_map_size:
-      value: 10
-      dtype: double
-
-    max_count:
-      value: 1
-      dtype: double
-
-    velocity_trust_threshold:
-      value: 8.0
-      dtype: double
-
-    distance_threshold:
-      value: 0.1
-      dtype: double
-
-    height_threshold_minimum:
-      value: 0.05
-      dtype: double
-
-    height_threshold_proportional:
-      value: 0.05
-      dtype: double
+    rate: 500
+    heightmap_publish_rate: 5
+    map_resolution: 0.025
+    local_map_size: 10
+    max_count: 1
+    velocity_trust_threshold: 8.0
+    distance_threshold: 0.1
+    height_threshold_minimum: 0.05
+    height_threshold_proportional: 0.05
 
     ray_casting:
-      is_ray_casting:
-        value: false
-        dtype: bool
-      downsampling_kernel:
-        value: 20
-        dtype: int
+      is_ray_casting: false
+      downsampling_kernel: 20
 
     hole_filling:
-      is_hole_filling:
-        value: true
-        dtype: bool
-      hole_filling_kernel_size:
-        value: 5
-        dtype: int
+      is_hole_filling: true
+      hole_filling_kernel_size: 5
 
     inpainting:
-      is_inpainting:
-        value: false
-        dtype: bool
-      rayWidthProportional:
-        value: 5.0
-        dtype: double
+      is_inpainting: false
+      rayWidthProportional: 5.0
 
-    memorize_limit:
-      value: 0.1
-      dtype: double
+    memorize_limit: 0.1
 
 Parameter Reference
 ^^^^^^^^^^^^^^^^^^^
@@ -265,7 +225,7 @@ Usage
 Basic Setup
 ^^^^^^^^^^^
 
-1. Load the D455 depth camera plugin
+1. Load a supported depth camera plugin
 2. Load a state estimator (IEKF or sim_state)
 3. Load the Grid Mapping plugin
 
@@ -274,20 +234,14 @@ Example configuration in ``params.yaml``:
 .. code-block:: yaml
 
     plugin:
-      raisin_d455_plugin:
-        rate:
-          value: 30
-          dtype: double
+      raisin_d455_plugin:  # e.g., for D455 camera
+        rate: 30
 
       raisin_iekf_plugin:
-        rate:
-          value: 400
-          dtype: double
+        rate: 400
 
       raisin_grid_mapping_plugin:
-        rate:
-          value: 500
-          dtype: double
+        rate: 500
 
 Tuning for Different Terrains
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -296,17 +250,13 @@ For rough terrain:
 
 .. code-block:: yaml
 
-    height_threshold_minimum:
-      value: 0.1
-      dtype: double
+    height_threshold_minimum: 0.1
 
 For smooth terrain:
 
 .. code-block:: yaml
 
-    height_threshold_minimum:
-      value: 0.02
-      dtype: double
+    height_threshold_minimum: 0.02
 
 .. note::
    Lower resolution (larger ``map_resolution``) improves performance but reduces terrain detail.

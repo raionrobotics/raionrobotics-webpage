@@ -13,63 +13,64 @@ The autonomous navigation stack uses two types of tasks:
 
 .. code-block:: text
 
-    ┌─────────────────────────────────────────────────────────────────────────┐
-    │                    SENSOR LAYER (PeriodicTask)                          │
-    ├─────────────┬─────────────┬─────────────┬─────────────┬─────────────────┤
-    │   LiDAR     │     IMU     │  Depth Cameras  │  Encoders   │    GPS      │
-    │ (OS-1-32/   │             │  (D430 front/   │  (Joints)   │ (Optional)  │
-    │  Mid-360)   │             │   rear, etc.)   │             │             │
-    └──────┬──────┴──────┬──────┴──────┬──────┴──────┬──────┴────────┬────────┘
-           │             │             │             │               │
-           ▼             ▼             │             ▼               │
-    ┌─────────────────────────────────────────────────────────────────────────┐
-    │                 PERIODIC TASKS (Always Running)                         │
-    ├─────────────────────────────┬─────────────────────┬─────────────────────┤
-    │        FAST-LIO SLAM        │   STATE ESTIMATION  │    GRID MAPPING     │
-    │    (LiDAR-IMU Odometry)     │       (IEKF)        │  (Terrain Heightmap)│
-    │                             │                     │                     │
-    │  Input:                     │  Input:             │  Input:             │
-    │  - LiDAR points             │  - IMU              │  - Depth cameras    │
-    │  - IMU                      │  - Joint encoders   │  - robot_pose       │
-    │                             │  - Contact state    │                     │
-    │  Output:                    │  Output:            │  Output:            │
-    │  - /Odometry/base ────────────────────────────────────────► Autonomy    │
-    │  - /cloud_registered ─────────────────────────────────────► Map Window  │
-    │                             │  - robot_pose ─────►│  - heightmap ──────►│
-    └─────────────────────────────┴─────────────────────┴─────────────────────┘
-                                            │
-                                            │ Data subscription
-                                            ▼
-    ┌─────────────────────────────────────────────────────────────────────────┐
-    │                 EVENT TASKS (Triggered by Request)                      │
-    ├─────────────────────────────────────────────────────────────────────────┤
-    │                         AUTONOMY PLUGIN                                 │
-    │                                                                         │
-    │  Trigger: SetWaypoints service call (from Map Window)                   │
-    │                                                                         │
-    │  Subscribes:                              Publishes:                    │
-    │  - /Odometry/base (from FAST-LIO)         - /way_point (next target)    │
-    │  - heightmap (from Grid Mapping)          - /speed (desired velocity)   │
-    │  - GPS fix (optional)                                                   │
-    └─────────────────────────────────────────────────────────────────────────┘
-                                            ▲
-                                            │ SetWaypoints service
-                                            │
-    ┌─────────────────────────────────────────────────────────────────────────┐
-    │                         GUI MAP WINDOW                                  │
-    │                        (User Interface)                                 │
-    │                                                                         │
-    │  Visualization:                                                         │
-    │  - FAST-LIO point cloud (/cloud_registered) - real-time display         │
-    │  - Saved PCD maps - load and display                                    │
-    │  - Robot position (GPS/Odometry)                                        │
-    │  - Autonomy graph (nodes/edges)                                         │
-    │                                                                         │
-    │  Editing:                                                               │
-    │  - Waypoint editing → SetWaypoints service call                         │
-    │  - Graph node/edge editing (Map Editor)                                 │
-    │  - Robot localization setup (2-click)                                   │
-    └─────────────────────────────────────────────────────────────────────────┘
+    ┌───────────────────────────────────────────────────────────────────────┐
+    │                     SENSOR LAYER (PeriodicTask)                       │
+    ├─────────────┬───────────┬─────────────────┬───────────┬───────────────┤
+    │    LiDAR    │    IMU    │  Depth Cameras  │  Encoders │      GPS      │
+    │  (OS-1-32/  │           │  (D430 front/   │  (Joints) │   (Optional)  │
+    │   Mid-360)  │           │   rear, etc.)   │           │               │
+    └──────┬──────┴─────┬─────┴────────┬────────┴─────┬─────┴───────┬───────┘
+           │            │              │              │             │
+           ▼            ▼              ▼              ▼             ▼
+    ┌───────────────────────────────────────────────────────────────────────┐
+    │                   PERIODIC TASKS (Always Running)                     │
+    ├───────────────────────────┬───────────────────┬───────────────────────┤
+    │       FAST-LIO SLAM       │  STATE ESTIMATION │     GRID MAPPING      │
+    │   (LiDAR-IMU Odometry)    │      (IEKF)       │  (Terrain Heightmap)  │
+    │                           │                   │                       │
+    │  Input:                   │  Input:           │  Input:               │
+    │  - LiDAR points           │  - IMU            │  - Depth cameras      │
+    │  - IMU                    │  - Joint encoders │  - robot_pose         │
+    │                           │  - Contact state  │                       │
+    │                           │                   │                       │
+    │  Output:                  │  Output:          │  Output:              │
+    │  - /Odometry/base         │  - robot_pose ───►│  - heightmap          │
+    │  - /cloud_registered      │                   │                       │
+    └─────────────┬─────────────┴─────────┬─────────┴───────────┬───────────┘
+                  │                       │                     │
+                  │       Data subscription                     │
+                  ▼                       ▼                     ▼
+    ┌───────────────────────────────────────────────────────────────────────┐
+    │                  EVENT TASKS (Triggered by Request)                   │
+    ├───────────────────────────────────────────────────────────────────────┤
+    │                          AUTONOMY PLUGIN                              │
+    │                                                                       │
+    │  Trigger: SetWaypoints service call (from Map Window)                 │
+    │                                                                       │
+    │  Subscribes:                            Publishes:                    │
+    │  - /Odometry/base (from FAST-LIO)       - /way_point (next target)    │
+    │  - heightmap (from Grid Mapping)        - /speed (desired velocity)   │
+    │  - GPS fix (optional)                                                 │
+    └───────────────────────────────────────────────────────────────────────┘
+                                          ▲
+                                          │ SetWaypoints service
+                                          │
+    ┌───────────────────────────────────────────────────────────────────────┐
+    │                          GUI MAP WINDOW                               │
+    │                         (User Interface)                              │
+    │                                                                       │
+    │  Subscribes:                                                          │
+    │  - /cloud_registered (from FAST-LIO) - real-time point cloud          │
+    │  - /Odometry/base (from FAST-LIO) - robot position                    │
+    │  - GPS fix (optional)                                                 │
+    │                                                                       │
+    │  Features:                                                            │
+    │  - Saved PCD maps - load and display                                  │
+    │  - Autonomy graph visualization (nodes/edges)                         │
+    │  - Waypoint editing → SetWaypoints service call                       │
+    │  - Graph node/edge editing (Map Editor)                               │
+    │  - Robot localization setup (2-click)                                 │
+    └───────────────────────────────────────────────────────────────────────┘
 
 Component Overview
 ------------------
