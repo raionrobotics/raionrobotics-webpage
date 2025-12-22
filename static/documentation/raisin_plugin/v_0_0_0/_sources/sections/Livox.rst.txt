@@ -1,0 +1,220 @@
+Livox LiDAR Plugin
+==================
+
+The Livox plugin provides driver support for Livox Mid-360 LiDAR sensor.
+
+Overview
+--------
+
+The Livox plugin connects to Livox LiDAR sensors via UDP, streaming point cloud and IMU data. It supports multiple concurrent sensors and provides mounting calibration options.
+
+Supported Sensors
+^^^^^^^^^^^^^^^^^
+
+* Livox Mid-360 (360-degree coverage)
+
+Configuration
+-------------
+
+Configuration File
+^^^^^^^^^^^^^^^^^^
+
+Location: ``raisin_livox_lidar_plugin/config/MID360_config.json``
+
+.. code-block:: json
+
+    {
+      "lidar_summary_info" : {
+        "lidar_type": 8
+      },
+      "MID360": {
+        "lidar_net_info" : {
+          "cmd_data_port": 56100,
+          "push_msg_port": 56200,
+          "point_data_port": 56300,
+          "imu_data_port": 56400,
+          "log_data_port": 56500
+        },
+        "host_net_info" : {
+          "cmd_data_ip" : "192.168.1.50",
+          "cmd_data_port": 56101,
+          "push_msg_ip": "192.168.1.50",
+          "push_msg_port": 56201,
+          "point_data_ip": "192.168.1.50",
+          "point_data_port": 56301,
+          "imu_data_ip" : "192.168.1.50",
+          "imu_data_port": 56401,
+          "log_data_ip" : "",
+          "log_data_port": 56501
+        }
+      },
+      "lidar_configs" : [
+        {
+          "ip" : "192.168.1.100",
+          "pcl_data_type" : 1,
+          "pattern_mode" : 0,
+          "extrinsic_parameter" : {
+            "roll": 0.0,
+            "pitch": 0.0,
+            "yaw": 0.0,
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        }
+      ]
+    }
+
+.. note::
+   The ``lidar_type: 8`` indicates the Livox SDK2 protocol type, not a specific device model.
+
+Parameter Reference
+^^^^^^^^^^^^^^^^^^^
+
+Network Configuration:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 25 15 60
+
+   * - Parameter
+     - Default
+     - Description
+   * - cmd_data_port
+     - 56000
+     - Command communication port
+   * - point_data_port
+     - 57000
+     - Point cloud data receiving port
+   * - imu_data_port
+     - 58000
+     - IMU data receiving port
+   * - log_data_port
+     - 59000
+     - Log data port
+
+LiDAR Configuration:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 25 15 60
+
+   * - Parameter
+     - Default
+     - Description
+   * - ip
+     - "192.168.1.100"
+     - IP address of the LiDAR sensor
+   * - pcl_data_type
+     - 1
+     - Point cloud data format type
+   * - pattern_mode
+     - 0
+     - Scan pattern mode
+
+Extrinsic Parameters (Mounting Calibration):
+
+.. list-table::
+   :header-rows: 1
+   :widths: 25 15 15 45
+
+   * - Parameter
+     - Type
+     - Unit
+     - Description
+   * - roll
+     - double
+     - radians
+     - Roll rotation offset
+   * - pitch
+     - double
+     - radians
+     - Pitch rotation offset
+   * - yaw
+     - double
+     - radians
+     - Yaw rotation offset
+   * - x
+     - double
+     - meters
+     - X translation offset
+   * - y
+     - double
+     - meters
+     - Y translation offset
+   * - z
+     - double
+     - meters
+     - Z translation offset
+
+Configuration Notes
+^^^^^^^^^^^^^^^^^^^
+
+The ``lidar_type`` value in the configuration file refers to the Livox SDK2 protocol type:
+
+* ``lidar_type: 8`` - Livox SDK2 protocol (used for Mid-360)
+
+This value should always be set to 8 for Mid-360 sensors.
+
+Message Topics
+--------------
+
+Publishers
+^^^^^^^^^^
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 30 40
+
+   * - Topic
+     - Type
+     - Description
+   * - /livox/lidar
+     - sensor_msgs/PointCloud2
+     - Point cloud data
+   * - /livox/imu
+     - sensor_msgs/Imu
+     - Integrated IMU measurements
+
+Usage
+-----
+
+Network Setup
+^^^^^^^^^^^^^
+
+1. Connect Livox sensor to your computer via Ethernet
+2. Set your host IP to match ``host_net_info`` configuration (e.g., 192.168.1.5)
+3. Ensure the LiDAR IP matches the ``lidar_configs`` ip setting
+
+Multi-Sensor Setup
+^^^^^^^^^^^^^^^^^^
+
+To use multiple Livox sensors, add entries to the ``lidar_configs`` array:
+
+.. code-block:: json
+
+    "lidar_configs" : [
+      {
+        "ip" : "192.168.1.100",
+        "extrinsic_parameter" : {
+          "roll": 0.0, "pitch": 0.0, "yaw": 0.0,
+          "x": 0.2, "y": 0, "z": 0.1
+        }
+      },
+      {
+        "ip" : "192.168.1.101",
+        "extrinsic_parameter" : {
+          "roll": 0.0, "pitch": 0.0, "yaw": 3.14159,
+          "x": -0.2, "y": 0, "z": 0.1
+        }
+      }
+    ]
+
+Mounting Calibration
+^^^^^^^^^^^^^^^^^^^^
+
+Set the ``extrinsic_parameter`` values to match your physical mounting:
+
+1. Measure the sensor position relative to robot base frame
+2. Set x, y, z translation offsets in meters
+3. Set roll, pitch, yaw rotation offsets in radians

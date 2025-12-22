@@ -1,0 +1,315 @@
+Grid Mapping Plugin
+===================
+
+The Grid Mapping plugin provides real-time terrain heightmap generation from depth cameras for locomotion and navigation.
+
+Overview
+--------
+
+The Grid Mapping plugin processes depth camera data to create terrain heightmaps:
+
+* Real-time terrain elevation mapping
+* Ray casting based depth data processing
+* Hole filling for missing data interpolation
+* Inpainting for terrain reconstruction
+* Multi-sensor support
+* Integration with RaiSim physics simulation
+
+The plugin is essential for quadruped locomotion, providing terrain awareness for footstep planning and obstacle avoidance.
+
+Dependencies
+^^^^^^^^^^^^
+
+* D455 plugin (or other depth camera plugin)
+* IEKF state estimator (or sim_state for simulation)
+
+Configuration
+-------------
+
+Configuration File
+^^^^^^^^^^^^^^^^^^
+
+Location: ``raisin_grid_mapping_plugin/config/params.yaml``
+
+.. code-block:: yaml
+
+    rate:
+      value: 500
+      dtype: double
+
+    heightmap_publish_rate:
+      value: 5
+      dtype: double
+
+    map_resolution:
+      value: 0.025
+      dtype: double
+
+    local_map_size:
+      value: 10
+      dtype: double
+
+    max_count:
+      value: 1
+      dtype: double
+
+    velocity_trust_threshold:
+      value: 8.0
+      dtype: double
+
+    distance_threshold:
+      value: 0.1
+      dtype: double
+
+    height_threshold_minimum:
+      value: 0.05
+      dtype: double
+
+    height_threshold_proportional:
+      value: 0.05
+      dtype: double
+
+    ray_casting:
+      is_ray_casting:
+        value: false
+        dtype: bool
+      downsampling_kernel:
+        value: 20
+        dtype: int
+
+    hole_filling:
+      is_hole_filling:
+        value: true
+        dtype: bool
+      hole_filling_kernel_size:
+        value: 5
+        dtype: int
+
+    inpainting:
+      is_inpainting:
+        value: false
+        dtype: bool
+      rayWidthProportional:
+        value: 5.0
+        dtype: double
+
+    memorize_limit:
+      value: 0.1
+      dtype: double
+
+Parameter Reference
+^^^^^^^^^^^^^^^^^^^
+
+Map Configuration:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 15 55
+
+   * - Parameter
+     - Default
+     - Description
+   * - rate
+     - 500
+     - Processing rate (Hz)
+   * - heightmap_publish_rate
+     - 5
+     - Heightmap publishing rate (Hz)
+   * - map_resolution
+     - 0.025
+     - Map resolution in meters per cell
+   * - local_map_size
+     - 10
+     - Local map size in meters
+
+Trust and Filtering:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 15 55
+
+   * - Parameter
+     - Default
+     - Description
+   * - velocity_trust_threshold
+     - 8.0
+     - Maximum velocity for trusting measurements (m/s)
+   * - distance_threshold
+     - 0.1
+     - Distance threshold for filtering (m)
+   * - height_threshold_minimum
+     - 0.05
+     - Minimum height change threshold (m)
+   * - height_threshold_proportional
+     - 0.05
+     - Height threshold increase per meter of distance
+
+Ray Casting:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 15 55
+
+   * - Parameter
+     - Default
+     - Description
+   * - is_ray_casting
+     - false
+     - Enable ray casting for occlusion handling
+   * - downsampling_kernel
+     - 20
+     - Ray casting downsampling factor
+
+Hole Filling:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 15 55
+
+   * - Parameter
+     - Default
+     - Description
+   * - is_hole_filling
+     - true
+     - Enable hole filling for missing data
+   * - hole_filling_kernel_size
+     - 5
+     - Kernel size for hole filling algorithm
+
+Inpainting:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 15 55
+
+   * - Parameter
+     - Default
+     - Description
+   * - is_inpainting
+     - false
+     - Enable inpainting for terrain reconstruction
+   * - rayWidthProportional
+     - 5.0
+     - Ray width proportional factor for inpainting
+
+Memory:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 15 55
+
+   * - Parameter
+     - Default
+     - Description
+   * - memorize_limit
+     - 0.1
+     - Time limit for keeping old measurements (seconds)
+
+Message Topics
+--------------
+
+Publishers
+^^^^^^^^^^
+
+.. list-table::
+   :header-rows: 1
+   :widths: 35 30 35
+
+   * - Topic
+     - Type
+     - Description
+   * - /heightmap
+     - raisin_interfaces/Heightmap
+     - Processed terrain heightmap
+   * - /inpaint_heightmap
+     - raisin_interfaces/Heightmap
+     - Inpainted terrain heightmap
+
+Subscribers
+^^^^^^^^^^^
+
+.. list-table::
+   :header-rows: 1
+   :widths: 35 30 35
+
+   * - Topic
+     - Type
+     - Description
+   * - /pose
+     - raisin_interfaces/Pose
+     - Robot pose from state estimator
+   * - /joint_states
+     - raisin_interfaces/JointStates
+     - Joint states for leg collision filtering
+   * - /module_list
+     - raisin_interfaces/ModuleList
+     - Loaded module list for state estimator verification
+
+Services
+^^^^^^^^
+
+.. list-table::
+   :header-rows: 1
+   :widths: 35 30 35
+
+   * - Service
+     - Type
+     - Description
+   * - /get_inpaintmap
+     - GetInpaintmap
+     - Request inpainted map data
+
+Usage
+-----
+
+Basic Setup
+^^^^^^^^^^^
+
+1. Load the D455 depth camera plugin
+2. Load a state estimator (IEKF or sim_state)
+3. Load the Grid Mapping plugin
+
+Example configuration in ``params.yaml``:
+
+.. code-block:: yaml
+
+    plugin:
+      raisin_d455_plugin:
+        rate:
+          value: 30
+          dtype: double
+
+      raisin_iekf_plugin:
+        rate:
+          value: 400
+          dtype: double
+
+      raisin_grid_mapping_plugin:
+        rate:
+          value: 500
+          dtype: double
+
+Tuning for Different Terrains
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For rough terrain:
+
+.. code-block:: yaml
+
+    height_threshold_minimum:
+      value: 0.1
+      dtype: double
+
+For smooth terrain:
+
+.. code-block:: yaml
+
+    height_threshold_minimum:
+      value: 0.02
+      dtype: double
+
+.. note::
+   Lower resolution (larger ``map_resolution``) improves performance but reduces terrain detail.
+
+.. warning::
+   Grid Mapping requires a valid state estimator. The plugin will wait until a valid estimator (iekf or sim_state) is loaded.

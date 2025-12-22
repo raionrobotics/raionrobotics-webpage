@@ -1,0 +1,305 @@
+FAST-LIO SLAM Plugin
+====================
+
+FAST-LIO (Fast LiDAR-Inertial Odometry) provides real-time state estimation and mapping using tightly-coupled LiDAR and IMU fusion.
+
+Overview
+--------
+
+FAST-LIO2 is a robust, low-drift odometry algorithm that:
+
+* Provides accurate 6-DOF pose estimation
+* Builds incrementally updated point cloud maps
+* Supports Livox and Ouster LiDAR types
+* Operates in real-time at high frequency
+
+Supported LiDARs
+^^^^^^^^^^^^^^^^
+
+Pre-configured for:
+
+* Livox Mid-360
+* Ouster OS-1-32
+
+Configuration
+-------------
+
+Configuration Files
+^^^^^^^^^^^^^^^^^^^
+
+Location: ``raisin_fast_lio_plugin/config/``
+
+Available configurations:
+
+* ``mid360.yaml`` - Livox Mid-360
+* ``ouster32.yaml`` - Ouster OS-1-32
+
+Example Configuration (Ouster)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: yaml
+
+    common:
+      lid_topic:
+        value: /ouster/points
+        dtype: string
+      imu_topic:
+        value: /ouster/imu
+        dtype: string
+      time_sync_en:
+        value: false
+        dtype: bool
+
+    preprocess:
+      lidar_type:
+        value: 3  # 1=Livox, 2=Velodyne, 3=Ouster
+        dtype: int
+      scan_line:
+        value: 32
+        dtype: int
+      blind:
+        value: 0.5
+        dtype: double
+
+    mapping:
+      acc_cov:
+        value: 0.1
+        dtype: double
+      gyr_cov:
+        value: 0.1
+        dtype: double
+      extrinsic_est_en:
+        value: false
+        dtype: bool
+      extrinsic_T:
+        value: [0.002441, 0.009725, 0.030662]
+        dtype: vector<double>
+      extrinsic_R:
+        value: [-1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0]
+        dtype: vector<double>
+
+    publish:
+      scan_publish_en:
+        value: true
+        dtype: bool
+      dense_publish_en:
+        value: true
+        dtype: bool
+
+    pcd_save:
+      pcd_save_en:
+        value: true
+        dtype: bool
+
+Parameter Reference
+^^^^^^^^^^^^^^^^^^^
+
+Input Topics:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 25 15 60
+
+   * - Parameter
+     - Default
+     - Description
+   * - lid_topic
+     - /livox/lidar
+     - Input point cloud topic
+   * - imu_topic
+     - /livox/imu
+     - Input IMU data topic
+   * - time_sync_en
+     - false
+     - Enable software time sync
+   * - time_offset_lidar_to_imu
+     - 0.0
+     - Time offset between LiDAR and IMU (seconds)
+
+LiDAR Preprocessing:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 25 15 60
+
+   * - Parameter
+     - Default
+     - Description
+   * - lidar_type
+     - 1
+     - LiDAR type: 1=Livox, 3=Ouster
+   * - scan_line
+     - 6
+     - Number of scan lines
+   * - blind
+     - 4.0
+     - Minimum range filter (meters)
+   * - point_filter_num
+     - 3
+     - Downsample factor for points
+
+State Estimation:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 25 15 60
+
+   * - Parameter
+     - Default
+     - Description
+   * - acc_cov
+     - 0.1
+     - Accelerometer noise covariance
+   * - gyr_cov
+     - 0.1
+     - Gyroscope noise covariance
+   * - b_acc_cov
+     - 0.0001
+     - Accelerometer bias drift covariance
+   * - b_gyr_cov
+     - 0.0001
+     - Gyroscope bias drift covariance
+   * - fov_degree
+     - 360.0
+     - Field of view (degrees)
+   * - det_range
+     - 150.0
+     - Maximum detection range (meters)
+
+LiDAR-to-IMU Transform:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 25 15 60
+
+   * - Parameter
+     - Type
+     - Description
+   * - extrinsic_est_en
+     - bool
+     - Enable online extrinsic calibration
+   * - extrinsic_T
+     - vector<double>
+     - Translation [x, y, z] from LiDAR to IMU (meters)
+   * - extrinsic_R
+     - vector<double>
+     - Rotation matrix (row-major 3x3) from LiDAR to IMU
+
+Output Configuration:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 25 15 60
+
+   * - Parameter
+     - Default
+     - Description
+   * - path_en
+     - false
+     - Publish trajectory path
+   * - scan_publish_en
+     - true
+     - Publish aligned point clouds
+   * - dense_publish_en
+     - true
+     - Publish full dense map
+   * - scan_bodyframe_pub_en
+     - true
+     - Output scans in body frame
+
+PCD Export:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 25 15 60
+
+   * - Parameter
+     - Default
+     - Description
+   * - pcd_save_en
+     - true
+     - Enable map saving to PCD file
+   * - interval
+     - -1
+     - Frames per PCD file (-1 = all in one)
+   * - map_file_path
+     - ./test.pcd
+     - Output file path
+
+Message Topics
+--------------
+
+Publishers
+^^^^^^^^^^
+
+.. list-table::
+   :header-rows: 1
+   :widths: 35 30 35
+
+   * - Topic
+     - Type
+     - Description
+   * - /Odometry
+     - nav_msgs/Odometry
+     - Odometry in LiDAR frame
+   * - /Odometry/base
+     - nav_msgs/Odometry
+     - Odometry in IMU/base frame
+   * - /cloud_registered
+     - sensor_msgs/PointCloud2
+     - Aligned map points
+   * - /cloud_registered_body
+     - sensor_msgs/PointCloud2
+     - Points in body frame
+   * - /Laser_map
+     - sensor_msgs/PointCloud2
+     - Global accumulated map
+
+Subscribers
+^^^^^^^^^^^
+
+.. list-table::
+   :header-rows: 1
+   :widths: 35 30 35
+
+   * - Topic
+     - Type
+     - Description
+   * - <lid_topic>
+     - sensor_msgs/PointCloud2
+     - Input LiDAR point cloud
+   * - <imu_topic>
+     - sensor_msgs/Imu
+     - Input IMU data
+
+Usage
+-----
+
+Selecting Configuration
+^^^^^^^^^^^^^^^^^^^^^^^
+
+1. Choose the config file matching your LiDAR sensor (mid360.yaml or ouster32.yaml)
+2. Verify ``lid_topic`` and ``imu_topic`` match your sensor driver output
+3. Set ``lidar_type`` correctly (1=Livox, 3=Ouster)
+
+Extrinsic Calibration
+^^^^^^^^^^^^^^^^^^^^^
+
+For best performance, calibrate LiDAR-IMU extrinsics:
+
+1. Measure physical offset from LiDAR to IMU
+2. Set ``extrinsic_T`` with translation in meters
+3. Set ``extrinsic_R`` with rotation matrix
+4. Or enable ``extrinsic_est_en`` for online calibration
+
+.. warning::
+    Incorrect extrinsics will cause drift and map distortion
+
+Saving Maps
+^^^^^^^^^^^
+
+To save point cloud maps:
+
+1. Set ``pcd_save_en: true``
+2. Set ``map_file_path`` to desired output location
+3. Map is saved when plugin unloads

@@ -1,0 +1,41 @@
+.. Raisin Autonomous Navigation documentation master file
+
+Raisin Plugin - Autonomous Navigation System
+====================================================================
+
+**Raisin Plugin (Autonomous Navigation)** provides a complete autonomous navigation stack for quadrupedal robots.
+It includes LiDAR drivers, SLAM, path planning, and a GUI interface for mission management.
+
+This documentation covers the configuration and usage of autonomous navigation plugins including sensor drivers, state estimation, and path planning.
+
+Key Features
+------------
+
+* **LiDAR Support**: Drivers for Ouster OS-1-32 and Livox Mid-360 LiDAR sensors
+* **Depth Camera**: D455 depth camera for terrain perception
+* **SLAM**: FAST-LIO LiDAR-Inertial Odometry for real-time localization and mapping
+* **Terrain Mapping**: Grid mapping for terrain heightmap generation
+* **Autonomous Navigation**: Waypoint navigation with terrain analysis and obstacle avoidance
+* **Path Planning**: Local path planning with terrain traversability assessment
+* **GUI Interface**: Interactive map window for mission planning and visualization
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   sections/Overview
+   sections/Ouster
+   sections/Livox
+   sections/D455
+   sections/FastLIO
+   sections/GridMapping
+   sections/Autonomy
+   sections/MapWindow
+   sections/Troubleshooting
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`search`

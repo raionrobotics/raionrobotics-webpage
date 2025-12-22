@@ -1,0 +1,105 @@
+D455 Depth Camera Plugin
+========================
+
+The D455 plugin provides driver support for the Intel RealSense D455 depth camera, enabling RGB and depth data acquisition for terrain mapping.
+
+Overview
+--------
+
+The D455 plugin connects to Intel RealSense D455 cameras and provides:
+
+* RGB image streaming
+* Depth image streaming
+* Point cloud generation
+* Integration with Grid Mapping plugin for terrain analysis
+
+The D455 is particularly suited for close-range terrain perception, providing high-resolution depth data for the Grid Mapping plugin.
+
+Supported Sensors
+^^^^^^^^^^^^^^^^^
+
+* Intel RealSense D455
+
+Configuration
+-------------
+
+Configuration File
+^^^^^^^^^^^^^^^^^^
+
+Location: ``raisin_d455_plugin/config/params.yaml``
+
+.. code-block:: yaml
+
+    allow_multiple_instances: true
+    is_loadable: true
+    is_unloadable: true
+    thread: main
+
+Parameter Reference
+^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 15 55
+
+   * - Parameter
+     - Default
+     - Description
+   * - allow_multiple_instances
+     - true
+     - Allow multiple D455 cameras to be loaded simultaneously
+   * - is_loadable
+     - true
+     - Plugin can be loaded at runtime
+   * - is_unloadable
+     - true
+     - Plugin can be unloaded at runtime
+   * - thread
+     - main
+     - Thread group for plugin execution
+
+Integration with Grid Mapping
+-----------------------------
+
+The D455 plugin is designed to work seamlessly with the Grid Mapping plugin for terrain perception:
+
+1. D455 provides depth data to Grid Mapping
+2. Grid Mapping uses ray casting to build terrain heightmaps
+3. Heightmaps are used for locomotion and navigation
+
+Setup
+^^^^^
+
+To enable D455 with Grid Mapping:
+
+1. Load the D455 plugin
+2. Load the Grid Mapping plugin
+3. Ensure the camera is mounted with appropriate extrinsics configured
+
+Usage
+-----
+
+Loading the Plugin
+^^^^^^^^^^^^^^^^^^
+
+Add to your ``params.yaml``:
+
+.. code-block:: yaml
+
+    plugin:
+      raisin_d455_plugin:
+        rate:
+          value: 30
+          dtype: double
+
+Camera Mounting
+^^^^^^^^^^^^^^^
+
+For optimal terrain perception:
+
+* Mount the camera facing downward at 30-45 degrees
+* Position to see terrain 1-3 meters ahead of the robot
+* Configure extrinsics in Grid Mapping to match physical mounting
+
+.. note::
+   Multiple D455 cameras can be used for wider field of view coverage.
