@@ -1,0 +1,493 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAST-LIO SLAM Plugin &mdash; Raisin Plugin - Autonomous Navigation 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Grid Mapping Plugin" href="GridMapping.html" />
+    <link rel="prev" title="D455 Depth Camera Plugin" href="D455.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Raisin Plugin - Autonomous Navigation
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Ouster.html">Ouster LiDAR Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Livox.html">Livox LiDAR Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="D455.html">D455 Depth Camera Plugin</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">FAST-LIO SLAM Plugin</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#supported-lidars">Supported LiDARs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-files">Configuration Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-configuration-ouster">Example Configuration (Ouster)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parameter-reference">Parameter Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#message-topics">Message Topics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#publishers">Publishers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#subscribers">Subscribers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#selecting-configuration">Selecting Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#extrinsic-calibration">Extrinsic Calibration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#saving-maps">Saving Maps</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="GridMapping.html">Grid Mapping Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Autonomy.html">Autonomy Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MapWindow.html">Map Window (GUI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Troubleshooting.html">Troubleshooting</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Raisin Plugin - Autonomous Navigation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">FAST-LIO SLAM Plugin</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/sections/FastLIO.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="fast-lio-slam-plugin">
+<h1>FAST-LIO SLAM Plugin<a class="headerlink" href="#fast-lio-slam-plugin" title="Link to this heading"></a></h1>
+<p>FAST-LIO (Fast LiDAR-Inertial Odometry) provides real-time state estimation and mapping using tightly-coupled LiDAR and IMU fusion.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>FAST-LIO2 is a robust, low-drift odometry algorithm that:</p>
+<ul class="simple">
+<li><p>Provides accurate 6-DOF pose estimation</p></li>
+<li><p>Builds incrementally updated point cloud maps</p></li>
+<li><p>Supports Livox and Ouster LiDAR types</p></li>
+<li><p>Operates in real-time at high frequency</p></li>
+</ul>
+<section id="supported-lidars">
+<h3>Supported LiDARs<a class="headerlink" href="#supported-lidars" title="Link to this heading"></a></h3>
+<p>Pre-configured for:</p>
+<ul class="simple">
+<li><p>Livox Mid-360</p></li>
+<li><p>Ouster OS-1-32</p></li>
+</ul>
+</section>
+</section>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h2>
+<section id="configuration-files">
+<h3>Configuration Files<a class="headerlink" href="#configuration-files" title="Link to this heading"></a></h3>
+<p>Location: <code class="docutils literal notranslate"><span class="pre">raisin_fast_lio_plugin/config/</span></code></p>
+<p>Available configurations:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mid360.yaml</span></code> - Livox Mid-360</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ouster32.yaml</span></code> - Ouster OS-1-32</p></li>
+</ul>
+</section>
+<section id="example-configuration-ouster">
+<h3>Example Configuration (Ouster)<a class="headerlink" href="#example-configuration-ouster" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">common</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">lid_topic</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/ouster/points</span>
+<span class="w">  </span><span class="nt">imu_topic</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/ouster/imu</span>
+<span class="w">  </span><span class="nt">time_sync_en</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+
+<span class="nt">preprocess</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">lidar_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span><span class="w">  </span><span class="c1"># 1=Livox, 2=Velodyne, 3=Ouster</span>
+<span class="w">  </span><span class="nt">scan_line</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32</span>
+<span class="w">  </span><span class="nt">blind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
+
+<span class="nt">mapping</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">acc_cov</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span>
+<span class="w">  </span><span class="nt">gyr_cov</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span>
+<span class="w">  </span><span class="nt">extrinsic_est_en</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="nt">extrinsic_T</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.002441</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.009725</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.030662</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">extrinsic_R</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">-1.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">-1.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">1.0</span><span class="p p-Indicator">]</span>
+
+<span class="nt">publish</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">scan_publish_en</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">dense_publish_en</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+
+<span class="nt">pcd_save</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">pcd_save_en</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+</section>
+<section id="parameter-reference">
+<h3>Parameter Reference<a class="headerlink" href="#parameter-reference" title="Link to this heading"></a></h3>
+<p>Input Topics:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>lid_topic</p></td>
+<td><p>/livox/lidar</p></td>
+<td><p>Input point cloud topic</p></td>
+</tr>
+<tr class="row-odd"><td><p>imu_topic</p></td>
+<td><p>/livox/imu</p></td>
+<td><p>Input IMU data topic</p></td>
+</tr>
+<tr class="row-even"><td><p>time_sync_en</p></td>
+<td><p>false</p></td>
+<td><p>Enable software time sync</p></td>
+</tr>
+<tr class="row-odd"><td><p>time_offset_lidar_to_imu</p></td>
+<td><p>0.0</p></td>
+<td><p>Time offset between LiDAR and IMU (seconds)</p></td>
+</tr>
+</tbody>
+</table>
+<p>LiDAR Preprocessing:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>lidar_type</p></td>
+<td><p>1</p></td>
+<td><p>LiDAR type: 1=Livox, 3=Ouster</p></td>
+</tr>
+<tr class="row-odd"><td><p>scan_line</p></td>
+<td><p>6</p></td>
+<td><p>Number of scan lines</p></td>
+</tr>
+<tr class="row-even"><td><p>blind</p></td>
+<td><p>4.0</p></td>
+<td><p>Minimum range filter (meters)</p></td>
+</tr>
+<tr class="row-odd"><td><p>point_filter_num</p></td>
+<td><p>3</p></td>
+<td><p>Downsample factor for points</p></td>
+</tr>
+</tbody>
+</table>
+<p>State Estimation:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>acc_cov</p></td>
+<td><p>0.1</p></td>
+<td><p>Accelerometer noise covariance</p></td>
+</tr>
+<tr class="row-odd"><td><p>gyr_cov</p></td>
+<td><p>0.1</p></td>
+<td><p>Gyroscope noise covariance</p></td>
+</tr>
+<tr class="row-even"><td><p>b_acc_cov</p></td>
+<td><p>0.0001</p></td>
+<td><p>Accelerometer bias drift covariance</p></td>
+</tr>
+<tr class="row-odd"><td><p>b_gyr_cov</p></td>
+<td><p>0.0001</p></td>
+<td><p>Gyroscope bias drift covariance</p></td>
+</tr>
+<tr class="row-even"><td><p>fov_degree</p></td>
+<td><p>360.0</p></td>
+<td><p>Field of view (degrees)</p></td>
+</tr>
+<tr class="row-odd"><td><p>det_range</p></td>
+<td><p>150.0</p></td>
+<td><p>Maximum detection range (meters)</p></td>
+</tr>
+</tbody>
+</table>
+<p>LiDAR-to-IMU Transform:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>extrinsic_est_en</p></td>
+<td><p>bool</p></td>
+<td><p>Enable online extrinsic calibration</p></td>
+</tr>
+<tr class="row-odd"><td><p>extrinsic_T</p></td>
+<td><p>vector&lt;double&gt;</p></td>
+<td><p>Translation [x, y, z] from LiDAR to IMU (meters)</p></td>
+</tr>
+<tr class="row-even"><td><p>extrinsic_R</p></td>
+<td><p>vector&lt;double&gt;</p></td>
+<td><p>Rotation matrix (row-major 3x3) from LiDAR to IMU</p></td>
+</tr>
+</tbody>
+</table>
+<p>Output Configuration:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>path_en</p></td>
+<td><p>false</p></td>
+<td><p>Publish trajectory path</p></td>
+</tr>
+<tr class="row-odd"><td><p>scan_publish_en</p></td>
+<td><p>true</p></td>
+<td><p>Publish aligned point clouds</p></td>
+</tr>
+<tr class="row-even"><td><p>dense_publish_en</p></td>
+<td><p>true</p></td>
+<td><p>Publish full dense map</p></td>
+</tr>
+<tr class="row-odd"><td><p>scan_bodyframe_pub_en</p></td>
+<td><p>true</p></td>
+<td><p>Output scans in body frame</p></td>
+</tr>
+</tbody>
+</table>
+<p>PCD Export:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>pcd_save_en</p></td>
+<td><p>true</p></td>
+<td><p>Enable map saving to PCD file</p></td>
+</tr>
+<tr class="row-odd"><td><p>interval</p></td>
+<td><p>-1</p></td>
+<td><p>Frames per PCD file (-1 = all in one)</p></td>
+</tr>
+<tr class="row-even"><td><p>map_file_path</p></td>
+<td><p>./test.pcd</p></td>
+<td><p>Output file path</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="message-topics">
+<h2>Message Topics<a class="headerlink" href="#message-topics" title="Link to this heading"></a></h2>
+<section id="publishers">
+<h3>Publishers<a class="headerlink" href="#publishers" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 30.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Topic</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>/Odometry</p></td>
+<td><p>nav_msgs/Odometry</p></td>
+<td><p>Odometry in LiDAR frame</p></td>
+</tr>
+<tr class="row-odd"><td><p>/Odometry/base</p></td>
+<td><p>nav_msgs/Odometry</p></td>
+<td><p>Odometry in IMU/base frame</p></td>
+</tr>
+<tr class="row-even"><td><p>/cloud_registered</p></td>
+<td><p>sensor_msgs/PointCloud2</p></td>
+<td><p>Aligned map points</p></td>
+</tr>
+<tr class="row-odd"><td><p>/cloud_registered_body</p></td>
+<td><p>sensor_msgs/PointCloud2</p></td>
+<td><p>Points in body frame</p></td>
+</tr>
+<tr class="row-even"><td><p>/Laser_map</p></td>
+<td><p>sensor_msgs/PointCloud2</p></td>
+<td><p>Global accumulated map</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="subscribers">
+<h3>Subscribers<a class="headerlink" href="#subscribers" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 30.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Topic</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;lid_topic&gt;</p></td>
+<td><p>sensor_msgs/PointCloud2</p></td>
+<td><p>Input LiDAR point cloud</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;imu_topic&gt;</p></td>
+<td><p>sensor_msgs/Imu</p></td>
+<td><p>Input IMU data</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
+<section id="selecting-configuration">
+<h3>Selecting Configuration<a class="headerlink" href="#selecting-configuration" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Choose the config file matching your LiDAR sensor (mid360.yaml or ouster32.yaml)</p></li>
+<li><p>Verify <code class="docutils literal notranslate"><span class="pre">lid_topic</span></code> and <code class="docutils literal notranslate"><span class="pre">imu_topic</span></code> match your sensor driver output</p></li>
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">lidar_type</span></code> correctly (1=Livox, 3=Ouster)</p></li>
+</ol>
+</section>
+<section id="extrinsic-calibration">
+<h3>Extrinsic Calibration<a class="headerlink" href="#extrinsic-calibration" title="Link to this heading"></a></h3>
+<p>For best performance, calibrate LiDAR-IMU extrinsics:</p>
+<ol class="arabic simple">
+<li><p>Measure physical offset from LiDAR to IMU</p></li>
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">extrinsic_T</span></code> with translation in meters</p></li>
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">extrinsic_R</span></code> with rotation matrix</p></li>
+<li><p>Or enable <code class="docutils literal notranslate"><span class="pre">extrinsic_est_en</span></code> for online calibration</p></li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Incorrect extrinsics will cause drift and map distortion</p>
+</div>
+</section>
+<section id="saving-maps">
+<h3>Saving Maps<a class="headerlink" href="#saving-maps" title="Link to this heading"></a></h3>
+<p>To save point cloud maps:</p>
+<ol class="arabic simple">
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">pcd_save_en:</span> <span class="pre">true</span></code></p></li>
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">map_file_path</span></code> to desired output location</p></li>
+<li><p>Map is saved when plugin unloads</p></li>
+</ol>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="D455.html" class="btn btn-neutral float-left" title="D455 Depth Camera Plugin" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="GridMapping.html" class="btn btn-neutral float-right" title="Grid Mapping Plugin" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Raion Robotics..</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

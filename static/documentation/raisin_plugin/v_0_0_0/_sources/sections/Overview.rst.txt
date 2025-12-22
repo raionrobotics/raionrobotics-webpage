@@ -1,0 +1,149 @@
+Overview
+========
+
+The RAISIN autonomous navigation system enables quadrupedal robots to navigate autonomously through complex environments using LiDAR-based perception, depth camera-based terrain mapping, SLAM, and intelligent path planning.
+
+System Architecture
+-------------------
+
+The autonomous navigation stack uses two types of tasks:
+
+* **Periodic Tasks**: Run continuously at a set frequency (e.g., sensors, SLAM, state estimation)
+* **Event Tasks**: Execute only when triggered by an event (e.g., waypoint navigation)
+
+.. code-block:: text
+
+    ┌───────────────────────────────────────────────────────────────────────┐
+    │                     SENSOR LAYER (PeriodicTask)                       │
+    ├─────────────┬───────────┬─────────────────┬───────────┬───────────────┤
+    │    LiDAR    │    IMU    │  Depth Cameras  │  Encoders │      GPS      │
+    │  (OS-1-32/  │           │  (D430 front/   │  (Joints) │   (Optional)  │
+    │   Mid-360)  │           │   rear, etc.)   │           │               │
+    └──────┬──────┴─────┬─────┴────────┬────────┴─────┬─────┴───────┬───────┘
+           │            │              │              │             │
+           ▼            ▼              ▼              ▼             ▼
+    ┌───────────────────────────────────────────────────────────────────────┐
+    │                   PERIODIC TASKS (Always Running)                     │
+    ├───────────────────────────┬───────────────────┬───────────────────────┤
+    │       FAST-LIO SLAM       │  STATE ESTIMATION │     GRID MAPPING      │
+    │   (LiDAR-IMU Odometry)    │      (IEKF)       │  (Terrain Heightmap)  │
+    │                           │                   │                       │
+    │  Input:                   │  Input:           │  Input:               │
+    │  - LiDAR points           │  - IMU            │  - Depth cameras      │
+    │  - IMU                    │  - Joint encoders │  - robot_pose         │
+    │                           │  - Contact state  │                       │
+    │                           │                   │                       │
+    │  Output:                  │  Output:          │  Output:              │
+    │  - /Odometry/base         │  - robot_pose ───►│  - heightmap          │
+    │  - /cloud_registered      │                   │                       │
+    └─────────────┬─────────────┴─────────┬─────────┴───────────┬───────────┘
+                  │                       │                     │
+                  │       Data subscription                     │
+                  ▼                       ▼                     ▼
+    ┌───────────────────────────────────────────────────────────────────────┐
+    │                  EVENT TASKS (Triggered by Request)                   │
+    ├───────────────────────────────────────────────────────────────────────┤
+    │                          AUTONOMY PLUGIN                              │
+    │                                                                       │
+    │  Trigger: SetWaypoints service call (from Map Window)                 │
+    │                                                                       │
+    │  Subscribes:                            Publishes:                    │
+    │  - /Odometry/base (from FAST-LIO)       - /way_point (next target)    │
+    │  - heightmap (from Grid Mapping)        - /speed (desired velocity)   │
+    │  - GPS fix (optional)                                                 │
+    └───────────────────────────────────────────────────────────────────────┘
+                                          ▲
+                                          │ SetWaypoints service
+                                          │
+    ┌───────────────────────────────────────────────────────────────────────┐
+    │                          GUI MAP WINDOW                               │
+    │                         (User Interface)                              │
+    │                                                                       │
+    │  Subscribes:                                                          │
+    │  - /cloud_registered (from FAST-LIO) - real-time point cloud          │
+    │  - /Odometry/base (from FAST-LIO) - robot position                    │
+    │  - GPS fix (optional)                                                 │
+    │                                                                       │
+    │  Features:                                                            │
+    │  - Saved PCD maps - load and display                                  │
+    │  - Autonomy graph visualization (nodes/edges)                         │
+    │  - Waypoint editing → SetWaypoints service call                       │
+    │  - Graph node/edge editing (Map Editor)                               │
+    │  - Robot localization setup (2-click)                                 │
+    └───────────────────────────────────────────────────────────────────────┘
+
+Component Overview
+------------------
+
+Periodic Tasks (Always Running)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+These components run continuously at their configured frequency, independent of autonomous navigation:
+
+**LiDAR Drivers**
+
+* **Ouster Plugin**: Driver for Ouster OS-1-32 LiDAR sensor
+* **Livox Plugin**: Driver for Livox Mid-360 LiDAR sensor
+
+**Depth Cameras**
+
+* **D430/D435/D455 Plugins**: Intel RealSense depth camera drivers for terrain perception. Default configuration uses D430 front and rear cameras.
+
+**SLAM (Localization and Mapping)**
+
+* **FAST-LIO Plugin**: LiDAR-Inertial Odometry providing real-time localization and mapping. Publishes ``/Odometry/base`` for robot localization.
+
+**State Estimation**
+
+* **IEKF Plugin**: Fuses IMU, joint encoders, and contact state for accurate robot pose estimation. Publishes ``robot_pose`` used by Grid Mapping.
+
+**Terrain Mapping**
+
+* **Grid Mapping Plugin**: Generates real-time terrain heightmaps from depth camera data. Requires IEKF state estimation. Publishes ``heightmap`` for obstacle avoidance.
+
+Event Tasks (Triggered by Request)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+These components are activated by external events:
+
+**Navigation**
+
+* **Autonomy Plugin**: Activated when waypoints are set via ``SetWaypoints`` service. Uses ``/Odometry/base`` for localization and ``heightmap`` for obstacle avoidance and path planning.
+
+**User Interface**
+
+* **Map Window**: GUI for visualization and mission planning. Displays FAST-LIO point clouds (``/cloud_registered``), saved PCD maps, robot position, and autonomy graph. Users can define waypoints and trigger the ``SetWaypoints`` service to activate autonomous navigation.
+
+Data Flow
+---------
+
+**Periodic Tasks (Always Running):**
+
+1. **Sensor Data Acquisition**: LiDAR, IMU, depth cameras, and encoders continuously collect data
+2. **FAST-LIO SLAM**: Processes LiDAR + IMU data to produce odometry and registered point clouds
+3. **State Estimation (IEKF)**: Fuses IMU, joint encoders, and contact state for accurate robot pose
+4. **Terrain Mapping**: Grid Mapping uses depth camera data + robot pose to generate local heightmap
+
+**Event Tasks (Triggered by User):**
+
+5. **Map Window**: Visualizes FAST-LIO point clouds and saved maps; user defines waypoints and triggers ``SetWaypoints`` service
+6. **Autonomy**: Activated by waypoint event, uses odometry + heightmap for navigation
+
+Prerequisites
+-------------
+
+Before using autonomous navigation:
+
+* LiDAR sensor properly connected and powered
+* IMU sensor calibrated
+* Robot base configuration completed
+* Network connectivity between sensors and host computer
+
+Quick Start
+-----------
+
+1. Configure your LiDAR driver (Ouster or Livox)
+2. Set up FAST-LIO with appropriate sensor configuration
+3. Load the Autonomy plugin with your robot parameters
+4. Use the Map Window to define waypoints
+5. Start autonomous navigation

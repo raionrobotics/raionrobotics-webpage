@@ -1,0 +1,217 @@
+Map Window (GUI)
+================
+
+The Map Window provides an interactive interface for mission planning, waypoint management, and real-time visualization.
+
+Overview
+--------
+
+The Map Window is part of the RAISIN GUI and provides:
+
+* Interactive map display with satellite/vector layers
+* Waypoint creation and editing
+* Real-time robot position tracking
+* Path visualization
+* Point cloud overlay
+* Autonomy graph visualization
+
+Map Layers
+----------
+
+The map supports multiple visualization layers:
+
+Satellite Layer
+^^^^^^^^^^^^^^^
+
+Displays aerial/satellite imagery from OpenStreetMap tile servers.
+
+* Zoom levels: 1-19
+* Automatic tile caching
+* Multiple tile server support
+
+Vector Graphics Layer
+^^^^^^^^^^^^^^^^^^^^^
+
+Displays vector map data including:
+
+* Roads and paths
+* Building outlines
+* Terrain features
+* Custom annotations
+
+Point Cloud Layer
+^^^^^^^^^^^^^^^^^
+
+Overlays LiDAR point cloud data on the map:
+
+* Real-time point cloud from sensors
+* Saved PCD maps loaded from file
+* Color-coded by height or intensity
+* Adjustable point size and opacity
+
+Tabs
+----
+
+Autonomy Tab
+^^^^^^^^^^^^
+
+The main interface for autonomous navigation control:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 70
+
+   * - Feature
+     - Description
+   * - Waypoint List
+     - Ordered list of navigation waypoints
+   * - Add Waypoint
+     - Click map to add new waypoint
+   * - Add Current Pose
+     - Add robot's current position as waypoint
+   * - Remove Waypoint
+     - Delete selected waypoint from list
+   * - Reorder
+     - Drag to change waypoint order
+   * - Clear All
+     - Remove all waypoints
+   * - Start/Stop
+     - Begin or halt autonomous navigation
+
+Waypoint Management
+"""""""""""""""""""
+
+**Adding Waypoints:**
+
+1. Select the Autonomy tab
+2. Click on the map at desired location
+3. Waypoint appears in the list
+
+**Editing Waypoints:**
+
+* Drag waypoints on the map to reposition
+* Use list controls to reorder
+* Click remove button to delete
+
+**Sending Mission:**
+
+1. Define all waypoints
+2. Configure repeat/loop settings if needed
+3. Click "Start" to send waypoints to Autonomy plugin
+
+Robot Selection Tab
+^^^^^^^^^^^^^^^^^^^
+
+For multi-robot operations:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 70
+
+   * - Feature
+     - Description
+   * - Robot List
+     - Available robots in the system
+   * - Select Robot
+     - Choose which robot to control
+   * - Status Display
+     - Connection and operational status
+
+Map Editor Tab
+^^^^^^^^^^^^^^
+
+For creating and editing map annotations:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 70
+
+   * - Feature
+     - Description
+   * - Draw Path
+     - Create path annotations
+   * - Draw Area
+     - Define restricted/priority areas
+   * - Save/Load
+     - Persist annotations to file
+
+Controls
+--------
+
+Map Navigation
+^^^^^^^^^^^^^^
+
+* **Pan**: Click and drag
+* **Zoom**: Mouse wheel or pinch gesture
+* **Reset View**: Double-click or button
+
+Display Options
+^^^^^^^^^^^^^^^
+
+* **Layer Toggle**: Show/hide individual layers
+* **Coordinate System**: Switch between local/GPS frames
+* **Follow Robot**: Auto-center on robot position
+
+Configuration
+-------------
+
+Frame Selection
+^^^^^^^^^^^^^^^
+
+Choose coordinate reference:
+
+* **Local Frame**: Robot-centric coordinates (meters)
+* **GPS Frame**: Latitude/Longitude coordinates
+
+Path Planning
+-------------
+
+Valhalla Integration
+^^^^^^^^^^^^^^^^^^^^
+
+The Map Window integrates with Valhalla routing for:
+
+* Street-level path planning
+* Multi-waypoint routing optimization
+* Turn-by-turn navigation
+
+Usage
+-----
+
+Basic Workflow
+^^^^^^^^^^^^^^
+
+1. **Launch GUI**: Start the RAISIN GUI application
+2. **Open Map Window**: Select from window menu
+3. **Connect to Robot**: Ensure robot is publishing odometry
+4. **Add Waypoints**: Click on map to define mission
+5. **Start Navigation**: Send waypoints to autonomy plugin
+
+Tips
+^^^^
+
+* Use satellite view for outdoor environments
+* Enable point cloud layer to see sensor coverage
+* Set appropriate zoom level for waypoint precision
+* Save waypoint lists for repeatable missions
+
+.. note::
+    The Map Window requires network connectivity for map tile downloads
+
+Keyboard Shortcuts
+^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 70
+
+   * - Key
+     - Action
+   * - +/-
+     - Zoom in/out
+   * - Arrow keys
+     - Pan map
+   * - Delete
+     - Remove selected waypoint
+   * - Escape
+     - Cancel current operation

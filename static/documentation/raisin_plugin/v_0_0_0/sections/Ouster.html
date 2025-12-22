@@ -1,0 +1,324 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ouster LiDAR Plugin &mdash; Raisin Plugin - Autonomous Navigation 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Livox LiDAR Plugin" href="Livox.html" />
+    <link rel="prev" title="Overview" href="Overview.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Raisin Plugin - Autonomous Navigation
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Ouster LiDAR Plugin</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#supported-sensors">Supported Sensors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-file">Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parameter-reference">Parameter Reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lidar-modes">LiDAR Modes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#message-topics">Message Topics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#publishers">Publishers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#network-setup">Network Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loading-the-plugin">Loading the Plugin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#verifying-connection">Verifying Connection</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Livox.html">Livox LiDAR Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="D455.html">D455 Depth Camera Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FastLIO.html">FAST-LIO SLAM Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GridMapping.html">Grid Mapping Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Autonomy.html">Autonomy Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MapWindow.html">Map Window (GUI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Troubleshooting.html">Troubleshooting</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Raisin Plugin - Autonomous Navigation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Ouster LiDAR Plugin</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/sections/Ouster.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ouster-lidar-plugin">
+<h1>Ouster LiDAR Plugin<a class="headerlink" href="#ouster-lidar-plugin" title="Link to this heading"></a></h1>
+<p>The Ouster plugin provides driver support for Ouster OS-1 series LiDAR sensors, enabling point cloud and IMU data acquisition.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The Ouster plugin connects to Ouster LiDAR sensors over Ethernet, streaming point cloud and IMU data at configurable rates. It supports various resolution and scan rate modes.</p>
+<section id="supported-sensors">
+<h3>Supported Sensors<a class="headerlink" href="#supported-sensors" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Ouster OS-1-32 (32 scan lines)</p></li>
+</ul>
+</section>
+</section>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h2>
+<section id="configuration-file">
+<h3>Configuration File<a class="headerlink" href="#configuration-file" title="Link to this heading"></a></h3>
+<p>Location: <code class="docutils literal notranslate"><span class="pre">raisin_ouster_plugin/config/ouster32.yaml</span></code></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">sensor_hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;169.254.16.143&quot;</span>
+<span class="nt">lidar_mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1024x10&quot;</span>
+<span class="nt">lidar_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="nt">imu_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="nt">sensor_frame</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;os_sensor&quot;</span>
+<span class="nt">lidar_frame</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;os_lidar&quot;</span>
+<span class="nt">imu_frame</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;os_imu&quot;</span>
+<span class="nt">publish_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0</span>
+</pre></div>
+</div>
+</section>
+<section id="parameter-reference">
+<h3>Parameter Reference<a class="headerlink" href="#parameter-reference" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>sensor_hostname</p></td>
+<td><p>string</p></td>
+<td><p>“169.254.16.143”</p></td>
+<td><p>IP address of the Ouster sensor</p></td>
+</tr>
+<tr class="row-odd"><td><p>lidar_mode</p></td>
+<td><p>string</p></td>
+<td><p>“1024x10”</p></td>
+<td><p>Resolution and scan rate</p></td>
+</tr>
+<tr class="row-even"><td><p>lidar_port</p></td>
+<td><p>int</p></td>
+<td><p>0</p></td>
+<td><p>LiDAR data port (0 = auto-detect)</p></td>
+</tr>
+<tr class="row-odd"><td><p>imu_port</p></td>
+<td><p>int</p></td>
+<td><p>0</p></td>
+<td><p>IMU data port (0 = auto-detect)</p></td>
+</tr>
+<tr class="row-even"><td><p>sensor_frame</p></td>
+<td><p>string</p></td>
+<td><p>“os_sensor”</p></td>
+<td><p>TF frame ID for sensor</p></td>
+</tr>
+<tr class="row-odd"><td><p>lidar_frame</p></td>
+<td><p>string</p></td>
+<td><p>“os_lidar”</p></td>
+<td><p>TF frame ID for LiDAR</p></td>
+</tr>
+<tr class="row-even"><td><p>imu_frame</p></td>
+<td><p>string</p></td>
+<td><p>“os_imu”</p></td>
+<td><p>TF frame ID for IMU</p></td>
+</tr>
+<tr class="row-odd"><td><p>publish_rate</p></td>
+<td><p>double</p></td>
+<td><p>10.0</p></td>
+<td><p>Output publishing rate (Hz)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="lidar-modes">
+<h3>LiDAR Modes<a class="headerlink" href="#lidar-modes" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">lidar_mode</span></code> parameter controls resolution and scan rate:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 35.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Mode</p></th>
+<th class="head"><p>Resolution</p></th>
+<th class="head"><p>Scan Rate</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>512x10</p></td>
+<td><p>512 columns</p></td>
+<td><p>10 Hz</p></td>
+</tr>
+<tr class="row-odd"><td><p>512x20</p></td>
+<td><p>512 columns</p></td>
+<td><p>20 Hz</p></td>
+</tr>
+<tr class="row-even"><td><p>1024x10</p></td>
+<td><p>1024 columns</p></td>
+<td><p>10 Hz</p></td>
+</tr>
+<tr class="row-odd"><td><p>1024x20</p></td>
+<td><p>1024 columns</p></td>
+<td><p>20 Hz</p></td>
+</tr>
+<tr class="row-even"><td><p>2048x10</p></td>
+<td><p>2048 columns</p></td>
+<td><p>10 Hz</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="message-topics">
+<h2>Message Topics<a class="headerlink" href="#message-topics" title="Link to this heading"></a></h2>
+<section id="publishers">
+<h3>Publishers<a class="headerlink" href="#publishers" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 30.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Topic</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>/ouster/points</p></td>
+<td><p>sensor_msgs/PointCloud2</p></td>
+<td><p>Raw LiDAR point cloud</p></td>
+</tr>
+<tr class="row-odd"><td><p>/ouster/imu</p></td>
+<td><p>sensor_msgs/Imu</p></td>
+<td><p>IMU measurements</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
+<section id="network-setup">
+<h3>Network Setup<a class="headerlink" href="#network-setup" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Connect Ouster sensor to your computer via Ethernet</p></li>
+<li><p>Configure your network interface to be on the same subnet as the sensor</p></li>
+<li><p>Default sensor IP is typically <code class="docutils literal notranslate"><span class="pre">169.254.x.x</span></code> (link-local)</p></li>
+</ol>
+</section>
+<section id="loading-the-plugin">
+<h3>Loading the Plugin<a class="headerlink" href="#loading-the-plugin" title="Link to this heading"></a></h3>
+<p>Add to your <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">plugin</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">raisin_ouster_plugin</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+</pre></div>
+</div>
+</section>
+<section id="verifying-connection">
+<h3>Verifying Connection<a class="headerlink" href="#verifying-connection" title="Link to this heading"></a></h3>
+<p>Check that point clouds are being published using <code class="docutils literal notranslate"><span class="pre">raisin_cli</span></code> (see <a class="reference internal" href="Troubleshooting.html#using-raisin-cli"><span class="std std-ref">Using raisin_cli</span></a> for details):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># In raisin_cli</span>
+list<span class="w">                    </span><span class="c1"># Check available servers and get server_id</span>
+con<span class="w"> </span>&lt;server_id&gt;<span class="w">         </span><span class="c1"># Connect using server_id from list output</span>
+list<span class="w">                    </span><span class="c1"># List all available topics</span>
+sub<span class="w"> </span>&lt;topic&gt;<span class="w"> </span>&lt;time&gt;<span class="w">      </span><span class="c1"># e.g., sub /ouster/points 10</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Overview.html" class="btn btn-neutral float-left" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Livox.html" class="btn btn-neutral float-right" title="Livox LiDAR Plugin" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Raion Robotics..</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
