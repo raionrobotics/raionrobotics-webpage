@@ -12,12 +12,29 @@
     "groupName": "raisin_master",
     "manuals": [
       {
+        "version": "0_2_2",
+        "path": "/documentation/raisin_master/v_0_2_2/index.html"
+      },
+      {
+        "version": "0_2_1",
+        "path": "/documentation/raisin_master/v_0_2_1/index.html"
+      },
+      {
         "version": "0_2_0",
         "path": "/documentation/raisin_master/v_0_2_0/index.html"
       },
       {
         "version": "0_0_0",
         "path": "/documentation/raisin_master/v_0_0_0/index.html"
+      }
+    ]
+  },
+  {
+    "groupName": "raisin_plugin",
+    "manuals": [
+      {
+        "version": "0_0_0",
+        "path": "/documentation/raisin_plugin/v_0_0_0/index.html"
       }
     ]
   }
