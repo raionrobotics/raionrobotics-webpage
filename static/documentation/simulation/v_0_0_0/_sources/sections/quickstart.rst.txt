@@ -10,7 +10,7 @@ Prerequisites
 * Raisim activation key (provided by Raion Robotics)
 * Raisin GitHub token (provided by Raion Robotics)
 * Raisim Unreal binary for visualization
-  (`https://github.com/raisimTech/raisimLib/releases/tag/v1.1.5`); the mobile
+  (`Raisim releases <https://github.com/raisimTech/raisimLib/releases/tag/v1.1.5>`_); the mobile
   version is recommended
 * A valid graphics driver for your GPU
 * Gamepad for robot control (Logitech F710 recommended; any Linux-supported
@@ -35,7 +35,8 @@ Raisin Master Setup
 ===================
 
 Raisin Master is a package manager and middleware for robotics software. See
-`https://raionrobotics.com/documentation/raisin_master/v_0_2_2/` for details.
+`Raisin Master documentation <https://raionrobotics.com/documentation/raisin_master/v_0_2_2/>`_
+for details.
 
 Clone it into your workspace:
 
@@ -181,4 +182,5 @@ Connect again.
 
 Port 7000 renders the simulation world with the exact simulation state.
 
-To learn more about Raisim and Raisim Unreal, see `https://raisim.com`.
+To learn more about Raisim and Raisim Unreal, see
+`Raisim documentation <https://raisim.com>`_.
