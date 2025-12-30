@@ -1,0 +1,68 @@
+Extending the GUI
+=================
+
+Raisin GUI windows are plugins. To add a new window, create a new package that
+builds a shared library named ``raisin_gui_<window>_window`` and implements the
+``GuiWindow`` interface.
+
+Plugin Skeleton
+---------------
+
+1. Derive from ``GuiWindow`` and implement the required lifecycle methods:
+
+   * ``init``
+   * ``update``
+   * ``draw``
+   * ``reset``
+   * ``shutDown``
+
+2. Export C linkage ``create`` and ``destroy`` symbols so the window manager
+   can instantiate and clean up the plugin:
+
+.. code-block:: cpp
+
+   extern "C" {
+   GuiWindow* create(const std::string& title,
+                     std::shared_ptr<GuiResource> resource) {
+     return new my_window(title, resource);
+   }
+
+   void destroy(GuiWindow* p) {
+     delete p;
+   }
+   }
+
+3. Add a parameter file at
+   ``config/params.yaml`` (installed under ``install/config``) with optional
+   keys such as ``open_when_start`` and ``only_single_instance_allowed``.
+
+4. Start from the window template at
+   ``templates/developer/raisin_gui_empty_window`` to get the correct build
+   setup, plugin exports, and folder structure.
+
+5. Add an icon to ``resource/icon.png`` so the window appears in the dock bar.
+
+Using Shared Resources
+----------------------
+
+The ``GuiResource`` object provides shared access to:
+
+* Active ``Network`` and ``Remote::Connection`` objects
+* Fonts and UI scale
+* Preloaded images via ``imageAssets``
+* Global window settings (positions and flags)
+
+Use ``resource_->mainWindowFlags`` when creating ImGui windows to align with
+the dock layout, and use ``resource_->imageButton`` or ``resource_->image``
+for consistent icon rendering.
+
+Window Naming and Discovery
+---------------------------
+
+The window manager scans for libraries that match the pattern
+``raisin_gui_*_window``. The plugin name used in the dock bar is derived from
+that library name. For example, ``raisin_gui_robot_window`` yields a window
+name of ``robot``.
+
+If you want the window to appear under a menu category in the dock bar, set
+``menu_tab`` in the window's parameter file.

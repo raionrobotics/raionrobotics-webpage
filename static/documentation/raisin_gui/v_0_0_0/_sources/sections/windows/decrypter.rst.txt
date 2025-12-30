@@ -1,0 +1,41 @@
+Decrypter Window
+================
+
+.. figure:: ../../image/window_decrypter.png
+   :alt: decrypter_window
+   :width: 900
+
+   Decrypter window.
+
+Overview
+--------
+
+In the screenshot above, the left panel lists encrypted video logs, and the
+right side shows the active decryption status and output messages.
+
+Layout
+------
+
+* **File list**: encrypted ``.raisin_video`` files from
+  ``raisin_recorded_videos``.
+* **Decrypt action**: converts the selected file to ``.mp4``.
+* **Progress indicator**: shows decode progress while running.
+* **Result message**: shows success or error details.
+
+Controls and Indicators
+-----------------------
+
+* **Decrypt** spawns a decoding thread, reads the encrypted stream, and writes
+  a video file using OpenCV.
+* The progress bar reflects the fraction of bytes processed.
+
+Data Sources
+------------
+
+* Reads encrypted video logs from ``raisin_recorded_videos`` on disk.
+
+Notes
+-----
+
+* Decrypted ``.mp4`` files are saved alongside the original logs.
+* The window cleans up stale decrypted files on shutdown.

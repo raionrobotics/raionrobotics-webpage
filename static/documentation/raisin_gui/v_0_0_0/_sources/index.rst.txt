@@ -1,0 +1,27 @@
+.. Raisin GUI documentation master file, created by
+   sphinx-quickstart on Thu Aug 14 03:16:54 2025.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Raisin GUI Documentation
+========================
+
+This documentation explains how the Raisin GUI is structured, configured, and
+used to connect to robots or simulation nodes.
+
+**Please read raisin simulation documentation before reading this documentation.**
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Contents:
+
+   sections/raisin_gui_architecture
+   sections/gui_windows
+   sections/extending_gui
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

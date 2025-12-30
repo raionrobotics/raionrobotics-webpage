@@ -1,0 +1,199 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Node Flow Window &mdash; Raisin GUI Documentation 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Data Logger Window" href="data_logger.html" />
+    <link rel="prev" title="Plot Window" href="plot.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Raisin GUI Documentation
+              <img src="../../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../raisin_gui_architecture.html">Raisin GUI Architecture</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../gui_windows.html">GUI Windows</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Window Guides</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="robot_selection.html">Robot Selection Window</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robot.html">Robot Window (Operator)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robot_dev.html">Robot Window (Developer)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sensor_set_1.html">Sensor Set 1 Window</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ffmpeg.html">FFmpeg Window</a></li>
+<li class="toctree-l3"><a class="reference internal" href="local_map.html">Local Map Window</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plot.html">Plot Window</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Node Flow Window</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#layout">Layout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#controls-and-indicators">Controls and Indicators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#data-sources">Data Sources</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#notes">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="data_logger.html">Data Logger Window</a></li>
+<li class="toctree-l3"><a class="reference internal" href="profile.html">Profile Window</a></li>
+<li class="toctree-l3"><a class="reference internal" href="profile_timeline.html">Profile Timeline Window</a></li>
+<li class="toctree-l3"><a class="reference internal" href="threadpool.html">Threadpool Window</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lock_profiler.html">Lock Profiler Window</a></li>
+<li class="toctree-l3"><a class="reference internal" href="file_manager.html">File Manager Window</a></li>
+<li class="toctree-l3"><a class="reference internal" href="raidrive.html">Raidrive Window</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../extending_gui.html">Extending the GUI</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Raisin GUI Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../gui_windows.html">GUI Windows</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Window Guides</a></li>
+      <li class="breadcrumb-item active">Node Flow Window</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/sections/windows/node_flow.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="node-flow-window">
+<h1>Node Flow Window<a class="headerlink" href="#node-flow-window" title="Link to this heading"></a></h1>
+<figure class="align-default" id="id1">
+<a class="reference internal image-reference" href="../../_images/node_flow_window.png"><img alt="node_flow_window" src="../../_images/node_flow_window.png" style="width: 900px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Node Flow window.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id2">
+<a class="reference internal image-reference" href="../../_images/node_flow_window2.png"><img alt="node_flow_window2" src="../../_images/node_flow_window2.png" style="width: 900px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Message description pop-up.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>In the screenshot above, the top bar contains filters and traffic metrics,
+while the main area renders an interactive node graph of publish/subscribe and
+service flows. Hovering pins and links reveals detailed rate and type
+information.</p>
+</section>
+<section id="layout">
+<h2>Layout<a class="headerlink" href="#layout" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Controls panel</strong>: local/remote toggles, layout presets, filter fields, and
+focus/pin actions.</p></li>
+<li><p><strong>Traffic panel</strong>: sortable table of message rates and byte rates for
+visible flows.</p></li>
+<li><p><strong>Node graph</strong>: visualizes nodes, publishers, subscribers, clients, and
+services with directional links.</p></li>
+</ul>
+</section>
+<section id="controls-and-indicators">
+<h2>Controls and Indicators<a class="headerlink" href="#controls-and-indicators" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Local / Remote / Active Only</strong> filters which flows are displayed.</p></li>
+<li><p><strong>Layout preset</strong> chooses layered or radial layouts; manual mode disables
+auto-layout.</p></li>
+<li><p><strong>Filter fields</strong> match nodes, topics, or message types.</p></li>
+<li><p><strong>Pin Selected</strong> locks nodes in place; <strong>Fit View</strong> re-centers the graph.</p></li>
+</ul>
+</section>
+<section id="data-sources">
+<h2>Data Sources<a class="headerlink" href="#data-sources" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Flow data is subscribed from <code class="docutils literal notranslate"><span class="pre">node_flow</span></code>
+(<code class="docutils literal notranslate"><span class="pre">raisin_interfaces::msg::NodeFlow</span></code>).</p></li>
+<li><p>Message sizes and rates are derived from connection traffic statistics.</p></li>
+</ul>
+</section>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Use the traffic table to identify high-bandwidth topics before optimizing
+your pipeline.</p></li>
+<li><p>Pin critical nodes when using auto-layout to keep important layouts stable.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="plot.html" class="btn btn-neutral float-left" title="Plot Window" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="data_logger.html" class="btn btn-neutral float-right" title="Data Logger Window" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Jemin Hwangbo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

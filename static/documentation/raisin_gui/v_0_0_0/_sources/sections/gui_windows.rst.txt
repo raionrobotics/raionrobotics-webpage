@@ -1,0 +1,11 @@
+GUI Windows
+===========
+
+Raisin GUI is built from dynamically loaded window plugins. Each window has a
+separate guide with a screenshot and a walkthrough of the UI layout and
+controls. Use the index below to navigate to a specific window.
+
+.. toctree::
+   :maxdepth: 2
+
+   windows/index

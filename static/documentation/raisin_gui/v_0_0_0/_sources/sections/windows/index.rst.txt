@@ -1,0 +1,24 @@
+Window Guides
+=============
+
+Each Raisin GUI window has its own documentation page with a screenshot and a
+walkthrough of the UI. Use the list below to jump to a specific window.
+
+.. toctree::
+   :maxdepth: 1
+
+   robot_selection
+   robot
+   robot_dev
+   sensor_set_1
+   ffmpeg
+   local_map
+   plot
+   node_flow
+   data_logger
+   profile
+   profile_timeline
+   threadpool
+   lock_profiler
+   file_manager
+   raidrive

@@ -1,0 +1,223 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raisin GUI Architecture &mdash; Raisin GUI Documentation 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="GUI Windows" href="gui_windows.html" />
+    <link rel="prev" title="Raisin GUI Documentation" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Raisin GUI Documentation
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Raisin GUI Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#startup-flow">Startup Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#main-loop-and-input-thread">Main Loop and Input Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#networking-and-connections">Networking and Connections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#resources-and-shared-state">Resources and Shared State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#window-system-and-plugins">Window System and Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dock-bar-and-status-bar">Dock Bar and Status Bar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#d-rendering-rayrai">3D Rendering (Rayrai)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logging-and-profiling">Logging and Profiling</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gui_windows.html">GUI Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extending_gui.html">Extending the GUI</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Raisin GUI Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Raisin GUI Architecture</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/sections/raisin_gui_architecture.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="raisin-gui-architecture">
+<h1>Raisin GUI Architecture<a class="headerlink" href="#raisin-gui-architecture" title="Link to this heading"></a></h1>
+<p>The Raisin GUI is a desktop application built on SDL2, OpenGL, and ImGui.
+It uses Raisin networking to connect to robots or simulation nodes and loads
+windows as runtime plugins.</p>
+<section id="startup-flow">
+<h2>Startup Flow<a class="headerlink" href="#startup-flow" title="Link to this heading"></a></h2>
+<p>At launch, the GUI performs the following steps:</p>
+<ul class="simple">
+<li><p>Loads GUI parameters (<code class="docutils literal notranslate"><span class="pre">raisin_gui</span></code>) and joystick parameters
+(<code class="docutils literal notranslate"><span class="pre">raisin_joy_interface</span></code>).</p></li>
+<li><p>Builds the network thread organization from the <code class="docutils literal notranslate"><span class="pre">threads</span></code> parameter.</p></li>
+<li><p>Creates a <code class="docutils literal notranslate"><span class="pre">Network</span></code> instance using <code class="docutils literal notranslate"><span class="pre">network_id</span></code> and <code class="docutils literal notranslate"><span class="pre">model_name</span></code>.</p></li>
+<li><p>Copies module definition files from <code class="docutils literal notranslate"><span class="pre">$HOME/.raisin/raisin_raibo2/modules</span></code>
+into the installed resource directory so they are visible to the simulator.</p></li>
+<li><p>Initializes SDL2, OpenGL, glbinding, ImGui, and ImPlot.</p></li>
+<li><p>Loads fonts and icons into a shared <code class="docutils literal notranslate"><span class="pre">GuiResource</span></code> object.</p></li>
+<li><p>Starts a dedicated input thread for low-latency joystick and input handling.</p></li>
+</ul>
+</section>
+<section id="main-loop-and-input-thread">
+<h2>Main Loop and Input Thread<a class="headerlink" href="#main-loop-and-input-thread" title="Link to this heading"></a></h2>
+<p>The GUI uses two threads:</p>
+<ul class="simple">
+<li><p><strong>Input thread</strong> waits on SDL events and forwards them to the render thread.
+Joystick events are processed immediately for lower latency.</p></li>
+<li><p><strong>Render thread</strong> drains the event queue, updates ImGui, renders the dock bar
+and active windows, and swaps the OpenGL buffers.</p></li>
+</ul>
+<p>This structure keeps rendering responsive while maintaining consistent input
+behavior across platforms.</p>
+</section>
+<section id="networking-and-connections">
+<h2>Networking and Connections<a class="headerlink" href="#networking-and-connections" title="Link to this heading"></a></h2>
+<p>The GUI connects to robots using Raisin <code class="docutils literal notranslate"><span class="pre">Remote::Connection</span></code> objects.
+Connections can be TCP or WebSocket, and the connection state is shown in the
+status bar. The Robot Selection window discovers devices on the network and
+lets you connect by IP or by advertised robot ID.</p>
+<p>Only a single active connection is used by most windows, but the GUI keeps
+track of all active connections and can reuse them when opening new windows.</p>
+</section>
+<section id="resources-and-shared-state">
+<h2>Resources and Shared State<a class="headerlink" href="#resources-and-shared-state" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">GuiResource</span></code> is the shared state object used by all windows. It stores:</p>
+<ul class="simple">
+<li><p>The active network and connection</p></li>
+<li><p>Font handles and UI scale</p></li>
+<li><p>Preloaded icon textures</p></li>
+<li><p>The window manager, dock bar, and status bar</p></li>
+<li><p>A shared <code class="docutils literal notranslate"><span class="pre">tf::Transform</span></code> instance for frame lookups</p></li>
+</ul>
+</section>
+<section id="window-system-and-plugins">
+<h2>Window System and Plugins<a class="headerlink" href="#window-system-and-plugins" title="Link to this heading"></a></h2>
+<p>Windows are loaded dynamically as shared libraries. The window manager scans
+for libraries named <code class="docutils literal notranslate"><span class="pre">raisin_gui_&lt;window&gt;_window</span></code> and loads them at runtime.
+Each plugin must export two symbols:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">create</span></code>: returns a new <code class="docutils literal notranslate"><span class="pre">GuiWindow</span></code> instance</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">destroy</span></code>: releases an existing instance</p></li>
+</ul>
+<p>Every window derives from <code class="docutils literal notranslate"><span class="pre">GuiWindow</span></code> and implements:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">init</span></code> / <code class="docutils literal notranslate"><span class="pre">reset</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">update</span></code> (logic)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">draw</span></code> (ImGui rendering)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">shutDown</span></code></p></li>
+</ul>
+<p>Window parameters are loaded from per-window config files (for example,
+<code class="docutils literal notranslate"><span class="pre">raisin_gui_robot_dev_window</span></code>). The window manager uses these to decide
+whether a window should open at startup, enforce single-instance behavior, and
+place the window in the dock bar menu hierarchy.</p>
+</section>
+<section id="dock-bar-and-status-bar">
+<h2>Dock Bar and Status Bar<a class="headerlink" href="#dock-bar-and-status-bar" title="Link to this heading"></a></h2>
+<p>The dock bar provides fast access to windows and shows which windows are open.
+It also handles focus switching and close actions. Some windows (such as
+<code class="docutils literal notranslate"><span class="pre">robot</span></code> and <code class="docutils literal notranslate"><span class="pre">sensor_set_1</span></code>) require an active connection and are disabled
+until connected.</p>
+<p>The status bar displays the current connection state, transport type, and the
+active robot ID and IP address.</p>
+</section>
+<section id="d-rendering-rayrai">
+<h2>3D Rendering (Rayrai)<a class="headerlink" href="#d-rendering-rayrai" title="Link to this heading"></a></h2>
+<p>Several windows render 3D scenes or sensor data using the Rayrai engine:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">robot</span></code> and <code class="docutils literal notranslate"><span class="pre">robot_dev</span></code> render a Raisim world for live visualization.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data_logger</span></code> and <code class="docutils literal notranslate"><span class="pre">local_map</span></code> visualize logs or map data using off-screen
+OpenGL rendering.</p></li>
+<li><p>Camera and lidar visualization utilities are integrated for sensor overlays.</p></li>
+</ul>
+<p>Rayrai supports off-screen rendering, point cloud display, and picking, which
+allows the GUI to embed 3D content directly inside ImGui windows.</p>
+</section>
+<section id="logging-and-profiling">
+<h2>Logging and Profiling<a class="headerlink" href="#logging-and-profiling" title="Link to this heading"></a></h2>
+<p>The GUI integrates Raisin logging and profiling utilities:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">RaisinLogApp</span></code> renders filtered logs with color-coded severities.</p></li>
+<li><p>The lock profiler and timeline windows visualize thread contention and timing
+data collected during runtime.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Raisin GUI Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="gui_windows.html" class="btn btn-neutral float-right" title="GUI Windows" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Jemin Hwangbo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

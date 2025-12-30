@@ -1,0 +1,111 @@
+Raisin GUI Architecture
+=======================
+
+The Raisin GUI is a desktop application built on SDL2, OpenGL, and ImGui.
+It uses Raisin networking to connect to robots or simulation nodes and loads
+windows as runtime plugins.
+
+Startup Flow
+------------
+
+At launch, the GUI performs the following steps:
+
+* Loads GUI parameters (``raisin_gui``) and joystick parameters
+  (``raisin_joy_interface``).
+* Builds the network thread organization from the ``threads`` parameter.
+* Creates a ``Network`` instance using ``network_id`` and ``model_name``.
+* Copies module definition files from ``$HOME/.raisin/raisin_raibo2/modules``
+  into the installed resource directory so they are visible to the simulator.
+* Initializes SDL2, OpenGL, glbinding, ImGui, and ImPlot.
+* Loads fonts and icons into a shared ``GuiResource`` object.
+* Starts a dedicated input thread for low-latency joystick and input handling.
+
+Main Loop and Input Thread
+--------------------------
+
+The GUI uses two threads:
+
+* **Input thread** waits on SDL events and forwards them to the render thread.
+  Joystick events are processed immediately for lower latency.
+* **Render thread** drains the event queue, updates ImGui, renders the dock bar
+  and active windows, and swaps the OpenGL buffers.
+
+This structure keeps rendering responsive while maintaining consistent input
+behavior across platforms.
+
+Networking and Connections
+--------------------------
+
+The GUI connects to robots using Raisin ``Remote::Connection`` objects.
+Connections can be TCP or WebSocket, and the connection state is shown in the
+status bar. The Robot Selection window discovers devices on the network and
+lets you connect by IP or by advertised robot ID.
+
+Only a single active connection is used by most windows, but the GUI keeps
+track of all active connections and can reuse them when opening new windows.
+
+Resources and Shared State
+--------------------------
+
+``GuiResource`` is the shared state object used by all windows. It stores:
+
+* The active network and connection
+* Font handles and UI scale
+* Preloaded icon textures
+* The window manager, dock bar, and status bar
+* A shared ``tf::Transform`` instance for frame lookups
+
+Window System and Plugins
+-------------------------
+
+Windows are loaded dynamically as shared libraries. The window manager scans
+for libraries named ``raisin_gui_<window>_window`` and loads them at runtime.
+Each plugin must export two symbols:
+
+* ``create``: returns a new ``GuiWindow`` instance
+* ``destroy``: releases an existing instance
+
+Every window derives from ``GuiWindow`` and implements:
+
+* ``init`` / ``reset``
+* ``update`` (logic)
+* ``draw`` (ImGui rendering)
+* ``shutDown``
+
+Window parameters are loaded from per-window config files (for example,
+``raisin_gui_robot_dev_window``). The window manager uses these to decide
+whether a window should open at startup, enforce single-instance behavior, and
+place the window in the dock bar menu hierarchy.
+
+Dock Bar and Status Bar
+-----------------------
+
+The dock bar provides fast access to windows and shows which windows are open.
+It also handles focus switching and close actions. Some windows (such as
+``robot`` and ``sensor_set_1``) require an active connection and are disabled
+until connected.
+
+The status bar displays the current connection state, transport type, and the
+active robot ID and IP address.
+
+3D Rendering (Rayrai)
+---------------------
+
+Several windows render 3D scenes or sensor data using the Rayrai engine:
+
+* ``robot`` and ``robot_dev`` render a Raisim world for live visualization.
+* ``data_logger`` and ``local_map`` visualize logs or map data using off-screen
+  OpenGL rendering.
+* Camera and lidar visualization utilities are integrated for sensor overlays.
+
+Rayrai supports off-screen rendering, point cloud display, and picking, which
+allows the GUI to embed 3D content directly inside ImGui windows.
+
+Logging and Profiling
+---------------------
+
+The GUI integrates Raisin logging and profiling utilities:
+
+* ``RaisinLogApp`` renders filtered logs with color-coded severities.
+* The lock profiler and timeline windows visualize thread contention and timing
+  data collected during runtime.

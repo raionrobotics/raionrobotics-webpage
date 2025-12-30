@@ -1,0 +1,201 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Robot Window (Operator) &mdash; Raisin GUI Documentation 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Robot Window (Developer)" href="robot_dev.html" />
+    <link rel="prev" title="Robot Selection Window" href="robot_selection.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Raisin GUI Documentation
+              <img src="../../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../raisin_gui_architecture.html">Raisin GUI Architecture</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../gui_windows.html">GUI Windows</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Window Guides</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="robot_selection.html">Robot Selection Window</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Robot Window (Operator)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#layout">Layout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#controls-and-indicators">Controls and Indicators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#data-sources-and-services">Data Sources and Services</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#notes">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robot_dev.html">Robot Window (Developer)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sensor_set_1.html">Sensor Set 1 Window</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ffmpeg.html">FFmpeg Window</a></li>
+<li class="toctree-l3"><a class="reference internal" href="local_map.html">Local Map Window</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plot.html">Plot Window</a></li>
+<li class="toctree-l3"><a class="reference internal" href="node_flow.html">Node Flow Window</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_logger.html">Data Logger Window</a></li>
+<li class="toctree-l3"><a class="reference internal" href="profile.html">Profile Window</a></li>
+<li class="toctree-l3"><a class="reference internal" href="profile_timeline.html">Profile Timeline Window</a></li>
+<li class="toctree-l3"><a class="reference internal" href="threadpool.html">Threadpool Window</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lock_profiler.html">Lock Profiler Window</a></li>
+<li class="toctree-l3"><a class="reference internal" href="file_manager.html">File Manager Window</a></li>
+<li class="toctree-l3"><a class="reference internal" href="raidrive.html">Raidrive Window</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../extending_gui.html">Extending the GUI</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Raisin GUI Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../gui_windows.html">GUI Windows</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Window Guides</a></li>
+      <li class="breadcrumb-item active">Robot Window (Operator)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/sections/windows/robot.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="robot-window-operator">
+<h1>Robot Window (Operator)<a class="headerlink" href="#robot-window-operator" title="Link to this heading"></a></h1>
+<figure class="align-default" id="id1">
+<a class="reference internal image-reference" href="../../_images/window_robot_window.png"><img alt="robot_window" src="../../_images/window_robot_window.png" style="width: 900px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Robot operator window.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>In the screenshot above, the left column provides high-level control actions
+and status indicators, while the right column renders a live 3D view of the
+robot in Rayrai. The bottom of the control column contains joystick selection
+and logs.</p>
+</section>
+<section id="layout">
+<h2>Layout<a class="headerlink" href="#layout" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Top-left controls</strong>: power and motor buttons with connection status and
+battery voltage.</p></li>
+<li><p><strong>Motion commands</strong>: set home, joint test, stand up, and sit down actions.</p></li>
+<li><p><strong>Controller loading</strong>: blind/vision locomotion buttons and auto mode toggle.</p></li>
+<li><p><strong>Command source</strong>: manual or autonomy joystick selection with a dropdown
+source list and listen indicator.</p></li>
+<li><p><strong>Joystick scale</strong>: sliders for forward and yaw rate range limits.</p></li>
+<li><p><strong>Log panel</strong>: real-time GUI log output.</p></li>
+<li><p><strong>Visualization</strong>: Rayrai view with optional actuator and sensor overlays,
+plus warnings for hot actuators or motor faults.</p></li>
+</ul>
+</section>
+<section id="controls-and-indicators">
+<h2>Controls and Indicators<a class="headerlink" href="#controls-and-indicators" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Power/motor buttons</strong> call <code class="docutils literal notranslate"><span class="pre">turn_on</span></code>, <code class="docutils literal notranslate"><span class="pre">turn_off</span></code>, <code class="docutils literal notranslate"><span class="pre">init_motor</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">stop_motor</span></code> services with safety confirmations when needed.</p></li>
+<li><p><strong>Controller buttons</strong> call <code class="docutils literal notranslate"><span class="pre">load_controller</span></code> for
+<code class="docutils literal notranslate"><span class="pre">blind_locomotion</span></code> or <code class="docutils literal notranslate"><span class="pre">vision_locomotion</span></code>.</p></li>
+<li><p><strong>Auto mode toggle</strong> calls <code class="docutils literal notranslate"><span class="pre">load_plugin</span></code> for <code class="docutils literal notranslate"><span class="pre">path_planning</span></code> when the
+required controller is loaded.</p></li>
+<li><p><strong>Listen controls</strong> route joystick commands using <code class="docutils literal notranslate"><span class="pre">set_listen</span></code> and display
+the active source.</p></li>
+<li><p><strong>Visualizer settings</strong> (gear icon) toggle actuator and sensor overlays.</p></li>
+</ul>
+</section>
+<section id="data-sources-and-services">
+<h2>Data Sources and Services<a class="headerlink" href="#data-sources-and-services" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Status is driven by <code class="docutils literal notranslate"><span class="pre">robot_state</span></code>, <code class="docutils literal notranslate"><span class="pre">module_list</span></code>, and <code class="docutils literal notranslate"><span class="pre">joy_range</span></code>.</p></li>
+<li><p>Log output is sourced from <code class="docutils literal notranslate"><span class="pre">gui_message</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">describe_robot</span></code> provides metadata for the window title and status.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set_joy_range</span></code> updates the joystick scaling sliders.</p></li>
+</ul>
+</section>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Temperature warnings use <code class="docutils literal notranslate"><span class="pre">actuator_hot_criteria</span></code> from GUI parameters.</p></li>
+<li><p>The visualization overlay highlights actuator and sensor states; disable
+overlays if you need a clearer camera view.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="robot_selection.html" class="btn btn-neutral float-left" title="Robot Selection Window" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="robot_dev.html" class="btn btn-neutral float-right" title="Robot Window (Developer)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Jemin Hwangbo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
