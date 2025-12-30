@@ -1,0 +1,247 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick Start &mdash; Raisin Simulation Documentation 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Parameter settings" href="parameter_setting.html" />
+    <link rel="prev" title="Raisin Simulation Documentation" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Raisin Simulation Documentation
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#raisim-setup">Raisim Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#raisin-master-setup">Raisin Master Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#simulation-and-gui-package-setup">Simulation and GUI Package Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-run-the-simulation">How to Run the Simulation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="parameter_setting.html">Parameter settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raisim_configuration.html">Raisim Configuration</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Raisin Simulation Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Quick Start</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/sections/quickstart.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="quick-start">
+<h1>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h1>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Ubuntu 22.04 or later</p></li>
+<li><p>Intel i7 or higher CPU; NVIDIA 5060 or higher GPU (for camera simulation)</p></li>
+<li><p>Raisim activation key (provided by Raion Robotics)</p></li>
+<li><p>Raisin GitHub token (provided by Raion Robotics)</p></li>
+<li><p>Raisim Unreal binary for visualization
+(<cite>https://github.com/raisimTech/raisimLib/releases/tag/v1.1.5</cite>); the mobile
+version is recommended</p></li>
+<li><p>A valid graphics driver for your GPU</p></li>
+<li><p>Gamepad for robot control (Logitech F710 recommended; any Linux-supported
+joystick works)</p></li>
+</ul>
+</section>
+<section id="raisim-setup">
+<h2>Raisim Setup<a class="headerlink" href="#raisim-setup" title="Link to this heading"></a></h2>
+<p>Raisim requires an activation key file named <code class="docutils literal notranslate"><span class="pre">.raisim</span></code> in your home
+directory. Save the provided key to <code class="docutils literal notranslate"><span class="pre">$HOME/.raisim</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp<span class="w"> </span>/path/to/activation.key<span class="w"> </span><span class="nv">$HOME</span>/.raisim
+</pre></div>
+</div>
+<p>Raisim reads this key at runtime, regardless of where you launch the
+executables.</p>
+</section>
+<section id="raisin-master-setup">
+<h2>Raisin Master Setup<a class="headerlink" href="#raisin-master-setup" title="Link to this heading"></a></h2>
+<p>Raisin Master is a package manager and middleware for robotics software. See
+<cite>https://raionrobotics.com/documentation/raisin_master/v_0_2_2/</cite> for details.</p>
+<p>Clone it into your workspace:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:raionrobotics/raisin_master.git
+</pre></div>
+</div>
+<p>Create the configuration file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>raisin_master
+cp<span class="w"> </span>configuration_setting_example.yaml<span class="w"> </span>configuration_setting.yaml
+</pre></div>
+</div>
+<p>Open <code class="docutils literal notranslate"><span class="pre">configuration_setting.yaml</span></code> and replace <code class="docutils literal notranslate"><span class="pre">ghp_mytoken_code</span></code> with your
+Raion Robotics GitHub token. You can also change <code class="docutils literal notranslate"><span class="pre">user_type</span></code>. The <code class="docutils literal notranslate"><span class="pre">devel</span></code>
+type grants access to pre-release packages (newer features, less testing).</p>
+<p>Install Python dependencies and the Raisin script:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+./raisin<span class="w"> </span>--install
+</pre></div>
+</div>
+<p>The steps below assume the script is installed.</p>
+</section>
+<section id="simulation-and-gui-package-setup">
+<h2>Simulation and GUI Package Setup<a class="headerlink" href="#simulation-and-gui-package-setup" title="Link to this heading"></a></h2>
+<p>This guide assumes you are installing the Raibo2 simulation. From the Raisin
+Master repository directory (for example, <code class="docutils literal notranslate"><span class="pre">raisin_master</span></code>), run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>raisin<span class="w"> </span>install<span class="w"> </span>raisin_raibo2<span class="w"> </span>raisin_gui
+</pre></div>
+</div>
+<p>These packages require your Raion Robotics GitHub token.</p>
+<p>After installation, verify the packages in the <code class="docutils literal notranslate"><span class="pre">release</span></code> directory.</p>
+<p>Set up the environment:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>raisin<span class="w"> </span>setup
+</pre></div>
+</div>
+<p>This copies the installed packages to the <code class="docutils literal notranslate"><span class="pre">install</span></code> directory. It also sets
+up the install dependency chain.</p>
+<p>Install system dependencies:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bash<span class="w"> </span>install_dependencies.sh
+</pre></div>
+</div>
+<p>Administrative privileges are required to download system packages.</p>
+</section>
+<section id="how-to-run-the-simulation">
+<h2>How to Run the Simulation<a class="headerlink" href="#how-to-run-the-simulation" title="Link to this heading"></a></h2>
+<p>Executables are located in <code class="docutils literal notranslate"><span class="pre">install/bin</span></code> after you set up the environment.
+Binaries with the <code class="docutils literal notranslate"><span class="pre">debug_build</span></code> suffix are for debugging only.</p>
+<ol class="arabic">
+<li><p>Start the simulation node:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>install/bin/raisin_raibo2
+</pre></div>
+</div>
+</li>
+<li><p>Start the GUI in another terminal:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>install/bin/raisin_gui
+</pre></div>
+</div>
+</li>
+</ol>
+<p>After the GUI starts, you will see the robot selection window:</p>
+<a class="reference internal image-reference" href="../_images/quick_start_1.png"><img alt="quick_start1" src="../_images/quick_start_1.png" style="width: 800px;" />
+</a>
+<p>If you launch multiple Raibo2 nodes, they appear in this list along with any
+robots discovered on your local network. Select the robot you want to control.</p>
+<a class="reference internal image-reference" href="../_images/quick_start_2.png"><img alt="quick_start2" src="../_images/quick_start_2.png" style="width: 800px;" />
+</a>
+<p>Click the Connect button.</p>
+<a class="reference internal image-reference" href="../_images/quick_start_3.png"><img alt="quick_start3" src="../_images/quick_start_3.png" style="width: 800px;" />
+</a>
+<p>Once connected, three additional buttons appear. For this tutorial, open the
+Developer Window.</p>
+<a class="reference internal image-reference" href="../_images/quick_start_4.png"><img alt="quick_start4" src="../_images/quick_start_4.png" style="width: 800px;" />
+</a>
+<p>The robot node is currently off. The robot server is on and manages the node.
+Turn on the robot node.</p>
+<a class="reference internal image-reference" href="../_images/quick_start_5.png"><img alt="quick_start5" src="../_images/quick_start_5.png" style="width: 800px;" />
+</a>
+<p>When the robot is on, it publishes multiple topics that appear in the
+Developer Window. For a quick start, choose the vision controller and press
+Load. This calls the load controller service in the background.</p>
+<a class="reference internal image-reference" href="../_images/quick_start_6.png"><img alt="quick_start6" src="../_images/quick_start_6.png" style="width: 800px;" />
+</a>
+<p>You can now control the robot with your gamepad. Button mappings vary by
+controller, so test yours first. The image below highlights key areas of the
+Developer Window.</p>
+<a class="reference internal image-reference" href="../_images/quick_start_7.png"><img alt="quick_start7" src="../_images/quick_start_7.png" style="width: 800px;" />
+</a>
+<p>Once the simulation is running, launch <code class="docutils literal notranslate"><span class="pre">raisimUnreal.sh</span></code> from the Raisim
+Unreal folder you downloaded.</p>
+<a class="reference internal image-reference" href="../_images/quick_start_8.png"><img alt="quick_start8" src="../_images/quick_start_8.png" style="width: 800px;" />
+</a>
+<p>The Raisin node exposes two ports. It connects to port <strong>8080</strong> by default. Port
+8080 renders the World Hub, which contains the estimated and perceived world
+state.</p>
+<p>To view the simulation world, clear <code class="docutils literal notranslate"><span class="pre">AutoConnect</span></code>, enter port <strong>7000</strong>, and click
+Connect again.</p>
+<a class="reference internal image-reference" href="../_images/quick_start_9.png"><img alt="quick_start9" src="../_images/quick_start_9.png" style="width: 800px;" />
+</a>
+<p>Port 7000 renders the simulation world with the exact simulation state.</p>
+<p>To learn more about Raisim and Raisim Unreal, see <cite>https://raisim.com</cite>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Raisin Simulation Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="parameter_setting.html" class="btn btn-neutral float-right" title="Parameter settings" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Jemin Hwangbo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

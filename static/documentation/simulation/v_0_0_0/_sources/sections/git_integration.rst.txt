@@ -1,0 +1,13 @@
+Git Integration
+===============
+
+Describe the repository workflow, branching, and release process for the
+simulation documentation and related packages.
+
+Suggested Topics
+----------------
+
+* Branching strategy
+* Release tagging
+* Contribution guidelines
+* CI checks for documentation

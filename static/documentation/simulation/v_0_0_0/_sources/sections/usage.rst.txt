@@ -1,0 +1,13 @@
+Usage
+=====
+
+Document the primary workflows for running simulations, collecting data, and
+analyzing results.
+
+Example Workflows
+-----------------
+
+* Launch a default simulation
+* Run a batch of scenarios
+* Record logs and metrics
+* Visualize outputs

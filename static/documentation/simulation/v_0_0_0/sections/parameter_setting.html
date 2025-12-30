@@ -1,0 +1,173 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parameter settings &mdash; Raisin Simulation Documentation 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Raisim Configuration" href="raisim_configuration.html" />
+    <link rel="prev" title="Quick Start" href="quickstart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Raisin Simulation Documentation
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Parameter settings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#parameter-loading">Parameter loading</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="raisim_configuration.html">Raisim Configuration</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Raisin Simulation Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Parameter settings</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/sections/parameter_setting.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="parameter-settings">
+<h1>Parameter settings<a class="headerlink" href="#parameter-settings" title="Link to this heading"></a></h1>
+<section id="parameter-loading">
+<h2>Parameter loading<a class="headerlink" href="#parameter-loading" title="Link to this heading"></a></h2>
+<p>All Raisin packages load parameters to determine their configuration. Default
+parameter files are stored under <code class="docutils literal notranslate"><span class="pre">install/config</span></code>. For example, open
+<code class="docutils literal notranslate"><span class="pre">install/config/raisin_gui/config/params.yaml</span></code> to see the parameters for the
+Raisin GUI package:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">starting_window</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">robot_selection</span>
+<span class="w">  </span><span class="nt">dtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
+
+<span class="nt">network_id</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gui</span>
+<span class="w">  </span><span class="nt">dtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
+
+<span class="nt">model_name</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gui</span>
+<span class="w">  </span><span class="nt">dtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
+
+<span class="nt">joy_topic_name</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">joy/gui</span>
+<span class="w">  </span><span class="nt">dtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
+
+<span class="nt">dock_bar</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;robot_selection&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;robot&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;robot_dev&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;sensor_set_1&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">dtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vector&lt;string&gt;</span>
+
+<span class="nt">actuator_hot_criteria</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">61</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">64</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">dtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vector&lt;double&gt;</span>
+
+<span class="nt">threads</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">thread_0</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;main&#39;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">dtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vector&lt;string&gt;</span>
+<span class="w">  </span><span class="nt">thread_1</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;surveillance&#39;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">dtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vector&lt;string&gt;</span>
+<span class="w">  </span><span class="nt">thread_2</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;audio&#39;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">dtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vector&lt;string&gt;</span>
+
+<span class="nt">scale</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
+</pre></div>
+</div>
+<p>Try changing <code class="docutils literal notranslate"><span class="pre">scale</span></code> to a different number and observe the effect in the GUI.
+You can also adjust <code class="docutils literal notranslate"><span class="pre">starting_window</span></code>, which is set to the robot selection
+window by default.</p>
+<p>The parameter manager loads these files at runtime. Files under
+<code class="docutils literal notranslate"><span class="pre">install/config</span></code> are defaults, and changes made there are temporary. Running
+<code class="docutils literal notranslate"><span class="pre">raisin</span> <span class="pre">setup</span></code> overwrites them with the default parameters stored in the
+<code class="docutils literal notranslate"><span class="pre">release</span></code> directory. This makes them suitable for quick experiments.</p>
+<p>For persistent overrides, create your own file at
+<code class="docutils literal notranslate"><span class="pre">$HOME/.raisin/&lt;PACKAGE_NAME&gt;/params.yaml</span></code>. The package manager loads the
+<code class="docutils literal notranslate"><span class="pre">install</span></code> parameters first and then overlays values from the file in
+<code class="docutils literal notranslate"><span class="pre">.raisin/&lt;PACKAGE_NAME&gt;</span></code>. Your override file does not need to be complete;
+define only the keys you want to change. The parameter manager merges your
+values with the defaults from the <code class="docutils literal notranslate"><span class="pre">install</span></code> directory.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quickstart.html" class="btn btn-neutral float-left" title="Quick Start" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="raisim_configuration.html" class="btn btn-neutral float-right" title="Raisim Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Jemin Hwangbo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

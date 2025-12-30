@@ -1,0 +1,65 @@
+Parameter settings
+===================
+
+Parameter loading
+------------------
+
+All Raisin packages load parameters to determine their configuration. Default
+parameter files are stored under ``install/config``. For example, open
+``install/config/raisin_gui/config/params.yaml`` to see the parameters for the
+Raisin GUI package:
+
+.. code-block:: yaml
+
+   starting_window:
+     value: robot_selection
+     dtype: string
+
+   network_id:
+     value: gui
+     dtype: string
+
+   model_name:
+     value: gui
+     dtype: string
+
+   joy_topic_name:
+     value: joy/gui
+     dtype: string
+
+   dock_bar:
+     value: ["robot_selection", "robot", "robot_dev", "sensor_set_1"]
+     dtype: vector<string>
+
+   actuator_hot_criteria:
+     value: [61, 64]
+     dtype: vector<double>
+
+   threads:
+     thread_0:
+       value: ['main']
+       dtype: vector<string>
+     thread_1:
+       value: ['surveillance']
+       dtype: vector<string>
+     thread_2:
+       value: ['audio']
+       dtype: vector<string>
+
+   scale: 1.0
+
+Try changing ``scale`` to a different number and observe the effect in the GUI.
+You can also adjust ``starting_window``, which is set to the robot selection
+window by default.
+
+The parameter manager loads these files at runtime. Files under
+``install/config`` are defaults, and changes made there are temporary. Running
+``raisin setup`` overwrites them with the default parameters stored in the
+``release`` directory. This makes them suitable for quick experiments.
+
+For persistent overrides, create your own file at
+``$HOME/.raisin/<PACKAGE_NAME>/params.yaml``. The package manager loads the
+``install`` parameters first and then overlays values from the file in
+``.raisin/<PACKAGE_NAME>``. Your override file does not need to be complete;
+define only the keys you want to change. The parameter manager merges your
+values with the defaults from the ``install`` directory.

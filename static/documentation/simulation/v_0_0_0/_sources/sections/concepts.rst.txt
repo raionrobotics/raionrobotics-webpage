@@ -1,0 +1,12 @@
+Concepts
+========
+
+Provide the key ideas and terminology used throughout the simulation project.
+
+Suggested Concepts
+------------------
+
+* World and scene representations
+* Sensors and data streams
+* Controllers and policies
+* Time stepping and determinism

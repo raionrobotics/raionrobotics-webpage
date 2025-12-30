@@ -1,0 +1,378 @@
+Raisim Configuration
+====================
+
+Raisim is a physics engine developed by Raion Robotics.
+It also ships two TCP/IP-based visualizers: raisimUnity and raisimUnreal.
+In this tutorial, we assume that you have downloaded raisimUnreal following the steps in the previous sections.
+Here is some background information to understand how Raion Robotics simulation works.
+
+URDF
+-----
+
+In Raisim, a robot is defined using a URDF (Unified Robot Description Format).
+For a detailed specification and examples, see the official ROS URDF
+documentation at `https://wiki.ros.org/urdf`.
+
+URDF is an XML-based format that describes a robot as a tree of rigid links
+connected by joints. It captures the kinematic structure, physical properties,
+and the geometry required for simulation and visualization.
+
+At a minimum, a URDF should include:
+
+* Links with inertial, visual, and collision elements.
+* Joints that connect links and define their axes and limits.
+* Consistent units (meters, kilograms, radians) and coordinate frames.
+
+Key points for Raisim and similar physics engines:
+
+* Inertial properties matter. Unrealistic masses or inertia tensors can cause
+  unstable simulation.
+* Collision geometry should be simple and watertight for stable contacts and
+  good performance.
+* Mesh paths must be valid and accessible on your machine.
+
+URDF models are hierarchical. Each joint defines a transform from its parent
+link to its child link, along with the joint type (e.g., fixed, revolute,
+continuous, or prismatic), axis of motion, and limits. This hierarchy determines
+the robot's kinematic tree and the degrees of freedom available in simulation.
+
+The inertial section of a link includes mass and the inertia tensor expressed
+in the link frame. These values must be physically consistent. For example,
+extremely small masses, negative inertia components, or inertia tensors that do
+not match the geometry often lead to unstable contact behavior.
+
+Visual geometry is used for rendering, while collision geometry is used for
+physics. Keeping collision meshes simpler than visuals improves stability and
+performance, especially for legged robots or tasks with many contacts. If you
+use meshes, ensure they are closed and correctly scaled. Primitive shapes
+(boxes, cylinders, spheres) are often more robust for contacts.
+
+Common pitfalls include missing inertial tags, incorrect joint axes, and
+collision meshes that do not match the visual model. If you have ROS tools
+available, validate the URDF with standard checkers before launching Raisim to
+catch errors early.
+
+Raisim visualizers use the same URDF to render the robot, so keeping visual and
+collision geometry aligned improves both realism and debugging.
+
+
+Raisim URDF extension
+----------------------
+
+There are two important features in Raisim URDF extension for this tutorial: modules and sensors.
+
+Open install/config/raisin_raibo2/config/params.yaml.
+You can see these two raisim related parameters:
+
+.. code-block:: yaml
+
+    raisim_config: /raisim_config/flat_terrain.xml
+    modules: [livox_lidar, sensor_head_set_1]
+
+The modules here is simply a text file that you can find in install/resource/raisin_raibo2/resource/modules.
+Contents of the text file is simply **copy-pasted to the bottom of the main URDF**, which can be found in install/resource/raisin_raibo2/resource/urdf/raibo2.urdf.
+
+So in simulation, the robot will have two modules (livox_lidar and sensor_head_set_1) attached.
+
+The environment is defined by the ``raisim_config``` file.
+You can find the config file in install/resource/raisin_raibo2/resource/raisim_config/flat_terrain.xml, which will create a simple flat terrain world.
+
+Currently, depth camera, RGB camera and lidar are supported.
+
+Sensor Configuration
+^^^^^^^^^^^^^^^^^^^^
+
+Sensor definitions live under ``install/resource/raisin_raibo2/resource/sensors``
+(source files in ``src/raisin_raibo2/resource/sensors``). Each file defines a
+``<sensor_set>`` with a single link and one or more sensors. Modules reference
+these files using the ``sensor="..."`` attribute in the module link definition
+(see ``install/resource/raisin_raibo2/resource/modules``).
+
+The common structure looks like this:
+
+.. code-block:: xml
+
+   <sensor_set name="realsense_d435">
+     <link>
+       <inertial>...</inertial>
+       <visual>...</visual>
+       <sensor name="color" type="rgb" update_rate="30">...</sensor>
+       <sensor name="depth" type="depth" update_rate="30">...</sensor>
+     </link>
+   </sensor_set>
+
+Key elements:
+
+* ``<sensor_set name="...">`` groups the sensors for a device.
+* ``<link>`` contains the inertial properties and optional visual geometry for
+  the sensor housing.
+* ``<sensor>`` nodes define the individual streams. Each has a ``name``,
+  ``type``, and ``update_rate`` (Hz), plus an ``<origin>`` for mounting offset.
+
+Camera sensors (``type="rgb"`` and ``type="depth"``) use a ``<camera>`` block:
+
+* ``horizontal_fov`` controls the horizontal field of view in radians.
+* ``<image width="..." height="..."/>`` sets the resolution.
+* ``<clip near="..." far="..."/>`` defines near/far planes.
+* ``<noise>`` adds Gaussian noise (``mean`` and ``stddev``).
+* Depth cameras often include ``<data type="coordinates"/>`` to emit point
+  coordinates instead of raw depth values.
+
+Lidar sensors use ``type="spinning_lidar"`` and define scan geometry:
+
+* ``<yaw samples="..."/>`` and ``<pitch samples="..." min_angle="..."
+  max_angle="..."/>`` set the angular sampling.
+* ``<spin direction="clockwise|counter-clockwise" rate="..."/>`` controls the
+  rotation.
+* ``<range min="..." max="..."/>`` sets the valid measurement range.
+
+IMU sensors use ``type="imu"`` and include ``<limit>`` for saturation bounds:
+
+* ``acc_limit`` (linear acceleration) and ``ang_vel_limit`` (angular velocity).
+
+Several sensor sets bundle multiple streams. For example, the Oak-D Pro file
+defines two monochrome RGB streams, a depth stream, and an IMU, while the
+Realsense files include both aligned and unaligned depth streams. Lidar sets
+such as ``mid360.xml`` and ``ouster1-32.xml`` pair a spinning lidar with an IMU.
+
+
+Raisim configuration file
+----------------------------
+
+You can find more examples of Raisim configuration file in https://github.com/raisimTech/raisimLib.
+
+Raisim worlds are described using an XML configuration file (often called a
+"Raisim config"). This file defines global world settings, reusable object
+classes, and concrete objects instantiated in the scene. The loader supports
+parameter substitution, includes, array expansion, and simple math expressions,
+which make large environments easier to define and maintain.
+
+At a high level, the loader performs these steps:
+
+* Read the XML file into a single string.
+* Replace ``[THIS_DIR]`` with the directory of the config file.
+* Substitute parameters from ``<params>`` blocks and command-line arguments.
+* Expand ``<array ...>...</array>`` blocks to generate repeated elements.
+* Evaluate math expressions inside ``{...}``.
+* Recursively load files referenced by ``<include>`` entries.
+* Parse world settings, materials, object classes, objects, and constraints.
+
+The sections below describe the structure and the supported features in detail.
+
+File Structure Overview
+^^^^^^^^^^^^^^^^^^^^^^^
+
+A typical config file uses a top-level ``<raisim>`` node and includes the
+following sections:
+
+.. code-block:: xml
+
+   <raisim>
+     <params>
+       <param_name value="..."/>
+     </params>
+
+     <include value="[THIS_DIR]/other_world.xml"/>
+
+     <material>...</material>
+     <gravity value="0 0 -9.81"/>
+     <timeStep value="0.001"/>
+     <erp erp="0.2" erp2="0.1"/>
+
+     <object_class>
+       <my_box type="box" mass="1.0" material="steel">
+         <dimension x="0.5" y="0.3" z="0.2"/>
+       </my_box>
+     </object_class>
+
+     <objects>
+       <my_box name="crate_0">
+         <state pos="0 0 0.3" quat="1 0 0 0"/>
+       </my_box>
+       <articulated_system name="raibo2"
+                           urdf_path="[THIS_DIR]/raibo2.urdf"
+                           res_dir="[THIS_DIR]/resources">
+         <state qpos="..." qvel="..."/>
+       </articulated_system>
+     </objects>
+
+     <wire type="stiff" name="tether" length="1.0">
+       <object1 name="crate_0" local_index="0" pos="0 0 0"/>
+       <object2 name="raibo2" frame="base"/>
+     </wire>
+   </raisim>
+
+This is illustrative; only the sections you use need to be present.
+
+Path Substitution with ``[THIS_DIR]``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The loader replaces all instances of ``[THIS_DIR]`` with the directory of the
+current configuration file. This makes files portable and avoids hard-coded
+absolute paths. It is commonly used for URDF files, resource directories, mesh
+paths, and included XML files.
+
+Parameter Substitution with ``@@name``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Parameters can be declared in one or more ``<params>`` blocks:
+
+.. code-block:: xml
+
+   <params>
+     <robot_name value="raibo2"/>
+     <root_height value="0.45"/>
+   </params>
+
+Any occurrence of ``@@robot_name`` or ``@@root_height`` in the file is replaced
+with the corresponding ``value`` attribute. Parameters are substituted in two
+phases:
+
+1. Values from ``<params>`` blocks in the config file.
+2. Values passed as loader arguments (these override the file values).
+
+If any unresolved ``@@param`` remains after substitution, loading fails with an
+error. This ensures that all required values are explicitly provided.
+
+Array Expansion with ``<array>``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Array blocks allow repeated elements with a changing index. The loader expands
+the block by duplicating its content and replacing the specified index symbol
+with successive values.
+
+.. code-block:: xml
+
+   <array start="0" end="3" increment="1" idx="$i">
+     <box name="box_$i">
+       <dim x="0.2" y="0.2" z="0.2"/>
+       <state pos="{0.5*$i} 0 0.1" quat="1 0 0 0"/>
+     </box>
+   </array>
+
+In this example, the loader produces four boxes: ``box_0`` through ``box_3``.
+
+Math Expressions with ``{...}``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Simple arithmetic expressions inside braces are evaluated and replaced with
+their numeric results. Expressions are case-insensitive and may include spaces,
+which are removed before evaluation.
+
+Example:
+
+.. code-block:: xml
+
+   <state pos="{0.1*2} {0.25+0.05} 0.3" quat="1 0 0 0"/>
+
+Include Files
+^^^^^^^^^^^^^
+
+Use ``<include>`` to load and merge additional XML files:
+
+.. code-block:: xml
+
+   <include value="[THIS_DIR]/terrain.xml"/>
+
+Includes are processed recursively before the main world is instantiated. This
+is useful for sharing materials, object classes, or common scenes across
+projects.
+
+World Parameters
+^^^^^^^^^^^^^^^^
+
+The following nodes configure the global simulation:
+
+* ``<material>``: Defines contact materials. The first material node is used to
+  initialize the material manager.
+* ``<gravity value="x y z">``: Sets gravity in m/s^2.
+* ``<timeStep value="...">``: Sets the physics time step.
+* ``<erp erp="..." erp2="...">``: Sets error reduction parameters.
+
+Object Classes
+^^^^^^^^^^^^^^
+
+``<object_class>`` provides reusable templates. Each child node defines a class
+by name and type. Example:
+
+.. code-block:: xml
+
+   <object_class>
+     <crate type="box" mass="5.0" material="wood">
+       <dimension x="0.5" y="0.4" z="0.3"/>
+     </crate>
+   </object_class>
+
+Later, instantiate the class under ``<objects>`` with a unique name:
+
+.. code-block:: xml
+
+   <objects>
+     <crate name="crate_1">
+       <state pos="0 0 0.2" quat="1 0 0 0"/>
+     </crate>
+   </objects>
+
+Object Instances
+^^^^^^^^^^^^^^^^
+
+The ``<objects>`` section creates concrete instances. Each object must have a
+``name`` attribute and, for movable bodies, a ``<state>`` node describing the
+initial pose and velocities.
+
+Supported object types include:
+
+* ``sphere``, ``box``, ``cylinder``, ``capsule``: Primitive shapes defined by a
+  ``<dim>`` or ``<dimension>`` node.
+* ``mesh``: A mesh file plus scale, mass, inertia, and center of mass.
+* ``compound``: A composite of child shapes with per-child poses.
+* ``articulated_system``: A URDF-defined robot with optional resource and
+  module settings.
+* ``heightmap`` and ``halfspace``: Terrain and ground definitions.
+
+For articulated systems, specify a URDF path:
+
+.. code-block:: xml
+
+   <articulated_system name="raibo2"
+                       urdf_path="[THIS_DIR]/raibo2.urdf"
+                       res_dir="[THIS_DIR]/resources">
+     <state qpos="..." qvel="..."/>
+   </articulated_system>
+
+The loader resolves ``urdf_path`` in this order:
+
+1. The path as specified (absolute or relative).
+2. The path relative to the top directory of the config file.
+
+Collision Groups and Masks
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Objects can specify ``collisionGroup`` and ``collisionMask`` attributes. The
+loader supports a compact syntax such as ``collision[1|2|3]`` to build bitmasks.
+If not provided, default collision settings are used.
+
+Constraints (Wires)
+^^^^^^^^^^^^^^^^^^^
+
+Wire constraints are defined with ``<wire>`` nodes. Supported types include
+``compliant``, ``stiff``, and ``custom``. Each wire references two objects and
+either a local index and position or a named frame for articulated systems.
+
+.. code-block:: xml
+
+   <wire type="compliant" name="tether" length="1.0" stiffness="200.0">
+     <object1 name="crate_0" local_index="0" pos="0 0 0"/>
+     <object2 name="raibo2" frame="base"/>
+   </wire>
+
+Best Practices
+^^^^^^^^^^^^^^
+
+* Keep all paths relative and use ``[THIS_DIR]`` for portability.
+* Prefer object classes for reusable shapes and properties.
+* Validate URDFs and ensure mesh files are accessible before launching.
+* Use simple collision geometry when possible to improve stability.
+* Avoid leaving unresolved ``@@params``; the loader will fail fast.
+
+

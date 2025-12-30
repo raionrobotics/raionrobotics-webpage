@@ -1,0 +1,12 @@
+Project Structure
+=================
+
+Outline the repository layout and the responsibilities of each major folder.
+
+Structure Guide
+---------------
+
+* src/ - core simulation packages
+* data/ - assets, models, and maps
+* tools/ - helper scripts and utilities
+* tests/ - validation and regression tests

@@ -1,0 +1,13 @@
+Configuration
+=============
+
+Explain the configuration files, required environment variables, and default
+settings for the simulation stack.
+
+Topics To Cover
+---------------
+
+* Configuration file locations
+* Required credentials or tokens
+* Hardware or GPU settings
+* Common troubleshooting tips

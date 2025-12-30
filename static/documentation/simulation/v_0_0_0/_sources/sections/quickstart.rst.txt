@@ -1,0 +1,184 @@
+===========
+Quick Start
+===========
+
+Prerequisites
+=============
+
+* Ubuntu 22.04 or later
+* Intel i7 or higher CPU; NVIDIA 5060 or higher GPU (for camera simulation)
+* Raisim activation key (provided by Raion Robotics)
+* Raisin GitHub token (provided by Raion Robotics)
+* Raisim Unreal binary for visualization
+  (`https://github.com/raisimTech/raisimLib/releases/tag/v1.1.5`); the mobile
+  version is recommended
+* A valid graphics driver for your GPU
+* Gamepad for robot control (Logitech F710 recommended; any Linux-supported
+  joystick works)
+
+Raisim Setup
+============
+
+Raisim requires an activation key file named ``.raisim`` in your home
+directory. Save the provided key to ``$HOME/.raisim``.
+
+Example:
+
+.. code-block:: bash
+
+   cp /path/to/activation.key $HOME/.raisim
+
+Raisim reads this key at runtime, regardless of where you launch the
+executables.
+
+Raisin Master Setup
+===================
+
+Raisin Master is a package manager and middleware for robotics software. See
+`https://raionrobotics.com/documentation/raisin_master/v_0_2_2/` for details.
+
+Clone it into your workspace:
+
+.. code-block:: bash
+
+   git clone git@github.com:raionrobotics/raisin_master.git
+
+Create the configuration file:
+
+.. code-block:: bash
+
+   cd raisin_master
+   cp configuration_setting_example.yaml configuration_setting.yaml
+
+Open ``configuration_setting.yaml`` and replace ``ghp_mytoken_code`` with your
+Raion Robotics GitHub token. You can also change ``user_type``. The ``devel``
+type grants access to pre-release packages (newer features, less testing).
+
+Install Python dependencies and the Raisin script:
+
+.. code-block:: bash
+
+   pip install -r requirements.txt
+   ./raisin --install
+
+The steps below assume the script is installed.
+
+Simulation and GUI Package Setup
+================================
+
+This guide assumes you are installing the Raibo2 simulation. From the Raisin
+Master repository directory (for example, ``raisin_master``), run:
+
+.. code-block:: bash
+
+   raisin install raisin_raibo2 raisin_gui
+
+These packages require your Raion Robotics GitHub token.
+
+After installation, verify the packages in the ``release`` directory.
+
+Set up the environment:
+
+.. code-block:: bash
+
+   raisin setup
+
+This copies the installed packages to the ``install`` directory. It also sets
+up the install dependency chain.
+
+Install system dependencies:
+
+.. code-block:: bash
+
+   bash install_dependencies.sh
+
+Administrative privileges are required to download system packages.
+
+How to Run the Simulation
+=========================
+
+Executables are located in ``install/bin`` after you set up the environment.
+Binaries with the ``debug_build`` suffix are for debugging only.
+
+1. Start the simulation node:
+
+   .. code-block:: bash
+
+      install/bin/raisin_raibo2
+
+2. Start the GUI in another terminal:
+
+   .. code-block:: bash
+
+      install/bin/raisin_gui
+
+After the GUI starts, you will see the robot selection window:
+
+.. image:: ../image/quick_start_1.png
+   :alt: quick_start1
+   :width: 800
+
+If you launch multiple Raibo2 nodes, they appear in this list along with any
+robots discovered on your local network. Select the robot you want to control.
+
+.. image:: ../image/quick_start_2.png
+   :alt: quick_start2
+   :width: 800
+
+Click the Connect button.
+
+.. image:: ../image/quick_start_3.png
+   :alt: quick_start3
+   :width: 800
+
+Once connected, three additional buttons appear. For this tutorial, open the
+Developer Window.
+
+.. image:: ../image/quick_start_4.png
+   :alt: quick_start4
+   :width: 800
+
+The robot node is currently off. The robot server is on and manages the node.
+Turn on the robot node.
+
+.. image:: ../image/quick_start_5.png
+   :alt: quick_start5
+   :width: 800
+
+When the robot is on, it publishes multiple topics that appear in the
+Developer Window. For a quick start, choose the vision controller and press
+Load. This calls the load controller service in the background.
+
+.. image:: ../image/quick_start_6.png
+   :alt: quick_start6
+   :width: 800
+
+You can now control the robot with your gamepad. Button mappings vary by
+controller, so test yours first. The image below highlights key areas of the
+Developer Window.
+
+.. image:: ../image/quick_start_7.png
+   :alt: quick_start7
+   :width: 800
+
+Once the simulation is running, launch ``raisimUnreal.sh`` from the Raisim
+Unreal folder you downloaded.
+
+.. image:: ../image/quick_start_8.png
+   :alt: quick_start8
+   :width: 800
+
+The Raisin node exposes two ports. It connects to port **8080** by default. Port
+8080 renders the World Hub, which contains the estimated and perceived world
+state.
+
+To view the simulation world, clear ``AutoConnect``, enter port **7000**, and click
+Connect again.
+
+.. image:: ../image/quick_start_9.png
+   :alt: quick_start9
+   :width: 800
+
+Port 7000 renders the simulation world with the exact simulation state.
+
+To learn more about Raisim and Raisim Unreal, see `https://raisim.com`.

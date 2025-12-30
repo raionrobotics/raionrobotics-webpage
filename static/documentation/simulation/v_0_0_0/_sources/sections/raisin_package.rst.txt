@@ -1,0 +1,13 @@
+Raisin Package
+==============
+
+Describe how packages are structured, named, and integrated into the
+simulation workspace.
+
+Details To Add
+--------------
+
+* Package naming conventions
+* Required metadata files
+* Build targets and dependencies
+* How to add a new package
