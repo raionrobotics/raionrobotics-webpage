@@ -1,0 +1,585 @@
+raisin_network Integration Guide
+================================
+
+This guide explains how external developers can integrate with the Raisin autonomous navigation system using the raisin_network library, without requiring access to the source code.
+
+Overview
+--------
+
+The raisin_network library provides a network abstraction layer that allows external programs to communicate with Raisin robots. By linking to this library, you can control autonomous navigation features such as waypoint setting, patrol configuration, and mission monitoring.
+
+.. code-block:: text
+
+    ┌─────────────────────────────────────┐     ┌─────────────────────────────────────┐
+    │        External Application         │     │            Raisin Robot             │
+    │   (Surveillance/Patrol System)      │     │                                     │
+    │                                     │     │  ┌─────────────────────────────────┐│
+    │  ┌─────────────────────────────┐    │     │  │       Autonomy Plugin          ││
+    │  │     raisin_network          │    │     │  │                                 ││
+    │  │     raisin_interfaces       │    │ WS  │  │  Service: set_waypoints        ││
+    │  │                             │◄───┼─────┼─►│  Service: get_waypoints        ││
+    │  │  - Network                  │    │     │  │  Service: append_waypoint      ││
+    │  │  - Node                     │    │     │  │                                 ││
+    │  │  - Client<T>                │    │     │  └─────────────────────────────────┘│
+    │  └─────────────────────────────┘    │     │                                     │
+    └─────────────────────────────────────┘     └─────────────────────────────────────┘
+
+Prerequisites
+-------------
+
+Required Libraries
+^^^^^^^^^^^^^^^^^^
+
+To build an external application that communicates with Raisin, you need:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 70
+
+   * - Library
+     - Purpose
+   * - raisin_network
+     - Network communication layer
+   * - raisin_interfaces
+     - Message and service definitions
+   * - raisin_thread_pool
+     - Thread management
+   * - raisin_parameter
+     - Parameter handling
+   * - raisin_encryption
+     - Secure communication
+   * - websocketpp
+     - WebSocket transport
+   * - Eigen3
+     - Linear algebra
+   * - OpenSSL
+     - SSL/TLS support
+   * - zstd
+     - Data compression
+
+Required Headers
+^^^^^^^^^^^^^^^^
+
+.. code-block:: cpp
+
+    // Network communication
+    #include "raisin_network/raisin.hpp"
+    #include "raisin_network/network.hpp"
+    #include "raisin_network/node.hpp"
+
+    // Autonomy services
+    #include "raisin_interfaces/srv/set_waypoints.hpp"
+    #include "raisin_interfaces/srv/get_waypoints.hpp"
+    #include "raisin_interfaces/srv/append_waypoint.hpp"
+    #include "raisin_interfaces/msg/waypoint.hpp"
+
+Connection Pattern
+------------------
+
+Establishing a connection to a Raisin robot follows this pattern:
+
+Step 1: Initialize raisin_network
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: cpp
+
+    #include "raisin_network/raisin.hpp"
+
+    // Call once at program startup
+    raisin::raisinInit();
+
+Step 2: Create Network Instance
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: cpp
+
+    #include "raisin_network/network.hpp"
+
+    // Define thread groups
+    std::vector<std::vector<std::string>> threads = {{"main"}};
+
+    // Create network as client
+    auto network = std::make_shared<raisin::Network>(
+        "my_patrol_controller",   // Client identifier (unique)
+        "external_controller",    // Device type
+        threads                   // Thread specification
+    );
+
+Step 3: Connect to Robot
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: cpp
+
+    // Wait for network initialization
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+
+    // Connect using robot ID or IP address
+    std::shared_ptr<raisin::Remote::Connection> connection;
+
+    // Option 1: Connect by robot ID (network discovery)
+    connection = network->connect("ROBOT_ID");
+
+    // Option 2: Connect by IP address
+    // connection = network->connect("192.168.1.100", 8080);
+
+    if (!connection) {
+        std::cerr << "Failed to connect to robot" << std::endl;
+        return -1;
+    }
+
+Step 4: Create Node for Service Clients
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: cpp
+
+    #include "raisin_network/node.hpp"
+
+    // Create node from network
+    raisin::Node node(network);
+
+Service Clients
+---------------
+
+Creating Clients
+^^^^^^^^^^^^^^^^
+
+After establishing a connection, create service clients:
+
+.. code-block:: cpp
+
+    // SetWaypoints client
+    auto setWaypointsClient = node.createClient<raisin_interfaces::srv::SetWaypoints>(
+        "planning/set_waypoints",
+        connection
+    );
+
+    // GetWaypoints client
+    auto getWaypointsClient = node.createClient<raisin_interfaces::srv::GetWaypoints>(
+        "planning/get_waypoints",
+        connection
+    );
+
+    // AppendWaypoint client
+    auto appendWaypointClient = node.createClient<raisin_interfaces::srv::AppendWaypoint>(
+        "planning/append_waypoint",
+        connection
+    );
+
+Checking Service Availability
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Before sending requests, verify the service is available:
+
+.. code-block:: cpp
+
+    // Check immediately
+    if (setWaypointsClient->isServiceAvailable()) {
+        // Service is ready
+    }
+
+    // Or wait with timeout
+    if (setWaypointsClient->waitForService(std::chrono::seconds(10))) {
+        // Service became available
+    } else {
+        std::cerr << "Service not available" << std::endl;
+    }
+
+Waypoint Control
+----------------
+
+Waypoint Message Structure
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Each waypoint contains:
+
+.. code-block:: cpp
+
+    raisin_interfaces::msg::Waypoint wp;
+    wp.frame = "gps";     // Coordinate frame: "map", "gps", "odom"
+    wp.x = 37.5665;       // X coordinate (latitude for GPS)
+    wp.y = 126.9780;      // Y coordinate (longitude for GPS)
+    wp.z = 0.0;           // Z coordinate (altitude for GPS)
+    wp.use_z = false;     // Whether to check Z when reaching waypoint
+
+Coordinate Frames
+^^^^^^^^^^^^^^^^^
+
+.. list-table::
+   :header-rows: 1
+   :widths: 15 85
+
+   * - Frame
+     - Description
+   * - ``map``
+     - Local map frame from SLAM. Coordinates in meters relative to map origin.
+   * - ``gps``
+     - GPS coordinates. x=latitude, y=longitude, z=altitude. Automatically converted to local ENU frame.
+   * - ``odom``
+     - Odometry frame. Coordinates in meters.
+
+SetWaypoints - Set Complete Path
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Replace the entire waypoint list and configure patrol:
+
+.. code-block:: cpp
+
+    auto request = std::make_shared<raisin_interfaces::srv::SetWaypoints::Request>();
+
+    // Add waypoints
+    raisin_interfaces::msg::Waypoint wp1;
+    wp1.frame = "gps";
+    wp1.x = 37.5665;    // Latitude
+    wp1.y = 126.9780;   // Longitude
+    wp1.z = 0.0;
+    wp1.use_z = false;
+    request->waypoints.push_back(wp1);
+
+    raisin_interfaces::msg::Waypoint wp2;
+    wp2.frame = "gps";
+    wp2.x = 37.5670;
+    wp2.y = 126.9785;
+    wp2.z = 0.0;
+    wp2.use_z = false;
+    request->waypoints.push_back(wp2);
+
+    // Configure patrol
+    request->repetition = 0;      // 0 = infinite patrol
+    request->current_index = 0;   // Start from first waypoint
+
+    // Send async request
+    auto future = setWaypointsClient->asyncSendRequest(request,
+        [](const raisin_interfaces::srv::SetWaypoints::Response::SharedPtr& response) {
+            if (response->success) {
+                std::cout << "Waypoints set: " << response->message << std::endl;
+            } else {
+                std::cerr << "Failed: " << response->message << std::endl;
+            }
+        }
+    );
+
+GetWaypoints - Query Current Status
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Retrieve current waypoint list and mission progress:
+
+.. code-block:: cpp
+
+    auto request = std::make_shared<raisin_interfaces::srv::GetWaypoints::Request>();
+
+    auto future = getWaypointsClient->asyncSendRequest(request,
+        [](const raisin_interfaces::srv::GetWaypoints::Response::SharedPtr& response) {
+            if (response->success) {
+                std::cout << "Waypoint count: " << response->waypoints.size() << std::endl;
+                std::cout << "Current index: " << (int)response->current_index << std::endl;
+                std::cout << "Remaining laps: " << (int)response->repetition << std::endl;
+
+                for (size_t i = 0; i < response->waypoints.size(); ++i) {
+                    const auto& wp = response->waypoints[i];
+                    std::cout << "[" << i << "] " << wp.frame
+                              << " (" << wp.x << ", " << wp.y << ")" << std::endl;
+                }
+            }
+        }
+    );
+
+AppendWaypoint - Add Single Waypoint
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Add a waypoint to the existing queue:
+
+.. code-block:: cpp
+
+    auto request = std::make_shared<raisin_interfaces::srv::AppendWaypoint::Request>();
+
+    request->waypoint.frame = "gps";
+    request->waypoint.x = 37.5675;
+    request->waypoint.y = 126.9790;
+    request->waypoint.z = 0.0;
+    request->waypoint.use_z = false;
+
+    auto future = appendWaypointClient->asyncSendRequest(request,
+        [](const raisin_interfaces::srv::AppendWaypoint::Response::SharedPtr& response) {
+            if (response->success) {
+                std::cout << "Waypoint appended" << std::endl;
+            }
+        }
+    );
+
+Patrol Configuration
+--------------------
+
+Repetition (Laps)
+^^^^^^^^^^^^^^^^^
+
+The ``repetition`` field controls how many times the robot traverses the waypoint list:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 80
+
+   * - Value
+     - Behavior
+   * - 0
+     - **Infinite patrol** - Robot continuously loops through waypoints
+   * - 1
+     - **Single pass** - Navigate once and stop at final waypoint
+   * - N (>1)
+     - **N laps** - Traverse the route N times
+
+.. code-block:: cpp
+
+    // Infinite patrol
+    request->repetition = 0;
+
+    // Single mission
+    request->repetition = 1;
+
+    // Patrol 5 times
+    request->repetition = 5;
+
+Starting Index
+^^^^^^^^^^^^^^
+
+The ``current_index`` field specifies which waypoint to start from:
+
+.. code-block:: cpp
+
+    // Start from beginning
+    request->current_index = 0;
+
+    // Resume from waypoint 3
+    request->current_index = 3;
+
+Stopping Navigation
+^^^^^^^^^^^^^^^^^^^
+
+To stop autonomous navigation, set an empty waypoint list:
+
+.. code-block:: cpp
+
+    auto request = std::make_shared<raisin_interfaces::srv::SetWaypoints::Request>();
+    request->waypoints.clear();  // Empty list
+    request->repetition = 0;
+    request->current_index = 0;
+
+    setWaypointsClient->asyncSendRequest(request);
+
+Complete Example
+----------------
+
+Here is a complete working example:
+
+.. code-block:: cpp
+
+    #include <iostream>
+    #include <memory>
+    #include <thread>
+    #include <chrono>
+
+    #include "raisin_network/raisin.hpp"
+    #include "raisin_network/network.hpp"
+    #include "raisin_network/node.hpp"
+    #include "raisin_interfaces/srv/set_waypoints.hpp"
+    #include "raisin_interfaces/srv/get_waypoints.hpp"
+    #include "raisin_interfaces/msg/waypoint.hpp"
+
+    using namespace std::chrono_literals;
+
+    int main(int argc, char* argv[]) {
+        if (argc < 2) {
+            std::cerr << "Usage: " << argv[0] << " <robot_id>" << std::endl;
+            return 1;
+        }
+
+        std::string robotId = argv[1];
+
+        // Step 1: Initialize
+        raisin::raisinInit();
+
+        // Step 2: Create network
+        std::vector<std::vector<std::string>> threads = {{"main"}};
+        auto network = std::make_shared<raisin::Network>(
+            "patrol_controller", "external", threads);
+
+        std::this_thread::sleep_for(1s);
+
+        // Step 3: Connect to robot
+        auto connection = network->connect(robotId);
+        if (!connection) {
+            std::cerr << "Connection failed" << std::endl;
+            return 1;
+        }
+        std::cout << "Connected to " << robotId << std::endl;
+
+        std::this_thread::sleep_for(2s);
+
+        // Step 4: Create node and clients
+        raisin::Node node(network);
+
+        auto setClient = node.createClient<raisin_interfaces::srv::SetWaypoints>(
+            "planning/set_waypoints", connection);
+        auto getClient = node.createClient<raisin_interfaces::srv::GetWaypoints>(
+            "planning/get_waypoints", connection);
+
+        // Wait for services
+        if (!setClient->waitForService(10s)) {
+            std::cerr << "SetWaypoints service not available" << std::endl;
+            return 1;
+        }
+
+        // Step 5: Set patrol route
+        auto request = std::make_shared<raisin_interfaces::srv::SetWaypoints::Request>();
+
+        // Define patrol route (GPS coordinates)
+        std::vector<std::pair<double, double>> route = {
+            {37.5665, 126.9780},
+            {37.5670, 126.9785},
+            {37.5668, 126.9790},
+            {37.5663, 126.9788}
+        };
+
+        for (const auto& [lat, lon] : route) {
+            raisin_interfaces::msg::Waypoint wp;
+            wp.frame = "gps";
+            wp.x = lat;
+            wp.y = lon;
+            wp.z = 0.0;
+            wp.use_z = false;
+            request->waypoints.push_back(wp);
+        }
+
+        request->repetition = 0;  // Infinite patrol
+        request->current_index = 0;
+
+        std::cout << "Setting " << request->waypoints.size() << " waypoints..." << std::endl;
+
+        auto future = setClient->asyncSendRequest(request);
+        if (future.wait_for(5s) == std::future_status::ready) {
+            auto response = future.get();
+            std::cout << "Result: " << response->message << std::endl;
+        }
+
+        // Step 6: Monitor progress
+        std::cout << "Monitoring patrol progress..." << std::endl;
+        for (int i = 0; i < 10; ++i) {
+            std::this_thread::sleep_for(5s);
+
+            auto getReq = std::make_shared<raisin_interfaces::srv::GetWaypoints::Request>();
+            auto getFuture = getClient->asyncSendRequest(getReq);
+
+            if (getFuture.wait_for(2s) == std::future_status::ready) {
+                auto resp = getFuture.get();
+                std::cout << "Progress: waypoint " << (int)resp->current_index
+                          << "/" << resp->waypoints.size() << std::endl;
+            }
+        }
+
+        // Cleanup
+        node.cleanupResources();
+        network->shutdown();
+
+        return 0;
+    }
+
+CMake Configuration
+-------------------
+
+Create a ``CMakeLists.txt`` for your external application:
+
+.. code-block:: cmake
+
+    cmake_minimum_required(VERSION 3.10)
+    project(my_patrol_controller)
+
+    set(CMAKE_CXX_STANDARD 17)
+    set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+    # Find required packages
+    find_package(Eigen3 REQUIRED)
+    find_package(OpenSSL REQUIRED)
+    find_package(raisin_network REQUIRED)
+    find_package(raisin_interfaces REQUIRED)
+    find_package(raisin_thread_pool REQUIRED)
+    find_package(raisin_parameter REQUIRED)
+    find_package(raisin_encryption REQUIRED)
+    find_package(websocketpp REQUIRED)
+    find_package(zstd REQUIRED)
+    find_package(raisin_data_logger REQUIRED)
+
+    # Create executable
+    add_executable(patrol_controller main.cpp)
+
+    # Link libraries
+    target_link_libraries(patrol_controller PRIVATE
+        raisin_network
+        raisin_interfaces
+        raisin_thread_pool
+        raisin_parameter
+        raisin_encryption
+        raisin_data_logger
+        websocketpp
+        Eigen3::Eigen
+        OpenSSL::SSL
+        OpenSSL::Crypto
+        zstd::libzstd
+    )
+
+    # Platform-specific libraries
+    if(UNIX AND NOT APPLE)
+        target_link_libraries(patrol_controller PRIVATE dl rt)
+    endif()
+
+    if(WIN32)
+        target_link_libraries(patrol_controller PRIVATE onecore.lib)
+    endif()
+
+Troubleshooting
+---------------
+
+Connection Issues
+^^^^^^^^^^^^^^^^^
+
+**Problem:** Cannot connect to robot
+
+**Solutions:**
+
+1. Verify robot is running and network is accessible
+2. Check firewall settings
+3. Ensure robot ID or IP address is correct
+4. Wait for network initialization (add ``sleep_for`` after Network creation)
+
+Service Not Available
+^^^^^^^^^^^^^^^^^^^^^
+
+**Problem:** ``waitForService()`` times out
+
+**Solutions:**
+
+1. Verify autonomy plugin is loaded on the robot
+2. Check that ``autonomyMode: true`` in plugin configuration
+3. Ensure connection was established successfully
+
+Waypoints Not Followed
+^^^^^^^^^^^^^^^^^^^^^^
+
+**Problem:** Robot doesn't move after setting waypoints
+
+**Solutions:**
+
+1. Confirm service response ``success == true``
+2. Check robot is in autonomous mode (not joystick override)
+3. Verify coordinate frame matches robot's localization
+4. Ensure waypoints are within reachable range
+
+GPS Coordinate Issues
+^^^^^^^^^^^^^^^^^^^^^
+
+**Problem:** Robot navigates to wrong location with GPS waypoints
+
+**Solutions:**
+
+1. Use ``frame = "gps"`` for GPS coordinates
+2. Ensure GPS fix is available on robot (``/fix`` topic)
+3. Latitude is ``x``, Longitude is ``y`` (not reversed)
+4. Consider GPS accuracy and offset calibration

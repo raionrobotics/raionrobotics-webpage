@@ -1,0 +1,438 @@
+Autonomy External API
+=====================
+
+This document describes how external systems (such as surveillance/patrol interfaces like raisin_bridge) can control the autonomous navigation system programmatically.
+
+Overview
+--------
+
+The Raisin Autonomy system provides ROS2 service interfaces for external control:
+
+.. code-block:: text
+
+    ┌─────────────────────────┐          ┌─────────────────────────┐
+    │   External System       │          │   Autonomy Plugin       │
+    │ (Surveillance/Patrol)   │          │                         │
+    │                         │          │  ┌──────────────────┐   │
+    │  ┌─────────────────┐    │  Service │  │ Waypoint Manager │   │
+    │  │ Service Client  │────┼──────────┼─►│                  │   │
+    │  └─────────────────┘    │  Call    │  └──────────────────┘   │
+    │                         │          │           │             │
+    │  Commands:              │          │           ▼             │
+    │  - Set waypoints        │          │  ┌──────────────────┐   │
+    │  - Get waypoints        │          │  │ Path Follower    │   │
+    │  - Append waypoint      │          │  └──────────────────┘   │
+    │  - Set repetition       │          │           │             │
+    └─────────────────────────┘          │           ▼             │
+                                         │      Robot Motion       │
+                                         └─────────────────────────┘
+
+Service Interfaces
+------------------
+
+SetWaypoints Service
+^^^^^^^^^^^^^^^^^^^^
+
+Sets the complete waypoint list for autonomous navigation.
+
+**Service Name:** ``planning/set_waypoints``
+
+**Request:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - waypoints
+     - Waypoint[]
+     - Array of waypoints to navigate
+   * - repetition
+     - uint8
+     - Number of patrol laps (0 = infinite)
+   * - current_index
+     - uint8
+     - Starting waypoint index
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - True if waypoints were set successfully
+   * - message
+     - string
+     - Status message (e.g., "set waypoint success")
+
+GetWaypoints Service
+^^^^^^^^^^^^^^^^^^^^
+
+Retrieves the current waypoint list and mission status.
+
+**Service Name:** ``planning/get_waypoints``
+
+**Request:** Empty
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - True if query was successful
+   * - message
+     - string
+     - Status message
+   * - waypoints
+     - Waypoint[]
+     - Current waypoint list
+   * - repetition
+     - uint8
+     - Total patrol lap count
+   * - current_index
+     - uint8
+     - Current waypoint being navigated to
+
+AppendWaypoint Service
+^^^^^^^^^^^^^^^^^^^^^^
+
+Adds a single waypoint to the existing queue.
+
+**Service Name:** ``planning/append_waypoint``
+
+**Request:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - waypoint
+     - Waypoint
+     - Single waypoint to append
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - True if waypoint was appended
+   * - message
+     - string
+     - Status message
+
+Waypoint Message
+----------------
+
+The Waypoint message defines a navigation target:
+
+**Message Definition:** ``raisin_interfaces/msg/Waypoint``
+
+.. code-block:: text
+
+    string frame      # Coordinate frame: "map", "gps", or custom TF frame
+    float64 x         # X coordinate (or latitude for GPS)
+    float64 y         # Y coordinate (or longitude for GPS)
+    float64 z         # Z coordinate (or altitude for GPS)
+    bool use_z        # Whether to check altitude when reaching waypoint
+
+Coordinate Frames
+^^^^^^^^^^^^^^^^^
+
+.. list-table::
+   :header-rows: 1
+   :widths: 15 85
+
+   * - Frame
+     - Description
+   * - ``map``
+     - Local map frame from SLAM. Coordinates are in meters relative to the map origin.
+   * - ``gps``
+     - GPS coordinates. x=latitude, y=longitude, z=altitude. Automatically converted to local ENU frame.
+   * - Custom
+     - Any TF2-registered frame. Coordinates are transformed via the TF system.
+
+Usage Examples
+--------------
+
+C++ Example
+^^^^^^^^^^^
+
+**Setting Waypoints:**
+
+.. code-block:: cpp
+
+    #include "raisin_interfaces/srv/set_waypoints.hpp"
+    #include "raisin_interfaces/msg/waypoint.hpp"
+
+    // Create service client
+    auto client = node->create_client<raisin_interfaces::srv::SetWaypoints>(
+        "planning/set_waypoints");
+
+    // Wait for service
+    while (!client->wait_for_service(std::chrono::seconds(1))) {
+        RCLCPP_WARN(node->get_logger(), "Waiting for service...");
+    }
+
+    // Create request
+    auto request = std::make_shared<raisin_interfaces::srv::SetWaypoints::Request>();
+
+    // Add waypoints (local map coordinates)
+    raisin_interfaces::msg::Waypoint wp1;
+    wp1.frame = "map";
+    wp1.x = 10.0;   // 10 meters forward
+    wp1.y = 0.0;
+    wp1.z = 0.0;
+    wp1.use_z = false;
+    request->waypoints.push_back(wp1);
+
+    raisin_interfaces::msg::Waypoint wp2;
+    wp2.frame = "map";
+    wp2.x = 10.0;
+    wp2.y = 5.0;    // 5 meters to the side
+    wp2.z = 0.0;
+    wp2.use_z = false;
+    request->waypoints.push_back(wp2);
+
+    // Set repetition (2 = traverse route twice)
+    request->repetition = 2;
+    request->current_index = 0;
+
+    // Send request
+    auto future = client->async_send_request(request);
+
+**Getting Current Status:**
+
+.. code-block:: cpp
+
+    #include "raisin_interfaces/srv/get_waypoints.hpp"
+
+    auto client = node->create_client<raisin_interfaces::srv::GetWaypoints>(
+        "planning/get_waypoints");
+
+    auto request = std::make_shared<raisin_interfaces::srv::GetWaypoints::Request>();
+    auto future = client->async_send_request(request,
+        [](rclcpp::Client<raisin_interfaces::srv::GetWaypoints>::SharedFuture future) {
+            auto response = future.get();
+            std::cout << "Current waypoint: " << (int)response->current_index << std::endl;
+            std::cout << "Total waypoints: " << response->waypoints.size() << std::endl;
+            std::cout << "Remaining laps: " << (int)response->repetition << std::endl;
+        });
+
+Python Example
+^^^^^^^^^^^^^^
+
+**Setting Waypoints with GPS Coordinates:**
+
+.. code-block:: python
+
+    import rclpy
+    from rclpy.node import Node
+    from raisin_interfaces.srv import SetWaypoints
+    from raisin_interfaces.msg import Waypoint
+
+    class PatrolController(Node):
+        def __init__(self):
+            super().__init__('patrol_controller')
+            self.client = self.create_client(
+                SetWaypoints, 'planning/set_waypoints')
+
+        def set_patrol_route(self, gps_coords, repetitions=0):
+            """
+            Set patrol route from GPS coordinates.
+
+            Args:
+                gps_coords: List of (lat, lon) tuples
+                repetitions: 0 for infinite patrol, N for N loops
+            """
+            request = SetWaypoints.Request()
+
+            for lat, lon in gps_coords:
+                wp = Waypoint()
+                wp.frame = 'gps'
+                wp.x = lat      # Latitude
+                wp.y = lon      # Longitude
+                wp.z = 0.0
+                wp.use_z = False
+                request.waypoints.append(wp)
+
+            request.repetition = repetitions
+            request.current_index = 0
+
+            future = self.client.call_async(request)
+            return future
+
+    # Usage
+    def main():
+        rclpy.init()
+        controller = PatrolController()
+
+        # Define patrol route (GPS coordinates)
+        patrol_route = [
+            (37.5665, 126.9780),  # Point A
+            (37.5670, 126.9785),  # Point B
+            (37.5668, 126.9790),  # Point C
+        ]
+
+        # Set infinite patrol (repetition=0)
+        future = controller.set_patrol_route(patrol_route, repetitions=0)
+        rclpy.spin_until_future_complete(controller, future)
+
+        result = future.result()
+        print(f"Success: {result.success}, Message: {result.message}")
+
+Patrol Mission Patterns
+-----------------------
+
+Single Pass
+^^^^^^^^^^^
+
+Navigate through waypoints once and stop:
+
+.. code-block:: cpp
+
+    request->repetition = 1;
+
+Continuous Patrol
+^^^^^^^^^^^^^^^^^
+
+Patrol indefinitely until manually stopped:
+
+.. code-block:: cpp
+
+    request->repetition = 0;  // 0 = infinite
+
+Multiple Laps
+^^^^^^^^^^^^^
+
+Complete a specific number of patrol cycles:
+
+.. code-block:: cpp
+
+    request->repetition = 5;  // Traverse route 5 times
+
+Dynamic Waypoint Addition
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Add waypoints during an active mission:
+
+.. code-block:: cpp
+
+    auto client = node->create_client<raisin_interfaces::srv::AppendWaypoint>(
+        "planning/append_waypoint");
+
+    auto request = std::make_shared<raisin_interfaces::srv::AppendWaypoint::Request>();
+    request->waypoint.frame = "map";
+    request->waypoint.x = 15.0;
+    request->waypoint.y = 10.0;
+    request->waypoint.z = 0.0;
+    request->waypoint.use_z = false;
+
+    client->async_send_request(request);
+
+Integration with Surveillance Systems
+-------------------------------------
+
+For surveillance/patrol applications, the typical integration pattern is:
+
+1. **Mission Planning Phase**
+   - External system defines patrol waypoints (GPS or map coordinates)
+   - Set ``repetition=0`` for continuous patrol
+
+2. **Mission Execution**
+   - Call ``planning/set_waypoints`` to start the mission
+   - Robot begins autonomous navigation
+
+3. **Mission Monitoring**
+   - Periodically call ``planning/get_waypoints`` to check progress
+   - Monitor ``current_index`` to track which waypoint is being approached
+
+4. **Mission Modification**
+   - Use ``planning/append_waypoint`` to add emergency waypoints
+   - Use ``planning/set_waypoints`` with new list to change route
+
+5. **Mission Termination**
+   - Set empty waypoint list to stop navigation
+   - Or use joystick override (robot resumes after ``joyToSpeedDelay``)
+
+.. code-block:: cpp
+
+    // Stop current mission
+    auto request = std::make_shared<raisin_interfaces::srv::SetWaypoints::Request>();
+    request->waypoints.clear();  // Empty list stops navigation
+    request->repetition = 0;
+    request->current_index = 0;
+    client->async_send_request(request);
+
+Error Handling
+--------------
+
+**Service Availability:**
+
+.. code-block:: cpp
+
+    if (!client->wait_for_service(std::chrono::seconds(5))) {
+        RCLCPP_ERROR(node->get_logger(),
+            "Autonomy plugin not available. Check if plugin is loaded.");
+        return false;
+    }
+
+**Response Validation:**
+
+.. code-block:: cpp
+
+    auto response = future.get();
+    if (!response->success) {
+        RCLCPP_ERROR(node->get_logger(),
+            "Failed to set waypoints: %s", response->message.c_str());
+    }
+
+**Common Issues:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 70
+
+   * - Issue
+     - Solution
+   * - Service not available
+     - Ensure autonomy plugin is loaded in the plugin configuration
+   * - Waypoints not followed
+     - Check that ``autonomyMode: true`` in plugin config
+   * - GPS waypoints incorrect
+     - Verify GPS fix is available on ``/fix`` topic
+   * - Robot stops unexpectedly
+     - Check obstacle detection or joystick override
+
+Service Definition Files
+------------------------
+
+For reference, the service interface files are located at:
+
+* ``raisin_interfaces/srv/SetWaypoints.srv``
+* ``raisin_interfaces/srv/GetWaypoints.srv``
+* ``raisin_interfaces/srv/AppendWaypoint.srv``
+* ``raisin_interfaces/msg/Waypoint.msg``
+
+These files define the exact message format for service communication.

@@ -1,0 +1,271 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Overview &mdash; Raisin Plugin - Autonomous Navigation 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Ouster LiDAR Plugin" href="Ouster.html" />
+    <link rel="prev" title="Raisin Plugin - Autonomous Navigation System" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Raisin Plugin - Autonomous Navigation
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#system-architecture">System Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#component-overview">Component Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#periodic-tasks-always-running">Periodic Tasks (Always Running)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#event-tasks-triggered-by-request">Event Tasks (Triggered by Request)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#data-flow">Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quick-start">Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Ouster.html">Ouster LiDAR Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Livox.html">Livox LiDAR Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="D455.html">D455 Depth Camera Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FastLIO.html">FAST-LIO SLAM Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GridMapping.html">Grid Mapping Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Autonomy.html">Autonomy Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AutonomyAPI.html">Autonomy External API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MapWindow.html">Map Window (GUI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Troubleshooting.html">Troubleshooting</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Raisin Plugin - Autonomous Navigation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Overview</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/sections/Overview.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h1>
+<p>The RAISIN autonomous navigation system enables quadrupedal robots to navigate autonomously through complex environments using LiDAR-based perception, depth camera-based terrain mapping, SLAM, and intelligent path planning.</p>
+<section id="system-architecture">
+<h2>System Architecture<a class="headerlink" href="#system-architecture" title="Link to this heading"></a></h2>
+<p>The autonomous navigation stack uses two types of tasks:</p>
+<ul class="simple">
+<li><p><strong>Periodic Tasks</strong>: Run continuously at a set frequency (e.g., sensors, SLAM, state estimation)</p></li>
+<li><p><strong>Event Tasks</strong>: Execute only when triggered by an event (e.g., waypoint navigation)</p></li>
+</ul>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>┌───────────────────────────────────────────────────────────────────────┐
+│                     SENSOR LAYER (PeriodicTask)                       │
+├─────────────┬───────────┬─────────────────┬───────────┬───────────────┤
+│    LiDAR    │    IMU    │  Depth Cameras  │  Encoders │      GPS      │
+│  (OS-1-32/  │           │  (D430 front/   │  (Joints) │   (Optional)  │
+│   Mid-360)  │           │   rear, etc.)   │           │               │
+└──────┬──────┴─────┬─────┴────────┬────────┴─────┬─────┴───────┬───────┘
+       │            │              │              │             │
+       ▼            ▼              ▼              ▼             ▼
+┌───────────────────────────────────────────────────────────────────────┐
+│                   PERIODIC TASKS (Always Running)                     │
+├───────────────────────────┬───────────────────┬───────────────────────┤
+│       FAST-LIO SLAM       │  STATE ESTIMATION │     GRID MAPPING      │
+│   (LiDAR-IMU Odometry)    │      (IEKF)       │  (Terrain Heightmap)  │
+│                           │                   │                       │
+│  Input:                   │  Input:           │  Input:               │
+│  - LiDAR points           │  - IMU            │  - Depth cameras      │
+│  - IMU                    │  - Joint encoders │  - robot_pose         │
+│                           │  - Contact state  │                       │
+│                           │                   │                       │
+│  Output:                  │  Output:          │  Output:              │
+│  - /Odometry/base         │  - robot_pose ───►│  - heightmap          │
+│  - /cloud_registered      │                   │                       │
+└─────────────┬─────────────┴─────────┬─────────┴───────────┬───────────┘
+              │                       │                     │
+              │       Data subscription                     │
+              ▼                       ▼                     ▼
+┌───────────────────────────────────────────────────────────────────────┐
+│                  EVENT TASKS (Triggered by Request)                   │
+├───────────────────────────────────────────────────────────────────────┤
+│                          AUTONOMY PLUGIN                              │
+│                                                                       │
+│  Trigger: SetWaypoints service call (from Map Window)                 │
+│                                                                       │
+│  Subscribes:                            Publishes:                    │
+│  - /Odometry/base (from FAST-LIO)       - /way_point (next target)    │
+│  - heightmap (from Grid Mapping)        - /speed (desired velocity)   │
+│  - GPS fix (optional)                                                 │
+└───────────────────────────────────────────────────────────────────────┘
+                                      ▲
+                                      │ SetWaypoints service
+                                      │
+┌───────────────────────────────────────────────────────────────────────┐
+│                          GUI MAP WINDOW                               │
+│                         (User Interface)                              │
+│                                                                       │
+│  Subscribes:                                                          │
+│  - /cloud_registered (from FAST-LIO) - real-time point cloud          │
+│  - /Odometry/base (from FAST-LIO) - robot position                    │
+│  - GPS fix (optional)                                                 │
+│                                                                       │
+│  Features:                                                            │
+│  - Saved PCD maps - load and display                                  │
+│  - Autonomy graph visualization (nodes/edges)                         │
+│  - Waypoint editing → SetWaypoints service call                       │
+│  - Graph node/edge editing (Map Editor)                               │
+│  - Robot localization setup (2-click)                                 │
+└───────────────────────────────────────────────────────────────────────┘
+</pre></div>
+</div>
+</section>
+<section id="component-overview">
+<h2>Component Overview<a class="headerlink" href="#component-overview" title="Link to this heading"></a></h2>
+<section id="periodic-tasks-always-running">
+<h3>Periodic Tasks (Always Running)<a class="headerlink" href="#periodic-tasks-always-running" title="Link to this heading"></a></h3>
+<p>These components run continuously at their configured frequency, independent of autonomous navigation:</p>
+<p><strong>LiDAR Drivers</strong></p>
+<ul class="simple">
+<li><p><strong>Ouster Plugin</strong>: Driver for Ouster OS-1-32 LiDAR sensor</p></li>
+<li><p><strong>Livox Plugin</strong>: Driver for Livox Mid-360 LiDAR sensor</p></li>
+</ul>
+<p><strong>Depth Cameras</strong></p>
+<ul class="simple">
+<li><p><strong>D430/D435/D455 Plugins</strong>: Intel RealSense depth camera drivers for terrain perception. Default configuration uses D430 front and rear cameras.</p></li>
+</ul>
+<p><strong>SLAM (Localization and Mapping)</strong></p>
+<ul class="simple">
+<li><p><strong>FAST-LIO Plugin</strong>: LiDAR-Inertial Odometry providing real-time localization and mapping. Publishes <code class="docutils literal notranslate"><span class="pre">/Odometry/base</span></code> for robot localization.</p></li>
+</ul>
+<p><strong>State Estimation</strong></p>
+<ul class="simple">
+<li><p><strong>IEKF Plugin</strong>: Fuses IMU, joint encoders, and contact state for accurate robot pose estimation. Publishes <code class="docutils literal notranslate"><span class="pre">robot_pose</span></code> used by Grid Mapping.</p></li>
+</ul>
+<p><strong>Terrain Mapping</strong></p>
+<ul class="simple">
+<li><p><strong>Grid Mapping Plugin</strong>: Generates real-time terrain heightmaps from depth camera data. Requires IEKF state estimation. Publishes <code class="docutils literal notranslate"><span class="pre">heightmap</span></code> for obstacle avoidance.</p></li>
+</ul>
+</section>
+<section id="event-tasks-triggered-by-request">
+<h3>Event Tasks (Triggered by Request)<a class="headerlink" href="#event-tasks-triggered-by-request" title="Link to this heading"></a></h3>
+<p>These components are activated by external events:</p>
+<p><strong>Navigation</strong></p>
+<ul class="simple">
+<li><p><strong>Autonomy Plugin</strong>: Activated when waypoints are set via <code class="docutils literal notranslate"><span class="pre">SetWaypoints</span></code> service. Uses <code class="docutils literal notranslate"><span class="pre">/Odometry/base</span></code> for localization and <code class="docutils literal notranslate"><span class="pre">heightmap</span></code> for obstacle avoidance and path planning.</p></li>
+</ul>
+<p><strong>User Interface</strong></p>
+<ul class="simple">
+<li><p><strong>Map Window</strong>: GUI for visualization and mission planning. Displays FAST-LIO point clouds (<code class="docutils literal notranslate"><span class="pre">/cloud_registered</span></code>), saved PCD maps, robot position, and autonomy graph. Users can define waypoints and trigger the <code class="docutils literal notranslate"><span class="pre">SetWaypoints</span></code> service to activate autonomous navigation.</p></li>
+</ul>
+</section>
+</section>
+<section id="data-flow">
+<h2>Data Flow<a class="headerlink" href="#data-flow" title="Link to this heading"></a></h2>
+<p><strong>Periodic Tasks (Always Running):</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Sensor Data Acquisition</strong>: LiDAR, IMU, depth cameras, and encoders continuously collect data</p></li>
+<li><p><strong>FAST-LIO SLAM</strong>: Processes LiDAR + IMU data to produce odometry and registered point clouds</p></li>
+<li><p><strong>State Estimation (IEKF)</strong>: Fuses IMU, joint encoders, and contact state for accurate robot pose</p></li>
+<li><p><strong>Terrain Mapping</strong>: Grid Mapping uses depth camera data + robot pose to generate local heightmap</p></li>
+</ol>
+<p><strong>Event Tasks (Triggered by User):</strong></p>
+<ol class="arabic simple" start="5">
+<li><p><strong>Map Window</strong>: Visualizes FAST-LIO point clouds and saved maps; user defines waypoints and triggers <code class="docutils literal notranslate"><span class="pre">SetWaypoints</span></code> service</p></li>
+<li><p><strong>Autonomy</strong>: Activated by waypoint event, uses odometry + heightmap for navigation</p></li>
+</ol>
+</section>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading"></a></h2>
+<p>Before using autonomous navigation:</p>
+<ul class="simple">
+<li><p>LiDAR sensor properly connected and powered</p></li>
+<li><p>IMU sensor calibrated</p></li>
+<li><p>Robot base configuration completed</p></li>
+<li><p>Network connectivity between sensors and host computer</p></li>
+</ul>
+</section>
+<section id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Configure your LiDAR driver (Ouster or Livox)</p></li>
+<li><p>Set up FAST-LIO with appropriate sensor configuration</p></li>
+<li><p>Load the Autonomy plugin with your robot parameters</p></li>
+<li><p>Use the Map Window to define waypoints</p></li>
+<li><p>Start autonomous navigation</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Raisin Plugin - Autonomous Navigation System" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Ouster.html" class="btn btn-neutral float-right" title="Ouster LiDAR Plugin" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Raion Robotics..</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

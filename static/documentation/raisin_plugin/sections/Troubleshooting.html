@@ -1,0 +1,447 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Troubleshooting &mdash; Raisin Plugin - Autonomous Navigation 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Map Window (GUI)" href="MapWindow.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Raisin Plugin - Autonomous Navigation
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Ouster.html">Ouster LiDAR Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Livox.html">Livox LiDAR Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="D455.html">D455 Depth Camera Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FastLIO.html">FAST-LIO SLAM Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GridMapping.html">Grid Mapping Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Autonomy.html">Autonomy Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AutonomyAPI.html">Autonomy External API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MapWindow.html">Map Window (GUI)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#lidar-issues">LiDAR Issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#no-point-cloud-data">No Point Cloud Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#point-cloud-distorted">Point Cloud Distorted</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#fast-lio-issues">FAST-LIO Issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#high-odometry-drift">High Odometry Drift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#slam-fails-to-initialize">SLAM Fails to Initialize</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#autonomy-issues">Autonomy Issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#robot-doesn-t-move-to-waypoint">Robot Doesn’t Move to Waypoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#robot-avoids-valid-paths">Robot Avoids Valid Paths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#robot-moves-too-slow">Robot Moves Too Slow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#map-window-issues">Map Window Issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#map-tiles-not-loading">Map Tiles Not Loading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#robot-position-not-updating">Robot Position Not Updating</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#general-tips">General Tips</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#using-raisin-cli">Using raisin_cli</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#checking-system-health">Checking System Health</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#logging">Logging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getting-help">Getting Help</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Raisin Plugin - Autonomous Navigation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Troubleshooting</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/sections/Troubleshooting.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="troubleshooting">
+<h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h1>
+<p>Common issues and solutions for the autonomous navigation system.</p>
+<section id="lidar-issues">
+<h2>LiDAR Issues<a class="headerlink" href="#lidar-issues" title="Link to this heading"></a></h2>
+<section id="no-point-cloud-data">
+<h3>No Point Cloud Data<a class="headerlink" href="#no-point-cloud-data" title="Link to this heading"></a></h3>
+<p><strong>Symptoms:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/ouster/points</span></code> or <code class="docutils literal notranslate"><span class="pre">/livox/lidar</span></code> topic not publishing</p></li>
+<li><p>Empty point cloud visualizations</p></li>
+</ul>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic">
+<li><p><strong>Check Network Connection</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ping<span class="w"> </span><span class="m">169</span>.254.16.143<span class="w">  </span><span class="c1"># Ouster default IP</span>
+ping<span class="w"> </span><span class="m">192</span>.168.1.100<span class="w">   </span><span class="c1"># Livox default IP</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Verify Topic Publishing</strong></p>
+<p>Open <code class="docutils literal notranslate"><span class="pre">raisin_cli</span></code> and connect to the robot (see <a class="reference internal" href="#using-raisin-cli"><span class="std std-ref">Using raisin_cli</span></a> for details):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># In raisin_cli</span>
+list<span class="w">                  </span><span class="c1"># Check available servers and get server_id</span>
+con<span class="w"> </span>&lt;server_id&gt;<span class="w">       </span><span class="c1"># Connect using server_id from list output</span>
+list<span class="w">                  </span><span class="c1"># List all available topics</span>
+sub<span class="w"> </span>&lt;topic&gt;<span class="w"> </span>&lt;time&gt;<span class="w">    </span><span class="c1"># e.g., sub /ouster/points 10</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Check IP Configuration</strong></p>
+<ul class="simple">
+<li><p>Ouster: Set <code class="docutils literal notranslate"><span class="pre">sensor_hostname</span></code> to correct IP</p></li>
+<li><p>Livox: Verify <code class="docutils literal notranslate"><span class="pre">lidar_configs.ip</span></code> matches sensor</p></li>
+</ul>
+</li>
+<li><p><strong>Network Interface</strong></p>
+<ul class="simple">
+<li><p>Ensure computer IP is on same subnet as sensor</p></li>
+<li><p>Check firewall allows UDP traffic</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="point-cloud-distorted">
+<h3>Point Cloud Distorted<a class="headerlink" href="#point-cloud-distorted" title="Link to this heading"></a></h3>
+<p><strong>Symptoms:</strong></p>
+<ul class="simple">
+<li><p>Twisted or warped point clouds</p></li>
+<li><p>Points don’t align properly</p></li>
+</ul>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic simple">
+<li><p>Check LiDAR-IMU time synchronization</p></li>
+<li><p>Verify extrinsic calibration (<code class="docutils literal notranslate"><span class="pre">extrinsic_T</span></code>, <code class="docutils literal notranslate"><span class="pre">extrinsic_R</span></code>)</p></li>
+<li><p>Reduce robot motion during calibration</p></li>
+<li><p>Check IMU data quality</p></li>
+</ol>
+</section>
+</section>
+<section id="fast-lio-issues">
+<h2>FAST-LIO Issues<a class="headerlink" href="#fast-lio-issues" title="Link to this heading"></a></h2>
+<section id="high-odometry-drift">
+<h3>High Odometry Drift<a class="headerlink" href="#high-odometry-drift" title="Link to this heading"></a></h3>
+<p><strong>Symptoms:</strong></p>
+<ul class="simple">
+<li><p>Robot position drifts over time</p></li>
+<li><p>Map becomes inconsistent</p></li>
+</ul>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic">
+<li><p><strong>Calibrate Extrinsics</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">mapping</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">extrinsic_est_en</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">  </span><span class="c1"># Enable online calibration</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Tune Noise Parameters</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">mapping</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">acc_cov</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span><span class="w">  </span><span class="c1"># Increase if accelerometer noisy</span>
+<span class="w">  </span><span class="nt">gyr_cov</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span><span class="w">  </span><span class="c1"># Increase if gyroscope noisy</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Check IMU Quality</strong></p>
+<ul class="simple">
+<li><p>Verify IMU is properly mounted</p></li>
+<li><p>Check for vibrations or interference</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="slam-fails-to-initialize">
+<h3>SLAM Fails to Initialize<a class="headerlink" href="#slam-fails-to-initialize" title="Link to this heading"></a></h3>
+<p><strong>Symptoms:</strong></p>
+<ul class="simple">
+<li><p>No odometry output</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/Odometry/base</span></code> topic not publishing</p></li>
+</ul>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic">
+<li><p><strong>Verify Input Topics</strong></p>
+<p>Open <code class="docutils literal notranslate"><span class="pre">raisin_cli</span></code> and check topic rates (see <a class="reference internal" href="#using-raisin-cli"><span class="std std-ref">Using raisin_cli</span></a> for connection details):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># In raisin_cli</span>
+list<span class="w">                       </span><span class="c1"># Check available servers and get server_id</span>
+con<span class="w"> </span>&lt;server_id&gt;<span class="w">            </span><span class="c1"># Connect using server_id from list output</span>
+sub<span class="w"> </span>&lt;topic&gt;<span class="w"> </span>&lt;time&gt;<span class="w">         </span><span class="c1"># e.g., sub /ouster/points 10</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Check Configuration</strong></p>
+<ul class="simple">
+<li><p>Ensure <code class="docutils literal notranslate"><span class="pre">lid_topic</span></code> and <code class="docutils literal notranslate"><span class="pre">imu_topic</span></code> match actual topics</p></li>
+<li><p>Verify <code class="docutils literal notranslate"><span class="pre">lidar_type</span></code> matches sensor (1=Livox, 2=Velodyne, 3=Ouster)</p></li>
+</ul>
+</li>
+<li><p><strong>Sufficient Motion</strong></p>
+<ul class="simple">
+<li><p>FAST-LIO needs initial motion to calibrate</p></li>
+<li><p>Move robot slightly to trigger initialization</p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+<section id="autonomy-issues">
+<h2>Autonomy Issues<a class="headerlink" href="#autonomy-issues" title="Link to this heading"></a></h2>
+<section id="robot-doesn-t-move-to-waypoint">
+<h3>Robot Doesn’t Move to Waypoint<a class="headerlink" href="#robot-doesn-t-move-to-waypoint" title="Link to this heading"></a></h3>
+<p><strong>Symptoms:</strong></p>
+<ul class="simple">
+<li><p>Waypoints set but robot stationary</p></li>
+<li><p>No path published</p></li>
+</ul>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic">
+<li><p><strong>Check Autonomy Mode</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">autonomyMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Verify Odometry</strong></p>
+<p>Open <code class="docutils literal notranslate"><span class="pre">raisin_cli</span></code> and check odometry (see <a class="reference internal" href="#using-raisin-cli"><span class="std std-ref">Using raisin_cli</span></a> for connection details):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># In raisin_cli</span>
+list<span class="w">                   </span><span class="c1"># Check available servers and get server_id</span>
+con<span class="w"> </span>&lt;server_id&gt;<span class="w">        </span><span class="c1"># Connect using server_id from list output</span>
+sub<span class="w"> </span>&lt;topic&gt;<span class="w"> </span>&lt;time&gt;<span class="w">     </span><span class="c1"># e.g., sub /Odometry/base 10</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Check Waypoint Service</strong></p>
+<ul class="simple">
+<li><p>Ensure waypoints were sent successfully</p></li>
+<li><p>Verify waypoint coordinates are valid</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="robot-avoids-valid-paths">
+<h3>Robot Avoids Valid Paths<a class="headerlink" href="#robot-avoids-valid-paths" title="Link to this heading"></a></h3>
+<p><strong>Symptoms:</strong></p>
+<ul class="simple">
+<li><p>Robot stops unnecessarily</p></li>
+<li><p>Valid terrain marked as obstacle</p></li>
+</ul>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic">
+<li><p><strong>Adjust Height Thresholds</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">localPlanner</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">heightGapThre</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.3</span><span class="w">       </span><span class="c1"># Increase for rougher terrain</span>
+<span class="w">  </span><span class="nt">obstacleHeightThre</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.25</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Tune Terrain Analysis</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">terrainAnalysis</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">minRelZ</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-2.0</span><span class="w">  </span><span class="c1"># Allow lower terrain</span>
+<span class="w">  </span><span class="nt">maxRelZ</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">   </span><span class="c1"># Allow higher terrain</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="robot-moves-too-slow">
+<h3>Robot Moves Too Slow<a class="headerlink" href="#robot-moves-too-slow" title="Link to this heading"></a></h3>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic">
+<li><p><strong>Increase Speed Limits</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">maxSpeed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4.0</span>
+<span class="nt">autonomySpeed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Adjust Slowdown Distance</strong></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">pathFollower</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">slowDwnDisThre</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">  </span><span class="c1"># Reduce to slow later</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+</section>
+<section id="map-window-issues">
+<h2>Map Window Issues<a class="headerlink" href="#map-window-issues" title="Link to this heading"></a></h2>
+<section id="map-tiles-not-loading">
+<h3>Map Tiles Not Loading<a class="headerlink" href="#map-tiles-not-loading" title="Link to this heading"></a></h3>
+<p><strong>Symptoms:</strong></p>
+<ul class="simple">
+<li><p>Blank map background</p></li>
+<li><p>Tiles fail to load</p></li>
+</ul>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic simple">
+<li><p>Check internet connectivity</p></li>
+<li><p>Verify tile server URL is accessible</p></li>
+<li><p>Clear tile cache and restart</p></li>
+</ol>
+</section>
+<section id="robot-position-not-updating">
+<h3>Robot Position Not Updating<a class="headerlink" href="#robot-position-not-updating" title="Link to this heading"></a></h3>
+<p><strong>Symptoms:</strong></p>
+<ul class="simple">
+<li><p>Robot icon doesn’t move on map</p></li>
+<li><p>Position stuck at origin</p></li>
+</ul>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic simple">
+<li><p>Verify odometry is publishing</p></li>
+<li><p>Check coordinate frame settings (local vs GPS)</p></li>
+<li><p>Ensure Map Window is subscribed to correct topics</p></li>
+</ol>
+</section>
+</section>
+<section id="general-tips">
+<h2>General Tips<a class="headerlink" href="#general-tips" title="Link to this heading"></a></h2>
+<section id="using-raisin-cli">
+<span id="id1"></span><h3>Using raisin_cli<a class="headerlink" href="#using-raisin-cli" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">raisin_cli</span></code> is the command-line tool for monitoring and debugging the RAISIN system.</p>
+<p><strong>Connecting to Robot:</strong></p>
+<ol class="arabic simple">
+<li><p>Open <code class="docutils literal notranslate"><span class="pre">raisin_cli</span></code> in terminal</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">list</span></code> to see available servers and their IDs</p></li>
+<li><p>Connect using the <code class="docutils literal notranslate"><span class="pre">server_id</span></code></p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># In raisin_cli</span>
+list<span class="w">                       </span><span class="c1"># Shows available servers</span>
+</pre></div>
+</div>
+<p>Example output:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Server on     IP             ID                            Device Type    Port
+--------------------------------------------------------------------------------
+Server        192.168.10.21  railab_raibo-2781268307830    raibo2%ouster32 d455_front  40121
+</pre></div>
+</div>
+<p>Connect using the <code class="docutils literal notranslate"><span class="pre">server_id</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>con<span class="w"> </span>&lt;server_id&gt;<span class="w">    </span><span class="c1"># Connect using server_id from list</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">server_id</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">railab_raibo-2781268307830</span></code>) is assigned dynamically and may change between sessions.
+Always run <code class="docutils literal notranslate"><span class="pre">list</span></code> first to check the current <code class="docutils literal notranslate"><span class="pre">server_id</span></code> before connecting.</p>
+</div>
+<p><strong>Common Commands (after connecting):</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>list<span class="w">                       </span><span class="c1"># List all available topics</span>
+sub<span class="w"> </span>&lt;topic_name&gt;<span class="w"> </span><span class="nb">time</span><span class="w">      </span><span class="c1"># Subscribe to topic and show timing info</span>
+sub<span class="w"> </span>&lt;topic_name&gt;<span class="w">           </span><span class="c1"># Subscribe to topic and show data</span>
+</pre></div>
+</div>
+</section>
+<section id="checking-system-health">
+<h3>Checking System Health<a class="headerlink" href="#checking-system-health" title="Link to this heading"></a></h3>
+<p>Use <code class="docutils literal notranslate"><span class="pre">raisin_cli</span></code> to verify system health:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># In raisin_cli</span>
+list<span class="w">                       </span><span class="c1"># Check available servers and get server_id</span>
+con<span class="w"> </span>&lt;server_id&gt;<span class="w">            </span><span class="c1"># Connect using server_id from list output</span>
+list<span class="w">                       </span><span class="c1"># List all available topics</span>
+sub<span class="w"> </span>&lt;topic&gt;<span class="w"> </span>&lt;time&gt;<span class="w">         </span><span class="c1"># e.g., sub /Odometry/base 10</span>
+</pre></div>
+</div>
+<p><strong>Monitor System Load:</strong></p>
+<ul class="simple">
+<li><p>Check CPU usage isn’t maxed</p></li>
+<li><p>Verify sufficient memory available</p></li>
+</ul>
+</section>
+<section id="logging">
+<h3>Logging<a class="headerlink" href="#logging" title="Link to this heading"></a></h3>
+<p>Enable detailed logging for debugging:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">runtime_pos_log_enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+<p>Check logs for error messages and warnings.</p>
+</section>
+<section id="getting-help">
+<h3>Getting Help<a class="headerlink" href="#getting-help" title="Link to this heading"></a></h3>
+<p>If issues persist:</p>
+<ol class="arabic simple">
+<li><p>Collect relevant log files</p></li>
+<li><p>Note exact error messages</p></li>
+<li><p>Document configuration files used</p></li>
+<li><p>Record topic publication rates</p></li>
+</ol>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="MapWindow.html" class="btn btn-neutral float-left" title="Map Window (GUI)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Raion Robotics..</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

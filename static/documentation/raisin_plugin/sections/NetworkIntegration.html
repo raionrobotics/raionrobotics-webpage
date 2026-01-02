@@ -1,0 +1,740 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>raisin_network Integration Guide &mdash; Raisin Plugin - Autonomous Navigation 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Map Window (GUI)" href="MapWindow.html" />
+    <link rel="prev" title="Autonomy External API" href="AutonomyAPI.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Raisin Plugin - Autonomous Navigation
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Ouster.html">Ouster LiDAR Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Livox.html">Livox LiDAR Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="D455.html">D455 Depth Camera Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FastLIO.html">FAST-LIO SLAM Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GridMapping.html">Grid Mapping Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Autonomy.html">Autonomy Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AutonomyAPI.html">Autonomy External API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">raisin_network Integration Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#required-libraries">Required Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#required-headers">Required Headers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#connection-pattern">Connection Pattern</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#step-1-initialize-raisin-network">Step 1: Initialize raisin_network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-2-create-network-instance">Step 2: Create Network Instance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-3-connect-to-robot">Step 3: Connect to Robot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-4-create-node-for-service-clients">Step 4: Create Node for Service Clients</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#service-clients">Service Clients</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creating-clients">Creating Clients</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#checking-service-availability">Checking Service Availability</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#waypoint-control">Waypoint Control</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#waypoint-message-structure">Waypoint Message Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#coordinate-frames">Coordinate Frames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setwaypoints-set-complete-path">SetWaypoints - Set Complete Path</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getwaypoints-query-current-status">GetWaypoints - Query Current Status</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#appendwaypoint-add-single-waypoint">AppendWaypoint - Add Single Waypoint</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#patrol-configuration">Patrol Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#repetition-laps">Repetition (Laps)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#starting-index">Starting Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stopping-navigation">Stopping Navigation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#complete-example">Complete Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cmake-configuration">CMake Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#connection-issues">Connection Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service-not-available">Service Not Available</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#waypoints-not-followed">Waypoints Not Followed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gps-coordinate-issues">GPS Coordinate Issues</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="MapWindow.html">Map Window (GUI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Troubleshooting.html">Troubleshooting</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Raisin Plugin - Autonomous Navigation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">raisin_network Integration Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/sections/NetworkIntegration.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="raisin-network-integration-guide">
+<h1>raisin_network Integration Guide<a class="headerlink" href="#raisin-network-integration-guide" title="Link to this heading"></a></h1>
+<p>This guide explains how external developers can integrate with the Raisin autonomous navigation system using the raisin_network library, without requiring access to the source code.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The raisin_network library provides a network abstraction layer that allows external programs to communicate with Raisin robots. By linking to this library, you can control autonomous navigation features such as waypoint setting, patrol configuration, and mission monitoring.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>┌─────────────────────────────────────┐     ┌─────────────────────────────────────┐
+│        External Application         │     │            Raisin Robot             │
+│   (Surveillance/Patrol System)      │     │                                     │
+│                                     │     │  ┌─────────────────────────────────┐│
+│  ┌─────────────────────────────┐    │     │  │       Autonomy Plugin          ││
+│  │     raisin_network          │    │     │  │                                 ││
+│  │     raisin_interfaces       │    │ WS  │  │  Service: set_waypoints        ││
+│  │                             │◄───┼─────┼─►│  Service: get_waypoints        ││
+│  │  - Network                  │    │     │  │  Service: append_waypoint      ││
+│  │  - Node                     │    │     │  │                                 ││
+│  │  - Client&lt;T&gt;                │    │     │  └─────────────────────────────────┘│
+│  └─────────────────────────────┘    │     │                                     │
+└─────────────────────────────────────┘     └─────────────────────────────────────┘
+</pre></div>
+</div>
+</section>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading"></a></h2>
+<section id="required-libraries">
+<h3>Required Libraries<a class="headerlink" href="#required-libraries" title="Link to this heading"></a></h3>
+<p>To build an external application that communicates with Raisin, you need:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Library</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>raisin_network</p></td>
+<td><p>Network communication layer</p></td>
+</tr>
+<tr class="row-odd"><td><p>raisin_interfaces</p></td>
+<td><p>Message and service definitions</p></td>
+</tr>
+<tr class="row-even"><td><p>raisin_thread_pool</p></td>
+<td><p>Thread management</p></td>
+</tr>
+<tr class="row-odd"><td><p>raisin_parameter</p></td>
+<td><p>Parameter handling</p></td>
+</tr>
+<tr class="row-even"><td><p>raisin_encryption</p></td>
+<td><p>Secure communication</p></td>
+</tr>
+<tr class="row-odd"><td><p>websocketpp</p></td>
+<td><p>WebSocket transport</p></td>
+</tr>
+<tr class="row-even"><td><p>Eigen3</p></td>
+<td><p>Linear algebra</p></td>
+</tr>
+<tr class="row-odd"><td><p>OpenSSL</p></td>
+<td><p>SSL/TLS support</p></td>
+</tr>
+<tr class="row-even"><td><p>zstd</p></td>
+<td><p>Data compression</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="required-headers">
+<h3>Required Headers<a class="headerlink" href="#required-headers" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Network communication</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_network/raisin.hpp&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_network/network.hpp&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_network/node.hpp&quot;</span>
+
+<span class="c1">// Autonomy services</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_interfaces/srv/set_waypoints.hpp&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_interfaces/srv/get_waypoints.hpp&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_interfaces/srv/append_waypoint.hpp&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_interfaces/msg/waypoint.hpp&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="connection-pattern">
+<h2>Connection Pattern<a class="headerlink" href="#connection-pattern" title="Link to this heading"></a></h2>
+<p>Establishing a connection to a Raisin robot follows this pattern:</p>
+<section id="step-1-initialize-raisin-network">
+<h3>Step 1: Initialize raisin_network<a class="headerlink" href="#step-1-initialize-raisin-network" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_network/raisin.hpp&quot;</span>
+
+<span class="c1">// Call once at program startup</span>
+<span class="n">raisin</span><span class="o">::</span><span class="n">raisinInit</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+<section id="step-2-create-network-instance">
+<h3>Step 2: Create Network Instance<a class="headerlink" href="#step-2-create-network-instance" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_network/network.hpp&quot;</span>
+
+<span class="c1">// Define thread groups</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">threads</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="s">&quot;main&quot;</span><span class="p">}};</span>
+
+<span class="c1">// Create network as client</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">network</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">raisin</span><span class="o">::</span><span class="n">Network</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;my_patrol_controller&quot;</span><span class="p">,</span><span class="w">   </span><span class="c1">// Client identifier (unique)</span>
+<span class="w">    </span><span class="s">&quot;external_controller&quot;</span><span class="p">,</span><span class="w">    </span><span class="c1">// Device type</span>
+<span class="w">    </span><span class="n">threads</span><span class="w">                   </span><span class="c1">// Thread specification</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="step-3-connect-to-robot">
+<h3>Step 3: Connect to Robot<a class="headerlink" href="#step-3-connect-to-robot" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Wait for network initialization</span>
+<span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">seconds</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+
+<span class="c1">// Connect using robot ID or IP address</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">raisin</span><span class="o">::</span><span class="n">Remote</span><span class="o">::</span><span class="n">Connection</span><span class="o">&gt;</span><span class="w"> </span><span class="n">connection</span><span class="p">;</span>
+
+<span class="c1">// Option 1: Connect by robot ID (network discovery)</span>
+<span class="n">connection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">network</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ROBOT_ID&quot;</span><span class="p">);</span>
+
+<span class="c1">// Option 2: Connect by IP address</span>
+<span class="c1">// connection = network-&gt;connect(&quot;192.168.1.100&quot;, 8080);</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">connection</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Failed to connect to robot&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="step-4-create-node-for-service-clients">
+<h3>Step 4: Create Node for Service Clients<a class="headerlink" href="#step-4-create-node-for-service-clients" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_network/node.hpp&quot;</span>
+
+<span class="c1">// Create node from network</span>
+<span class="n">raisin</span><span class="o">::</span><span class="n">Node</span><span class="w"> </span><span class="nf">node</span><span class="p">(</span><span class="n">network</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="service-clients">
+<h2>Service Clients<a class="headerlink" href="#service-clients" title="Link to this heading"></a></h2>
+<section id="creating-clients">
+<h3>Creating Clients<a class="headerlink" href="#creating-clients" title="Link to this heading"></a></h3>
+<p>After establishing a connection, create service clients:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// SetWaypoints client</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">setWaypointsClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">createClient</span><span class="o">&lt;</span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">SetWaypoints</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;planning/set_waypoints&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">connection</span>
+<span class="p">);</span>
+
+<span class="c1">// GetWaypoints client</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">getWaypointsClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">createClient</span><span class="o">&lt;</span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">GetWaypoints</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;planning/get_waypoints&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">connection</span>
+<span class="p">);</span>
+
+<span class="c1">// AppendWaypoint client</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">appendWaypointClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">createClient</span><span class="o">&lt;</span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">AppendWaypoint</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;planning/append_waypoint&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">connection</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="checking-service-availability">
+<h3>Checking Service Availability<a class="headerlink" href="#checking-service-availability" title="Link to this heading"></a></h3>
+<p>Before sending requests, verify the service is available:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Check immediately</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">setWaypointsClient</span><span class="o">-&gt;</span><span class="n">isServiceAvailable</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Service is ready</span>
+<span class="p">}</span>
+
+<span class="c1">// Or wait with timeout</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">setWaypointsClient</span><span class="o">-&gt;</span><span class="n">waitForService</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">seconds</span><span class="p">(</span><span class="mi">10</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Service became available</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Service not available&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="waypoint-control">
+<h2>Waypoint Control<a class="headerlink" href="#waypoint-control" title="Link to this heading"></a></h2>
+<section id="waypoint-message-structure">
+<h3>Waypoint Message Structure<a class="headerlink" href="#waypoint-message-structure" title="Link to this heading"></a></h3>
+<p>Each waypoint contains:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Waypoint</span><span class="w"> </span><span class="n">wp</span><span class="p">;</span>
+<span class="n">wp</span><span class="p">.</span><span class="n">frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;gps&quot;</span><span class="p">;</span><span class="w">     </span><span class="c1">// Coordinate frame: &quot;map&quot;, &quot;gps&quot;, &quot;odom&quot;</span>
+<span class="n">wp</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">37.5665</span><span class="p">;</span><span class="w">       </span><span class="c1">// X coordinate (latitude for GPS)</span>
+<span class="n">wp</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">126.9780</span><span class="p">;</span><span class="w">      </span><span class="c1">// Y coordinate (longitude for GPS)</span>
+<span class="n">wp</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span><span class="w">           </span><span class="c1">// Z coordinate (altitude for GPS)</span>
+<span class="n">wp</span><span class="p">.</span><span class="n">use_z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w">     </span><span class="c1">// Whether to check Z when reaching waypoint</span>
+</pre></div>
+</div>
+</section>
+<section id="coordinate-frames">
+<h3>Coordinate Frames<a class="headerlink" href="#coordinate-frames" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 85.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Frame</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">map</span></code></p></td>
+<td><p>Local map frame from SLAM. Coordinates in meters relative to map origin.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">gps</span></code></p></td>
+<td><p>GPS coordinates. x=latitude, y=longitude, z=altitude. Automatically converted to local ENU frame.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">odom</span></code></p></td>
+<td><p>Odometry frame. Coordinates in meters.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="setwaypoints-set-complete-path">
+<h3>SetWaypoints - Set Complete Path<a class="headerlink" href="#setwaypoints-set-complete-path" title="Link to this heading"></a></h3>
+<p>Replace the entire waypoint list and configure patrol:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">SetWaypoints</span><span class="o">::</span><span class="n">Request</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="c1">// Add waypoints</span>
+<span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Waypoint</span><span class="w"> </span><span class="n">wp1</span><span class="p">;</span>
+<span class="n">wp1</span><span class="p">.</span><span class="n">frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;gps&quot;</span><span class="p">;</span>
+<span class="n">wp1</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">37.5665</span><span class="p">;</span><span class="w">    </span><span class="c1">// Latitude</span>
+<span class="n">wp1</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">126.9780</span><span class="p">;</span><span class="w">   </span><span class="c1">// Longitude</span>
+<span class="n">wp1</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+<span class="n">wp1</span><span class="p">.</span><span class="n">use_z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="n">request</span><span class="o">-&gt;</span><span class="n">waypoints</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">wp1</span><span class="p">);</span>
+
+<span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Waypoint</span><span class="w"> </span><span class="n">wp2</span><span class="p">;</span>
+<span class="n">wp2</span><span class="p">.</span><span class="n">frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;gps&quot;</span><span class="p">;</span>
+<span class="n">wp2</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">37.5670</span><span class="p">;</span>
+<span class="n">wp2</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">126.9785</span><span class="p">;</span>
+<span class="n">wp2</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+<span class="n">wp2</span><span class="p">.</span><span class="n">use_z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="n">request</span><span class="o">-&gt;</span><span class="n">waypoints</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">wp2</span><span class="p">);</span>
+
+<span class="c1">// Configure patrol</span>
+<span class="n">request</span><span class="o">-&gt;</span><span class="n">repetition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">      </span><span class="c1">// 0 = infinite patrol</span>
+<span class="n">request</span><span class="o">-&gt;</span><span class="n">current_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">   </span><span class="c1">// Start from first waypoint</span>
+
+<span class="c1">// Send async request</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">future</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">setWaypointsClient</span><span class="o">-&gt;</span><span class="n">asyncSendRequest</span><span class="p">(</span><span class="n">request</span><span class="p">,</span>
+<span class="w">    </span><span class="p">[](</span><span class="k">const</span><span class="w"> </span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">SetWaypoints</span><span class="o">::</span><span class="n">Response</span><span class="o">::</span><span class="n">SharedPtr</span><span class="o">&amp;</span><span class="w"> </span><span class="n">response</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">response</span><span class="o">-&gt;</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Waypoints set: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">response</span><span class="o">-&gt;</span><span class="n">message</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Failed: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">response</span><span class="o">-&gt;</span><span class="n">message</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="getwaypoints-query-current-status">
+<h3>GetWaypoints - Query Current Status<a class="headerlink" href="#getwaypoints-query-current-status" title="Link to this heading"></a></h3>
+<p>Retrieve current waypoint list and mission progress:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">GetWaypoints</span><span class="o">::</span><span class="n">Request</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="k">auto</span><span class="w"> </span><span class="n">future</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getWaypointsClient</span><span class="o">-&gt;</span><span class="n">asyncSendRequest</span><span class="p">(</span><span class="n">request</span><span class="p">,</span>
+<span class="w">    </span><span class="p">[](</span><span class="k">const</span><span class="w"> </span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">GetWaypoints</span><span class="o">::</span><span class="n">Response</span><span class="o">::</span><span class="n">SharedPtr</span><span class="o">&amp;</span><span class="w"> </span><span class="n">response</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">response</span><span class="o">-&gt;</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Waypoint count: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">response</span><span class="o">-&gt;</span><span class="n">waypoints</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Current index: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">response</span><span class="o">-&gt;</span><span class="n">current_index</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Remaining laps: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">response</span><span class="o">-&gt;</span><span class="n">repetition</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">response</span><span class="o">-&gt;</span><span class="n">waypoints</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">wp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">response</span><span class="o">-&gt;</span><span class="n">waypoints</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">                </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;[&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;] &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">wp</span><span class="p">.</span><span class="n">frame</span>
+<span class="w">                          </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; (&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">wp</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;, &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">wp</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;)&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="appendwaypoint-add-single-waypoint">
+<h3>AppendWaypoint - Add Single Waypoint<a class="headerlink" href="#appendwaypoint-add-single-waypoint" title="Link to this heading"></a></h3>
+<p>Add a waypoint to the existing queue:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">AppendWaypoint</span><span class="o">::</span><span class="n">Request</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="n">request</span><span class="o">-&gt;</span><span class="n">waypoint</span><span class="p">.</span><span class="n">frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;gps&quot;</span><span class="p">;</span>
+<span class="n">request</span><span class="o">-&gt;</span><span class="n">waypoint</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">37.5675</span><span class="p">;</span>
+<span class="n">request</span><span class="o">-&gt;</span><span class="n">waypoint</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">126.9790</span><span class="p">;</span>
+<span class="n">request</span><span class="o">-&gt;</span><span class="n">waypoint</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+<span class="n">request</span><span class="o">-&gt;</span><span class="n">waypoint</span><span class="p">.</span><span class="n">use_z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+
+<span class="k">auto</span><span class="w"> </span><span class="n">future</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">appendWaypointClient</span><span class="o">-&gt;</span><span class="n">asyncSendRequest</span><span class="p">(</span><span class="n">request</span><span class="p">,</span>
+<span class="w">    </span><span class="p">[](</span><span class="k">const</span><span class="w"> </span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">AppendWaypoint</span><span class="o">::</span><span class="n">Response</span><span class="o">::</span><span class="n">SharedPtr</span><span class="o">&amp;</span><span class="w"> </span><span class="n">response</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">response</span><span class="o">-&gt;</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Waypoint appended&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="patrol-configuration">
+<h2>Patrol Configuration<a class="headerlink" href="#patrol-configuration" title="Link to this heading"></a></h2>
+<section id="repetition-laps">
+<h3>Repetition (Laps)<a class="headerlink" href="#repetition-laps" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">repetition</span></code> field controls how many times the robot traverses the waypoint list:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Value</p></th>
+<th class="head"><p>Behavior</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p><strong>Infinite patrol</strong> - Robot continuously loops through waypoints</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p><strong>Single pass</strong> - Navigate once and stop at final waypoint</p></td>
+</tr>
+<tr class="row-even"><td><p>N (&gt;1)</p></td>
+<td><p><strong>N laps</strong> - Traverse the route N times</p></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Infinite patrol</span>
+<span class="n">request</span><span class="o">-&gt;</span><span class="n">repetition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="c1">// Single mission</span>
+<span class="n">request</span><span class="o">-&gt;</span><span class="n">repetition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+
+<span class="c1">// Patrol 5 times</span>
+<span class="n">request</span><span class="o">-&gt;</span><span class="n">repetition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="starting-index">
+<h3>Starting Index<a class="headerlink" href="#starting-index" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">current_index</span></code> field specifies which waypoint to start from:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Start from beginning</span>
+<span class="n">request</span><span class="o">-&gt;</span><span class="n">current_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="c1">// Resume from waypoint 3</span>
+<span class="n">request</span><span class="o">-&gt;</span><span class="n">current_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="stopping-navigation">
+<h3>Stopping Navigation<a class="headerlink" href="#stopping-navigation" title="Link to this heading"></a></h3>
+<p>To stop autonomous navigation, set an empty waypoint list:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">SetWaypoints</span><span class="o">::</span><span class="n">Request</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="n">request</span><span class="o">-&gt;</span><span class="n">waypoints</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w">  </span><span class="c1">// Empty list</span>
+<span class="n">request</span><span class="o">-&gt;</span><span class="n">repetition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="n">request</span><span class="o">-&gt;</span><span class="n">current_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="n">setWaypointsClient</span><span class="o">-&gt;</span><span class="n">asyncSendRequest</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="complete-example">
+<h2>Complete Example<a class="headerlink" href="#complete-example" title="Link to this heading"></a></h2>
+<p>Here is a complete working example:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;memory&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;thread&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;chrono&gt;</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_network/raisin.hpp&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_network/network.hpp&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_network/node.hpp&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_interfaces/srv/set_waypoints.hpp&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_interfaces/srv/get_waypoints.hpp&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_interfaces/msg/waypoint.hpp&quot;</span>
+
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="o">::</span><span class="nn">chrono_literals</span><span class="p">;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">argc</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Usage: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &lt;robot_id&gt;&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">robotId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+
+<span class="w">    </span><span class="c1">// Step 1: Initialize</span>
+<span class="w">    </span><span class="n">raisin</span><span class="o">::</span><span class="n">raisinInit</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Step 2: Create network</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">threads</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="s">&quot;main&quot;</span><span class="p">}};</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">network</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">raisin</span><span class="o">::</span><span class="n">Network</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">        </span><span class="s">&quot;patrol_controller&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;external&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">threads</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="mi">1</span><span class="n">s</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Step 3: Connect to robot</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">connection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">network</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="n">robotId</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">connection</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Connection failed&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Connected to &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">robotId</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="mi">2</span><span class="n">s</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Step 4: Create node and clients</span>
+<span class="w">    </span><span class="n">raisin</span><span class="o">::</span><span class="n">Node</span><span class="w"> </span><span class="n">node</span><span class="p">(</span><span class="n">network</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">setClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">createClient</span><span class="o">&lt;</span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">SetWaypoints</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">        </span><span class="s">&quot;planning/set_waypoints&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">connection</span><span class="p">);</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">getClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">createClient</span><span class="o">&lt;</span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">GetWaypoints</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">        </span><span class="s">&quot;planning/get_waypoints&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">connection</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Wait for services</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">setClient</span><span class="o">-&gt;</span><span class="n">waitForService</span><span class="p">(</span><span class="mi">10</span><span class="n">s</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;SetWaypoints service not available&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Step 5: Set patrol route</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">SetWaypoints</span><span class="o">::</span><span class="n">Request</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Define patrol route (GPS coordinates)</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">route</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="p">{</span><span class="mf">37.5665</span><span class="p">,</span><span class="w"> </span><span class="mf">126.9780</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="mf">37.5670</span><span class="p">,</span><span class="w"> </span><span class="mf">126.9785</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="mf">37.5668</span><span class="p">,</span><span class="w"> </span><span class="mf">126.9790</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="mf">37.5663</span><span class="p">,</span><span class="w"> </span><span class="mf">126.9788</span><span class="p">}</span>
+<span class="w">    </span><span class="p">};</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="p">[</span><span class="n">lat</span><span class="p">,</span><span class="w"> </span><span class="n">lon</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">route</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Waypoint</span><span class="w"> </span><span class="n">wp</span><span class="p">;</span>
+<span class="w">        </span><span class="n">wp</span><span class="p">.</span><span class="n">frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;gps&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">wp</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lat</span><span class="p">;</span>
+<span class="w">        </span><span class="n">wp</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lon</span><span class="p">;</span>
+<span class="w">        </span><span class="n">wp</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+<span class="w">        </span><span class="n">wp</span><span class="p">.</span><span class="n">use_z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">        </span><span class="n">request</span><span class="o">-&gt;</span><span class="n">waypoints</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">wp</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">request</span><span class="o">-&gt;</span><span class="n">repetition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">  </span><span class="c1">// Infinite patrol</span>
+<span class="w">    </span><span class="n">request</span><span class="o">-&gt;</span><span class="n">current_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Setting &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">request</span><span class="o">-&gt;</span><span class="n">waypoints</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; waypoints...&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">future</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">setClient</span><span class="o">-&gt;</span><span class="n">asyncSendRequest</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">future</span><span class="p">.</span><span class="n">wait_for</span><span class="p">(</span><span class="mi">5</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">future_status</span><span class="o">::</span><span class="n">ready</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">future</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Result: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">response</span><span class="o">-&gt;</span><span class="n">message</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Step 6: Monitor progress</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Monitoring patrol progress...&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="mi">5</span><span class="n">s</span><span class="p">);</span>
+
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">getReq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">GetWaypoints</span><span class="o">::</span><span class="n">Request</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">getFuture</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getClient</span><span class="o">-&gt;</span><span class="n">asyncSendRequest</span><span class="p">(</span><span class="n">getReq</span><span class="p">);</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">getFuture</span><span class="p">.</span><span class="n">wait_for</span><span class="p">(</span><span class="mi">2</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">future_status</span><span class="o">::</span><span class="n">ready</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">auto</span><span class="w"> </span><span class="n">resp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getFuture</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Progress: waypoint &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">resp</span><span class="o">-&gt;</span><span class="n">current_index</span>
+<span class="w">                      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;/&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">resp</span><span class="o">-&gt;</span><span class="n">waypoints</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Cleanup</span>
+<span class="w">    </span><span class="n">node</span><span class="p">.</span><span class="n">cleanupResources</span><span class="p">();</span>
+<span class="w">    </span><span class="n">network</span><span class="o">-&gt;</span><span class="n">shutdown</span><span class="p">();</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="cmake-configuration">
+<h2>CMake Configuration<a class="headerlink" href="#cmake-configuration" title="Link to this heading"></a></h2>
+<p>Create a <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> for your external application:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span><span class="w"> </span><span class="s">3.10</span><span class="p">)</span>
+<span class="nb">project</span><span class="p">(</span><span class="s">my_patrol_controller</span><span class="p">)</span>
+
+<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_STANDARD</span><span class="w"> </span><span class="s">17</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_STANDARD_REQUIRED</span><span class="w"> </span><span class="s">ON</span><span class="p">)</span>
+
+<span class="c"># Find required packages</span>
+<span class="nb">find_package</span><span class="p">(</span><span class="s">Eigen3</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<span class="nb">find_package</span><span class="p">(</span><span class="s">OpenSSL</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<span class="nb">find_package</span><span class="p">(</span><span class="s">raisin_network</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<span class="nb">find_package</span><span class="p">(</span><span class="s">raisin_interfaces</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<span class="nb">find_package</span><span class="p">(</span><span class="s">raisin_thread_pool</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<span class="nb">find_package</span><span class="p">(</span><span class="s">raisin_parameter</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<span class="nb">find_package</span><span class="p">(</span><span class="s">raisin_encryption</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<span class="nb">find_package</span><span class="p">(</span><span class="s">websocketpp</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<span class="nb">find_package</span><span class="p">(</span><span class="s">zstd</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<span class="nb">find_package</span><span class="p">(</span><span class="s">raisin_data_logger</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+
+<span class="c"># Create executable</span>
+<span class="nb">add_executable</span><span class="p">(</span><span class="s">patrol_controller</span><span class="w"> </span><span class="s">main.cpp</span><span class="p">)</span>
+
+<span class="c"># Link libraries</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">patrol_controller</span><span class="w"> </span><span class="s">PRIVATE</span>
+<span class="w">    </span><span class="s">raisin_network</span>
+<span class="w">    </span><span class="s">raisin_interfaces</span>
+<span class="w">    </span><span class="s">raisin_thread_pool</span>
+<span class="w">    </span><span class="s">raisin_parameter</span>
+<span class="w">    </span><span class="s">raisin_encryption</span>
+<span class="w">    </span><span class="s">raisin_data_logger</span>
+<span class="w">    </span><span class="s">websocketpp</span>
+<span class="w">    </span><span class="s">Eigen3::Eigen</span>
+<span class="w">    </span><span class="s">OpenSSL::SSL</span>
+<span class="w">    </span><span class="s">OpenSSL::Crypto</span>
+<span class="w">    </span><span class="s">zstd::libzstd</span>
+<span class="p">)</span>
+
+<span class="c"># Platform-specific libraries</span>
+<span class="nb">if</span><span class="p">(</span><span class="s">UNIX</span><span class="w"> </span><span class="s">AND</span><span class="w"> </span><span class="s">NOT</span><span class="w"> </span><span class="s">APPLE</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">patrol_controller</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">dl</span><span class="w"> </span><span class="s">rt</span><span class="p">)</span>
+<span class="nb">endif</span><span class="p">()</span>
+
+<span class="nb">if</span><span class="p">(</span><span class="s">WIN32</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">patrol_controller</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">onecore.lib</span><span class="p">)</span>
+<span class="nb">endif</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h2>
+<section id="connection-issues">
+<h3>Connection Issues<a class="headerlink" href="#connection-issues" title="Link to this heading"></a></h3>
+<p><strong>Problem:</strong> Cannot connect to robot</p>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic simple">
+<li><p>Verify robot is running and network is accessible</p></li>
+<li><p>Check firewall settings</p></li>
+<li><p>Ensure robot ID or IP address is correct</p></li>
+<li><p>Wait for network initialization (add <code class="docutils literal notranslate"><span class="pre">sleep_for</span></code> after Network creation)</p></li>
+</ol>
+</section>
+<section id="service-not-available">
+<h3>Service Not Available<a class="headerlink" href="#service-not-available" title="Link to this heading"></a></h3>
+<p><strong>Problem:</strong> <code class="docutils literal notranslate"><span class="pre">waitForService()</span></code> times out</p>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic simple">
+<li><p>Verify autonomy plugin is loaded on the robot</p></li>
+<li><p>Check that <code class="docutils literal notranslate"><span class="pre">autonomyMode:</span> <span class="pre">true</span></code> in plugin configuration</p></li>
+<li><p>Ensure connection was established successfully</p></li>
+</ol>
+</section>
+<section id="waypoints-not-followed">
+<h3>Waypoints Not Followed<a class="headerlink" href="#waypoints-not-followed" title="Link to this heading"></a></h3>
+<p><strong>Problem:</strong> Robot doesn’t move after setting waypoints</p>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic simple">
+<li><p>Confirm service response <code class="docutils literal notranslate"><span class="pre">success</span> <span class="pre">==</span> <span class="pre">true</span></code></p></li>
+<li><p>Check robot is in autonomous mode (not joystick override)</p></li>
+<li><p>Verify coordinate frame matches robot’s localization</p></li>
+<li><p>Ensure waypoints are within reachable range</p></li>
+</ol>
+</section>
+<section id="gps-coordinate-issues">
+<h3>GPS Coordinate Issues<a class="headerlink" href="#gps-coordinate-issues" title="Link to this heading"></a></h3>
+<p><strong>Problem:</strong> Robot navigates to wrong location with GPS waypoints</p>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">frame</span> <span class="pre">=</span> <span class="pre">&quot;gps&quot;</span></code> for GPS coordinates</p></li>
+<li><p>Ensure GPS fix is available on robot (<code class="docutils literal notranslate"><span class="pre">/fix</span></code> topic)</p></li>
+<li><p>Latitude is <code class="docutils literal notranslate"><span class="pre">x</span></code>, Longitude is <code class="docutils literal notranslate"><span class="pre">y</span></code> (not reversed)</p></li>
+<li><p>Consider GPS accuracy and offset calibration</p></li>
+</ol>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="AutonomyAPI.html" class="btn btn-neutral float-left" title="Autonomy External API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="MapWindow.html" class="btn btn-neutral float-right" title="Map Window (GUI)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Raion Robotics..</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,159 @@
+Ouster LiDAR Plugin
+===================
+
+The Ouster plugin provides driver support for Ouster OS-1 series LiDAR sensors, enabling point cloud and IMU data acquisition.
+
+Overview
+--------
+
+The Ouster plugin connects to Ouster LiDAR sensors over Ethernet, streaming point cloud and IMU data at configurable rates. It supports various resolution and scan rate modes.
+
+Supported Sensors
+^^^^^^^^^^^^^^^^^
+
+* Ouster OS-1-32 (32 scan lines)
+
+Configuration
+-------------
+
+Configuration File
+^^^^^^^^^^^^^^^^^^
+
+Location: ``raisin_ouster_plugin/config/ouster32.yaml``
+
+.. code-block:: yaml
+
+    sensor_hostname: "169.254.16.143"
+    lidar_mode: "1024x10"
+    lidar_port: 0
+    imu_port: 0
+    sensor_frame: "os_sensor"
+    lidar_frame: "os_lidar"
+    imu_frame: "os_imu"
+    publish_rate: 10.0
+
+Parameter Reference
+^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+   :header-rows: 1
+   :widths: 25 15 15 45
+
+   * - Parameter
+     - Type
+     - Default
+     - Description
+   * - sensor_hostname
+     - string
+     - "169.254.16.143"
+     - IP address of the Ouster sensor
+   * - lidar_mode
+     - string
+     - "1024x10"
+     - Resolution and scan rate
+   * - lidar_port
+     - int
+     - 0
+     - LiDAR data port (0 = auto-detect)
+   * - imu_port
+     - int
+     - 0
+     - IMU data port (0 = auto-detect)
+   * - sensor_frame
+     - string
+     - "os_sensor"
+     - TF frame ID for sensor
+   * - lidar_frame
+     - string
+     - "os_lidar"
+     - TF frame ID for LiDAR
+   * - imu_frame
+     - string
+     - "os_imu"
+     - TF frame ID for IMU
+   * - publish_rate
+     - double
+     - 10.0
+     - Output publishing rate (Hz)
+
+LiDAR Modes
+^^^^^^^^^^^
+
+The ``lidar_mode`` parameter controls resolution and scan rate:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 35 35
+
+   * - Mode
+     - Resolution
+     - Scan Rate
+   * - 512x10
+     - 512 columns
+     - 10 Hz
+   * - 512x20
+     - 512 columns
+     - 20 Hz
+   * - 1024x10
+     - 1024 columns
+     - 10 Hz
+   * - 1024x20
+     - 1024 columns
+     - 20 Hz
+   * - 2048x10
+     - 2048 columns
+     - 10 Hz
+
+Message Topics
+--------------
+
+Publishers
+^^^^^^^^^^
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 30 40
+
+   * - Topic
+     - Type
+     - Description
+   * - /ouster/points
+     - sensor_msgs/PointCloud2
+     - Raw LiDAR point cloud
+   * - /ouster/imu
+     - sensor_msgs/Imu
+     - IMU measurements
+
+Usage
+-----
+
+Network Setup
+^^^^^^^^^^^^^
+
+1. Connect Ouster sensor to your computer via Ethernet
+2. Configure your network interface to be on the same subnet as the sensor
+3. Default sensor IP is typically ``169.254.x.x`` (link-local)
+
+Loading the Plugin
+^^^^^^^^^^^^^^^^^^
+
+Add to your ``params.yaml``:
+
+.. code-block:: yaml
+
+    plugin:
+      raisin_ouster_plugin:
+        rate: 10
+
+Verifying Connection
+^^^^^^^^^^^^^^^^^^^^
+
+Check that point clouds are being published using ``raisin_cli`` (see :ref:`using-raisin-cli` for details):
+
+.. code-block:: bash
+
+    # In raisin_cli
+    list                    # Check available servers and get server_id
+    con <server_id>         # Connect using server_id from list output
+    list                    # List all available topics
+    sub <topic> <time>      # e.g., sub /ouster/points 10

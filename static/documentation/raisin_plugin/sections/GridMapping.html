@@ -1,0 +1,473 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grid Mapping Plugin &mdash; Raisin Plugin - Autonomous Navigation 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Autonomy Plugin" href="Autonomy.html" />
+    <link rel="prev" title="FAST-LIO SLAM Plugin" href="FastLIO.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Raisin Plugin - Autonomous Navigation
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Ouster.html">Ouster LiDAR Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Livox.html">Livox LiDAR Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="D455.html">D455 Depth Camera Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FastLIO.html">FAST-LIO SLAM Plugin</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Grid Mapping Plugin</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-file">Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parameter-reference">Parameter Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#message-topics">Message Topics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#publishers">Publishers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#subscribers">Subscribers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#services">Services</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-setup">Basic Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tuning-for-different-terrains">Tuning for Different Terrains</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Autonomy.html">Autonomy Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AutonomyAPI.html">Autonomy External API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MapWindow.html">Map Window (GUI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Troubleshooting.html">Troubleshooting</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Raisin Plugin - Autonomous Navigation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Grid Mapping Plugin</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/sections/GridMapping.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="grid-mapping-plugin">
+<h1>Grid Mapping Plugin<a class="headerlink" href="#grid-mapping-plugin" title="Link to this heading"></a></h1>
+<p>The Grid Mapping plugin provides real-time terrain heightmap generation from depth cameras for locomotion and navigation.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The Grid Mapping plugin processes depth camera data to create terrain heightmaps:</p>
+<ul class="simple">
+<li><p>Real-time terrain elevation mapping</p></li>
+<li><p>Ray casting based depth data processing</p></li>
+<li><p>Hole filling for missing data interpolation</p></li>
+<li><p>Inpainting for terrain reconstruction</p></li>
+<li><p>Multi-sensor support</p></li>
+<li><p>Integration with RaiSim physics simulation</p></li>
+</ul>
+<p>The plugin is essential for quadruped locomotion, providing terrain awareness for footstep planning and obstacle avoidance.</p>
+<section id="dependencies">
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>D455 plugin (or other depth camera plugin)</p></li>
+<li><p>IEKF state estimator (or sim_state for simulation)</p></li>
+</ul>
+</section>
+</section>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h2>
+<section id="configuration-file">
+<h3>Configuration File<a class="headerlink" href="#configuration-file" title="Link to this heading"></a></h3>
+<p>Location: <code class="docutils literal notranslate"><span class="pre">raisin_grid_mapping_plugin/config/params.yaml</span></code></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span>
+<span class="nt">heightmap_publish_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="nt">map_resolution</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.025</span>
+<span class="nt">local_map_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="nt">max_count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="nt">velocity_trust_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8.0</span>
+<span class="nt">distance_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span>
+<span class="nt">height_threshold_minimum</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.05</span>
+<span class="nt">height_threshold_proportional</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.05</span>
+
+<span class="nt">ray_casting</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">is_ray_casting</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="nt">downsampling_kernel</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
+
+<span class="nt">hole_filling</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">is_hole_filling</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">hole_filling_kernel_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+
+<span class="nt">inpainting</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">is_inpainting</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="nt">rayWidthProportional</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.0</span>
+
+<span class="nt">memorize_limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span>
+</pre></div>
+</div>
+</section>
+<section id="parameter-reference">
+<h3>Parameter Reference<a class="headerlink" href="#parameter-reference" title="Link to this heading"></a></h3>
+<p>Map Configuration:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 15.0%" />
+<col style="width: 55.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>rate</p></td>
+<td><p>500</p></td>
+<td><p>Processing rate (Hz)</p></td>
+</tr>
+<tr class="row-odd"><td><p>heightmap_publish_rate</p></td>
+<td><p>5</p></td>
+<td><p>Heightmap publishing rate (Hz)</p></td>
+</tr>
+<tr class="row-even"><td><p>map_resolution</p></td>
+<td><p>0.025</p></td>
+<td><p>Map resolution in meters per cell</p></td>
+</tr>
+<tr class="row-odd"><td><p>local_map_size</p></td>
+<td><p>10</p></td>
+<td><p>Local map size in meters</p></td>
+</tr>
+</tbody>
+</table>
+<p>Trust and Filtering:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 15.0%" />
+<col style="width: 55.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>velocity_trust_threshold</p></td>
+<td><p>8.0</p></td>
+<td><p>Maximum velocity for trusting measurements (m/s)</p></td>
+</tr>
+<tr class="row-odd"><td><p>distance_threshold</p></td>
+<td><p>0.1</p></td>
+<td><p>Distance threshold for filtering (m)</p></td>
+</tr>
+<tr class="row-even"><td><p>height_threshold_minimum</p></td>
+<td><p>0.05</p></td>
+<td><p>Minimum height change threshold (m)</p></td>
+</tr>
+<tr class="row-odd"><td><p>height_threshold_proportional</p></td>
+<td><p>0.05</p></td>
+<td><p>Height threshold increase per meter of distance</p></td>
+</tr>
+</tbody>
+</table>
+<p>Ray Casting:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 15.0%" />
+<col style="width: 55.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>is_ray_casting</p></td>
+<td><p>false</p></td>
+<td><p>Enable ray casting for occlusion handling</p></td>
+</tr>
+<tr class="row-odd"><td><p>downsampling_kernel</p></td>
+<td><p>20</p></td>
+<td><p>Ray casting downsampling factor</p></td>
+</tr>
+</tbody>
+</table>
+<p>Hole Filling:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 15.0%" />
+<col style="width: 55.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>is_hole_filling</p></td>
+<td><p>true</p></td>
+<td><p>Enable hole filling for missing data</p></td>
+</tr>
+<tr class="row-odd"><td><p>hole_filling_kernel_size</p></td>
+<td><p>5</p></td>
+<td><p>Kernel size for hole filling algorithm</p></td>
+</tr>
+</tbody>
+</table>
+<p>Inpainting:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 15.0%" />
+<col style="width: 55.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>is_inpainting</p></td>
+<td><p>false</p></td>
+<td><p>Enable inpainting for terrain reconstruction</p></td>
+</tr>
+<tr class="row-odd"><td><p>rayWidthProportional</p></td>
+<td><p>5.0</p></td>
+<td><p>Ray width proportional factor for inpainting</p></td>
+</tr>
+</tbody>
+</table>
+<p>Memory:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 15.0%" />
+<col style="width: 55.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>memorize_limit</p></td>
+<td><p>0.1</p></td>
+<td><p>Time limit for keeping old measurements (seconds)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="message-topics">
+<h2>Message Topics<a class="headerlink" href="#message-topics" title="Link to this heading"></a></h2>
+<section id="publishers">
+<h3>Publishers<a class="headerlink" href="#publishers" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 30.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Topic</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>/heightmap</p></td>
+<td><p>raisin_interfaces/Heightmap</p></td>
+<td><p>Processed terrain heightmap</p></td>
+</tr>
+<tr class="row-odd"><td><p>/inpaint_heightmap</p></td>
+<td><p>raisin_interfaces/Heightmap</p></td>
+<td><p>Inpainted terrain heightmap</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="subscribers">
+<h3>Subscribers<a class="headerlink" href="#subscribers" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 30.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Topic</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>/pose</p></td>
+<td><p>raisin_interfaces/Pose</p></td>
+<td><p>Robot pose from state estimator</p></td>
+</tr>
+<tr class="row-odd"><td><p>/joint_states</p></td>
+<td><p>raisin_interfaces/JointStates</p></td>
+<td><p>Joint states for leg collision filtering</p></td>
+</tr>
+<tr class="row-even"><td><p>/module_list</p></td>
+<td><p>raisin_interfaces/ModuleList</p></td>
+<td><p>Loaded module list for state estimator verification</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="services">
+<h3>Services<a class="headerlink" href="#services" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 30.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Service</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>/get_inpaintmap</p></td>
+<td><p>GetInpaintmap</p></td>
+<td><p>Request inpainted map data</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
+<section id="basic-setup">
+<h3>Basic Setup<a class="headerlink" href="#basic-setup" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Load a supported depth camera plugin</p></li>
+<li><p>Load a state estimator (IEKF or sim_state)</p></li>
+<li><p>Load the Grid Mapping plugin</p></li>
+</ol>
+<p>Example configuration in <code class="docutils literal notranslate"><span class="pre">params.yaml</span></code>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">plugin</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">raisin_d455_plugin</span><span class="p">:</span><span class="w">  </span><span class="c1"># e.g., for D455 camera</span>
+<span class="w">    </span><span class="nt">rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span>
+
+<span class="w">  </span><span class="nt">raisin_iekf_plugin</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">400</span>
+
+<span class="w">  </span><span class="nt">raisin_grid_mapping_plugin</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span>
+</pre></div>
+</div>
+</section>
+<section id="tuning-for-different-terrains">
+<h3>Tuning for Different Terrains<a class="headerlink" href="#tuning-for-different-terrains" title="Link to this heading"></a></h3>
+<p>For rough terrain:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">height_threshold_minimum</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span>
+</pre></div>
+</div>
+<p>For smooth terrain:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">height_threshold_minimum</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.02</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Lower resolution (larger <code class="docutils literal notranslate"><span class="pre">map_resolution</span></code>) improves performance but reduces terrain detail.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Grid Mapping requires a valid state estimator. The plugin will wait until a valid estimator (iekf or sim_state) is loaded.</p>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="FastLIO.html" class="btn btn-neutral float-left" title="FAST-LIO SLAM Plugin" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Autonomy.html" class="btn btn-neutral float-right" title="Autonomy Plugin" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Raion Robotics..</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

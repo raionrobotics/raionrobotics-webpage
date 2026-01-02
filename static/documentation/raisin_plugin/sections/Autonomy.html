@@ -1,0 +1,579 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Autonomy Plugin &mdash; Raisin Plugin - Autonomous Navigation 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Autonomy External API" href="AutonomyAPI.html" />
+    <link rel="prev" title="Grid Mapping Plugin" href="GridMapping.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Raisin Plugin - Autonomous Navigation
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Ouster.html">Ouster LiDAR Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Livox.html">Livox LiDAR Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="D455.html">D455 Depth Camera Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FastLIO.html">FAST-LIO SLAM Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GridMapping.html">Grid Mapping Plugin</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Autonomy Plugin</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#heightmap-based-obstacle-avoidance">Heightmap-Based Obstacle Avoidance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-file">Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#basic-settings">Basic Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parameter-reference">Parameter Reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#local-planner-configuration">Local Planner Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#path-following-configuration">Path Following Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#terrain-analysis-configuration">Terrain Analysis Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#message-topics">Message Topics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#publishers">Publishers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#subscribers">Subscribers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#services">Services</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#setting-waypoints">Setting Waypoints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#robot-dimensions">Robot Dimensions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gps-navigation">GPS Navigation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="AutonomyAPI.html">Autonomy External API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MapWindow.html">Map Window (GUI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Troubleshooting.html">Troubleshooting</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Raisin Plugin - Autonomous Navigation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Autonomy Plugin</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/sections/Autonomy.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="autonomy-plugin">
+<h1>Autonomy Plugin<a class="headerlink" href="#autonomy-plugin" title="Link to this heading"></a></h1>
+<p>The Autonomy plugin enables autonomous waypoint navigation with terrain analysis, obstacle avoidance, and intelligent path planning.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The Autonomy plugin provides:</p>
+<ul class="simple">
+<li><p>Waypoint-based navigation</p></li>
+<li><p>Local path planning with obstacle avoidance</p></li>
+<li><p>Terrain analysis and traversability assessment</p></li>
+<li><p>Speed adaptation based on terrain and obstacles</p></li>
+<li><p>GPS waypoint support</p></li>
+</ul>
+</section>
+<section id="heightmap-based-obstacle-avoidance">
+<h2>Heightmap-Based Obstacle Avoidance<a class="headerlink" href="#heightmap-based-obstacle-avoidance" title="Link to this heading"></a></h2>
+<p>The Autonomy plugin uses terrain heightmap data for intelligent obstacle avoidance. This heightmap is generated by the <strong>Grid Mapping plugin</strong> which processes depth camera data.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>┌──────────────┐     ┌──────────────┐     ┌──────────────┐
+│ Depth Camera │────►│ Grid Mapping │────►│   Autonomy   │
+│    Plugin    │     │    Plugin    │     │    Plugin    │
+└──────────────┘     └──────────────┘     └──────────────┘
+       │                    │                    │
+       ▼                    ▼                    ▼
+  Depth Images       Terrain Heightmap     Path Planning
+                     (local_grid_map)      + Avoidance
+</pre></div>
+</div>
+<p><strong>Data Flow:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Depth Camera Plugin</strong> captures depth images from an Intel RealSense camera</p></li>
+<li><p><strong>Grid Mapping Plugin</strong> processes depth data to generate a terrain heightmap (<code class="docutils literal notranslate"><span class="pre">local_grid_map</span></code>)</p></li>
+<li><p><strong>Autonomy Plugin</strong> subscribes to this heightmap via the <code class="docutils literal notranslate"><span class="pre">heightMapName</span></code> parameter</p></li>
+<li><p>The local planner uses heightmap data to detect obstacles and plan collision-free paths</p></li>
+</ol>
+<p><strong>Configuration:</strong></p>
+<p>To enable heightmap-based obstacle avoidance, ensure:</p>
+<ul class="simple">
+<li><p>Depth camera plugin is loaded and configured</p></li>
+<li><p>Grid Mapping plugin is running with proper parameters</p></li>
+<li><p>Autonomy plugin’s <code class="docutils literal notranslate"><span class="pre">heightMapName</span></code> matches Grid Mapping’s output topic</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># In Autonomy plugin config</span>
+<span class="nt">heightMapName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local_grid_map</span><span class="w">  </span><span class="c1"># Must match Grid Mapping output topic</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For optimal obstacle avoidance, the Grid Mapping plugin should be configured with appropriate <code class="docutils literal notranslate"><span class="pre">map_resolution</span></code> and <code class="docutils literal notranslate"><span class="pre">local_map_size</span></code> to cover the robot’s navigation area.</p>
+</div>
+</section>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h2>
+<section id="configuration-file">
+<h3>Configuration File<a class="headerlink" href="#configuration-file" title="Link to this heading"></a></h3>
+<p>Location: <code class="docutils literal notranslate"><span class="pre">raisin_autonomy_plugin/config/params.yaml</span></code></p>
+</section>
+<section id="basic-settings">
+<h3>Basic Settings<a class="headerlink" href="#basic-settings" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="nt">maxSpeed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4.0</span>
+<span class="nt">autonomyMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="nt">autonomySpeed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
+<span class="nt">waypointXYRadius</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
+<span class="nt">twoWayDrive</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="nt">joyToSpeedDelay</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span>
+</pre></div>
+</div>
+</section>
+<section id="parameter-reference">
+<h3>Parameter Reference<a class="headerlink" href="#parameter-reference" title="Link to this heading"></a></h3>
+<p>Core Settings:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>rate</p></td>
+<td><p>double</p></td>
+<td><p>100</p></td>
+<td><p>Update frequency (Hz)</p></td>
+</tr>
+<tr class="row-odd"><td><p>maxSpeed</p></td>
+<td><p>double</p></td>
+<td><p>4.0</p></td>
+<td><p>Maximum speed limit (m/s)</p></td>
+</tr>
+<tr class="row-even"><td><p>autonomyMode</p></td>
+<td><p>bool</p></td>
+<td><p>true</p></td>
+<td><p>Enable autonomous navigation</p></td>
+</tr>
+<tr class="row-odd"><td><p>autonomySpeed</p></td>
+<td><p>double</p></td>
+<td><p>1.0</p></td>
+<td><p>Default cruising speed (m/s)</p></td>
+</tr>
+<tr class="row-even"><td><p>waypointXYRadius</p></td>
+<td><p>double</p></td>
+<td><p>1.0</p></td>
+<td><p>Distance to consider waypoint reached (m)</p></td>
+</tr>
+<tr class="row-odd"><td><p>twoWayDrive</p></td>
+<td><p>bool</p></td>
+<td><p>false</p></td>
+<td><p>Enable reverse driving</p></td>
+</tr>
+<tr class="row-even"><td><p>joyToSpeedDelay</p></td>
+<td><p>double</p></td>
+<td><p>2.0</p></td>
+<td><p>Delay before resuming after joystick (s)</p></td>
+</tr>
+<tr class="row-odd"><td><p>heightMapName</p></td>
+<td><p>string</p></td>
+<td><p>local_grid_map</p></td>
+<td><p>Height map topic to use</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="local-planner-configuration">
+<h3>Local Planner Configuration<a class="headerlink" href="#local-planner-configuration" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">localPlanner</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">vehicleLength</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.2</span>
+<span class="w">  </span><span class="nt">vehicleWidth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
+<span class="w">  </span><span class="nt">useTerrainAnalysis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">checkObstacle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">adjacentRange</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.5</span>
+</pre></div>
+</div>
+<p>Local Planner Parameters:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>vehicleLength</p></td>
+<td><p>double</p></td>
+<td><p>1.2</p></td>
+<td><p>Robot length for collision checking (m)</p></td>
+</tr>
+<tr class="row-odd"><td><p>vehicleWidth</p></td>
+<td><p>double</p></td>
+<td><p>0.5</p></td>
+<td><p>Robot width for collision checking (m)</p></td>
+</tr>
+<tr class="row-even"><td><p>laserVoxelSize</p></td>
+<td><p>double</p></td>
+<td><p>0.05</p></td>
+<td><p>Obstacle detection resolution (m)</p></td>
+</tr>
+<tr class="row-odd"><td><p>terrainVoxelSize</p></td>
+<td><p>double</p></td>
+<td><p>0.2</p></td>
+<td><p>Terrain mapping resolution (m)</p></td>
+</tr>
+<tr class="row-even"><td><p>useTerrainAnalysis</p></td>
+<td><p>bool</p></td>
+<td><p>true</p></td>
+<td><p>Enable terrain cost analysis</p></td>
+</tr>
+<tr class="row-odd"><td><p>checkObstacle</p></td>
+<td><p>bool</p></td>
+<td><p>true</p></td>
+<td><p>Enable obstacle collision checking</p></td>
+</tr>
+<tr class="row-even"><td><p>adjacentRange</p></td>
+<td><p>double</p></td>
+<td><p>3.5</p></td>
+<td><p>Planning horizon distance (m)</p></td>
+</tr>
+<tr class="row-odd"><td><p>heightGapThre</p></td>
+<td><p>double</p></td>
+<td><p>0.25</p></td>
+<td><p>Max allowed ground discontinuity (m)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="path-following-configuration">
+<h3>Path Following Configuration<a class="headerlink" href="#path-following-configuration" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">pathFollower</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">lookAheadDis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
+<span class="w">  </span><span class="nt">yawRateGain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.5</span>
+<span class="w">  </span><span class="nt">maxYawRate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">90.0</span>
+<span class="w">  </span><span class="nt">maxAccel</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0</span>
+</pre></div>
+</div>
+<p>Path Follower Parameters:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>lookAheadDis</p></td>
+<td><p>double</p></td>
+<td><p>0.5</p></td>
+<td><p>Pure pursuit lookahead distance (m)</p></td>
+</tr>
+<tr class="row-odd"><td><p>yawRateGain</p></td>
+<td><p>double</p></td>
+<td><p>2.5</p></td>
+<td><p>Steering responsiveness gain</p></td>
+</tr>
+<tr class="row-even"><td><p>maxYawRate</p></td>
+<td><p>double</p></td>
+<td><p>90.0</p></td>
+<td><p>Maximum turning rate (deg/s)</p></td>
+</tr>
+<tr class="row-odd"><td><p>maxAccel</p></td>
+<td><p>double</p></td>
+<td><p>3.0</p></td>
+<td><p>Maximum acceleration (m/s²)</p></td>
+</tr>
+<tr class="row-even"><td><p>slowDwnDisThre</p></td>
+<td><p>double</p></td>
+<td><p>1.8</p></td>
+<td><p>Distance to start slowing (m)</p></td>
+</tr>
+<tr class="row-odd"><td><p>stopDisThre</p></td>
+<td><p>double</p></td>
+<td><p>0.4</p></td>
+<td><p>Distance to stop at waypoint (m)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="terrain-analysis-configuration">
+<h3>Terrain Analysis Configuration<a class="headerlink" href="#terrain-analysis-configuration" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">terrainAnalysis</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">scanVoxelSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.05</span>
+<span class="w">  </span><span class="nt">decayTime</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
+<span class="w">  </span><span class="nt">clearingDis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8.0</span>
+<span class="w">  </span><span class="nt">vehicleHeight</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.5</span>
+</pre></div>
+</div>
+<p>Terrain Analysis Parameters:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>scanVoxelSize</p></td>
+<td><p>double</p></td>
+<td><p>0.05</p></td>
+<td><p>Point cloud voxel size (m)</p></td>
+</tr>
+<tr class="row-odd"><td><p>decayTime</p></td>
+<td><p>double</p></td>
+<td><p>0.5</p></td>
+<td><p>Obstacle memory decay time (s)</p></td>
+</tr>
+<tr class="row-even"><td><p>clearingDis</p></td>
+<td><p>double</p></td>
+<td><p>8.0</p></td>
+<td><p>Maximum sensor range (m)</p></td>
+</tr>
+<tr class="row-odd"><td><p>vehicleHeight</p></td>
+<td><p>double</p></td>
+<td><p>1.5</p></td>
+<td><p>Robot height for clearance check (m)</p></td>
+</tr>
+<tr class="row-even"><td><p>minRelZ / maxRelZ</p></td>
+<td><p>double</p></td>
+<td><p>-1.5 / 0.5</p></td>
+<td><p>Valid height range relative to robot (m)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="message-topics">
+<h2>Message Topics<a class="headerlink" href="#message-topics" title="Link to this heading"></a></h2>
+<section id="publishers">
+<h3>Publishers<a class="headerlink" href="#publishers" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 30.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Topic</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>/way_point</p></td>
+<td><p>geometry_msgs/PointStamped</p></td>
+<td><p>Current target waypoint</p></td>
+</tr>
+<tr class="row-odd"><td><p>/speed</p></td>
+<td><p>std_msgs/Float32</p></td>
+<td><p>Commanded speed</p></td>
+</tr>
+<tr class="row-even"><td><p>/path</p></td>
+<td><p>nav_msgs/Path</p></td>
+<td><p>Planned path visualization</p></td>
+</tr>
+<tr class="row-odd"><td><p>/free_paths</p></td>
+<td><p>sensor_msgs/PointCloud2</p></td>
+<td><p>Available path options (debug)</p></td>
+</tr>
+<tr class="row-even"><td><p>/terrain_map</p></td>
+<td><p>sensor_msgs/PointCloud2</p></td>
+<td><p>Terrain elevation map</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="subscribers">
+<h3>Subscribers<a class="headerlink" href="#subscribers" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 30.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Topic</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>/Odometry/base</p></td>
+<td><p>nav_msgs/Odometry</p></td>
+<td><p>Robot odometry (from FAST-LIO)</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;heightMapName&gt;</p></td>
+<td><p>sensor_msgs/PointCloud2</p></td>
+<td><p>Local height map</p></td>
+</tr>
+<tr class="row-even"><td><p>/fix</p></td>
+<td><p>sensor_msgs/NavSatFix</p></td>
+<td><p>GPS coordinates (optional)</p></td>
+</tr>
+<tr class="row-odd"><td><p>yaw_offset</p></td>
+<td><p>std_msgs/Float64</p></td>
+<td><p>GPS heading calibration (optional)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="services">
+<h3>Services<a class="headerlink" href="#services" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Service</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>planning/set_waypoints</p></td>
+<td><p>Set mission waypoint list</p></td>
+</tr>
+<tr class="row-odd"><td><p>planning/get_waypoints</p></td>
+<td><p>Get current waypoint list</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
+<section id="setting-waypoints">
+<h3>Setting Waypoints<a class="headerlink" href="#setting-waypoints" title="Link to this heading"></a></h3>
+<p>Waypoints can be set via:</p>
+<ol class="arabic simple">
+<li><p><strong>GUI Map Window</strong>: Click to add waypoints on the map</p></li>
+<li><p><strong>Service Call</strong>: Programmatically set waypoint list</p></li>
+</ol>
+</section>
+<section id="robot-dimensions">
+<h3>Robot Dimensions<a class="headerlink" href="#robot-dimensions" title="Link to this heading"></a></h3>
+<p>Set <code class="docutils literal notranslate"><span class="pre">vehicleLength</span></code> and <code class="docutils literal notranslate"><span class="pre">vehicleWidth</span></code> to match your robot:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">localPlanner</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">vehicleLength</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.2</span><span class="w">  </span><span class="c1"># Your robot length</span>
+<span class="w">  </span><span class="nt">vehicleWidth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span><span class="w">   </span><span class="c1"># Your robot width</span>
+</pre></div>
+</div>
+</section>
+<section id="gps-navigation">
+<h3>GPS Navigation<a class="headerlink" href="#gps-navigation" title="Link to this heading"></a></h3>
+<p>For GPS-based waypoints:</p>
+<ol class="arabic simple">
+<li><p>Ensure GPS provides <code class="docutils literal notranslate"><span class="pre">/fix</span></code> topic</p></li>
+<li><p>Calibrate heading with <code class="docutils literal notranslate"><span class="pre">yaw_offset</span></code></p></li>
+<li><p>Set waypoints using latitude/longitude</p></li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>GPS accuracy affects navigation precision. Use RTK-GPS for best results.</p>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="GridMapping.html" class="btn btn-neutral float-left" title="Grid Mapping Plugin" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="AutonomyAPI.html" class="btn btn-neutral float-right" title="Autonomy External API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Raion Robotics..</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
