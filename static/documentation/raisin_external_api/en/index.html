@@ -1,0 +1,1163 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raisin External API Reference &mdash; Raisin External API Reference 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8d563738"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Raisin External API Reference
+              <img src="_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Raisin External API Reference</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#integration-package">Integration Package</a><ul>
+<li><a class="reference internal" href="#how-to-obtain">How to Obtain</a></li>
+<li><a class="reference internal" href="#package-contents">Package Contents</a></li>
+<li><a class="reference internal" href="#system-requirements">System Requirements</a></li>
+<li><a class="reference internal" href="#network-requirements">Network Requirements</a></li>
+<li><a class="reference internal" href="#finding-robot-id">Finding Robot ID</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#api-example-reference">API Example Reference</a><ul>
+<li><a class="reference internal" href="#include-header">Include Header</a></li>
+<li><a class="reference internal" href="#basic-workflow">Basic Workflow</a></li>
+<li><a class="reference internal" href="#data-types">Data Types</a></li>
+<li><a class="reference internal" href="#autonomyclient-methods">AutonomyClient Methods</a></li>
+<li><a class="reference internal" href="#gps-usage-notes">GPS Usage Notes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#direct-network-api">Direct Network API</a><ul>
+<li><a class="reference internal" href="#include-headers">Include Headers</a></li>
+<li><a class="reference internal" href="#connection-pattern">Connection Pattern</a></li>
+<li><a class="reference internal" href="#creating-service-clients">Creating Service Clients</a></li>
+<li><a class="reference internal" href="#service-call-example">Service Call Example</a></li>
+<li><a class="reference internal" href="#creating-subscribers">Creating Subscribers</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#service-interface-reference">Service Interface Reference</a><ul>
+<li><a class="reference internal" href="#planning-set-waypoints">planning/set_waypoints</a></li>
+<li><a class="reference internal" href="#planning-get-waypoints">planning/get_waypoints</a></li>
+<li><a class="reference internal" href="#planning-append-waypoint">planning/append_waypoint</a></li>
+<li><a class="reference internal" href="#set-map-setlasermap">set_map (SetLaserMap)</a></li>
+<li><a class="reference internal" href="#waypoint-message">Waypoint Message</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#complete-examples">Complete Examples</a><ul>
+<li><a class="reference internal" href="#basic-waypoint-control">Basic Waypoint Control</a></li>
+<li><a class="reference internal" href="#real-time-monitoring">Real-time Monitoring</a></li>
+<li><a class="reference internal" href="#infinite-patrol">Infinite Patrol</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#gui-demo-simple-gui">GUI Demo (simple_gui)</a><ul>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+<li><a class="reference internal" href="#workflow">Workflow</a></li>
+<li><a class="reference internal" href="#keyboard-shortcuts">Keyboard Shortcuts</a></li>
+<li><a class="reference internal" href="#mouse-controls">Mouse Controls</a></li>
+<li><a class="reference internal" href="#status-display">Status Display</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cmake-configuration">CMake Configuration</a></li>
+<li><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li><a class="reference internal" href="#connection-failed">Connection Failed</a></li>
+<li><a class="reference internal" href="#map-load-failed">Map Load Failed</a></li>
+<li><a class="reference internal" href="#robot-not-moving">Robot Not Moving</a></li>
+<li><a class="reference internal" href="#service-response-messages">Service Response Messages</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#related-documentation">Related Documentation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Raisin External API Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Raisin External API Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="raisin-external-api-reference">
+<h1>Raisin External API Reference<a class="headerlink" href="#raisin-external-api-reference" title="Link to this heading"></a></h1>
+<p>API documentation for controlling Raibo2 autonomous navigation from external systems.</p>
+<p><a class="reference external" href="../ko/index.html">한국어 버전</a></p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>Raisin provides two integration methods for external systems:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Method</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Use Case</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>API Example</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AutonomyClient</span></code> wrapper class example code</p></td>
+<td><p>Quick start, reference implementation</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Direct Network</strong></p></td>
+<td><p>Direct use of <code class="docutils literal notranslate"><span class="pre">raisin_network</span></code> library</p></td>
+<td><p>Custom service calls, fine-grained control</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>API Example (AutonomyClient)</strong> is example code, not an officially supported SDK.
+It is a reference implementation showing how to integrate with the Raisin platform.
+Modify it as needed for your use case.</p>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>+------------------------------------------+
+|           External Application           |
++------------------------------------------+
+|  Option A: API Example                   |
+|  +------------------------------------+  |
+|  |  #include &quot;autonomy_client.hpp&quot;   |  |
+|  |  AutonomyClient client;           |  |
+|  |  client.connect(&quot;ROBOT_ID&quot;);      |  |
+|  |  client.setMap(...);              |  |
+|  |  client.setWaypoints(...);        |  |
+|  +------------------------------------+  |
++------------------------------------------+
+|  Option B: Direct Network                |
+|  +------------------------------------+  |
+|  |  raisin::Network network;         |  |
+|  |  raisin::Node node;               |  |
+|  |  auto client = node.createClient  |  |
+|  |      &lt;SetWaypoints&gt;(...);         |  |
+|  +------------------------------------+  |
++------------------------------------------+
+                  |
+                  | WebSocket
+                  v
++------------------------------------------+
+|                 Raibo2                   |
+|  +----------------+  +----------------+  |
+|  | Autonomy Plugin|  | Fast-LIO Plugin|  |
+|  | - Waypoints    |  | - Localization |  |
+|  | - Navigation   |  | - Map Loading  |  |
+|  +----------------+  +----------------+  |
++------------------------------------------+
+</pre></div>
+</div>
+</section>
+<section id="integration-package">
+<h2>Integration Package<a class="headerlink" href="#integration-package" title="Link to this heading"></a></h2>
+<section id="how-to-obtain">
+<h3>How to Obtain<a class="headerlink" href="#how-to-obtain" title="Link to this heading"></a></h3>
+<p>The integration package is provided by Raion Robotics. Request via:</p>
+<ul class="simple">
+<li><p><strong>Email</strong>: <a class="reference external" href="mailto:support&#37;&#52;&#48;raionrobotics&#46;com">support<span>&#64;</span>raionrobotics<span>&#46;</span>com</a></p></li>
+<li><p><strong>Website</strong>: <a class="reference external" href="https://raionrobotics.com/support">https://raionrobotics.com/support</a></p></li>
+</ul>
+</section>
+<section id="package-contents">
+<h3>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">raisin_sdk_install/</span></code> folder contains:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>raisin_sdk_install/
+├── include/                    # Header files
+│   ├── raisin_network/         # Network library
+│   ├── raisin_interfaces/      # Message/service definitions
+│   └── ...
+└── lib/                        # Compiled libraries
+    ├── libraisin_network.so
+    ├── libraisin_interfaces.so
+    └── ...
+</pre></div>
+</div>
+</section>
+<section id="system-requirements">
+<h3>System Requirements<a class="headerlink" href="#system-requirements" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ubuntu 22.04</span>
+sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>libeigen3-dev<span class="w"> </span>libssl-dev<span class="w"> </span>libpcl-dev<span class="w"> </span>libopencv-dev
+</pre></div>
+</div>
+</section>
+<section id="network-requirements">
+<h3>Network Requirements<a class="headerlink" href="#network-requirements" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Robot and client must be on the <strong>same network</strong></p></li>
+<li><p>Multicast traffic must be allowed (for Robot ID discovery)</p></li>
+<li><p>Firewall: Allow TCP/UDP ports 8080, 38371, etc.</p></li>
+</ul>
+</section>
+<section id="finding-robot-id">
+<h3>Finding Robot ID<a class="headerlink" href="#finding-robot-id" title="Link to this heading"></a></h3>
+<p>Robot ID is printed in the <code class="docutils literal notranslate"><span class="pre">raisin_master</span></code> console on startup:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[raisin_master] Robot ID: railab_raibo-3614732983840
+[raisin_master] Listening on port 38371
+</pre></div>
+</div>
+<p>It can also be found in raisin_gui.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="api-example-reference">
+<h2>API Example Reference<a class="headerlink" href="#api-example-reference" title="Link to this heading"></a></h2>
+<p>Example code using the <code class="docutils literal notranslate"><span class="pre">AutonomyClient</span></code> wrapper class. Modify as needed for your use case.</p>
+<section id="include-header">
+<h3>Include Header<a class="headerlink" href="#include-header" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_sdk/autonomy_client.hpp&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="basic-workflow">
+<h3>Basic Workflow<a class="headerlink" href="#basic-workflow" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// 1. Create client</span>
+<span class="n">raisin_sdk</span><span class="o">::</span><span class="n">AutonomyClient</span><span class="w"> </span><span class="n">client</span><span class="p">(</span><span class="s">&quot;my_app&quot;</span><span class="p">);</span>
+
+<span class="c1">// 2. Connect to robot</span>
+<span class="n">client</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ROBOT_ID&quot;</span><span class="p">);</span>
+
+<span class="c1">// 3. Load map (enables localization)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">setMap</span><span class="p">(</span><span class="s">&quot;/path/to/map.pcd&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;my_map&quot;</span><span class="p">);</span>
+
+<span class="c1">// 4. Set waypoints (frame MUST match map_name!)</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="o">&gt;</span><span class="w"> </span><span class="n">waypoints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;my_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span><span class="w">   </span><span class="c1">// Use &quot;my_map&quot;</span>
+<span class="w">    </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;my_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">),</span>
+<span class="p">};</span>
+<span class="n">client</span><span class="p">.</span><span class="n">setWaypoints</span><span class="p">(</span><span class="n">waypoints</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+
+<span class="c1">// 5. Monitor status</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">getMissionStatus</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+<section id="data-types">
+<h3>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h3>
+<p><strong>Waypoint</strong> - Navigation target point</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">Waypoint</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">frame</span><span class="p">;</span><span class="w">  </span><span class="c1">// Coordinate frame (important!)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">;</span><span class="w">     </span><span class="c1">// Coordinates</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">use_z</span><span class="p">;</span><span class="w">         </span><span class="c1">// Whether to use Z coordinate</span>
+<span class="p">};</span>
+
+<span class="c1">// Creation methods</span>
+<span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;map_name&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">);</span><span class="w">           </span><span class="c1">// Map coordinates</span>
+<span class="n">Waypoint</span><span class="o">::</span><span class="n">GPS</span><span class="p">(</span><span class="n">latitude</span><span class="p">,</span><span class="w"> </span><span class="n">longitude</span><span class="p">);</span><span class="w">   </span><span class="c1">// GPS coordinates (requires GPS module)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>The frame name MUST match the map_name specified in setMap()!</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Correct example</span>
+<span class="n">client</span><span class="p">.</span><span class="n">setMap</span><span class="p">(</span><span class="s">&quot;/path/map.pcd&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;office_map&quot;</span><span class="p">);</span>
+<span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;office_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span><span class="w">  </span><span class="c1">// Same name</span>
+
+<span class="c1">// Wrong example</span>
+<span class="n">client</span><span class="p">.</span><span class="n">setMap</span><span class="p">(</span><span class="s">&quot;/path/map.pcd&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;office_map&quot;</span><span class="p">);</span>
+<span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span><span class="w">  </span><span class="c1">// Name mismatch - won&#39;t work!</span>
+</pre></div>
+</div>
+</div>
+<p><strong>MissionStatus</strong> - Mission state</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">MissionStatus</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Waypoint</span><span class="o">&gt;</span><span class="w"> </span><span class="n">waypoints</span><span class="p">;</span><span class="w">  </span><span class="c1">// Current waypoint list</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">current_index</span><span class="p">;</span><span class="w">            </span><span class="c1">// Current target index</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">repetition</span><span class="p">;</span><span class="w">               </span><span class="c1">// Remaining laps (0=infinite)</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">valid</span><span class="p">;</span><span class="w">                       </span><span class="c1">// Data validity</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>ServiceResult</strong> - Service call result</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">ServiceResult</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">success</span><span class="p">;</span><span class="w">         </span><span class="c1">// Success flag</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">message</span><span class="p">;</span><span class="w">  </span><span class="c1">// Result message</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>RobotState</strong> - Robot state (Odometry)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">RobotState</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">;</span><span class="w">    </span><span class="c1">// Position (meters)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">yaw</span><span class="p">;</span><span class="w">        </span><span class="c1">// Heading (radians)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">vx</span><span class="p">,</span><span class="w"> </span><span class="n">vy</span><span class="p">;</span><span class="w">     </span><span class="c1">// Linear velocity (m/s)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">omega</span><span class="p">;</span><span class="w">      </span><span class="c1">// Angular velocity (rad/s)</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">valid</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>Point3D</strong> - Point cloud point</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">Point3D</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">;</span><span class="w"> </span><span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="autonomyclient-methods">
+<h3>AutonomyClient Methods<a class="headerlink" href="#autonomyclient-methods" title="Link to this heading"></a></h3>
+<p><strong>connect()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="nf">connect</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">robot_id</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">timeout_sec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Connects to the robot.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">robot_id</span></code>: Robot ID or IP address</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">timeout_sec</span></code>: Connection timeout (seconds)</p></li>
+<li><p><strong>Returns</strong>: Connection success</p></li>
+</ul>
+<p><strong>setMap()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">setMap</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">pcd_path</span><span class="p">,</span>
+<span class="w">                     </span><span class="kt">double</span><span class="w"> </span><span class="n">initial_x</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">initial_y</span><span class="p">,</span>
+<span class="w">                     </span><span class="kt">double</span><span class="w"> </span><span class="n">initial_z</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">initial_yaw</span><span class="p">,</span>
+<span class="w">                     </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">map_name</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Loads a PCD map file and initializes localization.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pcd_path</span></code>: PCD file path (<strong>file on client PC</strong>, transferred to robot)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initial_x/y/z</span></code>: Robot initial position in map (enter map coordinates where the robot is physically located)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initial_yaw</span></code>: Initial heading (radians)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">map_name</span></code>: Map frame name (<strong>must match Waypoint frame</strong>)</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>PCD maps must be pre-generated using SLAM. Use raisin_gui’s Mapping feature or
+generate directly with the Fast-LIO plugin.</p>
+</div>
+<p><strong>setWaypoints()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">setWaypoints</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Waypoint</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">waypoints</span><span class="p">,</span>
+<span class="w">                            </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">repetition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                            </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">start_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Sets waypoint list and starts navigation.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">waypoints</span></code>: Waypoint list</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">repetition</span></code>: Repeat count</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">0</span></code> = infinite patrol</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1</span></code> = single pass (default)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">N</span></code> = repeat N times</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">start_index</span></code>: Starting waypoint index</p></li>
+</ul>
+<p><strong>getMissionStatus()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MissionStatus</span><span class="w"> </span><span class="nf">getMissionStatus</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Queries current mission status.</p>
+<p><strong>appendWaypoint()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">appendWaypoint</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Waypoint</span><span class="o">&amp;</span><span class="w"> </span><span class="n">waypoint</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Appends a waypoint to the current mission queue.</p>
+<p><strong>stopNavigation()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">stopNavigation</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Stops autonomous navigation (sets empty waypoint list).</p>
+<p><strong>startPatrol()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">startPatrol</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Waypoint</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">waypoints</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Starts infinite patrol (equivalent to <code class="docutils literal notranslate"><span class="pre">setWaypoints(waypoints,</span> <span class="pre">0)</span></code>).</p>
+<p><strong>subscribeOdometry()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">subscribeOdometry</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">RobotState</span><span class="o">&amp;</span><span class="p">)</span><span class="o">&gt;</span><span class="w"> </span><span class="n">callback</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Subscribes to real-time odometry data.</p>
+<p><strong>subscribePointCloud()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">subscribePointCloud</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Point3D</span><span class="o">&gt;&amp;</span><span class="p">)</span><span class="o">&gt;</span><span class="w"> </span><span class="n">callback</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Subscribes to real-time LiDAR point cloud.</p>
+<p><strong>getRobotState() / getLatestPointCloud()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">RobotState</span><span class="w"> </span><span class="nf">getRobotState</span><span class="p">();</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Point3D</span><span class="o">&gt;</span><span class="w"> </span><span class="n">getLatestPointCloud</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Returns last received data (thread-safe).</p>
+<p><strong>loadPCD() (static)</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Point3D</span><span class="o">&gt;</span><span class="w"> </span><span class="n">loadPCD</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">pcd_path</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Loads a PCD file (for visualization without sending to robot).</p>
+</section>
+<section id="gps-usage-notes">
+<h3>GPS Usage Notes<a class="headerlink" href="#gps-usage-notes" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Waypoint</span><span class="o">::</span><span class="n">GPS</span><span class="p">(</span><span class="mf">37.5665</span><span class="p">,</span><span class="w"> </span><span class="mf">126.9780</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>GPS module must be installed</strong> on the robot</p></li>
+<li><p>GPS fix must be valid (<code class="docutils literal notranslate"><span class="pre">/fix</span></code> topic)</p></li>
+<li><p>Without GPS, <code class="docutils literal notranslate"><span class="pre">setWaypoints()</span></code> succeeds but robot won’t reach target</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="direct-network-api">
+<h2>Direct Network API<a class="headerlink" href="#direct-network-api" title="Link to this heading"></a></h2>
+<p>Direct <code class="docutils literal notranslate"><span class="pre">raisin_network</span></code> usage for advanced users.</p>
+<section id="include-headers">
+<h3>Include Headers<a class="headerlink" href="#include-headers" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_network/raisin.hpp&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_network/network.hpp&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_network/node.hpp&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_interfaces/srv/set_waypoints.hpp&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_interfaces/srv/get_waypoints.hpp&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_interfaces/srv/append_waypoint.hpp&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_interfaces/srv/set_laser_map.hpp&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="connection-pattern">
+<h3>Connection Pattern<a class="headerlink" href="#connection-pattern" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// 1. Initialize</span>
+<span class="n">raisin</span><span class="o">::</span><span class="n">raisinInit</span><span class="p">();</span>
+
+<span class="c1">// 2. Create network</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">threads</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="s">&quot;main&quot;</span><span class="p">}};</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">network</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">raisin</span><span class="o">::</span><span class="n">Network</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;my_client&quot;</span><span class="p">,</span><span class="w">      </span><span class="c1">// Client ID</span>
+<span class="w">    </span><span class="s">&quot;external&quot;</span><span class="p">,</span><span class="w">       </span><span class="c1">// Device type</span>
+<span class="w">    </span><span class="n">threads</span>
+<span class="p">);</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">seconds</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+
+<span class="c1">// 3. Connect to robot</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">connection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">network</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ROBOT_ID&quot;</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">connection</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Connection failed&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">seconds</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
+
+<span class="c1">// 4. Create Node</span>
+<span class="n">raisin</span><span class="o">::</span><span class="n">Node</span><span class="w"> </span><span class="nf">node</span><span class="p">(</span><span class="n">network</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="creating-service-clients">
+<h3>Creating Service Clients<a class="headerlink" href="#creating-service-clients" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// SetWaypoints client</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">setClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">createClient</span><span class="o">&lt;</span><span class="n">raisin</span><span class="o">::</span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">SetWaypoints</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;planning/set_waypoints&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">connection</span><span class="p">);</span>
+
+<span class="c1">// GetWaypoints client</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">getClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">createClient</span><span class="o">&lt;</span><span class="n">raisin</span><span class="o">::</span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">GetWaypoints</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;planning/get_waypoints&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">connection</span><span class="p">);</span>
+
+<span class="c1">// AppendWaypoint client</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">appendClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">createClient</span><span class="o">&lt;</span><span class="n">raisin</span><span class="o">::</span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">AppendWaypoint</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;planning/append_waypoint&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">connection</span><span class="p">);</span>
+
+<span class="c1">// SetMap client</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">mapClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">createClient</span><span class="o">&lt;</span><span class="n">raisin</span><span class="o">::</span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">SetLaserMap</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;set_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">connection</span><span class="p">);</span>
+
+<span class="c1">// Wait for service</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">setClient</span><span class="o">-&gt;</span><span class="n">waitForService</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">seconds</span><span class="p">(</span><span class="mi">10</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Service not available&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="service-call-example">
+<h3>Service Call Example<a class="headerlink" href="#service-call-example" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create SetWaypoints request</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">raisin</span><span class="o">::</span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">SetWaypoints</span><span class="o">::</span><span class="n">Request</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="n">raisin</span><span class="o">::</span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Waypoint</span><span class="w"> </span><span class="n">wp</span><span class="p">;</span>
+<span class="n">wp</span><span class="p">.</span><span class="n">frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;my_map&quot;</span><span class="p">;</span>
+<span class="n">wp</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">5.0</span><span class="p">;</span>
+<span class="n">wp</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+<span class="n">wp</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+<span class="n">wp</span><span class="p">.</span><span class="n">use_z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="n">request</span><span class="o">-&gt;</span><span class="n">waypoints</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">wp</span><span class="p">);</span>
+
+<span class="n">request</span><span class="o">-&gt;</span><span class="n">repetition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="n">request</span><span class="o">-&gt;</span><span class="n">current_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="c1">// Async call</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">future</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">setClient</span><span class="o">-&gt;</span><span class="n">asyncSendRequest</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">future</span><span class="p">.</span><span class="n">wait_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">seconds</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">future_status</span><span class="o">::</span><span class="n">ready</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">future</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Success: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">response</span><span class="o">-&gt;</span><span class="n">success</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Message: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">response</span><span class="o">-&gt;</span><span class="n">message</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="creating-subscribers">
+<h3>Creating Subscribers<a class="headerlink" href="#creating-subscribers" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Odometry subscription</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">odomSub</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">createSubscriber</span><span class="o">&lt;</span><span class="n">raisin</span><span class="o">::</span><span class="n">nav_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Odometry</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;/Odometry&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">connection</span><span class="p">,</span>
+<span class="w">    </span><span class="p">[](</span><span class="k">const</span><span class="w"> </span><span class="n">raisin</span><span class="o">::</span><span class="n">nav_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Odometry</span><span class="o">::</span><span class="n">SharedPtr</span><span class="o">&amp;</span><span class="w"> </span><span class="n">msg</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Position: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">msg</span><span class="o">-&gt;</span><span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span>
+<span class="w">                  </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;, &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">msg</span><span class="o">-&gt;</span><span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="p">});</span>
+
+<span class="c1">// PointCloud subscription</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">cloudSub</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">createSubscriber</span><span class="o">&lt;</span><span class="n">raisin</span><span class="o">::</span><span class="n">sensor_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">PointCloud2</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;/cloud_registered&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">connection</span><span class="p">,</span>
+<span class="w">    </span><span class="p">[](</span><span class="k">const</span><span class="w"> </span><span class="n">raisin</span><span class="o">::</span><span class="n">sensor_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">PointCloud2</span><span class="o">::</span><span class="n">SharedPtr</span><span class="o">&amp;</span><span class="w"> </span><span class="n">msg</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Points: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">msg</span><span class="o">-&gt;</span><span class="n">width</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">msg</span><span class="o">-&gt;</span><span class="n">height</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="p">});</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="service-interface-reference">
+<h2>Service Interface Reference<a class="headerlink" href="#service-interface-reference" title="Link to this heading"></a></h2>
+<p>Available service interface definitions.</p>
+<section id="planning-set-waypoints">
+<h3>planning/set_waypoints<a class="headerlink" href="#planning-set-waypoints" title="Link to this heading"></a></h3>
+<p>Sets the waypoint list.</p>
+<p><strong>Request:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>waypoints</p></td>
+<td><p>Waypoint[]</p></td>
+<td><p>Waypoint array</p></td>
+</tr>
+<tr class="row-odd"><td><p>repetition</p></td>
+<td><p>uint8</p></td>
+<td><p>Repeat count (0=infinite)</p></td>
+</tr>
+<tr class="row-even"><td><p>current_index</p></td>
+<td><p>uint8</p></td>
+<td><p>Starting index</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>Success flag</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>Result message</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Possible Response Messages:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;set</span> <span class="pre">waypoint</span> <span class="pre">success&quot;</span></code> - Success</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;waypoint</span> <span class="pre">list</span> <span class="pre">is</span> <span class="pre">empty&quot;</span></code> - Empty waypoint list</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - No service response</p></li>
+</ul>
+</section>
+<section id="planning-get-waypoints">
+<h3>planning/get_waypoints<a class="headerlink" href="#planning-get-waypoints" title="Link to this heading"></a></h3>
+<p>Queries current mission status.</p>
+<p><strong>Request:</strong> (empty)</p>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>Success flag</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>Result message</p></td>
+</tr>
+<tr class="row-even"><td><p>waypoints</p></td>
+<td><p>Waypoint[]</p></td>
+<td><p>Current waypoint list</p></td>
+</tr>
+<tr class="row-odd"><td><p>repetition</p></td>
+<td><p>uint8</p></td>
+<td><p>Remaining laps</p></td>
+</tr>
+<tr class="row-even"><td><p>current_index</p></td>
+<td><p>uint8</p></td>
+<td><p>Current target index</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="planning-append-waypoint">
+<h3>planning/append_waypoint<a class="headerlink" href="#planning-append-waypoint" title="Link to this heading"></a></h3>
+<p>Appends a waypoint to the queue.</p>
+<p><strong>Request:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>waypoint</p></td>
+<td><p>Waypoint</p></td>
+<td><p>Waypoint to append</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>Success flag</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>Result message</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="set-map-setlasermap">
+<h3>set_map (SetLaserMap)<a class="headerlink" href="#set-map-setlasermap" title="Link to this heading"></a></h3>
+<p>Loads PCD map and initializes localization.</p>
+<p><strong>Request:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>name</p></td>
+<td><p>string</p></td>
+<td><p>Map frame name</p></td>
+</tr>
+<tr class="row-odd"><td><p>pc</p></td>
+<td><p>PointCloud2</p></td>
+<td><p>Point cloud data</p></td>
+</tr>
+<tr class="row-even"><td><p>initial_pose</p></td>
+<td><p>Pose</p></td>
+<td><p>Initial robot pose</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>Success flag</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>Result message</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Possible Response Messages:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Map</span> <span class="pre">saved.&quot;</span></code> - Success</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - Fast-LIO plugin not loaded</p></li>
+</ul>
+</section>
+<section id="waypoint-message">
+<h3>Waypoint Message<a class="headerlink" href="#waypoint-message" title="Link to this heading"></a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>string frame      # Coordinate frame: &quot;map_name&quot;, &quot;gps&quot;, &quot;odom&quot;
+float64 x         # X coordinate (GPS: latitude)
+float64 y         # Y coordinate (GPS: longitude)
+float64 z         # Z coordinate (GPS: altitude)
+bool use_z        # Whether to check Z coordinate
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="complete-examples">
+<h2>Complete Examples<a class="headerlink" href="#complete-examples" title="Link to this heading"></a></h2>
+<section id="basic-waypoint-control">
+<h3>Basic Waypoint Control<a class="headerlink" href="#basic-waypoint-control" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;thread&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;chrono&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_sdk/autonomy_client.hpp&quot;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">argc</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Usage: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &lt;robot_id&gt; [pcd_path]&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">robotId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">pcdPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">argc</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;../maps/office1_example.pcd&quot;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Create and connect client</span>
+<span class="w">    </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">AutonomyClient</span><span class="w"> </span><span class="n">client</span><span class="p">(</span><span class="s">&quot;waypoint_example&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Connecting to &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">robotId</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;...&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">client</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">robotId</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Connection failed!&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Connected!&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Load map</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Loading map...&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">mapResult</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">setMap</span><span class="p">(</span><span class="n">pcdPath</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sdk_map&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">mapResult</span><span class="p">.</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Map load failed: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">mapResult</span><span class="p">.</span><span class="n">message</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Map loaded: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">mapResult</span><span class="p">.</span><span class="n">message</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Set waypoints (frame MUST match map_name!)</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="o">&gt;</span><span class="w"> </span><span class="n">waypoints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;sdk_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span>
+<span class="w">        </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;sdk_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span>
+<span class="w">        </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;sdk_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">),</span>
+<span class="w">        </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;sdk_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">),</span>
+<span class="w">        </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;sdk_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span>
+<span class="w">    </span><span class="p">};</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Setting &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">waypoints</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; waypoints...&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">setWaypoints</span><span class="p">(</span><span class="n">waypoints</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Failed: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="n">message</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Navigation started!&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Monitor progress</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nb">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">getMissionStatus</span><span class="p">();</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">status</span><span class="p">.</span><span class="n">valid</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\r</span><span class="s">Progress: waypoint &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">status</span><span class="p">.</span><span class="n">current_index</span>
+<span class="w">                      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;/&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">status</span><span class="p">.</span><span class="n">waypoints</span><span class="p">.</span><span class="n">size</span><span class="p">()</span>
+<span class="w">                      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; | Laps: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">status</span><span class="p">.</span><span class="n">repetition</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;   &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">flush</span><span class="p">;</span>
+
+<span class="w">            </span><span class="c1">// Check mission complete</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">status</span><span class="p">.</span><span class="n">current_index</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">status</span><span class="p">.</span><span class="n">waypoints</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&amp;&amp;</span>
+<span class="w">                </span><span class="n">status</span><span class="p">.</span><span class="n">repetition</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Mission complete!&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">                </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">seconds</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">client</span><span class="p">.</span><span class="n">disconnect</span><span class="p">();</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="real-time-monitoring">
+<h3>Real-time Monitoring<a class="headerlink" href="#real-time-monitoring" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;atomic&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;csignal&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_sdk/autonomy_client.hpp&quot;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">atomic</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="w"> </span><span class="n">running</span><span class="p">{</span><span class="nb">true</span><span class="p">};</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">signalHandler</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">running</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">signal</span><span class="p">(</span><span class="n">SIGINT</span><span class="p">,</span><span class="w"> </span><span class="n">signalHandler</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">AutonomyClient</span><span class="w"> </span><span class="n">client</span><span class="p">(</span><span class="s">&quot;monitor&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">client</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Subscribe to odometry</span>
+<span class="w">    </span><span class="n">client</span><span class="p">.</span><span class="n">subscribeOdometry</span><span class="p">([](</span><span class="k">const</span><span class="w"> </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">RobotState</span><span class="o">&amp;</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Position: (&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;, &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;) &quot;</span>
+<span class="w">                  </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Yaw: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">yaw</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; rad&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="p">});</span>
+
+<span class="w">    </span><span class="c1">// Subscribe to point cloud</span>
+<span class="w">    </span><span class="n">client</span><span class="p">.</span><span class="n">subscribePointCloud</span><span class="p">([](</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Point3D</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">cloud</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;LiDAR points: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">cloud</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="p">});</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Monitoring... (Ctrl+C to stop)&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">running</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="infinite-patrol">
+<h3>Infinite Patrol<a class="headerlink" href="#infinite-patrol" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Start infinite patrol</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="o">&gt;</span><span class="w"> </span><span class="n">patrol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;sdk_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span>
+<span class="w">    </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;sdk_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">10.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span>
+<span class="w">    </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;sdk_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">10.0</span><span class="p">,</span><span class="w"> </span><span class="mf">10.0</span><span class="p">),</span>
+<span class="w">    </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;sdk_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">10.0</span><span class="p">),</span>
+<span class="p">};</span>
+
+<span class="n">client</span><span class="p">.</span><span class="n">startPatrol</span><span class="p">(</span><span class="n">patrol</span><span class="p">);</span><span class="w">  </span><span class="c1">// or client.setWaypoints(patrol, 0);</span>
+
+<span class="c1">// Stop patrol</span>
+<span class="n">client</span><span class="p">.</span><span class="n">stopNavigation</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="gui-demo-simple-gui">
+<h2>GUI Demo (simple_gui)<a class="headerlink" href="#gui-demo-simple-gui" title="Link to this heading"></a></h2>
+<p>An OpenCV-based visualization demo program. It visualizes maps and robot positions, allowing you to set waypoints with mouse clicks.</p>
+<section id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./simple_gui<span class="w"> </span>&lt;robot_id&gt;<span class="w"> </span><span class="o">[</span>pcd_path<span class="o">]</span>
+
+<span class="c1"># Examples</span>
+./simple_gui<span class="w"> </span>railab_raibo-3614732983840
+./simple_gui<span class="w"> </span>railab_raibo-3614732983840<span class="w"> </span>../maps/office1_example.pcd
+</pre></div>
+</div>
+</section>
+<section id="workflow">
+<h3>Workflow<a class="headerlink" href="#workflow" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Press <code class="docutils literal notranslate"><span class="pre">O</span></code> to open a PCD map file</p></li>
+<li><p>Click on map to set robot initial position</p></li>
+<li><p>Click in the direction the robot is facing to set yaw</p></li>
+<li><p>Press <code class="docutils literal notranslate"><span class="pre">S</span></code> to send map and start localization</p></li>
+<li><p>Click on map to add waypoints</p></li>
+<li><p>Press <code class="docutils literal notranslate"><span class="pre">W</span></code> to send waypoints and start navigation</p></li>
+</ol>
+</section>
+<section id="keyboard-shortcuts">
+<h3>Keyboard Shortcuts<a class="headerlink" href="#keyboard-shortcuts" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 85.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Key</p></th>
+<th class="head"><p>Function</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">O</span></code></p></td>
+<td><p>Open PCD map file</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">S</span></code></p></td>
+<td><p>Send map (start localization)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">W</span></code></p></td>
+<td><p>Send waypoints (start navigation)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">C</span></code></p></td>
+<td><p>Clear waypoints</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">R</span></code></p></td>
+<td><p>Toggle repetition (1 → 5 → ∞)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">X</span></code></p></td>
+<td><p>Reset initial pose</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">+/-</span></code></p></td>
+<td><p>Zoom in/out</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Q</span></code></p></td>
+<td><p>Quit</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="mouse-controls">
+<h3>Mouse Controls<a class="headerlink" href="#mouse-controls" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Left-click</strong>: Step-by-step workflow action (position/direction/waypoint)</p></li>
+<li><p><strong>Right-drag</strong>: Pan view</p></li>
+<li><p><strong>Scroll</strong>: Zoom</p></li>
+</ul>
+</section>
+<section id="status-display">
+<h3>Status Display<a class="headerlink" href="#status-display" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Current step and next action guide displayed at bottom of screen</p></li>
+<li><p>Waypoints cannot be added before localization is active</p></li>
+<li><p>Pressing <code class="docutils literal notranslate"><span class="pre">S</span></code> when localization is already active shows reset instructions</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>simple_gui uses the <code class="docutils literal notranslate"><span class="pre">zenity</span></code> package for file selection dialogs.
+Install with <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">zenity</span></code> on Ubuntu.</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="cmake-configuration">
+<h2>CMake Configuration<a class="headerlink" href="#cmake-configuration" title="Link to this heading"></a></h2>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span><span class="w"> </span><span class="s">3.16</span><span class="p">)</span>
+<span class="nb">project</span><span class="p">(</span><span class="s">my_controller</span><span class="p">)</span>
+
+<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_STANDARD</span><span class="w"> </span><span class="s">17</span><span class="p">)</span>
+
+<span class="c"># SDK path</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">RAISIN_SDK_PATH</span><span class="w"> </span><span class="s2">&quot;/path/to/raisin_sdk_install&quot;</span><span class="p">)</span>
+
+<span class="c"># Dependencies</span>
+<span class="nb">find_package</span><span class="p">(</span><span class="s">Eigen3</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<span class="nb">find_package</span><span class="p">(</span><span class="s">OpenSSL</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+
+<span class="nb">set</span><span class="p">(</span><span class="s">PCL_INCLUDE_DIRS</span><span class="w"> </span><span class="s2">&quot;/usr/include/pcl-1.12&quot;</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">PCL_LIBRARIES</span><span class="w"> </span><span class="s">pcl_common</span><span class="w"> </span><span class="s">pcl_io</span><span class="p">)</span>
+
+<span class="c"># Executable</span>
+<span class="nb">add_executable</span><span class="p">(</span><span class="s">my_controller</span><span class="w"> </span><span class="s">main.cpp</span><span class="p">)</span>
+
+<span class="nb">target_include_directories</span><span class="p">(</span><span class="s">my_controller</span><span class="w"> </span><span class="s">PRIVATE</span>
+<span class="w">    </span><span class="o">${</span><span class="nv">CMAKE_SOURCE_DIR</span><span class="o">}</span><span class="s">/include</span>
+<span class="w">    </span><span class="o">${</span><span class="nv">RAISIN_SDK_PATH</span><span class="o">}</span><span class="s">/include</span>
+<span class="w">    </span><span class="o">${</span><span class="nv">PCL_INCLUDE_DIRS</span><span class="o">}</span>
+<span class="p">)</span>
+
+<span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">my_controller</span><span class="w"> </span><span class="s">PRIVATE</span>
+<span class="w">    </span><span class="o">${</span><span class="nv">RAISIN_SDK_PATH</span><span class="o">}</span><span class="s">/lib/libraisin_network.so</span>
+<span class="w">    </span><span class="o">${</span><span class="nv">RAISIN_SDK_PATH</span><span class="o">}</span><span class="s">/lib/libraisin_thread_pool.so</span>
+<span class="w">    </span><span class="o">${</span><span class="nv">RAISIN_SDK_PATH</span><span class="o">}</span><span class="s">/lib/libraisin_parameter.so</span>
+<span class="w">    </span><span class="o">${</span><span class="nv">RAISIN_SDK_PATH</span><span class="o">}</span><span class="s">/lib/libraisin_encryption.so</span>
+<span class="w">    </span><span class="o">${</span><span class="nv">RAISIN_SDK_PATH</span><span class="o">}</span><span class="s">/lib/libraisin_data_logger.so</span>
+<span class="w">    </span><span class="o">${</span><span class="nv">RAISIN_SDK_PATH</span><span class="o">}</span><span class="s">/lib/libraisin_util.so</span>
+<span class="w">    </span><span class="o">${</span><span class="nv">RAISIN_SDK_PATH</span><span class="o">}</span><span class="s">/lib/libraisim.so</span>
+<span class="w">    </span><span class="o">${</span><span class="nv">RAISIN_SDK_PATH</span><span class="o">}</span><span class="s">/lib/libzstd.so</span>
+<span class="w">    </span><span class="s">Eigen3::Eigen</span>
+<span class="w">    </span><span class="s">OpenSSL::SSL</span><span class="w"> </span><span class="s">OpenSSL::Crypto</span>
+<span class="w">    </span><span class="o">${</span><span class="nv">PCL_LIBRARIES</span><span class="o">}</span>
+<span class="w">    </span><span class="s">pthread</span><span class="w"> </span><span class="s">dl</span><span class="w"> </span><span class="s">rt</span>
+<span class="p">)</span>
+
+<span class="nb">set_target_properties</span><span class="p">(</span><span class="s">my_controller</span><span class="w"> </span><span class="s">PROPERTIES</span>
+<span class="w">    </span><span class="s">BUILD_RPATH</span><span class="w"> </span><span class="s2">&quot;${RAISIN_SDK_PATH}/lib&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h2>
+<section id="connection-failed">
+<h3>Connection Failed<a class="headerlink" href="#connection-failed" title="Link to this heading"></a></h3>
+<p><strong>Symptom</strong>: <code class="docutils literal notranslate"><span class="pre">connect()</span></code> returns false</p>
+<p><strong>Check:</strong></p>
+<ol class="arabic simple">
+<li><p>Verify <code class="docutils literal notranslate"><span class="pre">raisin_master</span></code> is running on robot</p></li>
+<li><p>Verify same network connectivity</p></li>
+<li><p>Verify correct Robot ID (see raisin_master console output)</p></li>
+</ol>
+</section>
+<section id="map-load-failed">
+<h3>Map Load Failed<a class="headerlink" href="#map-load-failed" title="Link to this heading"></a></h3>
+<p><strong>Symptom</strong>: <code class="docutils literal notranslate"><span class="pre">setMap()</span></code> fails or times out</p>
+<p><strong>Check:</strong></p>
+<ol class="arabic simple">
+<li><p>Verify <strong>Fast-LIO plugin</strong> is loaded (if not: see FastLIO section in raisin_plugin documentation)</p></li>
+<li><p>Verify PCD file path is correct</p></li>
+<li><p>Verify PCD file is not corrupted (test with <code class="docutils literal notranslate"><span class="pre">loadPCD()</span></code>)</p></li>
+</ol>
+</section>
+<section id="robot-not-moving">
+<h3>Robot Not Moving<a class="headerlink" href="#robot-not-moving" title="Link to this heading"></a></h3>
+<p><strong>Symptom</strong>: <code class="docutils literal notranslate"><span class="pre">setWaypoints()</span></code> succeeds but robot stays still</p>
+<p><strong>Check:</strong></p>
+<ol class="arabic simple">
+<li><p>Verify <strong>Autonomy plugin</strong> is loaded (if not: see Autonomy section in raisin_plugin documentation)</p></li>
+<li><p><strong>Verify frame name matches map_name</strong> (most common cause!)</p></li>
+<li><p>Verify waypoint coordinates are within map bounds</p></li>
+<li><p>Verify not in joystick override mode</p></li>
+</ol>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Common mistake</span>
+<span class="n">client</span><span class="p">.</span><span class="n">setMap</span><span class="p">(</span><span class="s">&quot;...&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;office_map&quot;</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">setWaypoints</span><span class="p">({</span><span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)},</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w">  </span><span class="c1">// &quot;map&quot; != &quot;office_map&quot;</span>
+
+<span class="c1">// Correct usage</span>
+<span class="n">client</span><span class="p">.</span><span class="n">setMap</span><span class="p">(</span><span class="s">&quot;...&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;office_map&quot;</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">setWaypoints</span><span class="p">({</span><span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;office_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)},</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="service-response-messages">
+<h3>Service Response Messages<a class="headerlink" href="#service-response-messages" title="Link to this heading"></a></h3>
+<p><strong>SetWaypoints:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;set</span> <span class="pre">waypoint</span> <span class="pre">success&quot;</span></code> - Success</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;waypoint</span> <span class="pre">list</span> <span class="pre">is</span> <span class="pre">empty&quot;</span></code> - Empty list</p></li>
+</ul>
+<p><strong>SetMap (SetLaserMap):</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Map</span> <span class="pre">saved.&quot;</span></code> - Success</p></li>
+<li><p>Timeout - Fast-LIO plugin not loaded</p></li>
+</ul>
+<p><strong>GetWaypoints:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;get</span> <span class="pre">waypoint</span> <span class="pre">success&quot;</span></code> - Success</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="related-documentation">
+<h2>Related Documentation<a class="headerlink" href="#related-documentation" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>raisin_master documentation</strong>: Robot setup and plugin loading</p></li>
+<li><p><strong>raisin_plugin documentation</strong>: Autonomy, Fast-LIO plugin details</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Raion Robotics..</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
