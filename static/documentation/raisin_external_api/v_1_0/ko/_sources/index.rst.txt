@@ -66,14 +66,6 @@ Raisin 시스템은 외부 연동을 위해 두 가지 방식을 제공합니다
 Integration Package
 -------------------
 
-획득 방법
-^^^^^^^^^
-
-연동 패키지는 Raion Robotics에서 제공합니다. 다음 방법으로 요청하세요:
-
-- **이메일**: support@raionrobotics.com
-- **웹사이트**: https://raionrobotics.com/support
-
 패키지 구성
 ^^^^^^^^^^^
 

@@ -46,27 +46,26 @@
 <li><a class="reference internal" href="#">Raisin External API Reference</a><ul>
 <li><a class="reference internal" href="#overview">Overview</a></li>
 <li><a class="reference internal" href="#integration-package">Integration Package</a><ul>
-<li><a class="reference internal" href="#id1">획득 방법</a></li>
-<li><a class="reference internal" href="#id2">패키지 구성</a></li>
-<li><a class="reference internal" href="#id3">시스템 요구사항</a></li>
-<li><a class="reference internal" href="#id4">네트워크 요구사항</a></li>
+<li><a class="reference internal" href="#id1">패키지 구성</a></li>
+<li><a class="reference internal" href="#id2">시스템 요구사항</a></li>
+<li><a class="reference internal" href="#id3">네트워크 요구사항</a></li>
 <li><a class="reference internal" href="#robot-id">Robot ID 확인</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#api-example-reference">API Example Reference</a><ul>
-<li><a class="reference internal" href="#id7">헤더 포함</a></li>
-<li><a class="reference internal" href="#id8">기본 워크플로우</a></li>
+<li><a class="reference internal" href="#id6">헤더 포함</a></li>
+<li><a class="reference internal" href="#id7">기본 워크플로우</a></li>
 <li><a class="reference internal" href="#data-types">Data Types</a></li>
 <li><a class="reference internal" href="#autonomyclient-methods">AutonomyClient Methods</a></li>
 <li><a class="reference internal" href="#gps">GPS 사용 시 주의사항</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#direct-network-api">Direct Network API</a><ul>
-<li><a class="reference internal" href="#id15">헤더 포함</a></li>
-<li><a class="reference internal" href="#id16">연결 패턴</a></li>
-<li><a class="reference internal" href="#id17">서비스 클라이언트 생성</a></li>
-<li><a class="reference internal" href="#id18">서비스 호출 예시</a></li>
-<li><a class="reference internal" href="#id19">구독자 생성</a></li>
+<li><a class="reference internal" href="#id14">헤더 포함</a></li>
+<li><a class="reference internal" href="#id15">연결 패턴</a></li>
+<li><a class="reference internal" href="#id16">서비스 클라이언트 생성</a></li>
+<li><a class="reference internal" href="#id17">서비스 호출 예시</a></li>
+<li><a class="reference internal" href="#id18">구독자 생성</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#service-interface-reference">Service Interface Reference</a><ul>
@@ -79,27 +78,27 @@
 </li>
 <li><a class="reference internal" href="#complete-examples">Complete Examples</a><ul>
 <li><a class="reference internal" href="#waypoint">기본 Waypoint 제어</a></li>
-<li><a class="reference internal" href="#id20">실시간 모니터링</a></li>
-<li><a class="reference internal" href="#id21">무한 순찰</a></li>
+<li><a class="reference internal" href="#id19">실시간 모니터링</a></li>
+<li><a class="reference internal" href="#id20">무한 순찰</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#gui-demo-simple-gui">GUI Demo (simple_gui)</a><ul>
-<li><a class="reference internal" href="#id22">실행 방법</a></li>
-<li><a class="reference internal" href="#id23">워크플로우</a></li>
-<li><a class="reference internal" href="#id24">키보드 단축키</a></li>
-<li><a class="reference internal" href="#id25">마우스 조작</a></li>
-<li><a class="reference internal" href="#id26">상태 표시</a></li>
+<li><a class="reference internal" href="#id21">실행 방법</a></li>
+<li><a class="reference internal" href="#id22">워크플로우</a></li>
+<li><a class="reference internal" href="#id23">키보드 단축키</a></li>
+<li><a class="reference internal" href="#id24">마우스 조작</a></li>
+<li><a class="reference internal" href="#id25">상태 표시</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cmake-configuration">CMake Configuration</a></li>
 <li><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
-<li><a class="reference internal" href="#id27">연결 실패</a></li>
-<li><a class="reference internal" href="#id30">맵 로드 실패</a></li>
-<li><a class="reference internal" href="#id35">로봇이 움직이지 않음</a></li>
-<li><a class="reference internal" href="#id38">서비스 응답 메시지 목록</a></li>
+<li><a class="reference internal" href="#id26">연결 실패</a></li>
+<li><a class="reference internal" href="#id29">맵 로드 실패</a></li>
+<li><a class="reference internal" href="#id34">로봇이 움직이지 않음</a></li>
+<li><a class="reference internal" href="#id37">서비스 응답 메시지 목록</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id39">관련 문서</a></li>
+<li><a class="reference internal" href="#id38">관련 문서</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
@@ -202,15 +201,7 @@
 <section id="integration-package">
 <h2>Integration Package<a class="headerlink" href="#integration-package" title="Link to this heading"></a></h2>
 <section id="id1">
-<h3>획득 방법<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
-<p>연동 패키지는 Raion Robotics에서 제공합니다. 다음 방법으로 요청하세요:</p>
-<ul class="simple">
-<li><p><strong>이메일</strong>: <a class="reference external" href="mailto:support&#37;&#52;&#48;raionrobotics&#46;com">support<span>&#64;</span>raionrobotics<span>&#46;</span>com</a></p></li>
-<li><p><strong>웹사이트</strong>: <a class="reference external" href="https://raionrobotics.com/support">https://raionrobotics.com/support</a></p></li>
-</ul>
-</section>
-<section id="id2">
-<h3>패키지 구성<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<h3>패키지 구성<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">raisin_sdk_install/</span></code> 폴더에는 다음이 포함됩니다:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>raisin_sdk_install/
 ├── include/                    # 헤더 파일
@@ -224,17 +215,17 @@
 </pre></div>
 </div>
 </section>
-<section id="id3">
-<h3>시스템 요구사항<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<section id="id2">
+<h3>시스템 요구사항<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ubuntu 22.04</span>
 sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>libeigen3-dev<span class="w"> </span>libssl-dev<span class="w"> </span>libpcl-dev<span class="w"> </span>libopencv-dev
 </pre></div>
 </div>
 </section>
-<section id="id4">
-<h3>네트워크 요구사항<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<section id="id3">
+<h3>네트워크 요구사항<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><p>로봇과 클라이언트가 <a href="#id5"><span class="problematic" id="id6">**</span></a>동일 네트워크**에 있어야 합니다</p></li>
+<li><p>로봇과 클라이언트가 <a href="#id4"><span class="problematic" id="id5">**</span></a>동일 네트워크**에 있어야 합니다</p></li>
 <li><p>멀티캐스트 트래픽이 허용되어야 합니다 (Robot ID 자동 발견용)</p></li>
 <li><p>방화벽: TCP/UDP 포트 8080, 38371 등 허용 필요</p></li>
 </ul>
@@ -253,14 +244,14 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 <section id="api-example-reference">
 <h2>API Example Reference<a class="headerlink" href="#api-example-reference" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">AutonomyClient</span></code> 래퍼 클래스를 사용한 예제 코드입니다. 필요에 따라 수정하여 사용하세요.</p>
-<section id="id7">
-<h3>헤더 포함<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<section id="id6">
+<h3>헤더 포함<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_sdk/autonomy_client.hpp&quot;</span>
 </pre></div>
 </div>
 </section>
-<section id="id8">
-<h3>기본 워크플로우<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<section id="id7">
+<h3>기본 워크플로우<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// 1. 클라이언트 생성</span>
 <span class="n">raisin_sdk</span><span class="o">::</span><span class="n">AutonomyClient</span><span class="w"> </span><span class="n">client</span><span class="p">(</span><span class="s">&quot;my_app&quot;</span><span class="p">);</span>
 
@@ -408,7 +399,7 @@ Fast-LIO 플러그인으로 직접 생성할 수 있습니다.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">startPatrol</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Waypoint</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">waypoints</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>무한 순찰을 시작합니다 (<a href="#id9"><span class="problematic" id="id10">``</span></a>setWaypoints(waypoints, 0)``과 동일).</p>
+<p>무한 순찰을 시작합니다 (<a href="#id8"><span class="problematic" id="id9">``</span></a>setWaypoints(waypoints, 0)``과 동일).</p>
 <p><strong>subscribeOdometry()</strong></p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">subscribeOdometry</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">RobotState</span><span class="o">&amp;</span><span class="p">)</span><span class="o">&gt;</span><span class="w"> </span><span class="n">callback</span><span class="p">);</span>
 </pre></div>
@@ -437,9 +428,9 @@ Fast-LIO 플러그인으로 직접 생성할 수 있습니다.</p>
 </pre></div>
 </div>
 <ul class="simple">
-<li><p><a href="#id11"><span class="problematic" id="id12">**</span></a>GPS 모듈이 로봇에 장착**되어 있어야 합니다</p></li>
+<li><p><a href="#id10"><span class="problematic" id="id11">**</span></a>GPS 모듈이 로봇에 장착**되어 있어야 합니다</p></li>
 <li><p>GPS fix가 유효해야 합니다 (<code class="docutils literal notranslate"><span class="pre">/fix</span></code> 토픽)</p></li>
-<li><p>GPS가 없으면 <a href="#id13"><span class="problematic" id="id14">``</span></a>setWaypoints()``는 성공하지만 로봇이 목표에 도달하지 못합니다</p></li>
+<li><p>GPS가 없으면 <a href="#id12"><span class="problematic" id="id13">``</span></a>setWaypoints()``는 성공하지만 로봇이 목표에 도달하지 못합니다</p></li>
 </ul>
 </section>
 </section>
@@ -447,8 +438,8 @@ Fast-LIO 플러그인으로 직접 생성할 수 있습니다.</p>
 <section id="direct-network-api">
 <h2>Direct Network API<a class="headerlink" href="#direct-network-api" title="Link to this heading"></a></h2>
 <p>고급 사용자를 위한 <code class="docutils literal notranslate"><span class="pre">raisin_network</span></code> 직접 사용 방법입니다.</p>
-<section id="id15">
-<h3>헤더 포함<a class="headerlink" href="#id15" title="Link to this heading"></a></h3>
+<section id="id14">
+<h3>헤더 포함<a class="headerlink" href="#id14" title="Link to this heading"></a></h3>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_network/raisin.hpp&quot;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_network/network.hpp&quot;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_network/node.hpp&quot;</span>
@@ -459,8 +450,8 @@ Fast-LIO 플러그인으로 직접 생성할 수 있습니다.</p>
 </pre></div>
 </div>
 </section>
-<section id="id16">
-<h3>연결 패턴<a class="headerlink" href="#id16" title="Link to this heading"></a></h3>
+<section id="id15">
+<h3>연결 패턴<a class="headerlink" href="#id15" title="Link to this heading"></a></h3>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// 1. 초기화</span>
 <span class="n">raisin</span><span class="o">::</span><span class="n">raisinInit</span><span class="p">();</span>
 
@@ -488,8 +479,8 @@ Fast-LIO 플러그인으로 직접 생성할 수 있습니다.</p>
 </pre></div>
 </div>
 </section>
-<section id="id17">
-<h3>서비스 클라이언트 생성<a class="headerlink" href="#id17" title="Link to this heading"></a></h3>
+<section id="id16">
+<h3>서비스 클라이언트 생성<a class="headerlink" href="#id16" title="Link to this heading"></a></h3>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Waypoint 설정 클라이언트</span>
 <span class="k">auto</span><span class="w"> </span><span class="n">setClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">createClient</span><span class="o">&lt;</span><span class="n">raisin</span><span class="o">::</span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">SetWaypoints</span><span class="o">&gt;</span><span class="p">(</span>
 <span class="w">    </span><span class="s">&quot;planning/set_waypoints&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">connection</span><span class="p">);</span>
@@ -513,8 +504,8 @@ Fast-LIO 플러그인으로 직접 생성할 수 있습니다.</p>
 </pre></div>
 </div>
 </section>
-<section id="id18">
-<h3>서비스 호출 예시<a class="headerlink" href="#id18" title="Link to this heading"></a></h3>
+<section id="id17">
+<h3>서비스 호출 예시<a class="headerlink" href="#id17" title="Link to this heading"></a></h3>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// SetWaypoints 요청 생성</span>
 <span class="k">auto</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">raisin</span><span class="o">::</span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">SetWaypoints</span><span class="o">::</span><span class="n">Request</span><span class="o">&gt;</span><span class="p">();</span>
 
@@ -540,8 +531,8 @@ Fast-LIO 플러그인으로 직접 생성할 수 있습니다.</p>
 </pre></div>
 </div>
 </section>
-<section id="id19">
-<h3>구독자 생성<a class="headerlink" href="#id19" title="Link to this heading"></a></h3>
+<section id="id18">
+<h3>구독자 생성<a class="headerlink" href="#id18" title="Link to this heading"></a></h3>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Odometry 구독</span>
 <span class="k">auto</span><span class="w"> </span><span class="n">odomSub</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">createSubscriber</span><span class="o">&lt;</span><span class="n">raisin</span><span class="o">::</span><span class="n">nav_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">Odometry</span><span class="o">&gt;</span><span class="p">(</span>
 <span class="w">    </span><span class="s">&quot;/Odometry&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">connection</span><span class="p">,</span>
@@ -866,8 +857,8 @@ bool use_z        # Z 좌표 검사 여부
 </pre></div>
 </div>
 </section>
-<section id="id20">
-<h3>실시간 모니터링<a class="headerlink" href="#id20" title="Link to this heading"></a></h3>
+<section id="id19">
+<h3>실시간 모니터링<a class="headerlink" href="#id19" title="Link to this heading"></a></h3>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;atomic&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;csignal&gt;</span>
@@ -903,8 +894,8 @@ bool use_z        # Z 좌표 검사 여부
 </pre></div>
 </div>
 </section>
-<section id="id21">
-<h3>무한 순찰<a class="headerlink" href="#id21" title="Link to this heading"></a></h3>
+<section id="id20">
+<h3>무한 순찰<a class="headerlink" href="#id20" title="Link to this heading"></a></h3>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// 무한 순찰 시작</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="o">&gt;</span><span class="w"> </span><span class="n">patrol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;sdk_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span>
@@ -925,8 +916,8 @@ bool use_z        # Z 좌표 검사 여부
 <section id="gui-demo-simple-gui">
 <h2>GUI Demo (simple_gui)<a class="headerlink" href="#gui-demo-simple-gui" title="Link to this heading"></a></h2>
 <p>OpenCV 기반의 시각화 데모 프로그램입니다. 맵과 로봇 위치를 시각화하고, 마우스로 Waypoint를 설정할 수 있습니다.</p>
-<section id="id22">
-<h3>실행 방법<a class="headerlink" href="#id22" title="Link to this heading"></a></h3>
+<section id="id21">
+<h3>실행 방법<a class="headerlink" href="#id21" title="Link to this heading"></a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./simple_gui<span class="w"> </span>&lt;robot_id&gt;<span class="w"> </span><span class="o">[</span>pcd_path<span class="o">]</span>
 
 <span class="c1"># 예시</span>
@@ -935,8 +926,8 @@ bool use_z        # Z 좌표 검사 여부
 </pre></div>
 </div>
 </section>
-<section id="id23">
-<h3>워크플로우<a class="headerlink" href="#id23" title="Link to this heading"></a></h3>
+<section id="id22">
+<h3>워크플로우<a class="headerlink" href="#id22" title="Link to this heading"></a></h3>
 <ol class="arabic simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">O</span></code> 키로 PCD 맵 파일 열기</p></li>
 <li><p>맵에서 클릭하여 로봇 초기 위치 설정</p></li>
@@ -946,8 +937,8 @@ bool use_z        # Z 좌표 검사 여부
 <li><p><code class="docutils literal notranslate"><span class="pre">W</span></code> 키로 Waypoint 전송 및 자율주행 시작</p></li>
 </ol>
 </section>
-<section id="id24">
-<h3>키보드 단축키<a class="headerlink" href="#id24" title="Link to this heading"></a></h3>
+<section id="id23">
+<h3>키보드 단축키<a class="headerlink" href="#id23" title="Link to this heading"></a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 15.0%" />
@@ -986,16 +977,16 @@ bool use_z        # Z 좌표 검사 여부
 </tbody>
 </table>
 </section>
-<section id="id25">
-<h3>마우스 조작<a class="headerlink" href="#id25" title="Link to this heading"></a></h3>
+<section id="id24">
+<h3>마우스 조작<a class="headerlink" href="#id24" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>좌클릭</strong>: 워크플로우 단계별 동작 (위치/방향/Waypoint)</p></li>
 <li><p><strong>우클릭 드래그</strong>: 화면 이동 (Pan)</p></li>
 <li><p><strong>스크롤</strong>: 줌</p></li>
 </ul>
 </section>
-<section id="id26">
-<h3>상태 표시<a class="headerlink" href="#id26" title="Link to this heading"></a></h3>
+<section id="id25">
+<h3>상태 표시<a class="headerlink" href="#id25" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>화면 하단에 현재 단계 및 다음 동작 안내 표시</p></li>
 <li><p>Localization 활성화 전에는 Waypoint 추가 불가</p></li>
@@ -1059,32 +1050,32 @@ Ubuntu에서 <code class="docutils literal notranslate"><span class="pre">sudo</
 <hr class="docutils" />
 <section id="troubleshooting">
 <h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h2>
-<section id="id27">
-<h3>연결 실패<a class="headerlink" href="#id27" title="Link to this heading"></a></h3>
+<section id="id26">
+<h3>연결 실패<a class="headerlink" href="#id26" title="Link to this heading"></a></h3>
 <p><strong>증상</strong>: <code class="docutils literal notranslate"><span class="pre">connect()</span></code> 반환값이 false</p>
 <p><strong>확인 사항</strong>:</p>
 <ol class="arabic simple">
-<li><p><a href="#id28"><span class="problematic" id="id29">``</span></a>raisin_master``가 로봇에서 실행 중인지 확인</p></li>
+<li><p><a href="#id27"><span class="problematic" id="id28">``</span></a>raisin_master``가 로봇에서 실행 중인지 확인</p></li>
 <li><p>동일 네트워크에 있는지 확인</p></li>
 <li><p>Robot ID가 정확한지 확인 (raisin_master 콘솔 출력 참조)</p></li>
 </ol>
 </section>
-<section id="id30">
-<h3>맵 로드 실패<a class="headerlink" href="#id30" title="Link to this heading"></a></h3>
+<section id="id29">
+<h3>맵 로드 실패<a class="headerlink" href="#id29" title="Link to this heading"></a></h3>
 <p><strong>증상</strong>: <code class="docutils literal notranslate"><span class="pre">setMap()</span></code> 실패 또는 타임아웃</p>
 <p><strong>확인 사항</strong>:</p>
 <ol class="arabic simple">
-<li><p><a href="#id31"><span class="problematic" id="id32">**</span></a>Fast-LIO 플러그인**이 로드되어 있는지 확인 (미로드 시: raisin_plugin 문서의 FastLIO 섹션 참조)</p></li>
+<li><p><a href="#id30"><span class="problematic" id="id31">**</span></a>Fast-LIO 플러그인**이 로드되어 있는지 확인 (미로드 시: raisin_plugin 문서의 FastLIO 섹션 참조)</p></li>
 <li><p>PCD 파일 경로가 올바른지 확인</p></li>
-<li><p>PCD 파일이 손상되지 않았는지 확인 (<a href="#id33"><span class="problematic" id="id34">``</span></a>loadPCD()``로 테스트)</p></li>
+<li><p>PCD 파일이 손상되지 않았는지 확인 (<a href="#id32"><span class="problematic" id="id33">``</span></a>loadPCD()``로 테스트)</p></li>
 </ol>
 </section>
-<section id="id35">
-<h3>로봇이 움직이지 않음<a class="headerlink" href="#id35" title="Link to this heading"></a></h3>
+<section id="id34">
+<h3>로봇이 움직이지 않음<a class="headerlink" href="#id34" title="Link to this heading"></a></h3>
 <p><strong>증상</strong>: <code class="docutils literal notranslate"><span class="pre">setWaypoints()</span></code> 성공했지만 로봇이 정지</p>
 <p><strong>확인 사항</strong>:</p>
 <ol class="arabic simple">
-<li><p><a href="#id36"><span class="problematic" id="id37">**</span></a>Autonomy 플러그인**이 로드되어 있는지 확인 (미로드 시: raisin_plugin 문서의 Autonomy 섹션 참조)</p></li>
+<li><p><a href="#id35"><span class="problematic" id="id36">**</span></a>Autonomy 플러그인**이 로드되어 있는지 확인 (미로드 시: raisin_plugin 문서의 Autonomy 섹션 참조)</p></li>
 <li><p><strong>frame 이름이 map_name과 일치하는지 확인</strong> (가장 흔한 원인!)</p></li>
 <li><p>Waypoint 좌표가 맵 범위 내에 있는지 확인</p></li>
 <li><p>조이스틱 오버라이드 상태가 아닌지 확인</p></li>
@@ -1099,8 +1090,8 @@ Ubuntu에서 <code class="docutils literal notranslate"><span class="pre">sudo</
 </pre></div>
 </div>
 </section>
-<section id="id38">
-<h3>서비스 응답 메시지 목록<a class="headerlink" href="#id38" title="Link to this heading"></a></h3>
+<section id="id37">
+<h3>서비스 응답 메시지 목록<a class="headerlink" href="#id37" title="Link to this heading"></a></h3>
 <p><strong>SetWaypoints:</strong></p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">&quot;set</span> <span class="pre">waypoint</span> <span class="pre">success&quot;</span></code> - 성공</p></li>
@@ -1118,8 +1109,8 @@ Ubuntu에서 <code class="docutils literal notranslate"><span class="pre">sudo</
 </section>
 </section>
 <hr class="docutils" />
-<section id="id39">
-<h2>관련 문서<a class="headerlink" href="#id39" title="Link to this heading"></a></h2>
+<section id="id38">
+<h2>관련 문서<a class="headerlink" href="#id38" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>raisin_master 문서</strong>: 로봇 설정 및 플러그인 로드 방법</p></li>
 <li><p><strong>raisin_plugin 문서</strong>: Autonomy, Fast-LIO 플러그인 상세</p></li>

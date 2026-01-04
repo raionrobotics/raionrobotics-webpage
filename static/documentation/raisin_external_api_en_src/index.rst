@@ -66,14 +66,6 @@ Raisin provides two integration methods for external systems:
 Integration Package
 -------------------
 
-How to Obtain
-^^^^^^^^^^^^^
-
-The integration package is provided by Raion Robotics. Request via:
-
-- **Email**: support@raionrobotics.com
-- **Website**: https://raionrobotics.com/support
-
 Package Contents
 ^^^^^^^^^^^^^^^^
 
