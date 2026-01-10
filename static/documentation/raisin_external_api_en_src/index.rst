@@ -444,48 +444,82 @@ Subscribes to extended robot state in real-time. Includes battery information, l
 Returns last received extended robot state (thread-safe).
 Must call ``subscribeRobotState()`` first to get valid data.
 
-**enableJoyControl()**
+**findGuiNetworkId()**
 
 .. code-block:: cpp
 
-    ServiceResult enableJoyControl(const std::string& topic_name = "joy");
+    std::string findGuiNetworkId(const std::string& prefix = "gui");
 
-Enables manual joystick control.
+Finds the connected GUI's network ID.
 
-- ``topic_name``: Joystick topic name (default: "joy")
+- ``prefix``: GUI ID prefix (default: "gui")
+- **Returns**: GUI network ID (e.g., "gui53-230486654196"), empty string if not found
+
+.. code-block:: cpp
+
+    std::string guiId = client.findGuiNetworkId();
+    std::cout << "Connected GUI: " << guiId << std::endl;
+
+**setManualControl()**
+
+.. code-block:: cpp
+
+    ServiceResult setManualControl(const std::string& gui_network_id = "");
+
+Enables manual joystick control (joy/gui).
+Auto-detects the GUI network ID to receive joystick commands from that GUI.
+
+- ``gui_network_id``: GUI network ID (auto-detected if empty)
 - **Returns**: Service call result
 
 .. code-block:: cpp
 
-    auto result = client.enableJoyControl();
+    auto result = client.setManualControl();
     if (result.success) {
         std::cout << "Manual control enabled" << std::endl;
     }
 
-**disableJoyControl()**
+**setAutonomousControl()**
 
 .. code-block:: cpp
 
-    ServiceResult disableJoyControl(const std::string& topic_name = "joy");
+    ServiceResult setAutonomousControl();
 
-Disables joystick control (locks manual control).
+Enables autonomous control (vel_cmd/autonomy).
 
-- ``topic_name``: Joystick topic name (default: "joy")
 - **Returns**: Service call result
 
 .. code-block:: cpp
 
-    auto result = client.disableJoyControl();
+    auto result = client.setAutonomousControl();
     if (result.success) {
-        std::cout << "Joystick control locked" << std::endl;
+        std::cout << "Autonomous control enabled" << std::endl;
     }
 
-.. note::
-    Joystick control state can be checked via ``ExtendedRobotState.joy_listen_type``:
+**releaseControl()**
 
-    - ``JOY (0)``: Manual joystick control active
-    - ``VEL_CMD (1)``: Receiving autonomous velocity commands
-    - ``NUM_SOURCES (2)``: No control source (locked)
+.. code-block:: cpp
+
+    ServiceResult releaseControl(const std::string& source = "joy/gui");
+
+Releases control (switches to None state).
+
+- ``source``: Control source to release ("joy/gui" or "vel_cmd/autonomy")
+- **Returns**: Service call result
+
+.. code-block:: cpp
+
+    client.releaseControl("joy/gui");
+    client.releaseControl("vel_cmd/autonomy");
+
+.. note::
+    Control state can be checked via ``ExtendedRobotState.joy_listen_type``:
+
+    - ``JOY (0)``: Manual joystick control active (joy/gui)
+    - ``VEL_CMD (1)``: Receiving autonomous velocity commands (vel_cmd/autonomy)
+    - ``NONE (2)``: No control source
+
+    When ``setManualControl()`` is called, the GUI's wifi icon turns green.
 
 GPS Usage Notes
 ^^^^^^^^^^^^^^^

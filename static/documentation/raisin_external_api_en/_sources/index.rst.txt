@@ -1,33 +1,33 @@
 Raisin External API Reference
 ==============================
 
-외부 시스템에서 Raibo2의 자율주행 기능을 제어하기 위한 API 문서입니다.
+API documentation for controlling Raibo2 autonomous navigation from external systems.
 
-`English Version <../en/index.html>`_
+`한국어 버전 <../ko/index.html>`_
 
 Overview
 --------
 
-Raisin 시스템은 외부 연동을 위해 두 가지 방식을 제공합니다:
+Raisin provides two integration methods for external systems:
 
 .. list-table::
    :header-rows: 1
    :widths: 20 40 40
 
-   * - 방식
-     - 설명
-     - 용도
+   * - Method
+     - Description
+     - Use Case
    * - **API Example**
-     - ``RaisinClient`` 래퍼 클래스 예제 코드
-     - 빠른 시작, 참고용 구현체
+     - ``RaisinClient`` wrapper class example code
+     - Quick start, reference implementation
    * - **Direct Network**
-     - ``raisin_network`` 라이브러리 직접 사용
-     - 커스텀 서비스 호출, 세밀한 제어 필요 시
+     - Direct use of ``raisin_network`` library
+     - Custom service calls, fine-grained control
 
 .. note::
-    **API Example (RaisinClient)** 는 공식 지원 SDK가 아닌 예제 코드입니다.
-    외부 개발자가 Raisin 플랫폼을 연동하는 방법을 보여주는 참고용 구현체이며,
-    필요에 따라 수정하여 사용하시기 바랍니다.
+    **API Example (RaisinClient)** is example code, not an officially supported SDK.
+    It is a reference implementation showing how to integrate with the Raisin platform.
+    Modify it as needed for your use case.
 
 .. code-block:: text
 
@@ -66,234 +66,234 @@ Raisin 시스템은 외부 연동을 위해 두 가지 방식을 제공합니다
 Integration Package
 -------------------
 
-패키지 구성
-^^^^^^^^^^^
+Package Contents
+^^^^^^^^^^^^^^^^
 
-``raisin_sdk_install/`` 폴더에는 다음이 포함됩니다:
+The ``raisin_sdk_install/`` folder contains:
 
 .. code-block:: text
 
     raisin_sdk_install/
-    ├── include/                    # 헤더 파일
-    │   ├── raisin_network/         # 네트워크 라이브러리
-    │   ├── raisin_interfaces/      # 메시지/서비스 정의
+    ├── include/                    # Header files
+    │   ├── raisin_network/         # Network library
+    │   ├── raisin_interfaces/      # Message/service definitions
     │   └── ...
-    └── lib/                        # 컴파일된 라이브러리
+    └── lib/                        # Compiled libraries
         ├── libraisin_network.so
         ├── libraisin_interfaces.so
         └── ...
 
-시스템 요구사항
-^^^^^^^^^^^^^^^
+System Requirements
+^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
     # Ubuntu 22.04
     sudo apt-get install libeigen3-dev libssl-dev libpcl-dev libopencv-dev
 
-네트워크 요구사항
-^^^^^^^^^^^^^^^^^
+Network Requirements
+^^^^^^^^^^^^^^^^^^^^
 
-- 로봇과 클라이언트가 **동일 네트워크**에 있어야 합니다
-- 멀티캐스트 트래픽이 허용되어야 합니다 (Robot ID 자동 발견용)
-- 방화벽: TCP/UDP 포트 8080, 38371 등 허용 필요
+- Robot and client must be on the **same network**
+- Multicast traffic must be allowed (for Robot ID discovery)
+- Firewall: Allow TCP/UDP ports 8080, 38371, etc.
 
-Robot ID 확인
-^^^^^^^^^^^^^
+Finding Robot ID
+^^^^^^^^^^^^^^^^
 
-Robot ID는 ``raisin_master`` 실행 시 콘솔에 출력됩니다:
+Robot ID is printed in the ``raisin_master`` console on startup:
 
 .. code-block:: text
 
     [raisin_master] Robot ID: railab_raibo-3614732983840
     [raisin_master] Listening on port 38371
 
-또는 raisin_gui에서 확인할 수 있습니다.
+It can also be found in raisin_gui.
 
 ----
 
 API Example Reference
 ---------------------
 
-``RaisinClient`` 래퍼 클래스를 사용한 예제 코드입니다. 필요에 따라 수정하여 사용하세요.
+Example code using the ``RaisinClient`` wrapper class. Modify as needed for your use case.
 
-헤더 포함
-^^^^^^^^^
+Include Header
+^^^^^^^^^^^^^^
 
 .. code-block:: cpp
 
     #include "raisin_sdk/raisin_client.hpp"
 
-기본 워크플로우
-^^^^^^^^^^^^^^^
+Basic Workflow
+^^^^^^^^^^^^^^
 
 .. code-block:: cpp
 
-    // 1. 클라이언트 생성
+    // 1. Create client
     raisin_sdk::RaisinClient client("my_app");
 
-    // 2. 로봇 연결
+    // 2. Connect to robot
     client.connect("ROBOT_ID");
 
-    // 3. 맵 로드 (Localization 활성화)
+    // 3. Load map (enables localization)
     client.setMap("/path/to/map.pcd", 0.0, 0.0, 0.0, 0.0, "my_map");
 
-    // 4. Waypoint 설정 (frame은 반드시 map_name과 동일해야 함!)
+    // 4. Set waypoints (frame MUST match map_name!)
     std::vector<raisin_sdk::Waypoint> waypoints = {
-        raisin_sdk::Waypoint("my_map", 5.0, 0.0),   // "my_map" 사용
+        raisin_sdk::Waypoint("my_map", 5.0, 0.0),   // Use "my_map"
         raisin_sdk::Waypoint("my_map", 5.0, 5.0),
     };
     client.setWaypoints(waypoints, 1);
 
-    // 5. 상태 모니터링
+    // 5. Monitor status
     auto status = client.getMissionStatus();
 
-.. _data-types:
+.. _data-types-en:
 
 Data Types
 ^^^^^^^^^^
 
-**Waypoint** - 네비게이션 목표 지점
+**Waypoint** - Navigation target point
 
 .. code-block:: cpp
 
     struct Waypoint {
-        std::string frame;  // 좌표 프레임 (중요!)
-        double x, y, z;     // 좌표
-        bool use_z;         // Z 좌표 사용 여부
+        std::string frame;  // Coordinate frame (important!)
+        double x, y, z;     // Coordinates
+        bool use_z;         // Whether to use Z coordinate
     };
 
-    // 생성 방법
-    Waypoint("map_name", x, y);           // 맵 좌표
-    Waypoint::GPS(latitude, longitude);   // GPS 좌표 (GPS 모듈 필요)
+    // Creation methods
+    Waypoint("map_name", x, y);           // Map coordinates
+    Waypoint::GPS(latitude, longitude);   // GPS coordinates (requires GPS module)
 
 .. warning::
-    **frame 이름은 setMap()에서 지정한 map_name과 반드시 일치해야 합니다!**
+    **The frame name MUST match the map_name specified in setMap()!**
 
     .. code-block:: cpp
 
-        // 올바른 예시
+        // Correct example
         client.setMap("/path/map.pcd", 0, 0, 0, 0, "office_map");
-        Waypoint("office_map", 5.0, 0.0);  // ✓ 동일한 이름
+        Waypoint("office_map", 5.0, 0.0);  // Same name
 
-        // 잘못된 예시
+        // Wrong example
         client.setMap("/path/map.pcd", 0, 0, 0, 0, "office_map");
-        Waypoint("map", 5.0, 0.0);  // ✗ 이름 불일치 - 동작 안함!
+        Waypoint("map", 5.0, 0.0);  // Name mismatch - won't work!
 
-**MissionStatus** - 미션 상태
+**MissionStatus** - Mission state
 
 .. code-block:: cpp
 
     struct MissionStatus {
-        std::vector<Waypoint> waypoints;  // 현재 waypoint 목록
-        uint8_t current_index;            // 현재 목표 인덱스
-        uint8_t repetition;               // 남은 반복 횟수 (0=무한)
-        bool valid;                       // 데이터 유효성
+        std::vector<Waypoint> waypoints;  // Current waypoint list
+        uint8_t current_index;            // Current target index
+        uint8_t repetition;               // Remaining laps (0=infinite)
+        bool valid;                       // Data validity
     };
 
-**ServiceResult** - 서비스 호출 결과
+**ServiceResult** - Service call result
 
 .. code-block:: cpp
 
     struct ServiceResult {
-        bool success;         // 성공 여부
-        std::string message;  // 결과 메시지
+        bool success;         // Success flag
+        std::string message;  // Result message
     };
 
-**RobotState** - 로봇 상태 (Odometry)
+**RobotState** - Robot state (Odometry)
 
 .. code-block:: cpp
 
     struct RobotState {
-        double x, y, z;    // 위치 (meters)
-        double yaw;        // 방향 (radians)
-        double vx, vy;     // 선속도 (m/s)
-        double omega;      // 각속도 (rad/s)
+        double x, y, z;    // Position (meters)
+        double yaw;        // Heading (radians)
+        double vx, vy;     // Linear velocity (m/s)
+        double omega;      // Angular velocity (rad/s)
         bool valid;
     };
 
-**Point3D** - 포인트 클라우드 점
+**Point3D** - Point cloud point
 
 .. code-block:: cpp
 
     struct Point3D { float x, y, z; };
 
-**ActuatorInfo** - 액추에이터(모터) 정보
+**ActuatorInfo** - Actuator (motor) information
 
 .. code-block:: cpp
 
     struct ActuatorInfo {
-        std::string name;           // 모터 이름 (e.g., "FR_hip", "FL_thigh")
-        uint16_t status;            // 상태 코드 (0 = 정상)
-        double temperature;         // 모터 온도 (°C)
-        double position;            // 관절 위치 (rad)
-        double velocity;            // 관절 속도 (rad/s)
-        double effort;              // 관절 토크 (Nm)
+        std::string name;           // Motor name (e.g., "FR_hip", "FL_thigh")
+        uint16_t status;            // Status code (0 = normal)
+        double temperature;         // Motor temperature (°C)
+        double position;            // Joint position (rad)
+        double velocity;            // Joint velocity (rad/s)
+        double effort;              // Joint torque (Nm)
     };
 
-**LocomotionState** - 로봇 locomotion 상태 열거형
+**LocomotionState** - Robot locomotion state enum
 
 .. code-block:: cpp
 
     enum class LocomotionState : int32_t {
-        COMM_DISABLED = 0,      // 통신 비활성
-        COMM_ENABLED = 1,       // 통신 활성
-        MOTOR_READY = 2,        // 모터 준비
-        MOTOR_COMMUTATION = 3,  // 모터 정류 중
-        MOTOR_ENABLED = 4,      // 모터 활성
-        IN_TEST_MODE = 5,       // 테스트 모드
-        STANDING_MODE = 6,      // 서있는 상태
-        IN_CONTROL = 7,         // 제어 중 (걷기)
-        SITDOWN_MODE = 8,       // 앉은 상태
-        MOTOR_DISABLED = 9      // 모터 비활성
+        COMM_DISABLED = 0,      // Communication disabled
+        COMM_ENABLED = 1,       // Communication enabled
+        MOTOR_READY = 2,        // Motor ready
+        MOTOR_COMMUTATION = 3,  // Motor commutation in progress
+        MOTOR_ENABLED = 4,      // Motor enabled
+        IN_TEST_MODE = 5,       // Test mode
+        STANDING_MODE = 6,      // Standing
+        IN_CONTROL = 7,         // In control (walking)
+        SITDOWN_MODE = 8,       // Sitting
+        MOTOR_DISABLED = 9      // Motor disabled
     };
 
-**JoySourceType** - 조이스틱 제어 소스 타입
+**JoySourceType** - Joystick control source type
 
 .. code-block:: cpp
 
     enum class JoySourceType : int32_t {
-        JOY = 0,           // 수동 조이스틱 제어
-        VEL_CMD = 1,       // 자율주행 속도 명령
-        NUM_SOURCES = 2    // 제어 소스 없음
+        JOY = 0,           // Manual joystick control
+        VEL_CMD = 1,       // Autonomous velocity command
+        NUM_SOURCES = 2    // No control source
     };
 
-**ExtendedRobotState** - 확장 로봇 상태 (배터리, 모터 상태 포함)
+**ExtendedRobotState** - Extended robot state (includes battery, motor status)
 
 .. code-block:: cpp
 
     struct ExtendedRobotState {
-        // 위치 및 속도
-        double x, y, z;             // 위치 (meters)
-        double yaw;                 // 방향 (radians)
-        double vx, vy;              // 선속도 (m/s)
-        double omega;               // 각속도 (rad/s)
+        // Position and velocity
+        double x, y, z;             // Position (meters)
+        double yaw;                 // Heading (radians)
+        double vx, vy;              // Linear velocity (m/s)
+        double omega;               // Angular velocity (rad/s)
 
-        // Locomotion 상태
-        int32_t locomotion_state;   // LocomotionState 열거형 값 (0-9)
+        // Locomotion state
+        int32_t locomotion_state;   // LocomotionState enum value (0-9)
 
-        // 배터리 정보
-        double voltage;             // 현재 전압 (V)
-        double current;             // 전류 (A)
-        double max_voltage;         // 최대 전압
-        double min_voltage;         // 최소 전압
+        // Battery information
+        double voltage;             // Current voltage (V)
+        double current;             // Current (A)
+        double max_voltage;         // Maximum voltage
+        double min_voltage;         // Minimum voltage
 
-        // 온도
-        double body_temperature;    // 본체 온도 (°C)
+        // Temperature
+        double body_temperature;    // Body temperature (°C)
 
-        // 조이스틱 제어 상태
-        int32_t joy_listen_type;    // JoySourceType 열거형 값
+        // Joystick control state
+        int32_t joy_listen_type;    // JoySourceType enum value
 
-        // 액추에이터 상태
+        // Actuator status
         std::vector<ActuatorInfo> actuators;
 
         bool valid;
 
-        // 유틸리티 메서드
-        std::string getLocomotionStateName() const;  // 상태명 문자열
-        std::string getJoySourceName() const;        // 제어 소스명 문자열
-        bool isOperational() const;                  // 서있거나 걷는 중인지
-        bool hasActuatorError() const;               // 모터 에러 여부
+        // Utility methods
+        std::string getLocomotionStateName() const;  // State name string
+        std::string getJoySourceName() const;        // Control source name string
+        bool isOperational() const;                  // Whether standing or walking
+        bool hasActuatorError() const;               // Whether any motor has error
     };
 
 RaisinClient Methods
@@ -305,11 +305,11 @@ RaisinClient Methods
 
     bool connect(const std::string& robot_id, int timeout_sec = 10);
 
-로봇에 연결합니다.
+Connects to the robot.
 
-- ``robot_id``: Robot ID 또는 IP 주소
-- ``timeout_sec``: 연결 타임아웃 (초)
-- **반환**: 연결 성공 여부
+- ``robot_id``: Robot ID or IP address
+- ``timeout_sec``: Connection timeout (seconds)
+- **Returns**: Connection success
 
 **setMap()**
 
@@ -320,16 +320,16 @@ RaisinClient Methods
                          double initial_z, double initial_yaw,
                          const std::string& map_name);
 
-PCD 맵 파일을 로드하고 Localization을 초기화합니다.
+Loads a PCD map file and initializes localization.
 
-- ``pcd_path``: PCD 파일 경로 (**클라이언트 PC에 있는 파일**, 로봇으로 전송됨)
-- ``initial_x/y/z``: 맵 내 로봇 초기 위치 (로봇이 물리적으로 있는 위치를 맵 좌표로 입력)
-- ``initial_yaw``: 초기 방향 (radians)
-- ``map_name``: 맵 프레임 이름 (**Waypoint frame과 일치해야 함**)
+- ``pcd_path``: PCD file path (**file on client PC**, transferred to robot)
+- ``initial_x/y/z``: Robot initial position in map (enter map coordinates where the robot is physically located)
+- ``initial_yaw``: Initial heading (radians)
+- ``map_name``: Map frame name (**must match Waypoint frame**)
 
 .. note::
-    PCD 맵은 사전에 SLAM으로 생성해야 합니다. raisin_gui의 Mapping 기능을 사용하거나,
-    Fast-LIO 플러그인으로 직접 생성할 수 있습니다.
+    PCD maps must be pre-generated using SLAM. Use raisin_gui's Mapping feature or
+    generate directly with the Fast-LIO plugin.
 
 **setWaypoints()**
 
@@ -339,16 +339,16 @@ PCD 맵 파일을 로드하고 Localization을 초기화합니다.
                                 uint8_t repetition = 1,
                                 uint8_t start_index = 0);
 
-Waypoint 목록을 설정하고 네비게이션을 시작합니다.
+Sets waypoint list and starts navigation.
 
-- ``waypoints``: Waypoint 목록
-- ``repetition``: 반복 횟수
+- ``waypoints``: Waypoint list
+- ``repetition``: Repeat count
 
-  - ``0`` = 무한 순찰
-  - ``1`` = 1회 통과 (기본값)
-  - ``N`` = N회 반복
+  - ``0`` = infinite patrol
+  - ``1`` = single pass (default)
+  - ``N`` = repeat N times
 
-- ``start_index``: 시작 waypoint 인덱스
+- ``start_index``: Starting waypoint index
 
 **getMissionStatus()**
 
@@ -356,7 +356,7 @@ Waypoint 목록을 설정하고 네비게이션을 시작합니다.
 
     MissionStatus getMissionStatus();
 
-현재 미션 상태를 조회합니다.
+Queries current mission status.
 
 **appendWaypoint()**
 
@@ -364,7 +364,7 @@ Waypoint 목록을 설정하고 네비게이션을 시작합니다.
 
     ServiceResult appendWaypoint(const Waypoint& waypoint);
 
-현재 미션 큐에 waypoint를 추가합니다.
+Appends a waypoint to the current mission queue.
 
 **stopNavigation()**
 
@@ -372,7 +372,7 @@ Waypoint 목록을 설정하고 네비게이션을 시작합니다.
 
     ServiceResult stopNavigation();
 
-자율주행을 중지합니다 (빈 waypoint 목록 설정).
+Stops autonomous navigation (sets empty waypoint list).
 
 **startPatrol()**
 
@@ -380,7 +380,7 @@ Waypoint 목록을 설정하고 네비게이션을 시작합니다.
 
     ServiceResult startPatrol(const std::vector<Waypoint>& waypoints);
 
-무한 순찰을 시작합니다 (``setWaypoints(waypoints, 0)``과 동일).
+Starts infinite patrol (equivalent to ``setWaypoints(waypoints, 0)``).
 
 **subscribeOdometry()**
 
@@ -388,7 +388,7 @@ Waypoint 목록을 설정하고 네비게이션을 시작합니다.
 
     void subscribeOdometry(std::function<void(const RobotState&)> callback);
 
-Odometry 데이터를 실시간 구독합니다.
+Subscribes to real-time odometry data.
 
 **subscribePointCloud()**
 
@@ -396,7 +396,7 @@ Odometry 데이터를 실시간 구독합니다.
 
     void subscribePointCloud(std::function<void(const std::vector<Point3D>&)> callback);
 
-LiDAR 포인트 클라우드를 실시간 구독합니다.
+Subscribes to real-time LiDAR point cloud.
 
 **getRobotState() / getLatestPointCloud()**
 
@@ -405,7 +405,7 @@ LiDAR 포인트 클라우드를 실시간 구독합니다.
     RobotState getRobotState();
     std::vector<Point3D> getLatestPointCloud();
 
-마지막으로 수신한 데이터를 반환합니다 (thread-safe).
+Returns last received data (thread-safe).
 
 **loadPCD() (static)**
 
@@ -413,7 +413,7 @@ LiDAR 포인트 클라우드를 실시간 구독합니다.
 
     static std::vector<Point3D> loadPCD(const std::string& pcd_path);
 
-PCD 파일을 로드합니다 (로봇 전송 없이 시각화용).
+Loads a PCD file (for visualization without sending to robot).
 
 **subscribeRobotState()**
 
@@ -421,7 +421,7 @@ PCD 파일을 로드합니다 (로봇 전송 없이 시각화용).
 
     void subscribeRobotState(std::function<void(const ExtendedRobotState&)> callback);
 
-확장 로봇 상태를 실시간 구독합니다. 배터리 정보, locomotion 상태, 액추에이터 상태 등을 포함합니다.
+Subscribes to extended robot state in real-time. Includes battery information, locomotion state, actuator status, etc.
 
 .. code-block:: cpp
 
@@ -441,72 +441,106 @@ PCD 파일을 로드합니다 (로봇 전송 없이 시각화용).
 
     ExtendedRobotState getExtendedRobotState();
 
-마지막으로 수신한 확장 로봇 상태를 반환합니다 (thread-safe).
-``subscribeRobotState()``를 먼저 호출해야 유효한 데이터를 얻을 수 있습니다.
+Returns last received extended robot state (thread-safe).
+Must call ``subscribeRobotState()`` first to get valid data.
 
-**enableJoyControl()**
-
-.. code-block:: cpp
-
-    ServiceResult enableJoyControl(const std::string& topic_name = "joy");
-
-수동 조이스틱 제어를 활성화합니다.
-
-- ``topic_name``: 조이스틱 토픽 이름 (기본값: "joy")
-- **반환**: 서비스 호출 결과
+**findGuiNetworkId()**
 
 .. code-block:: cpp
 
-    auto result = client.enableJoyControl();
+    std::string findGuiNetworkId(const std::string& prefix = "gui");
+
+Finds the connected GUI's network ID.
+
+- ``prefix``: GUI ID prefix (default: "gui")
+- **Returns**: GUI network ID (e.g., "gui53-230486654196"), empty string if not found
+
+.. code-block:: cpp
+
+    std::string guiId = client.findGuiNetworkId();
+    std::cout << "Connected GUI: " << guiId << std::endl;
+
+**setManualControl()**
+
+.. code-block:: cpp
+
+    ServiceResult setManualControl(const std::string& gui_network_id = "");
+
+Enables manual joystick control (joy/gui).
+Auto-detects the GUI network ID to receive joystick commands from that GUI.
+
+- ``gui_network_id``: GUI network ID (auto-detected if empty)
+- **Returns**: Service call result
+
+.. code-block:: cpp
+
+    auto result = client.setManualControl();
     if (result.success) {
         std::cout << "Manual control enabled" << std::endl;
     }
 
-**disableJoyControl()**
+**setAutonomousControl()**
 
 .. code-block:: cpp
 
-    ServiceResult disableJoyControl(const std::string& topic_name = "joy");
+    ServiceResult setAutonomousControl();
 
-조이스틱 제어를 비활성화합니다 (수동 조작 잠금).
+Enables autonomous control (vel_cmd/autonomy).
 
-- ``topic_name``: 조이스틱 토픽 이름 (기본값: "joy")
-- **반환**: 서비스 호출 결과
+- **Returns**: Service call result
 
 .. code-block:: cpp
 
-    auto result = client.disableJoyControl();
+    auto result = client.setAutonomousControl();
     if (result.success) {
-        std::cout << "Joystick control locked" << std::endl;
+        std::cout << "Autonomous control enabled" << std::endl;
     }
 
+**releaseControl()**
+
+.. code-block:: cpp
+
+    ServiceResult releaseControl(const std::string& source = "joy/gui");
+
+Releases control (switches to None state).
+
+- ``source``: Control source to release ("joy/gui" or "vel_cmd/autonomy")
+- **Returns**: Service call result
+
+.. code-block:: cpp
+
+    client.releaseControl("joy/gui");
+    client.releaseControl("vel_cmd/autonomy");
+
 .. note::
-    조이스틱 제어 상태는 ``ExtendedRobotState.joy_listen_type``으로 확인할 수 있습니다:
+    Control state can be checked via ``ExtendedRobotState.joy_listen_type``:
 
-    - ``JOY (0)``: 수동 조이스틱 제어 활성
-    - ``VEL_CMD (1)``: 자율주행 속도 명령 수신 중
-    - ``NUM_SOURCES (2)``: 제어 소스 없음 (잠금 상태)
+    - ``JOY (0)``: Manual joystick control active (joy/gui)
+    - ``VEL_CMD (1)``: Receiving autonomous velocity commands (vel_cmd/autonomy)
+    - ``NONE (2)``: No control source
 
-GPS 사용 시 주의사항
-^^^^^^^^^^^^^^^^^^^^
+    When ``setManualControl()`` is called, the GUI's wifi icon turns green.
+
+GPS Usage Notes
+^^^^^^^^^^^^^^^
 
 .. code-block:: cpp
 
     Waypoint::GPS(37.5665, 126.9780);
 
-- **GPS 모듈이 로봇에 장착**되어 있어야 합니다
-- GPS fix가 유효해야 합니다 (``/fix`` 토픽)
-- GPS가 없으면 ``setWaypoints()``는 성공하지만 로봇이 목표에 도달하지 못합니다
+- **GPS module must be installed** on the robot
+- GPS fix must be valid (``/fix`` topic)
+- Without GPS, ``setWaypoints()`` succeeds but robot won't reach target
 
 ----
 
 Direct Network API
 ------------------
 
-고급 사용자를 위한 ``raisin_network`` 직접 사용 방법입니다.
+Direct ``raisin_network`` usage for advanced users.
 
-헤더 포함
-^^^^^^^^^
+Include Headers
+^^^^^^^^^^^^^^^
 
 .. code-block:: cpp
 
@@ -517,28 +551,28 @@ Direct Network API
     #include "raisin_interfaces/srv/get_waypoints.hpp"
     #include "raisin_interfaces/srv/append_waypoint.hpp"
     #include "raisin_interfaces/srv/set_laser_map.hpp"
-    #include "raisin_interfaces/srv/string.hpp"       // Joy 제어용
-    #include "raisin_interfaces/msg/robot_state.hpp"  // 로봇 상태 토픽
+    #include "raisin_interfaces/srv/string.hpp"       // For Joy control
+    #include "raisin_interfaces/msg/robot_state.hpp"  // For robot state topic
 
-연결 패턴
-^^^^^^^^^
+Connection Pattern
+^^^^^^^^^^^^^^^^^^
 
 .. code-block:: cpp
 
-    // 1. 초기화
+    // 1. Initialize
     raisin::raisinInit();
 
-    // 2. 네트워크 생성
+    // 2. Create network
     std::vector<std::vector<std::string>> threads = {{"main"}};
     auto network = std::make_shared<raisin::Network>(
-        "my_client",      // 클라이언트 ID
-        "external",       // 디바이스 타입
+        "my_client",      // Client ID
+        "external",       // Device type
         threads
     );
 
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    // 3. 로봇 연결
+    // 3. Connect to robot
     auto connection = network->connect("ROBOT_ID");
     if (!connection) {
         std::cerr << "Connection failed" << std::endl;
@@ -547,45 +581,45 @@ Direct Network API
 
     std::this_thread::sleep_for(std::chrono::seconds(2));
 
-    // 4. Node 생성
+    // 4. Create Node
     raisin::Node node(network);
 
-서비스 클라이언트 생성
-^^^^^^^^^^^^^^^^^^^^^^
+Creating Service Clients
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: cpp
 
-    // Waypoint 설정 클라이언트
+    // SetWaypoints client
     auto setClient = node.createClient<raisin::raisin_interfaces::srv::SetWaypoints>(
         "planning/set_waypoints", connection);
 
-    // Waypoint 조회 클라이언트
+    // GetWaypoints client
     auto getClient = node.createClient<raisin::raisin_interfaces::srv::GetWaypoints>(
         "planning/get_waypoints", connection);
 
-    // Waypoint 추가 클라이언트
+    // AppendWaypoint client
     auto appendClient = node.createClient<raisin::raisin_interfaces::srv::AppendWaypoint>(
         "planning/append_waypoint", connection);
 
-    // 맵 설정 클라이언트
+    // SetMap client
     auto mapClient = node.createClient<raisin::raisin_interfaces::srv::SetLaserMap>(
         "set_map", connection);
 
-    // Joy 제어 클라이언트
+    // Joy control client
     auto joyListenClient = node.createClient<raisin::raisin_interfaces::srv::String>(
         "set_listen", connection);
 
-    // 서비스 대기
+    // Wait for service
     if (!setClient->waitForService(std::chrono::seconds(10))) {
         std::cerr << "Service not available" << std::endl;
     }
 
-서비스 호출 예시
-^^^^^^^^^^^^^^^^
+Service Call Example
+^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: cpp
 
-    // SetWaypoints 요청 생성
+    // Create SetWaypoints request
     auto request = std::make_shared<raisin::raisin_interfaces::srv::SetWaypoints::Request>();
 
     raisin::raisin_interfaces::msg::Waypoint wp;
@@ -599,7 +633,7 @@ Direct Network API
     request->repetition = 1;
     request->current_index = 0;
 
-    // 비동기 호출
+    // Async call
     auto future = setClient->asyncSendRequest(request);
 
     if (future.wait_for(std::chrono::seconds(5)) == std::future_status::ready) {
@@ -608,12 +642,12 @@ Direct Network API
         std::cout << "Message: " << response->message << std::endl;
     }
 
-구독자 생성
-^^^^^^^^^^^
+Creating Subscribers
+^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: cpp
 
-    // Odometry 구독
+    // Odometry subscription
     auto odomSub = node.createSubscriber<raisin::nav_msgs::msg::Odometry>(
         "/Odometry", connection,
         [](const raisin::nav_msgs::msg::Odometry::SharedPtr& msg) {
@@ -621,14 +655,14 @@ Direct Network API
                       << ", " << msg->pose.pose.position.y << std::endl;
         });
 
-    // PointCloud 구독
+    // PointCloud subscription
     auto cloudSub = node.createSubscriber<raisin::sensor_msgs::msg::PointCloud2>(
         "/cloud_registered", connection,
         [](const raisin::sensor_msgs::msg::PointCloud2::SharedPtr& msg) {
             std::cout << "Points: " << msg->width * msg->height << std::endl;
         });
 
-    // RobotState 구독 (배터리, locomotion 상태, 액추에이터 등)
+    // RobotState subscription (battery, locomotion state, actuators, etc.)
     auto stateSub = node.createSubscriber<raisin::raisin_interfaces::msg::RobotState>(
         "robot_state", connection,
         [](const raisin::raisin_interfaces::msg::RobotState::SharedPtr& msg) {
@@ -638,14 +672,14 @@ Direct Network API
             std::cout << "Actuators: " << msg->actuator_states.size() << std::endl;
         });
 
-Joy 제어 서비스 호출
-^^^^^^^^^^^^^^^^^^^^
+Joy Control Service Call
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: cpp
 
-    // 수동 조이스틱 제어 활성화
+    // Enable manual joystick control
     auto enableRequest = std::make_shared<raisin::raisin_interfaces::srv::String::Request>();
-    enableRequest->data = "joy<&>my_client_id";  // "토픽명<&>클라이언트ID"
+    enableRequest->data = "joy<&>my_client_id";  // "topic_name<&>client_id"
 
     auto future = joyListenClient->asyncSendRequest(enableRequest);
     if (future.wait_for(std::chrono::seconds(5)) == std::future_status::ready) {
@@ -653,9 +687,9 @@ Joy 제어 서비스 호출
         std::cout << "Enable joy: " << response->success << std::endl;
     }
 
-    // 조이스틱 제어 비활성화 (잠금)
+    // Disable joystick control (lock)
     auto disableRequest = std::make_shared<raisin::raisin_interfaces::srv::String::Request>();
-    disableRequest->data = "joy<&><CLOSE>";  // "토픽명<&><CLOSE>"
+    disableRequest->data = "joy<&><CLOSE>";  // "topic_name<&><CLOSE>"
 
     auto future2 = joyListenClient->asyncSendRequest(disableRequest);
     if (future2.wait_for(std::chrono::seconds(5)) == std::future_status::ready) {
@@ -668,12 +702,12 @@ Joy 제어 서비스 호출
 Service Interface Reference
 ----------------------------
 
-사용 가능한 서비스 인터페이스 정의입니다.
+Available service interface definitions.
 
 planning/set_waypoints
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Waypoint 목록을 설정합니다.
+Sets the waypoint list.
 
 **Request:**
 
@@ -686,13 +720,13 @@ Waypoint 목록을 설정합니다.
      - Description
    * - waypoints
      - Waypoint[]
-     - Waypoint 배열
+     - Waypoint array
    * - repetition
      - uint8
-     - 반복 횟수 (0=무한)
+     - Repeat count (0=infinite)
    * - current_index
      - uint8
-     - 시작 인덱스
+     - Starting index
 
 **Response:**
 
@@ -705,21 +739,21 @@ Waypoint 목록을 설정합니다.
      - Description
    * - success
      - bool
-     - 성공 여부
+     - Success flag
    * - message
      - string
-     - 결과 메시지
+     - Result message
 
-**가능한 Response 메시지:**
+**Possible Response Messages:**
 
-- ``"set waypoint success"`` - 성공
-- ``"waypoint list is empty"`` - waypoint가 비어있음
-- ``"service timeout"`` - 서비스 응답 없음
+- ``"set waypoint success"`` - Success
+- ``"waypoint list is empty"`` - Empty waypoint list
+- ``"service timeout"`` - No service response
 
 planning/get_waypoints
 ^^^^^^^^^^^^^^^^^^^^^^
 
-현재 미션 상태를 조회합니다.
+Queries current mission status.
 
 **Request:** (empty)
 
@@ -734,24 +768,24 @@ planning/get_waypoints
      - Description
    * - success
      - bool
-     - 성공 여부
+     - Success flag
    * - message
      - string
-     - 결과 메시지
+     - Result message
    * - waypoints
      - Waypoint[]
-     - 현재 waypoint 목록
+     - Current waypoint list
    * - repetition
      - uint8
-     - 남은 반복 횟수
+     - Remaining laps
    * - current_index
      - uint8
-     - 현재 목표 인덱스
+     - Current target index
 
 planning/append_waypoint
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Waypoint를 큐에 추가합니다.
+Appends a waypoint to the queue.
 
 **Request:**
 
@@ -764,7 +798,7 @@ Waypoint를 큐에 추가합니다.
      - Description
    * - waypoint
      - Waypoint
-     - 추가할 waypoint
+     - Waypoint to append
 
 **Response:**
 
@@ -777,15 +811,15 @@ Waypoint를 큐에 추가합니다.
      - Description
    * - success
      - bool
-     - 성공 여부
+     - Success flag
    * - message
      - string
-     - 결과 메시지
+     - Result message
 
 set_map (SetLaserMap)
 ^^^^^^^^^^^^^^^^^^^^^
 
-PCD 맵을 로드하고 Localization을 초기화합니다.
+Loads PCD map and initializes localization.
 
 **Request:**
 
@@ -798,13 +832,13 @@ PCD 맵을 로드하고 Localization을 초기화합니다.
      - Description
    * - name
      - string
-     - 맵 프레임 이름
+     - Map frame name
    * - pc
      - PointCloud2
-     - 포인트 클라우드 데이터
+     - Point cloud data
    * - initial_pose
      - Pose
-     - 초기 로봇 자세
+     - Initial robot pose
 
 **Response:**
 
@@ -817,31 +851,31 @@ PCD 맵을 로드하고 Localization을 초기화합니다.
      - Description
    * - success
      - bool
-     - 성공 여부
+     - Success flag
    * - message
      - string
-     - 결과 메시지
+     - Result message
 
-**가능한 Response 메시지:**
+**Possible Response Messages:**
 
-- ``"Map saved."`` - 성공
-- ``"service timeout"`` - Fast-LIO 플러그인 미로드
+- ``"Map saved."`` - Success
+- ``"service timeout"`` - Fast-LIO plugin not loaded
 
 Waypoint Message
 ^^^^^^^^^^^^^^^^
 
 .. code-block:: text
 
-    string frame      # 좌표 프레임: "map_name", "gps", "odom"
-    float64 x         # X 좌표 (GPS: latitude)
-    float64 y         # Y 좌표 (GPS: longitude)
-    float64 z         # Z 좌표 (GPS: altitude)
-    bool use_z        # Z 좌표 검사 여부
+    string frame      # Coordinate frame: "map_name", "gps", "odom"
+    float64 x         # X coordinate (GPS: latitude)
+    float64 y         # Y coordinate (GPS: longitude)
+    float64 z         # Z coordinate (GPS: altitude)
+    bool use_z        # Whether to check Z coordinate
 
-set_listen (Joy 제어)
-^^^^^^^^^^^^^^^^^^^^^
+set_listen (Joy Control)
+^^^^^^^^^^^^^^^^^^^^^^^^
 
-수동 조이스틱 제어를 활성화/비활성화합니다.
+Enables/disables manual joystick control.
 
 **Request:**
 
@@ -854,12 +888,12 @@ set_listen (Joy 제어)
      - Description
    * - data
      - string
-     - 제어 명령 문자열
+     - Control command string
 
-**Request data 형식:**
+**Request data format:**
 
-- 활성화: ``"토픽명<&>클라이언트ID"`` (예: ``"joy<&>my_app"``)
-- 비활성화: ``"토픽명<&><CLOSE>"`` (예: ``"joy<&><CLOSE>"``)
+- Enable: ``"topic_name<&>client_id"`` (e.g., ``"joy<&>my_app"``)
+- Disable: ``"topic_name<&><CLOSE>"`` (e.g., ``"joy<&><CLOSE>"``)
 
 **Response:**
 
@@ -872,19 +906,19 @@ set_listen (Joy 제어)
      - Description
    * - success
      - bool
-     - 성공 여부
+     - Success flag
    * - message
      - string
-     - 결과 메시지
+     - Result message
 
 robot_state (Topic)
 ^^^^^^^^^^^^^^^^^^^
 
-로봇의 상태 정보를 발행하는 토픽입니다.
+Topic that publishes robot state information.
 
-**토픽명:** ``robot_state``
+**Topic name:** ``robot_state``
 
-**메시지 필드:**
+**Message fields:**
 
 .. list-table::
    :header-rows: 1
@@ -895,42 +929,42 @@ robot_state (Topic)
      - Description
    * - actuator_states
      - ActuatorState[]
-     - 액추에이터(모터) 상태 배열
+     - Actuator (motor) status array
    * - base_pos
      - double[3]
-     - 베이스 위치 [x, y, z]
+     - Base position [x, y, z]
    * - base_quat
      - double[4]
-     - 베이스 쿼터니언 [x, y, z, w]
+     - Base quaternion [x, y, z, w]
    * - base_lin_vel
      - double[3]
-     - 선속도 [vx, vy, vz]
+     - Linear velocity [vx, vy, vz]
    * - base_ang_vel
      - double[3]
-     - 각속도 [wx, wy, wz]
+     - Angular velocity [wx, wy, wz]
    * - voltage
      - double
-     - 현재 배터리 전압 (V)
+     - Current battery voltage (V)
    * - current
      - double
-     - 현재 전류 (A)
+     - Current (A)
    * - max_voltage
      - double
-     - 최대 전압
+     - Maximum voltage
    * - min_voltage
      - double
-     - 최소 전압
+     - Minimum voltage
    * - body_temperature
      - double
-     - 본체 온도 (°C)
+     - Body temperature (°C)
    * - state
      - int32
-     - Locomotion 상태 (0-9)
+     - Locomotion state (0-9)
    * - joy_listen_type
      - int32
-     - Joy 소스 타입 (0=JOY, 1=VEL_CMD, 2=NONE)
+     - Joy source type (0=JOY, 1=VEL_CMD, 2=NONE)
 
-**ActuatorState 메시지:**
+**ActuatorState message:**
 
 .. list-table::
    :header-rows: 1
@@ -941,59 +975,59 @@ robot_state (Topic)
      - Description
    * - name
      - string
-     - 모터 이름 (예: "FR_hip")
+     - Motor name (e.g., "FR_hip")
    * - position
      - double
-     - 관절 위치 (rad)
+     - Joint position (rad)
    * - velocity
      - double
-     - 관절 속도 (rad/s)
+     - Joint velocity (rad/s)
    * - effort
      - double
-     - 관절 토크 (Nm)
+     - Joint torque (Nm)
    * - status
      - uint16
-     - 상태 코드 (0 = 정상)
+     - Status code (0 = normal)
    * - temperature
      - double
-     - 모터 온도 (°C)
+     - Motor temperature (°C)
 
-**Locomotion State 값:**
+**Locomotion State values:**
 
 .. list-table::
    :header-rows: 1
    :widths: 15 85
 
-   * - 값
-     - 상태
+   * - Value
+     - State
    * - 0
-     - COMM_DISABLED (통신 비활성)
+     - COMM_DISABLED (Communication disabled)
    * - 1
-     - COMM_ENABLED (통신 활성)
+     - COMM_ENABLED (Communication enabled)
    * - 2
-     - MOTOR_READY (모터 준비)
+     - MOTOR_READY (Motor ready)
    * - 3
-     - MOTOR_COMMUTATION (모터 정류 중)
+     - MOTOR_COMMUTATION (Motor commutation in progress)
    * - 4
-     - MOTOR_ENABLED (모터 활성)
+     - MOTOR_ENABLED (Motor enabled)
    * - 5
-     - IN_TEST_MODE (테스트 모드)
+     - IN_TEST_MODE (Test mode)
    * - 6
-     - STANDING_MODE (서있는 상태)
+     - STANDING_MODE (Standing)
    * - 7
-     - IN_CONTROL (제어 중/걷기)
+     - IN_CONTROL (In control/walking)
    * - 8
-     - SITDOWN_MODE (앉은 상태)
+     - SITDOWN_MODE (Sitting)
    * - 9
-     - MOTOR_DISABLED (모터 비활성)
+     - MOTOR_DISABLED (Motor disabled)
 
 ----
 
 Complete Examples
 -----------------
 
-기본 Waypoint 제어
-^^^^^^^^^^^^^^^^^^
+Basic Waypoint Control
+^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: cpp
 
@@ -1011,7 +1045,7 @@ Complete Examples
         std::string robotId = argv[1];
         std::string pcdPath = (argc >= 3) ? argv[2] : "../maps/office1_example.pcd";
 
-        // 클라이언트 생성 및 연결
+        // Create and connect client
         raisin_sdk::RaisinClient client("waypoint_example");
 
         std::cout << "Connecting to " << robotId << "..." << std::endl;
@@ -1021,7 +1055,7 @@ Complete Examples
         }
         std::cout << "Connected!" << std::endl;
 
-        // 맵 로드
+        // Load map
         std::cout << "Loading map..." << std::endl;
         auto mapResult = client.setMap(pcdPath, 0.0, 0.0, 0.0, 0.0, "sdk_map");
         if (!mapResult.success) {
@@ -1030,7 +1064,7 @@ Complete Examples
         }
         std::cout << "Map loaded: " << mapResult.message << std::endl;
 
-        // Waypoint 설정 (frame은 반드시 map_name과 동일!)
+        // Set waypoints (frame MUST match map_name!)
         std::vector<raisin_sdk::Waypoint> waypoints = {
             raisin_sdk::Waypoint("sdk_map", 0.0, 0.0),
             raisin_sdk::Waypoint("sdk_map", 5.0, 0.0),
@@ -1047,7 +1081,7 @@ Complete Examples
         }
         std::cout << "Navigation started!" << std::endl;
 
-        // 진행 상황 모니터링
+        // Monitor progress
         while (true) {
             auto status = client.getMissionStatus();
             if (status.valid) {
@@ -1055,7 +1089,7 @@ Complete Examples
                           << "/" << status.waypoints.size()
                           << " | Laps: " << (int)status.repetition << "   " << std::flush;
 
-                // 미션 완료 확인
+                // Check mission complete
                 if (status.current_index >= status.waypoints.size() - 1 &&
                     status.repetition == 0) {
                     std::cout << "\nMission complete!" << std::endl;
@@ -1069,8 +1103,8 @@ Complete Examples
         return 0;
     }
 
-실시간 모니터링
-^^^^^^^^^^^^^^^
+Real-time Monitoring
+^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: cpp
 
@@ -1088,13 +1122,13 @@ Complete Examples
         raisin_sdk::RaisinClient client("monitor");
         if (!client.connect(argv[1])) return 1;
 
-        // Odometry 구독
+        // Subscribe to odometry
         client.subscribeOdometry([](const raisin_sdk::RobotState& state) {
             std::cout << "Position: (" << state.x << ", " << state.y << ") "
                       << "Yaw: " << state.yaw << " rad" << std::endl;
         });
 
-        // PointCloud 구독
+        // Subscribe to point cloud
         client.subscribePointCloud([](const std::vector<raisin_sdk::Point3D>& cloud) {
             std::cout << "LiDAR points: " << cloud.size() << std::endl;
         });
@@ -1107,12 +1141,12 @@ Complete Examples
         return 0;
     }
 
-무한 순찰
-^^^^^^^^^
+Infinite Patrol
+^^^^^^^^^^^^^^^
 
 .. code-block:: cpp
 
-    // 무한 순찰 시작
+    // Start infinite patrol
     std::vector<raisin_sdk::Waypoint> patrol = {
         raisin_sdk::Waypoint("sdk_map", 0.0, 0.0),
         raisin_sdk::Waypoint("sdk_map", 10.0, 0.0),
@@ -1120,13 +1154,13 @@ Complete Examples
         raisin_sdk::Waypoint("sdk_map", 0.0, 10.0),
     };
 
-    client.startPatrol(patrol);  // 또는 client.setWaypoints(patrol, 0);
+    client.startPatrol(patrol);  // or client.setWaypoints(patrol, 0);
 
-    // 순찰 중지
+    // Stop patrol
     client.stopNavigation();
 
-로봇 상태 모니터링
-^^^^^^^^^^^^^^^^^^
+Robot State Monitoring
+^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: cpp
 
@@ -1144,14 +1178,14 @@ Complete Examples
         raisin_sdk::RaisinClient client("state_monitor");
         if (!client.connect(argv[1])) return 1;
 
-        // 확장 로봇 상태 구독
+        // Subscribe to extended robot state
         client.subscribeRobotState([](const raisin_sdk::ExtendedRobotState& state) {
             std::cout << "Locomotion: " << state.getLocomotionStateName()
                       << " | Battery: " << state.voltage << "V"
                       << " | Control: " << state.getJoySourceName()
                       << std::endl;
 
-            // 모터 에러 확인
+            // Check for motor errors
             if (state.hasActuatorError()) {
                 for (const auto& act : state.actuators) {
                     if (act.status != 0) {
@@ -1169,13 +1203,13 @@ Complete Examples
         return 0;
     }
 
-배터리 모니터링
-^^^^^^^^^^^^^^^
+Battery Monitoring
+^^^^^^^^^^^^^^^^^^
 
 .. code-block:: cpp
 
     client.subscribeRobotState([](const raisin_sdk::ExtendedRobotState& state) {
-        // 배터리 잔량 계산 (선형 근사)
+        // Calculate battery percentage (linear approximation)
         double percentage = 0.0;
         if (state.max_voltage > state.min_voltage) {
             percentage = (state.voltage - state.min_voltage) /
@@ -1187,44 +1221,44 @@ Complete Examples
                   << " | Temp: " << state.body_temperature << "°C"
                   << std::endl;
 
-        // 저전압 경고
+        // Low battery warning
         if (percentage < 20.0) {
             std::cerr << "Warning: Low battery!" << std::endl;
         }
     });
 
-수동/자율 제어 전환
-^^^^^^^^^^^^^^^^^^^
+Manual/Autonomous Control Switching
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: cpp
 
     raisin_sdk::RaisinClient client("control_switcher");
     if (!client.connect(argv[1])) return 1;
 
-    // 현재 제어 상태 확인
+    // Check current control state
     client.subscribeRobotState([](const raisin_sdk::ExtendedRobotState& state) {
         std::cout << "Current control: " << state.getJoySourceName() << std::endl;
     });
 
-    // 수동 조이스틱 제어 활성화
+    // Enable manual joystick control
     auto result = client.enableJoyControl();
     if (result.success) {
         std::cout << "Manual control enabled" << std::endl;
     }
 
-    // ... 수동 조작 ...
+    // ... manual operation ...
 
-    // 수동 제어 비활성화 (자율주행 전환 전)
+    // Disable manual control (before switching to autonomous)
     result = client.disableJoyControl();
     if (result.success) {
         std::cout << "Manual control disabled" << std::endl;
     }
 
-    // 자율주행 시작
+    // Start autonomous navigation
     client.setWaypoints(waypoints, 1);
 
-Odometry 모니터링 (현재 위치)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Odometry Monitoring (Current Position)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: cpp
 
@@ -1235,45 +1269,45 @@ Odometry 모니터링 (현재 위치)
                   << std::endl;
     });
 
-    // 또는 마지막 상태 조회
+    // Or get last state
     auto state = client.getRobotState();
     if (state.valid) {
         std::cout << "Current position: (" << state.x << ", " << state.y << ")" << std::endl;
     }
 
-PointCloud 구독 (LiDAR)
-^^^^^^^^^^^^^^^^^^^^^^^
+PointCloud Subscription (LiDAR)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: cpp
 
     client.subscribePointCloud([](const std::vector<raisin_sdk::Point3D>& points) {
         std::cout << "Received " << points.size() << " points" << std::endl;
 
-        // 포인트 처리 예시
+        // Process points
         for (const auto& p : points) {
-            // p.x, p.y, p.z 사용
+            // Use p.x, p.y, p.z
         }
     });
 
-    // 또는 마지막 포인트클라우드 조회
+    // Or get last pointcloud
     auto cloud = client.getLatestPointCloud();
 
-맵 로드 및 Localization
-^^^^^^^^^^^^^^^^^^^^^^^
+Map Loading and Localization
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: cpp
 
-    // PCD 맵 파일 로드 및 로봇에 전송
+    // Load PCD map file and send to robot
     auto result = client.setMap(
-        "./office.pcd",  // PCD 파일 경로
-        0.0, 0.0, 0.0,   // 초기 위치 (x, y, z)
-        0.0,             // 초기 방향 (yaw, radians)
-        "office_map"     // 맵 이름 (waypoint frame으로 사용)
+        "./office.pcd",  // PCD file path
+        0.0, 0.0, 0.0,   // Initial position (x, y, z)
+        0.0,             // Initial heading (yaw, radians)
+        "office_map"     // Map name (used as waypoint frame)
     );
 
     if (result.success) {
         std::cout << "Map loaded: " << result.message << std::endl;
-        // 이제 "office_map" 프레임으로 waypoint 설정 가능
+        // Now set waypoints using "office_map" frame
         std::vector<raisin_sdk::Waypoint> waypoints = {
             raisin_sdk::Waypoint("office_map", 5.0, 0.0),
             raisin_sdk::Waypoint("office_map", 5.0, 5.0),
@@ -1281,8 +1315,8 @@ PointCloud 구독 (LiDAR)
         client.setWaypoints(waypoints, 1);
     }
 
-미션 상태 조회
-^^^^^^^^^^^^^^
+Mission Status Query
+^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: cpp
 
@@ -1292,7 +1326,7 @@ PointCloud 구독 (LiDAR)
         std::cout << "Current target: " << (int)status.current_index << std::endl;
         std::cout << "Remaining laps: " << (int)status.repetition << std::endl;
 
-        // 각 waypoint 확인
+        // Check each waypoint
         for (size_t i = 0; i < status.waypoints.size(); ++i) {
             const auto& wp = status.waypoints[i];
             std::string state = (i < status.current_index) ? "DONE" :
@@ -1307,72 +1341,72 @@ PointCloud 구독 (LiDAR)
 GUI Demo (simple_gui)
 ---------------------
 
-OpenCV 기반의 시각화 데모 프로그램입니다. 맵과 로봇 위치를 시각화하고, 마우스로 Waypoint를 설정할 수 있습니다.
+An OpenCV-based visualization demo program. It visualizes maps and robot positions, allowing you to set waypoints with mouse clicks.
 
-실행 방법
-^^^^^^^^^
+Usage
+^^^^^
 
 .. code-block:: bash
 
     ./simple_gui <robot_id> [pcd_path]
 
-    # 예시
+    # Examples
     ./simple_gui railab_raibo-3614732983840
     ./simple_gui railab_raibo-3614732983840 ../maps/office1_example.pcd
 
-워크플로우
-^^^^^^^^^^
+Workflow
+^^^^^^^^
 
-1. ``O`` 키로 PCD 맵 파일 열기
-2. 맵에서 클릭하여 로봇 초기 위치 설정
-3. 로봇이 바라보는 방향으로 클릭하여 방향(Yaw) 설정
-4. ``S`` 키로 맵 전송 및 Localization 시작
-5. 맵에서 클릭하여 Waypoint 추가
-6. ``W`` 키로 Waypoint 전송 및 자율주행 시작
+1. Press ``O`` to open a PCD map file
+2. Click on map to set robot initial position
+3. Click in the direction the robot is facing to set yaw
+4. Press ``S`` to send map and start localization
+5. Click on map to add waypoints
+6. Press ``W`` to send waypoints and start navigation
 
-키보드 단축키
-^^^^^^^^^^^^^
+Keyboard Shortcuts
+^^^^^^^^^^^^^^^^^^
 
 .. list-table::
    :header-rows: 1
    :widths: 15 85
 
-   * - 키
-     - 기능
+   * - Key
+     - Function
    * - ``O``
-     - PCD 맵 파일 열기
+     - Open PCD map file
    * - ``S``
-     - 맵 전송 (Localization 시작)
+     - Send map (start localization)
    * - ``W``
-     - Waypoint 전송 (자율주행 시작)
+     - Send waypoints (start navigation)
    * - ``C``
-     - Waypoint 초기화
+     - Clear waypoints
    * - ``R``
-     - 반복 횟수 변경 (1 → 5 → ∞)
+     - Toggle repetition (1 → 5 → ∞)
    * - ``X``
-     - Initial pose 리셋
+     - Reset initial pose
    * - ``+/-``
-     - 줌 인/아웃
+     - Zoom in/out
    * - ``Q``
-     - 종료
+     - Quit
 
-마우스 조작
-^^^^^^^^^^^
+Mouse Controls
+^^^^^^^^^^^^^^
 
-- **좌클릭**: 워크플로우 단계별 동작 (위치/방향/Waypoint)
-- **우클릭 드래그**: 화면 이동 (Pan)
-- **스크롤**: 줌
+- **Left-click**: Step-by-step workflow action (position/direction/waypoint)
+- **Right-drag**: Pan view
+- **Scroll**: Zoom
 
-상태 표시
-^^^^^^^^^
+Status Display
+^^^^^^^^^^^^^^
 
-- 화면 하단에 현재 단계 및 다음 동작 안내 표시
-- Localization 활성화 전에는 Waypoint 추가 불가
-- 이미 Localization이 활성화된 상태에서 ``S`` 를 누르면 리셋 안내
+- Current step and next action guide displayed at bottom of screen
+- Waypoints cannot be added before localization is active
+- Pressing ``S`` when localization is already active shows reset instructions
 
 .. note::
-    simple_gui는 ``zenity`` 패키지를 사용하여 파일 선택 다이얼로그를 표시합니다.
-    Ubuntu에서 ``sudo apt-get install zenity`` 로 설치할 수 있습니다.
+    simple_gui uses the ``zenity`` package for file selection dialogs.
+    Install with ``sudo apt-get install zenity`` on Ubuntu.
 
 ----
 
@@ -1386,17 +1420,17 @@ CMake Configuration
 
     set(CMAKE_CXX_STANDARD 17)
 
-    # SDK 경로
+    # SDK path
     set(RAISIN_SDK_PATH "/path/to/raisin_sdk_install")
 
-    # 의존성
+    # Dependencies
     find_package(Eigen3 REQUIRED)
     find_package(OpenSSL REQUIRED)
 
     set(PCL_INCLUDE_DIRS "/usr/include/pcl-1.12")
     set(PCL_LIBRARIES pcl_common pcl_io)
 
-    # 실행 파일
+    # Executable
     add_executable(my_controller main.cpp)
 
     target_include_directories(my_controller PRIVATE
@@ -1429,145 +1463,145 @@ CMake Configuration
 Troubleshooting
 ---------------
 
-연결 실패
-^^^^^^^^^
+Connection Failed
+^^^^^^^^^^^^^^^^^
 
-**증상**: ``connect()`` 반환값이 false
+**Symptom**: ``connect()`` returns false
 
-**확인 사항**:
+**Check:**
 
-1. ``raisin_master``가 로봇에서 실행 중인지 확인
-2. 동일 네트워크에 있는지 확인
-3. Robot ID가 정확한지 확인 (raisin_master 콘솔 출력 참조)
+1. Verify ``raisin_master`` is running on robot
+2. Verify same network connectivity
+3. Verify correct Robot ID (see raisin_master console output)
 
-맵 로드 실패
-^^^^^^^^^^^^
+Map Load Failed
+^^^^^^^^^^^^^^^
 
-**증상**: ``setMap()`` 실패 또는 타임아웃
+**Symptom**: ``setMap()`` fails or times out
 
-**확인 사항**:
+**Check:**
 
-1. **Fast-LIO 플러그인**이 로드되어 있는지 확인 (미로드 시: raisin_plugin 문서의 FastLIO 섹션 참조)
-2. PCD 파일 경로가 올바른지 확인
-3. PCD 파일이 손상되지 않았는지 확인 (``loadPCD()``로 테스트)
+1. Verify **Fast-LIO plugin** is loaded (if not: see FastLIO section in raisin_plugin documentation)
+2. Verify PCD file path is correct
+3. Verify PCD file is not corrupted (test with ``loadPCD()``)
 
-로봇이 움직이지 않음
-^^^^^^^^^^^^^^^^^^^^
+Robot Not Moving
+^^^^^^^^^^^^^^^^
 
-**증상**: ``setWaypoints()`` 성공했지만 로봇이 정지
+**Symptom**: ``setWaypoints()`` succeeds but robot stays still
 
-**확인 사항**:
+**Check:**
 
-1. **Autonomy 플러그인**이 로드되어 있는지 확인 (미로드 시: raisin_plugin 문서의 Autonomy 섹션 참조)
-2. **frame 이름이 map_name과 일치하는지 확인** (가장 흔한 원인!)
-3. Waypoint 좌표가 맵 범위 내에 있는지 확인
-4. 조이스틱 오버라이드 상태가 아닌지 확인
+1. Verify **Autonomy plugin** is loaded (if not: see Autonomy section in raisin_plugin documentation)
+2. **Verify frame name matches map_name** (most common cause!)
+3. Verify waypoint coordinates are within map bounds
+4. Verify not in joystick override mode
 
 .. code-block:: cpp
 
-    // 흔한 실수
+    // Common mistake
     client.setMap("...", 0, 0, 0, 0, "office_map");
-    client.setWaypoints({Waypoint("map", 5.0, 0.0)}, 1);  // ✗ "map" != "office_map"
+    client.setWaypoints({Waypoint("map", 5.0, 0.0)}, 1);  // "map" != "office_map"
 
-    // 올바른 사용
+    // Correct usage
     client.setMap("...", 0, 0, 0, 0, "office_map");
-    client.setWaypoints({Waypoint("office_map", 5.0, 0.0)}, 1);  // ✓
+    client.setWaypoints({Waypoint("office_map", 5.0, 0.0)}, 1);
 
-서비스 응답 메시지 목록
-^^^^^^^^^^^^^^^^^^^^^^^
+Service Response Messages
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **SetWaypoints:**
 
-- ``"set waypoint success"`` - 성공
-- ``"waypoint list is empty"`` - 빈 목록
+- ``"set waypoint success"`` - Success
+- ``"waypoint list is empty"`` - Empty list
 
 **SetMap (SetLaserMap):**
 
-- ``"Map saved."`` - 성공
-- 타임아웃 - Fast-LIO 플러그인 미로드
+- ``"Map saved."`` - Success
+- Timeout - Fast-LIO plugin not loaded
 
 **GetWaypoints:**
 
-- ``"get waypoint success"`` - 성공
+- ``"get waypoint success"`` - Success
 
 ----
 
-FAQ (자주 묻는 질문)
---------------------
+FAQ (Frequently Asked Questions)
+--------------------------------
 
-이 섹션은 실제 사용자 문의를 바탕으로 작성되었습니다.
+This section is based on actual user inquiries.
 
-.. _faq-valid-field:
+.. _faq-valid-field-en:
 
-Q: MissionStatus와 RobotState의 valid 필드는 무엇인가요?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Q: What is the valid field in MissionStatus and RobotState?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**관련 문서**: :ref:`Data Types <data-types>` 섹션의 ``MissionStatus``, ``RobotState`` 참조
+**Related documentation**: See ``MissionStatus`` and ``RobotState`` in :ref:`Data Types <data-types-en>` section
 
-**문의 내용**:
+**Question**:
 
-    MissionStatus/RobotState 구조체의 ``valid`` 항목이 어떤 유효성을 검토하는지,
-    그리고 어떤 경우에 유효하지 않은 값(false)이 전달되는지 알고 싶습니다.
+    What does the ``valid`` field in MissionStatus/RobotState structures indicate,
+    and when does it return false?
 
-**답변**:
+**Answer**:
 
-``valid`` 필드는 **비동기 데이터 수신/서비스 호출의 성공 여부**를 나타냅니다.
+The ``valid`` field indicates **whether asynchronous data reception or service call was successful**.
 
 **RobotState.valid**
 
-- ``true``: Odometry 데이터를 정상적으로 수신한 상태
-- ``false``: 아직 Odometry 데이터를 받지 못함
+- ``true``: Odometry data has been received successfully
+- ``false``: No odometry data received yet
 
 .. code-block:: cpp
 
-    // 연결 직후에는 valid가 false일 수 있음
+    // valid may be false immediately after connection
     client.connect("ROBOT_ID");
     client.subscribeOdometry([](const RobotState& s) { /* ... */ });
 
-    // 잠시 후 조회
+    // Query after a moment
     auto state = client.getRobotState();
     if (!state.valid) {
-        // 아직 첫 번째 odometry 메시지를 받지 못함
+        // First odometry message not yet received
         std::cout << "Waiting for odometry..." << std::endl;
     }
 
 **MissionStatus.valid**
 
-- ``true``: ``getMissionStatus()`` 서비스 호출이 성공
-- ``false``: 서비스 호출 실패 (타임아웃 등)
+- ``true``: ``getMissionStatus()`` service call succeeded
+- ``false``: Service call failed (timeout, etc.)
 
 .. code-block:: cpp
 
     auto status = client.getMissionStatus();
     if (!status.valid) {
-        // 서비스 응답을 받지 못함 (타임아웃 또는 연결 끊김)
+        // No response received (timeout or disconnection)
         std::cerr << "Failed to get mission status" << std::endl;
     }
 
-**valid가 false인 주요 원인**:
+**Common causes when valid is false**:
 
 .. list-table::
    :header-rows: 1
    :widths: 30 70
 
-   * - 상황
-     - 설명
-   * - 로봇 연결 전
-     - ``connect()`` 호출 전에 데이터 조회
-   * - 연결 직후
-     - Subscriber가 아직 첫 메시지를 받지 못함 (1-2초 대기 필요)
-   * - 서비스 타임아웃
-     - 5초 내에 응답을 받지 못함
-   * - 네트워크 끊김
-     - 로봇과의 연결이 끊어진 상태
-   * - 플러그인 미로드
-     - 해당 서비스를 제공하는 플러그인이 로드되지 않음
+   * - Situation
+     - Description
+   * - Before robot connection
+     - Querying data before calling ``connect()``
+   * - Right after connection
+     - Subscriber hasn't received the first message yet (wait 1-2 seconds)
+   * - Service timeout
+     - No response within 5 seconds
+   * - Network disconnection
+     - Connection to robot is lost
+   * - Plugin not loaded
+     - The plugin providing the service is not loaded
 
-**권장 패턴**:
+**Recommended pattern**:
 
 .. code-block:: cpp
 
-    // 데이터 조회 전 항상 valid 확인
+    // Always check valid before using data
     auto state = client.getRobotState();
     if (state.valid) {
         std::cout << "Position: " << state.x << ", " << state.y << std::endl;
@@ -1575,19 +1609,19 @@ Q: MissionStatus와 RobotState의 valid 필드는 무엇인가요?
         std::cout << "Data not available yet" << std::endl;
     }
 
-    // 또는 콜백 방식 사용 (콜백이 호출되면 항상 valid)
+    // Or use callback approach (callback is only called when data is valid)
     client.subscribeOdometry([](const RobotState& state) {
-        // 여기서 state.valid는 항상 true
+        // state.valid is always true here
         std::cout << "Position: " << state.x << ", " << state.y << std::endl;
     });
 
 ----
 
-관련 문서
----------
+Related Documentation
+---------------------
 
-- **raisin_master 문서**: 로봇 설정 및 플러그인 로드 방법
-- **raisin_plugin 문서**: Autonomy, Fast-LIO 플러그인 상세
+- **raisin_master documentation**: Robot setup and plugin loading
+- **raisin_plugin documentation**: Autonomy, Fast-LIO plugin details
 
 ----
 

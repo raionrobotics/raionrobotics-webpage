@@ -444,48 +444,82 @@ PCD 파일을 로드합니다 (로봇 전송 없이 시각화용).
 마지막으로 수신한 확장 로봇 상태를 반환합니다 (thread-safe).
 ``subscribeRobotState()``를 먼저 호출해야 유효한 데이터를 얻을 수 있습니다.
 
-**enableJoyControl()**
+**findGuiNetworkId()**
 
 .. code-block:: cpp
 
-    ServiceResult enableJoyControl(const std::string& topic_name = "joy");
+    std::string findGuiNetworkId(const std::string& prefix = "gui");
 
-수동 조이스틱 제어를 활성화합니다.
+연결된 GUI의 네트워크 ID를 찾습니다.
 
-- ``topic_name``: 조이스틱 토픽 이름 (기본값: "joy")
+- ``prefix``: GUI ID 접두사 (기본값: "gui")
+- **반환**: GUI 네트워크 ID (예: "gui53-230486654196"), 없으면 빈 문자열
+
+.. code-block:: cpp
+
+    std::string guiId = client.findGuiNetworkId();
+    std::cout << "Connected GUI: " << guiId << std::endl;
+
+**setManualControl()**
+
+.. code-block:: cpp
+
+    ServiceResult setManualControl(const std::string& gui_network_id = "");
+
+수동 조이스틱 제어를 활성화합니다 (joy/gui).
+GUI 네트워크 ID를 자동 감지하여 해당 GUI에서 조이스틱 명령을 받을 수 있도록 합니다.
+
+- ``gui_network_id``: GUI 네트워크 ID (빈 문자열이면 자동 감지)
 - **반환**: 서비스 호출 결과
 
 .. code-block:: cpp
 
-    auto result = client.enableJoyControl();
+    auto result = client.setManualControl();
     if (result.success) {
         std::cout << "Manual control enabled" << std::endl;
     }
 
-**disableJoyControl()**
+**setAutonomousControl()**
 
 .. code-block:: cpp
 
-    ServiceResult disableJoyControl(const std::string& topic_name = "joy");
+    ServiceResult setAutonomousControl();
 
-조이스틱 제어를 비활성화합니다 (수동 조작 잠금).
+자율주행 제어를 활성화합니다 (vel_cmd/autonomy).
 
-- ``topic_name``: 조이스틱 토픽 이름 (기본값: "joy")
 - **반환**: 서비스 호출 결과
 
 .. code-block:: cpp
 
-    auto result = client.disableJoyControl();
+    auto result = client.setAutonomousControl();
     if (result.success) {
-        std::cout << "Joystick control locked" << std::endl;
+        std::cout << "Autonomous control enabled" << std::endl;
     }
 
-.. note::
-    조이스틱 제어 상태는 ``ExtendedRobotState.joy_listen_type``으로 확인할 수 있습니다:
+**releaseControl()**
 
-    - ``JOY (0)``: 수동 조이스틱 제어 활성
-    - ``VEL_CMD (1)``: 자율주행 속도 명령 수신 중
-    - ``NUM_SOURCES (2)``: 제어 소스 없음 (잠금 상태)
+.. code-block:: cpp
+
+    ServiceResult releaseControl(const std::string& source = "joy/gui");
+
+제어권을 해제합니다 (None 상태로 전환).
+
+- ``source``: 해제할 제어 소스 ("joy/gui" 또는 "vel_cmd/autonomy")
+- **반환**: 서비스 호출 결과
+
+.. code-block:: cpp
+
+    client.releaseControl("joy/gui");
+    client.releaseControl("vel_cmd/autonomy");
+
+.. note::
+    제어 상태는 ``ExtendedRobotState.joy_listen_type``으로 확인할 수 있습니다:
+
+    - ``JOY (0)``: 수동 조이스틱 제어 활성 (joy/gui)
+    - ``VEL_CMD (1)``: 자율주행 속도 명령 수신 중 (vel_cmd/autonomy)
+    - ``NONE (2)``: 제어 소스 없음
+
+    ``setManualControl()`` 호출 시 GUI의 와이파이 아이콘이 초록색으로 변합니다.
 
 GPS 사용 시 주의사항
 ^^^^^^^^^^^^^^^^^^^^
