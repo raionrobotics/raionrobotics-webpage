@@ -16,8 +16,19 @@ release = '1.0.0'
 
 # Output settings
 htmlhelp_basename = 'raisin_external_api_doc'
-html_show_sourcelink = True
+html_show_sourcelink = False
 html_show_sphinx = False
+
+# Disable index and search
+html_use_index = False
+html_domain_indices = False
+html_copy_source = False
+
+# RTD theme options
+html_theme_options = {
+    'display_version': False,
+    'prev_next_buttons_location': None,
+}
 
 # Copy logo from raisin_master if available
 import os
