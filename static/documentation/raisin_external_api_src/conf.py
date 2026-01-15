@@ -28,6 +28,14 @@ html_copy_source = False
 html_theme_options = {
     'display_version': False,
     'prev_next_buttons_location': None,
+    'collapse_navigation': False,  # Keep sidebar expanded after navigation
+    'sticky_navigation': True,     # Sidebar follows scroll
+    'navigation_depth': 4,         # Show all levels in sidebar
+}
+
+# Completely disable search and index pages
+html_sidebars = {
+    '**': ['globaltoc.html', 'localtoc.html']
 }
 
 # Copy logo from raisin_master if available

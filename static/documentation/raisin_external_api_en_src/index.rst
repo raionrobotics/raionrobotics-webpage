@@ -105,7 +105,7 @@ Robot ID is printed in the ``raisin_master`` console on startup:
 
 .. code-block:: text
 
-    [raisin_master] Robot ID: 10.42.0.1
+    [raisin_master] Robot ID: railab_raibo-xxx
     [raisin_master] Listening on port 38371
 
 It can also be found in raisin_gui.
@@ -1355,8 +1355,8 @@ Usage
     ./simple_gui <robot_id> [pcd_path]
 
     # Examples
-    ./simple_gui 10.42.0.1
-    ./simple_gui 10.42.0.1 ../maps/office1_example.pcd
+    ./simple_gui railab_raibo-xxx
+    ./simple_gui railab_raibo-xxx ../maps/office1_example.pcd
 
 Workflow
 ^^^^^^^^
@@ -1629,8 +1629,3 @@ Related Documentation
 
 ----
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`search`

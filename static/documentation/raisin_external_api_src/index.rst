@@ -105,7 +105,7 @@ Robot ID는 ``raisin_master`` 실행 시 콘솔에 출력됩니다:
 
 .. code-block:: text
 
-    [raisin_master] Robot ID: 10.42.0.1
+    [raisin_master] Robot ID: railab_raibo-xxx
     [raisin_master] Listening on port 38371
 
 또는 raisin_gui에서 확인할 수 있습니다.
@@ -1355,8 +1355,8 @@ OpenCV 기반의 시각화 데모 프로그램입니다. 맵과 로봇 위치를
     ./simple_gui <robot_id> [pcd_path]
 
     # 예시
-    ./simple_gui 10.42.0.1
-    ./simple_gui 10.42.0.1 ../maps/office1_example.pcd
+    ./simple_gui railab_raibo-xxx
+    ./simple_gui railab_raibo-xxx ../maps/office1_example.pcd
 
 워크플로우
 ^^^^^^^^^^
@@ -1629,8 +1629,3 @@ Q: MissionStatus와 RobotState의 valid 필드는 무엇인가요?
 
 ----
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`search`
