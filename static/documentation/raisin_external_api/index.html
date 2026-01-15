@@ -245,7 +245,7 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 <section id="robot-id">
 <h3>Robot ID 확인<a class="headerlink" href="#robot-id" title="Link to this heading"></a></h3>
 <p>Robot ID는 <code class="docutils literal notranslate"><span class="pre">raisin_master</span></code> 실행 시 콘솔에 출력됩니다:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[raisin_master] Robot ID: railab_raibo-3614732983840
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[raisin_master] Robot ID: 10.42.0.1
 [raisin_master] Listening on port 38371
 </pre></div>
 </div>
@@ -545,9 +545,14 @@ Fast-LIO 플러그인으로 직접 생성할 수 있습니다.</p>
 <p>수동 조이스틱 제어를 활성화합니다 (joy/gui).
 GUI 네트워크 ID를 자동 감지하여 해당 GUI에서 조이스틱 명령을 받을 수 있도록 합니다.</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">gui_network_id</span></code>: GUI 네트워크 ID (빈 문자열이면 자동 감지)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gui_network_id</span></code>: GUI 네트워크 ID (빈 문자열이면 자동 감지, 감지 실패 시 기존 ID 유지)</p></li>
 <li><p><strong>반환</strong>: 서비스 호출 결과</p></li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>GUI 네트워크 ID를 자동 감지하지 못해도 서비스 호출은 성공합니다.
+이 경우 로봇에 기존에 설정된 network_id가 유지됩니다.</p>
+</div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">setManualControl</span><span class="p">();</span>
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Manual control enabled&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
@@ -1507,8 +1512,8 @@ bool use_z        # Z 좌표 검사 여부
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./simple_gui<span class="w"> </span>&lt;robot_id&gt;<span class="w"> </span><span class="o">[</span>pcd_path<span class="o">]</span>
 
 <span class="c1"># 예시</span>
-./simple_gui<span class="w"> </span>railab_raibo-3614732983840
-./simple_gui<span class="w"> </span>railab_raibo-3614732983840<span class="w"> </span>../maps/office1_example.pcd
+./simple_gui<span class="w"> </span><span class="m">10</span>.42.0.1
+./simple_gui<span class="w"> </span><span class="m">10</span>.42.0.1<span class="w"> </span>../maps/office1_example.pcd
 </pre></div>
 </div>
 </section>

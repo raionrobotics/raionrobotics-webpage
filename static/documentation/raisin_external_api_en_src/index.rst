@@ -105,7 +105,7 @@ Robot ID is printed in the ``raisin_master`` console on startup:
 
 .. code-block:: text
 
-    [raisin_master] Robot ID: railab_raibo-3614732983840
+    [raisin_master] Robot ID: 10.42.0.1
     [raisin_master] Listening on port 38371
 
 It can also be found in raisin_gui.
@@ -469,8 +469,12 @@ Finds the connected GUI's network ID.
 Enables manual joystick control (joy/gui).
 Auto-detects the GUI network ID to receive joystick commands from that GUI.
 
-- ``gui_network_id``: GUI network ID (auto-detected if empty)
+- ``gui_network_id``: GUI network ID (auto-detected if empty, keeps existing ID if detection fails)
 - **Returns**: Service call result
+
+.. note::
+    Even if GUI network ID auto-detection fails, the service call will succeed.
+    In this case, the existing network_id configured on the robot is preserved.
 
 .. code-block:: cpp
 
@@ -1351,8 +1355,8 @@ Usage
     ./simple_gui <robot_id> [pcd_path]
 
     # Examples
-    ./simple_gui railab_raibo-3614732983840
-    ./simple_gui railab_raibo-3614732983840 ../maps/office1_example.pcd
+    ./simple_gui 10.42.0.1
+    ./simple_gui 10.42.0.1 ../maps/office1_example.pcd
 
 Workflow
 ^^^^^^^^

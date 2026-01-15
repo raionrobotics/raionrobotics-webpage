@@ -105,7 +105,7 @@ Robot ID는 ``raisin_master`` 실행 시 콘솔에 출력됩니다:
 
 .. code-block:: text
 
-    [raisin_master] Robot ID: railab_raibo-3614732983840
+    [raisin_master] Robot ID: 10.42.0.1
     [raisin_master] Listening on port 38371
 
 또는 raisin_gui에서 확인할 수 있습니다.
@@ -469,8 +469,12 @@ PCD 파일을 로드합니다 (로봇 전송 없이 시각화용).
 수동 조이스틱 제어를 활성화합니다 (joy/gui).
 GUI 네트워크 ID를 자동 감지하여 해당 GUI에서 조이스틱 명령을 받을 수 있도록 합니다.
 
-- ``gui_network_id``: GUI 네트워크 ID (빈 문자열이면 자동 감지)
+- ``gui_network_id``: GUI 네트워크 ID (빈 문자열이면 자동 감지, 감지 실패 시 기존 ID 유지)
 - **반환**: 서비스 호출 결과
+
+.. note::
+    GUI 네트워크 ID를 자동 감지하지 못해도 서비스 호출은 성공합니다.
+    이 경우 로봇에 기존에 설정된 network_id가 유지됩니다.
 
 .. code-block:: cpp
 
@@ -1351,8 +1355,8 @@ OpenCV 기반의 시각화 데모 프로그램입니다. 맵과 로봇 위치를
     ./simple_gui <robot_id> [pcd_path]
 
     # 예시
-    ./simple_gui railab_raibo-3614732983840
-    ./simple_gui railab_raibo-3614732983840 ../maps/office1_example.pcd
+    ./simple_gui 10.42.0.1
+    ./simple_gui 10.42.0.1 ../maps/office1_example.pcd
 
 워크플로우
 ^^^^^^^^^^
