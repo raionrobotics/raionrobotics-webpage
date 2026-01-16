@@ -6,10 +6,10 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Raisin External API Reference &mdash; Raisin External API Reference 1.0.0 documentation</title>
+  <title>Raisin External API v1.0.0 &mdash; Raisin External API Reference 1.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=8eee92c7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=e0935a24" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -44,7 +44,9 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <!-- Local TOC -->
               <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">Raisin External API Reference</a><ul>
+<li><a class="reference internal" href="#">Raisin External API v1.0.0</a><ul>
+<li><a class="reference internal" href="#system-requirements">System Requirements</a></li>
+<li><a class="reference internal" href="#chapters">Chapters</a></li>
 <li><a class="reference internal" href="#overview">Overview</a></li>
 <li><a class="reference internal" href="#integration-package">Integration Package</a><ul>
 <li><a class="reference internal" href="#id1">패키지 구성</a></li>
@@ -132,7 +134,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Raisin External API Reference</li>
+      <li class="breadcrumb-item active">Raisin External API v1.0.0</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -141,10 +143,34 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="raisin-external-api-reference">
-<h1>Raisin External API Reference<a class="headerlink" href="#raisin-external-api-reference" title="Link to this heading"></a></h1>
+  <section id="raisin-external-api-v1-0-0">
+<h1>Raisin External API v1.0.0<a class="headerlink" href="#raisin-external-api-v1-0-0" title="Link to this heading"></a></h1>
 <p>외부 시스템에서 Raibo2의 자율주행 기능을 제어하기 위한 API 문서입니다.</p>
 <p><a class="reference external" href="../en/index.html">English Version</a></p>
+<section id="system-requirements">
+<h2>System Requirements<a class="headerlink" href="#system-requirements" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>OS</strong>: Ubuntu 22.04 이상</p></li>
+<li><p><strong>Architecture</strong>: x86_64, arm64</p></li>
+<li><p><strong>Dependencies</strong>: Eigen3, OpenSSL, PCL</p></li>
+</ul>
+</section>
+<section id="chapters">
+<h2>Chapters<a class="headerlink" href="#chapters" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview">Overview</a></p></li>
+<li><p><a class="reference internal" href="#integration-package">Integration Package</a></p></li>
+<li><p><a class="reference internal" href="#api-example-reference">API Example Reference</a></p></li>
+<li><p><a class="reference internal" href="#direct-network-api">Direct Network API</a></p></li>
+<li><p><a class="reference internal" href="#service-interface-reference">Service Interface Reference</a></p></li>
+<li><p><a class="reference internal" href="#complete-examples">Complete Examples</a></p></li>
+<li><p><a class="reference internal" href="#gui-demo-simple-gui">GUI Demo (simple_gui)</a></p></li>
+<li><p><a class="reference internal" href="#cmake-configuration">CMake Configuration</a></p></li>
+<li><p><a class="reference internal" href="#troubleshooting">Troubleshooting</a></p></li>
+<li><p><a class="reference internal" href="#faq">FAQ (자주 묻는 질문)</a></p></li>
+</ul>
+</section>
+<hr class="docutils" />
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
 <p>Raisin 시스템은 외부 연동을 위해 두 가지 방식을 제공합니다:</p>

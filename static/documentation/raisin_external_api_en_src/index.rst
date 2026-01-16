@@ -1,9 +1,36 @@
-Raisin External API Reference
-==============================
+Raisin External API v1.0.0
+==========================
 
 API documentation for controlling Raibo2 autonomous navigation from external systems.
 
 `한국어 버전 <../ko/index.html>`_
+
+System Requirements
+-------------------
+
+- **OS**: Ubuntu 22.04 or later
+- **Architecture**: x86_64, arm64
+- **Dependencies**: Eigen3, OpenSSL, PCL
+
+Chapters
+--------
+
+- `Overview`_
+- `Integration Package`_
+- `API Example Reference`_
+- `Direct Network API`_
+- `Service Interface Reference`_
+- `Complete Examples`_
+- `GUI Demo (simple_gui)`_
+- `CMake Configuration`_
+- `Troubleshooting`_
+- `FAQ`_
+
+.. contents::
+   :local:
+   :depth: 2
+
+----
 
 Overview
 --------

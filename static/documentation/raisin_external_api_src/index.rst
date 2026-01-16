@@ -1,9 +1,36 @@
-Raisin External API Reference
-==============================
+Raisin External API v1.0.0
+==========================
 
 외부 시스템에서 Raibo2의 자율주행 기능을 제어하기 위한 API 문서입니다.
 
 `English Version <../en/index.html>`_
+
+System Requirements
+-------------------
+
+- **OS**: Ubuntu 22.04 이상
+- **Architecture**: x86_64, arm64
+- **Dependencies**: Eigen3, OpenSSL, PCL
+
+Chapters
+--------
+
+- `Overview`_
+- `Integration Package`_
+- `API Example Reference`_
+- `Direct Network API`_
+- `Service Interface Reference`_
+- `Complete Examples`_
+- `GUI Demo (simple_gui)`_
+- `CMake Configuration`_
+- `Troubleshooting`_
+- `FAQ (자주 묻는 질문)`_
+
+.. contents::
+   :local:
+   :depth: 2
+
+----
 
 Overview
 --------

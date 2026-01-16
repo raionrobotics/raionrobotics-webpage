@@ -33,10 +33,6 @@ html_theme_options = {
     'navigation_depth': 4,         # Show all levels in sidebar
 }
 
-# Completely disable search and index pages
-html_sidebars = {
-    '**': ['globaltoc.html', 'localtoc.html']
-}
 
 # Copy logo from raisin_master if available
 import os

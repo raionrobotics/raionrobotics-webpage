@@ -34,11 +34,6 @@ html_theme_options = {
     'navigation_depth': 4,         # Show all levels in sidebar
 }
 
-# Completely disable search and index pages
-html_sidebars = {
-    '**': ['globaltoc.html', 'localtoc.html']
-}
-
 # Copy logo from raisin_master if available
 import os
 logo_path = "/home/junje/raionrobotics-webpage/static/documentation/raisin_master/v_0_2_2/_static/logo_f2-02.png"

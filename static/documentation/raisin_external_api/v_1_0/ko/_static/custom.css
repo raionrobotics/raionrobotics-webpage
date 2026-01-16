@@ -3,23 +3,7 @@
     display: none !important;
 }
 
-/* Hide the top-level "Raisin External API Reference" item and show children directly */
-.local-toc > ul > li > a {
-    display: none !important;
-}
-
-/* Also hide the +/- button for the top-level item */
-.local-toc > ul > li > button.toctree-expand {
-    display: none !important;
-}
-
-/* Promote the nested ul to top level visually */
-.local-toc > ul > li > ul {
-    margin-left: 0 !important;
-    padding-left: 0 !important;
-}
-
-/* Default state for all items - no special styling */
+/* Default state for all items */
 .wy-menu-vertical li a {
     color: #404040 !important;
     background: transparent !important;
@@ -59,9 +43,4 @@
 
 .wy-menu-vertical li.current > ul li.current > ul {
     background: #fafafa !important;
-}
-
-/* Third level items */
-.wy-menu-vertical li.current > ul li.current > ul li a {
-    color: #404040 !important;
 }
