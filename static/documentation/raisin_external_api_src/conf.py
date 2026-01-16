@@ -47,6 +47,7 @@ if os.path.exists(logo_path):
 autosectionlabel_prefix_document = True
 autosectionlabel_maxdepth = 4
 
-# Add custom CSS
+# Add custom CSS and JS
 html_static_path = ['_static']
 html_css_files = ['custom.css']
+html_js_files = ['custom.js']

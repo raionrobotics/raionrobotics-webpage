@@ -2,21 +2,3 @@
 #rtd-search-form {
     display: none !important;
 }
-
-/* Force all navigation items to be expanded */
-.wy-menu-vertical li.toctree-l1.current > ul,
-.wy-menu-vertical li.toctree-l2.current > ul,
-.wy-menu-vertical li.toctree-l3.current > ul,
-.wy-menu-vertical li.toctree-l4.current > ul {
-    display: block !important;
-}
-
-/* Also show non-current nested items */
-.wy-menu-vertical .local-toc ul {
-    display: block !important;
-}
-
-/* Override collapse toggle behavior */
-.wy-menu-vertical li span.toctree-expand {
-    display: none !important;
-}
