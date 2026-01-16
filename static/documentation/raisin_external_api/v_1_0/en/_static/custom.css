@@ -8,38 +8,60 @@
     display: none !important;
 }
 
+/* Also hide the +/- button for the top-level item */
+.local-toc > ul > li > button.toctree-expand {
+    display: none !important;
+}
+
 /* Promote the nested ul to top level visually */
 .local-toc > ul > li > ul {
     margin-left: 0 !important;
     padding-left: 0 !important;
 }
 
-/* Remove the color/background change on current items */
-.wy-menu-vertical li.current > a {
-    background: transparent !important;
-    color: #404040 !important;
-}
-
-.wy-menu-vertical li.current a:hover {
-    background: #e0e0e0 !important;
-}
-
-/* Make expanded items have visible background */
-.wy-menu-vertical li.current > ul {
-    background: #f5f5f5 !important;
-}
-
-/* Style for nested items */
-.wy-menu-vertical li.current ul li a {
+/* Default state for all items - no special styling */
+.wy-menu-vertical li a {
     color: #404040 !important;
     background: transparent !important;
 }
 
-.wy-menu-vertical li.current ul li a:hover {
-    background: #e0e0e0 !important;
+/* Hover state */
+.wy-menu-vertical li a:hover {
+    background: #e3e3e3 !important;
 }
 
-/* Remove the bold from current items */
+/* Current/expanded parent item - dark background like RTD theme */
 .wy-menu-vertical li.current > a {
+    background: #343131 !important;
+    color: #ffffff !important;
     font-weight: normal !important;
+}
+
+/* Sub-items under expanded parent - light gray background */
+.wy-menu-vertical li.current > ul {
+    background: #e3e3e3 !important;
+}
+
+.wy-menu-vertical li.current > ul li a {
+    color: #404040 !important;
+    background: transparent !important;
+}
+
+.wy-menu-vertical li.current > ul li a:hover {
+    background: #d6d6d6 !important;
+}
+
+/* Nested expanded items */
+.wy-menu-vertical li.current > ul li.current > a {
+    background: #c9c9c9 !important;
+    color: #404040 !important;
+}
+
+.wy-menu-vertical li.current > ul li.current > ul {
+    background: #fafafa !important;
+}
+
+/* Third level items */
+.wy-menu-vertical li.current > ul li.current > ul li a {
+    color: #404040 !important;
 }
