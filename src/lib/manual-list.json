@@ -1,10 +1,28 @@
 [
   {
-    "groupName": "raibo",
+    "groupName": "raisin",
     "manuals": [
       {
-        "version": "2_7_2",
-        "path": "/documentation/raibo/v_2_7_2/index.html"
+        "version": "0_1_1",
+        "path": "/documentation/raisin/v_0_1_1/index.html"
+      }
+    ]
+  },
+  {
+    "groupName": "raisin_external_api",
+    "manuals": [
+      {
+        "version": "1_0",
+        "path": "/documentation/raisin_external_api/v_1_0/index.html"
+      }
+    ]
+  },
+  {
+    "groupName": "raisin_gui",
+    "manuals": [
+      {
+        "version": "0_0_0",
+        "path": "/documentation/raisin_gui/v_0_0_0/index.html"
       }
     ]
   },
@@ -35,6 +53,15 @@
       {
         "version": "0_0_0",
         "path": "/documentation/raisin_plugin/v_0_0_0/index.html"
+      }
+    ]
+  },
+  {
+    "groupName": "simulation",
+    "manuals": [
+      {
+        "version": "0_0_0",
+        "path": "/documentation/simulation/v_0_0_0/index.html"
       }
     ]
   }

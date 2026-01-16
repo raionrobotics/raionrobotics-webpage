@@ -13,11 +13,10 @@
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=8d563738"></script>
+      <script src="_static/documentation_options.js?v=a12e3537"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
 </head>
 
@@ -56,7 +55,7 @@
 <li><a class="reference internal" href="#include-header">Include Header</a></li>
 <li><a class="reference internal" href="#basic-workflow">Basic Workflow</a></li>
 <li><a class="reference internal" href="#data-types">Data Types</a></li>
-<li><a class="reference internal" href="#autonomyclient-methods">AutonomyClient Methods</a></li>
+<li><a class="reference internal" href="#raisinclient-methods">RaisinClient Methods</a></li>
 <li><a class="reference internal" href="#gps-usage-notes">GPS Usage Notes</a></li>
 </ul>
 </li>
@@ -66,6 +65,7 @@
 <li><a class="reference internal" href="#creating-service-clients">Creating Service Clients</a></li>
 <li><a class="reference internal" href="#service-call-example">Service Call Example</a></li>
 <li><a class="reference internal" href="#creating-subscribers">Creating Subscribers</a></li>
+<li><a class="reference internal" href="#joy-control-service-call">Joy Control Service Call</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#service-interface-reference">Service Interface Reference</a><ul>
@@ -74,12 +74,21 @@
 <li><a class="reference internal" href="#planning-append-waypoint">planning/append_waypoint</a></li>
 <li><a class="reference internal" href="#set-map-setlasermap">set_map (SetLaserMap)</a></li>
 <li><a class="reference internal" href="#waypoint-message">Waypoint Message</a></li>
+<li><a class="reference internal" href="#set-listen-joy-control">set_listen (Joy Control)</a></li>
+<li><a class="reference internal" href="#robot-state-topic">robot_state (Topic)</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#complete-examples">Complete Examples</a><ul>
 <li><a class="reference internal" href="#basic-waypoint-control">Basic Waypoint Control</a></li>
 <li><a class="reference internal" href="#real-time-monitoring">Real-time Monitoring</a></li>
 <li><a class="reference internal" href="#infinite-patrol">Infinite Patrol</a></li>
+<li><a class="reference internal" href="#robot-state-monitoring">Robot State Monitoring</a></li>
+<li><a class="reference internal" href="#battery-monitoring">Battery Monitoring</a></li>
+<li><a class="reference internal" href="#manual-autonomous-control-switching">Manual/Autonomous Control Switching</a></li>
+<li><a class="reference internal" href="#odometry-monitoring-current-position">Odometry Monitoring (Current Position)</a></li>
+<li><a class="reference internal" href="#pointcloud-subscription-lidar">PointCloud Subscription (LiDAR)</a></li>
+<li><a class="reference internal" href="#map-loading-and-localization">Map Loading and Localization</a></li>
+<li><a class="reference internal" href="#mission-status-query">Mission Status Query</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#gui-demo-simple-gui">GUI Demo (simple_gui)</a><ul>
@@ -98,10 +107,13 @@
 <li><a class="reference internal" href="#service-response-messages">Service Response Messages</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#faq-frequently-asked-questions">FAQ (Frequently Asked Questions)</a><ul>
+<li><a class="reference internal" href="#q-what-is-the-valid-field-in-missionstatus-and-robotstate">Q: What is the valid field in MissionStatus and RobotState?</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#related-documentation">Related Documentation</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 </div>
         </div>
@@ -120,7 +132,6 @@
       <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Raisin External API Reference</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -149,7 +160,7 @@
 </thead>
 <tbody>
 <tr class="row-even"><td><p><strong>API Example</strong></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">AutonomyClient</span></code> wrapper class example code</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">RaisinClient</span></code> wrapper class example code</p></td>
 <td><p>Quick start, reference implementation</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Direct Network</strong></p></td>
@@ -160,7 +171,7 @@
 </table>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><strong>API Example (AutonomyClient)</strong> is example code, not an officially supported SDK.
+<p><strong>API Example (RaisinClient)</strong> is example code, not an officially supported SDK.
 It is a reference implementation showing how to integrate with the Raisin platform.
 Modify it as needed for your use case.</p>
 </div>
@@ -169,8 +180,8 @@ Modify it as needed for your use case.</p>
 +------------------------------------------+
 |  Option A: API Example                   |
 |  +------------------------------------+  |
-|  |  #include &quot;autonomy_client.hpp&quot;   |  |
-|  |  AutonomyClient client;           |  |
+|  |  #include &quot;raisin_client.hpp&quot;   |  |
+|  |  RaisinClient client;           |  |
 |  |  client.connect(&quot;ROBOT_ID&quot;);      |  |
 |  |  client.setMap(...);              |  |
 |  |  client.setWaypoints(...);        |  |
@@ -233,7 +244,7 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 <section id="finding-robot-id">
 <h3>Finding Robot ID<a class="headerlink" href="#finding-robot-id" title="Link to this heading"></a></h3>
 <p>Robot ID is printed in the <code class="docutils literal notranslate"><span class="pre">raisin_master</span></code> console on startup:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[raisin_master] Robot ID: railab_raibo-3614732983840
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[raisin_master] Robot ID: railab_raibo-xxx
 [raisin_master] Listening on port 38371
 </pre></div>
 </div>
@@ -243,17 +254,17 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 <hr class="docutils" />
 <section id="api-example-reference">
 <h2>API Example Reference<a class="headerlink" href="#api-example-reference" title="Link to this heading"></a></h2>
-<p>Example code using the <code class="docutils literal notranslate"><span class="pre">AutonomyClient</span></code> wrapper class. Modify as needed for your use case.</p>
+<p>Example code using the <code class="docutils literal notranslate"><span class="pre">RaisinClient</span></code> wrapper class. Modify as needed for your use case.</p>
 <section id="include-header">
 <h3>Include Header<a class="headerlink" href="#include-header" title="Link to this heading"></a></h3>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_sdk/autonomy_client.hpp&quot;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_sdk/raisin_client.hpp&quot;</span>
 </pre></div>
 </div>
 </section>
 <section id="basic-workflow">
 <h3>Basic Workflow<a class="headerlink" href="#basic-workflow" title="Link to this heading"></a></h3>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// 1. Create client</span>
-<span class="n">raisin_sdk</span><span class="o">::</span><span class="n">AutonomyClient</span><span class="w"> </span><span class="n">client</span><span class="p">(</span><span class="s">&quot;my_app&quot;</span><span class="p">);</span>
+<span class="n">raisin_sdk</span><span class="o">::</span><span class="n">RaisinClient</span><span class="w"> </span><span class="n">client</span><span class="p">(</span><span class="s">&quot;my_app&quot;</span><span class="p">);</span>
 
 <span class="c1">// 2. Connect to robot</span>
 <span class="n">client</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ROBOT_ID&quot;</span><span class="p">);</span>
@@ -274,7 +285,7 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 </div>
 </section>
 <section id="data-types">
-<h3>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h3>
+<span id="data-types-en"></span><h3>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h3>
 <p><strong>Waypoint</strong> - Navigation target point</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">Waypoint</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">frame</span><span class="p">;</span><span class="w">  </span><span class="c1">// Coordinate frame (important!)</span>
@@ -330,9 +341,79 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">Point3D</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">;</span><span class="w"> </span><span class="p">};</span>
 </pre></div>
 </div>
+<p><strong>ActuatorInfo</strong> - Actuator (motor) information</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">ActuatorInfo</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w">           </span><span class="c1">// Motor name (e.g., &quot;FR_hip&quot;, &quot;FL_thigh&quot;)</span>
+<span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">status</span><span class="p">;</span><span class="w">            </span><span class="c1">// Status code (0 = normal)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">temperature</span><span class="p">;</span><span class="w">         </span><span class="c1">// Motor temperature (°C)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">position</span><span class="p">;</span><span class="w">            </span><span class="c1">// Joint position (rad)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">velocity</span><span class="p">;</span><span class="w">            </span><span class="c1">// Joint velocity (rad/s)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">effort</span><span class="p">;</span><span class="w">              </span><span class="c1">// Joint torque (Nm)</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>LocomotionState</strong> - Robot locomotion state enum</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">LocomotionState</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">int32_t</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">COMM_DISABLED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">      </span><span class="c1">// Communication disabled</span>
+<span class="w">    </span><span class="n">COMM_ENABLED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">       </span><span class="c1">// Communication enabled</span>
+<span class="w">    </span><span class="n">MOTOR_READY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">        </span><span class="c1">// Motor ready</span>
+<span class="w">    </span><span class="n">MOTOR_COMMUTATION</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">  </span><span class="c1">// Motor commutation in progress</span>
+<span class="w">    </span><span class="n">MOTOR_ENABLED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">      </span><span class="c1">// Motor enabled</span>
+<span class="w">    </span><span class="n">IN_TEST_MODE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">       </span><span class="c1">// Test mode</span>
+<span class="w">    </span><span class="n">STANDING_MODE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">      </span><span class="c1">// Standing</span>
+<span class="w">    </span><span class="n">IN_CONTROL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">         </span><span class="c1">// In control (walking)</span>
+<span class="w">    </span><span class="n">SITDOWN_MODE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">       </span><span class="c1">// Sitting</span>
+<span class="w">    </span><span class="n">MOTOR_DISABLED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">9</span><span class="w">      </span><span class="c1">// Motor disabled</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>JoySourceType</strong> - Joystick control source type</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">JoySourceType</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">int32_t</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">JOY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">           </span><span class="c1">// Manual joystick control</span>
+<span class="w">    </span><span class="n">VEL_CMD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">       </span><span class="c1">// Autonomous velocity command</span>
+<span class="w">    </span><span class="n">NUM_SOURCES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w">    </span><span class="c1">// No control source</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>ExtendedRobotState</strong> - Extended robot state (includes battery, motor status)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">ExtendedRobotState</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Position and velocity</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">;</span><span class="w">             </span><span class="c1">// Position (meters)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">yaw</span><span class="p">;</span><span class="w">                 </span><span class="c1">// Heading (radians)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">vx</span><span class="p">,</span><span class="w"> </span><span class="n">vy</span><span class="p">;</span><span class="w">              </span><span class="c1">// Linear velocity (m/s)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">omega</span><span class="p">;</span><span class="w">               </span><span class="c1">// Angular velocity (rad/s)</span>
+
+<span class="w">    </span><span class="c1">// Locomotion state</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">locomotion_state</span><span class="p">;</span><span class="w">   </span><span class="c1">// LocomotionState enum value (0-9)</span>
+
+<span class="w">    </span><span class="c1">// Battery information</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">voltage</span><span class="p">;</span><span class="w">             </span><span class="c1">// Current voltage (V)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">current</span><span class="p">;</span><span class="w">             </span><span class="c1">// Current (A)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">max_voltage</span><span class="p">;</span><span class="w">         </span><span class="c1">// Maximum voltage</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">min_voltage</span><span class="p">;</span><span class="w">         </span><span class="c1">// Minimum voltage</span>
+
+<span class="w">    </span><span class="c1">// Temperature</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">body_temperature</span><span class="p">;</span><span class="w">    </span><span class="c1">// Body temperature (°C)</span>
+
+<span class="w">    </span><span class="c1">// Joystick control state</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">joy_listen_type</span><span class="p">;</span><span class="w">    </span><span class="c1">// JoySourceType enum value</span>
+
+<span class="w">    </span><span class="c1">// Actuator status</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ActuatorInfo</span><span class="o">&gt;</span><span class="w"> </span><span class="n">actuators</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">valid</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Utility methods</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">getLocomotionStateName</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w">  </span><span class="c1">// State name string</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">getJoySourceName</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w">        </span><span class="c1">// Control source name string</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">isOperational</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w">                  </span><span class="c1">// Whether standing or walking</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">hasActuatorError</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w">               </span><span class="c1">// Whether any motor has error</span>
+<span class="p">};</span>
+</pre></div>
+</div>
 </section>
-<section id="autonomyclient-methods">
-<h3>AutonomyClient Methods<a class="headerlink" href="#autonomyclient-methods" title="Link to this heading"></a></h3>
+<section id="raisinclient-methods">
+<h3>RaisinClient Methods<a class="headerlink" href="#raisinclient-methods" title="Link to this heading"></a></h3>
 <p><strong>connect()</strong></p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="nf">connect</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">robot_id</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">timeout_sec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
 </pre></div>
@@ -421,6 +502,99 @@ generate directly with the Fast-LIO plugin.</p>
 </pre></div>
 </div>
 <p>Loads a PCD file (for visualization without sending to robot).</p>
+<p><strong>subscribeRobotState()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">subscribeRobotState</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">ExtendedRobotState</span><span class="o">&amp;</span><span class="p">)</span><span class="o">&gt;</span><span class="w"> </span><span class="n">callback</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Subscribes to extended robot state in real-time. Includes battery information, locomotion state, actuator status, etc.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">subscribeRobotState</span><span class="p">([](</span><span class="k">const</span><span class="w"> </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">ExtendedRobotState</span><span class="o">&amp;</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Locomotion: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">getLocomotionStateName</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Battery: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">voltage</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;V&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Control: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">getJoySourceName</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="p">.</span><span class="n">hasActuatorError</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Warning: Actuator error detected!&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p><strong>getExtendedRobotState()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ExtendedRobotState</span><span class="w"> </span><span class="nf">getExtendedRobotState</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Returns last received extended robot state (thread-safe).
+Must call <code class="docutils literal notranslate"><span class="pre">subscribeRobotState()</span></code> first to get valid data.</p>
+<p><strong>findGuiNetworkId()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">findGuiNetworkId</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;gui&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Finds the connected GUI’s network ID.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">prefix</span></code>: GUI ID prefix (default: “gui”)</p></li>
+<li><p><strong>Returns</strong>: GUI network ID (e.g., “gui53-230486654196”), empty string if not found</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">guiId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">findGuiNetworkId</span><span class="p">();</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Connected GUI: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">guiId</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>setManualControl()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="n">setManualControl</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">gui_network_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Enables manual joystick control (joy/gui).
+Auto-detects the GUI network ID to receive joystick commands from that GUI.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">gui_network_id</span></code>: GUI network ID (auto-detected if empty, keeps existing ID if detection fails)</p></li>
+<li><p><strong>Returns</strong>: Service call result</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Even if GUI network ID auto-detection fails, the service call will succeed.
+In this case, the existing network_id configured on the robot is preserved.</p>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">setManualControl</span><span class="p">();</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Manual control enabled&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>setAutonomousControl()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">setAutonomousControl</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Enables autonomous control (vel_cmd/autonomy).</p>
+<ul class="simple">
+<li><p><strong>Returns</strong>: Service call result</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">setAutonomousControl</span><span class="p">();</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Autonomous control enabled&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>releaseControl()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="n">releaseControl</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;joy/gui&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Releases control (switches to None state).</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">source</span></code>: Control source to release (“joy/gui” or “vel_cmd/autonomy”)</p></li>
+<li><p><strong>Returns</strong>: Service call result</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">releaseControl</span><span class="p">(</span><span class="s">&quot;joy/gui&quot;</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">releaseControl</span><span class="p">(</span><span class="s">&quot;vel_cmd/autonomy&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Control state can be checked via <code class="docutils literal notranslate"><span class="pre">ExtendedRobotState.joy_listen_type</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">JOY</span> <span class="pre">(0)</span></code>: Manual joystick control active (joy/gui)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VEL_CMD</span> <span class="pre">(1)</span></code>: Receiving autonomous velocity commands (vel_cmd/autonomy)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NONE</span> <span class="pre">(2)</span></code>: No control source</p></li>
+</ul>
+<p>When <code class="docutils literal notranslate"><span class="pre">setManualControl()</span></code> is called, the GUI’s wifi icon turns green.</p>
+</div>
 </section>
 <section id="gps-usage-notes">
 <h3>GPS Usage Notes<a class="headerlink" href="#gps-usage-notes" title="Link to this heading"></a></h3>
@@ -447,6 +621,8 @@ generate directly with the Fast-LIO plugin.</p>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_interfaces/srv/get_waypoints.hpp&quot;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_interfaces/srv/append_waypoint.hpp&quot;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_interfaces/srv/set_laser_map.hpp&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_interfaces/srv/string.hpp&quot;</span><span class="c1">       // For Joy control</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_interfaces/msg/robot_state.hpp&quot;</span><span class="c1">  // For robot state topic</span>
 </pre></div>
 </div>
 </section>
@@ -496,6 +672,10 @@ generate directly with the Fast-LIO plugin.</p>
 <span class="c1">// SetMap client</span>
 <span class="k">auto</span><span class="w"> </span><span class="n">mapClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">createClient</span><span class="o">&lt;</span><span class="n">raisin</span><span class="o">::</span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">SetLaserMap</span><span class="o">&gt;</span><span class="p">(</span>
 <span class="w">    </span><span class="s">&quot;set_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">connection</span><span class="p">);</span>
+
+<span class="c1">// Joy control client</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">joyListenClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">createClient</span><span class="o">&lt;</span><span class="n">raisin</span><span class="o">::</span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">String</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;set_listen&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">connection</span><span class="p">);</span>
 
 <span class="c1">// Wait for service</span>
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">setClient</span><span class="o">-&gt;</span><span class="n">waitForService</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">seconds</span><span class="p">(</span><span class="mi">10</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span>
@@ -547,6 +727,40 @@ generate directly with the Fast-LIO plugin.</p>
 <span class="w">    </span><span class="p">[](</span><span class="k">const</span><span class="w"> </span><span class="n">raisin</span><span class="o">::</span><span class="n">sensor_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">PointCloud2</span><span class="o">::</span><span class="n">SharedPtr</span><span class="o">&amp;</span><span class="w"> </span><span class="n">msg</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Points: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">msg</span><span class="o">-&gt;</span><span class="n">width</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">msg</span><span class="o">-&gt;</span><span class="n">height</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 <span class="w">    </span><span class="p">});</span>
+
+<span class="c1">// RobotState subscription (battery, locomotion state, actuators, etc.)</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">stateSub</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">createSubscriber</span><span class="o">&lt;</span><span class="n">raisin</span><span class="o">::</span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">RobotState</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;robot_state&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">connection</span><span class="p">,</span>
+<span class="w">    </span><span class="p">[](</span><span class="k">const</span><span class="w"> </span><span class="n">raisin</span><span class="o">::</span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">RobotState</span><span class="o">::</span><span class="n">SharedPtr</span><span class="o">&amp;</span><span class="w"> </span><span class="n">msg</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Locomotion state: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">msg</span><span class="o">-&gt;</span><span class="n">state</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Battery: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">msg</span><span class="o">-&gt;</span><span class="n">voltage</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;V / &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">msg</span><span class="o">-&gt;</span><span class="n">current</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;A&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Joy source: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">msg</span><span class="o">-&gt;</span><span class="n">joy_listen_type</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Actuators: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">msg</span><span class="o">-&gt;</span><span class="n">actuator_states</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="p">});</span>
+</pre></div>
+</div>
+</section>
+<section id="joy-control-service-call">
+<h3>Joy Control Service Call<a class="headerlink" href="#joy-control-service-call" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Enable manual joystick control</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">enableRequest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">raisin</span><span class="o">::</span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">String</span><span class="o">::</span><span class="n">Request</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="n">enableRequest</span><span class="o">-&gt;</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;joy&lt;&amp;&gt;my_client_id&quot;</span><span class="p">;</span><span class="w">  </span><span class="c1">// &quot;topic_name&lt;&amp;&gt;client_id&quot;</span>
+
+<span class="k">auto</span><span class="w"> </span><span class="n">future</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">joyListenClient</span><span class="o">-&gt;</span><span class="n">asyncSendRequest</span><span class="p">(</span><span class="n">enableRequest</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">future</span><span class="p">.</span><span class="n">wait_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">seconds</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">future_status</span><span class="o">::</span><span class="n">ready</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">future</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Enable joy: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">response</span><span class="o">-&gt;</span><span class="n">success</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Disable joystick control (lock)</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">disableRequest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">raisin</span><span class="o">::</span><span class="n">raisin_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">String</span><span class="o">::</span><span class="n">Request</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="n">disableRequest</span><span class="o">-&gt;</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;joy&lt;&amp;&gt;&lt;CLOSE&gt;&quot;</span><span class="p">;</span><span class="w">  </span><span class="c1">// &quot;topic_name&lt;&amp;&gt;&lt;CLOSE&gt;&quot;</span>
+
+<span class="k">auto</span><span class="w"> </span><span class="n">future2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">joyListenClient</span><span class="o">-&gt;</span><span class="n">asyncSendRequest</span><span class="p">(</span><span class="n">disableRequest</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">future2</span><span class="p">.</span><span class="n">wait_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">seconds</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">future_status</span><span class="o">::</span><span class="n">ready</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">future2</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Disable joy: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">response</span><span class="o">-&gt;</span><span class="n">success</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </section>
@@ -777,6 +991,212 @@ bool use_z        # Whether to check Z coordinate
 </pre></div>
 </div>
 </section>
+<section id="set-listen-joy-control">
+<h3>set_listen (Joy Control)<a class="headerlink" href="#set-listen-joy-control" title="Link to this heading"></a></h3>
+<p>Enables/disables manual joystick control.</p>
+<p><strong>Request:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>data</p></td>
+<td><p>string</p></td>
+<td><p>Control command string</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Request data format:</strong></p>
+<ul class="simple">
+<li><p>Enable: <code class="docutils literal notranslate"><span class="pre">&quot;topic_name&lt;&amp;&gt;client_id&quot;</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;joy&lt;&amp;&gt;my_app&quot;</span></code>)</p></li>
+<li><p>Disable: <code class="docutils literal notranslate"><span class="pre">&quot;topic_name&lt;&amp;&gt;&lt;CLOSE&gt;&quot;</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;joy&lt;&amp;&gt;&lt;CLOSE&gt;&quot;</span></code>)</p></li>
+</ul>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>Success flag</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>Result message</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="robot-state-topic">
+<h3>robot_state (Topic)<a class="headerlink" href="#robot-state-topic" title="Link to this heading"></a></h3>
+<p>Topic that publishes robot state information.</p>
+<p><strong>Topic name:</strong> <code class="docutils literal notranslate"><span class="pre">robot_state</span></code></p>
+<p><strong>Message fields:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 20.0%" />
+<col style="width: 55.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>actuator_states</p></td>
+<td><p>ActuatorState[]</p></td>
+<td><p>Actuator (motor) status array</p></td>
+</tr>
+<tr class="row-odd"><td><p>base_pos</p></td>
+<td><p>double[3]</p></td>
+<td><p>Base position [x, y, z]</p></td>
+</tr>
+<tr class="row-even"><td><p>base_quat</p></td>
+<td><p>double[4]</p></td>
+<td><p>Base quaternion [x, y, z, w]</p></td>
+</tr>
+<tr class="row-odd"><td><p>base_lin_vel</p></td>
+<td><p>double[3]</p></td>
+<td><p>Linear velocity [vx, vy, vz]</p></td>
+</tr>
+<tr class="row-even"><td><p>base_ang_vel</p></td>
+<td><p>double[3]</p></td>
+<td><p>Angular velocity [wx, wy, wz]</p></td>
+</tr>
+<tr class="row-odd"><td><p>voltage</p></td>
+<td><p>double</p></td>
+<td><p>Current battery voltage (V)</p></td>
+</tr>
+<tr class="row-even"><td><p>current</p></td>
+<td><p>double</p></td>
+<td><p>Current (A)</p></td>
+</tr>
+<tr class="row-odd"><td><p>max_voltage</p></td>
+<td><p>double</p></td>
+<td><p>Maximum voltage</p></td>
+</tr>
+<tr class="row-even"><td><p>min_voltage</p></td>
+<td><p>double</p></td>
+<td><p>Minimum voltage</p></td>
+</tr>
+<tr class="row-odd"><td><p>body_temperature</p></td>
+<td><p>double</p></td>
+<td><p>Body temperature (°C)</p></td>
+</tr>
+<tr class="row-even"><td><p>state</p></td>
+<td><p>int32</p></td>
+<td><p>Locomotion state (0-9)</p></td>
+</tr>
+<tr class="row-odd"><td><p>joy_listen_type</p></td>
+<td><p>int32</p></td>
+<td><p>Joy source type (0=JOY, 1=VEL_CMD, 2=NONE)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>ActuatorState message:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>name</p></td>
+<td><p>string</p></td>
+<td><p>Motor name (e.g., “FR_hip”)</p></td>
+</tr>
+<tr class="row-odd"><td><p>position</p></td>
+<td><p>double</p></td>
+<td><p>Joint position (rad)</p></td>
+</tr>
+<tr class="row-even"><td><p>velocity</p></td>
+<td><p>double</p></td>
+<td><p>Joint velocity (rad/s)</p></td>
+</tr>
+<tr class="row-odd"><td><p>effort</p></td>
+<td><p>double</p></td>
+<td><p>Joint torque (Nm)</p></td>
+</tr>
+<tr class="row-even"><td><p>status</p></td>
+<td><p>uint16</p></td>
+<td><p>Status code (0 = normal)</p></td>
+</tr>
+<tr class="row-odd"><td><p>temperature</p></td>
+<td><p>double</p></td>
+<td><p>Motor temperature (°C)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Locomotion State values:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 85.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Value</p></th>
+<th class="head"><p>State</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>COMM_DISABLED (Communication disabled)</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>COMM_ENABLED (Communication enabled)</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>MOTOR_READY (Motor ready)</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>MOTOR_COMMUTATION (Motor commutation in progress)</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>MOTOR_ENABLED (Motor enabled)</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>IN_TEST_MODE (Test mode)</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>STANDING_MODE (Standing)</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>IN_CONTROL (In control/walking)</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>SITDOWN_MODE (Sitting)</p></td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>MOTOR_DISABLED (Motor disabled)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
 </section>
 <hr class="docutils" />
 <section id="complete-examples">
@@ -786,7 +1206,7 @@ bool use_z        # Whether to check Z coordinate
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;thread&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;chrono&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_sdk/autonomy_client.hpp&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_sdk/raisin_client.hpp&quot;</span>
 
 <span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">argc</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -798,7 +1218,7 @@ bool use_z        # Whether to check Z coordinate
 <span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">pcdPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">argc</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;../maps/office1_example.pcd&quot;</span><span class="p">;</span>
 
 <span class="w">    </span><span class="c1">// Create and connect client</span>
-<span class="w">    </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">AutonomyClient</span><span class="w"> </span><span class="n">client</span><span class="p">(</span><span class="s">&quot;waypoint_example&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">RaisinClient</span><span class="w"> </span><span class="n">client</span><span class="p">(</span><span class="s">&quot;waypoint_example&quot;</span><span class="p">);</span>
 
 <span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Connecting to &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">robotId</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;...&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">client</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">robotId</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
@@ -862,7 +1282,7 @@ bool use_z        # Whether to check Z coordinate
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;atomic&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;csignal&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_sdk/autonomy_client.hpp&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_sdk/raisin_client.hpp&quot;</span>
 
 <span class="n">std</span><span class="o">::</span><span class="n">atomic</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="w"> </span><span class="n">running</span><span class="p">{</span><span class="nb">true</span><span class="p">};</span>
 <span class="kt">void</span><span class="w"> </span><span class="nf">signalHandler</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">running</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
@@ -870,7 +1290,7 @@ bool use_z        # Whether to check Z coordinate
 <span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">signal</span><span class="p">(</span><span class="n">SIGINT</span><span class="p">,</span><span class="w"> </span><span class="n">signalHandler</span><span class="p">);</span>
 
-<span class="w">    </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">AutonomyClient</span><span class="w"> </span><span class="n">client</span><span class="p">(</span><span class="s">&quot;monitor&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">RaisinClient</span><span class="w"> </span><span class="n">client</span><span class="p">(</span><span class="s">&quot;monitor&quot;</span><span class="p">);</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">client</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 
 <span class="w">    </span><span class="c1">// Subscribe to odometry</span>
@@ -911,6 +1331,176 @@ bool use_z        # Whether to check Z coordinate
 </pre></div>
 </div>
 </section>
+<section id="robot-state-monitoring">
+<h3>Robot State Monitoring<a class="headerlink" href="#robot-state-monitoring" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;atomic&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;csignal&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_sdk/raisin_client.hpp&quot;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">atomic</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="w"> </span><span class="n">running</span><span class="p">{</span><span class="nb">true</span><span class="p">};</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">signalHandler</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">running</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">signal</span><span class="p">(</span><span class="n">SIGINT</span><span class="p">,</span><span class="w"> </span><span class="n">signalHandler</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">RaisinClient</span><span class="w"> </span><span class="n">client</span><span class="p">(</span><span class="s">&quot;state_monitor&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">client</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Subscribe to extended robot state</span>
+<span class="w">    </span><span class="n">client</span><span class="p">.</span><span class="n">subscribeRobotState</span><span class="p">([](</span><span class="k">const</span><span class="w"> </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">ExtendedRobotState</span><span class="o">&amp;</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Locomotion: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">getLocomotionStateName</span><span class="p">()</span>
+<span class="w">                  </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; | Battery: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">voltage</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;V&quot;</span>
+<span class="w">                  </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; | Control: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">getJoySourceName</span><span class="p">()</span>
+<span class="w">                  </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Check for motor errors</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="p">.</span><span class="n">hasActuatorError</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">act</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">actuators</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">act</span><span class="p">.</span><span class="n">status</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Motor error: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">act</span><span class="p">.</span><span class="n">name</span>
+<span class="w">                              </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; (status=&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">act</span><span class="p">.</span><span class="n">status</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;)&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">});</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Monitoring... (Ctrl+C to stop)&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">running</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="battery-monitoring">
+<h3>Battery Monitoring<a class="headerlink" href="#battery-monitoring" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">subscribeRobotState</span><span class="p">([](</span><span class="k">const</span><span class="w"> </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">ExtendedRobotState</span><span class="o">&amp;</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Calculate battery percentage (linear approximation)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">percentage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="p">.</span><span class="n">max_voltage</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">min_voltage</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">percentage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="p">.</span><span class="n">voltage</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">min_voltage</span><span class="p">)</span><span class="w"> </span><span class="o">/</span>
+<span class="w">                    </span><span class="p">(</span><span class="n">state</span><span class="p">.</span><span class="n">max_voltage</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">min_voltage</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">100.0</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Battery: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">voltage</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;V (&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">percentage</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;%)&quot;</span>
+<span class="w">              </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; | Current: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">current</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;A&quot;</span>
+<span class="w">              </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; | Temp: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">body_temperature</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;°C&quot;</span>
+<span class="w">              </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Low battery warning</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">percentage</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">20.0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Warning: Low battery!&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+</section>
+<section id="manual-autonomous-control-switching">
+<h3>Manual/Autonomous Control Switching<a class="headerlink" href="#manual-autonomous-control-switching" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">RaisinClient</span><span class="w"> </span><span class="n">client</span><span class="p">(</span><span class="s">&quot;control_switcher&quot;</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">client</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+
+<span class="c1">// Check current control state</span>
+<span class="n">client</span><span class="p">.</span><span class="n">subscribeRobotState</span><span class="p">([](</span><span class="k">const</span><span class="w"> </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">ExtendedRobotState</span><span class="o">&amp;</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Current control: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">getJoySourceName</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="c1">// Enable manual joystick control</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">enableJoyControl</span><span class="p">();</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Manual control enabled&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// ... manual operation ...</span>
+
+<span class="c1">// Disable manual control (before switching to autonomous)</span>
+<span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">disableJoyControl</span><span class="p">();</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Manual control disabled&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Start autonomous navigation</span>
+<span class="n">client</span><span class="p">.</span><span class="n">setWaypoints</span><span class="p">(</span><span class="n">waypoints</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="odometry-monitoring-current-position">
+<h3>Odometry Monitoring (Current Position)<a class="headerlink" href="#odometry-monitoring-current-position" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">subscribeOdometry</span><span class="p">([](</span><span class="k">const</span><span class="w"> </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">RobotState</span><span class="o">&amp;</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Position: (&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;, &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;) &quot;</span>
+<span class="w">              </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Yaw: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="p">.</span><span class="n">yaw</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">180.0</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">M_PI</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; deg &quot;</span>
+<span class="w">              </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Vel: (&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">vx</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;, &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">vy</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;) m/s&quot;</span>
+<span class="w">              </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="c1">// Or get last state</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">getRobotState</span><span class="p">();</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="p">.</span><span class="n">valid</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Current position: (&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;, &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;)&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="pointcloud-subscription-lidar">
+<h3>PointCloud Subscription (LiDAR)<a class="headerlink" href="#pointcloud-subscription-lidar" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">subscribePointCloud</span><span class="p">([](</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Point3D</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">points</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Received &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">points</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; points&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Process points</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">points</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Use p.x, p.y, p.z</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">});</span>
+
+<span class="c1">// Or get last pointcloud</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">cloud</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">getLatestPointCloud</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+<section id="map-loading-and-localization">
+<h3>Map Loading and Localization<a class="headerlink" href="#map-loading-and-localization" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Load PCD map file and send to robot</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">setMap</span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;./office.pcd&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1">// PCD file path</span>
+<span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">   </span><span class="c1">// Initial position (x, y, z)</span>
+<span class="w">    </span><span class="mf">0.0</span><span class="p">,</span><span class="w">             </span><span class="c1">// Initial heading (yaw, radians)</span>
+<span class="w">    </span><span class="s">&quot;office_map&quot;</span><span class="w">     </span><span class="c1">// Map name (used as waypoint frame)</span>
+<span class="p">);</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Map loaded: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="n">message</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// Now set waypoints using &quot;office_map&quot; frame</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="o">&gt;</span><span class="w"> </span><span class="n">waypoints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;office_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span>
+<span class="w">        </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;office_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">),</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="w">    </span><span class="n">client</span><span class="p">.</span><span class="n">setWaypoints</span><span class="p">(</span><span class="n">waypoints</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="mission-status-query">
+<h3>Mission Status Query<a class="headerlink" href="#mission-status-query" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">getMissionStatus</span><span class="p">();</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">status</span><span class="p">.</span><span class="n">valid</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Active waypoints: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">status</span><span class="p">.</span><span class="n">waypoints</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Current target: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">status</span><span class="p">.</span><span class="n">current_index</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Remaining laps: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">status</span><span class="p">.</span><span class="n">repetition</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Check each waypoint</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">status</span><span class="p">.</span><span class="n">waypoints</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">wp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">status</span><span class="p">.</span><span class="n">waypoints</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">status</span><span class="p">.</span><span class="n">current_index</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;DONE&quot;</span><span class="w"> </span><span class="o">:</span>
+<span class="w">                           </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">status</span><span class="p">.</span><span class="n">current_index</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;CURRENT&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;PENDING&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;[&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;] (&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">wp</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;, &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">wp</span><span class="p">.</span><span class="n">y</span>
+<span class="w">                  </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;) &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
 </section>
 <hr class="docutils" />
 <section id="gui-demo-simple-gui">
@@ -921,8 +1511,8 @@ bool use_z        # Whether to check Z coordinate
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./simple_gui<span class="w"> </span>&lt;robot_id&gt;<span class="w"> </span><span class="o">[</span>pcd_path<span class="o">]</span>
 
 <span class="c1"># Examples</span>
-./simple_gui<span class="w"> </span>railab_raibo-3614732983840
-./simple_gui<span class="w"> </span>railab_raibo-3614732983840<span class="w"> </span>../maps/office1_example.pcd
+./simple_gui<span class="w"> </span>railab_raibo-xxx
+./simple_gui<span class="w"> </span>railab_raibo-xxx<span class="w"> </span>../maps/office1_example.pcd
 </pre></div>
 </div>
 </section>
@@ -1109,21 +1699,104 @@ Install with <code class="docutils literal notranslate"><span class="pre">sudo</
 </section>
 </section>
 <hr class="docutils" />
+<section id="faq-frequently-asked-questions">
+<h2>FAQ (Frequently Asked Questions)<a class="headerlink" href="#faq-frequently-asked-questions" title="Link to this heading"></a></h2>
+<p>This section is based on actual user inquiries.</p>
+<section id="q-what-is-the-valid-field-in-missionstatus-and-robotstate">
+<span id="faq-valid-field-en"></span><h3>Q: What is the valid field in MissionStatus and RobotState?<a class="headerlink" href="#q-what-is-the-valid-field-in-missionstatus-and-robotstate" title="Link to this heading"></a></h3>
+<p><strong>Related documentation</strong>: See <code class="docutils literal notranslate"><span class="pre">MissionStatus</span></code> and <code class="docutils literal notranslate"><span class="pre">RobotState</span></code> in <a class="reference internal" href="#data-types-en"><span class="std std-ref">Data Types</span></a> section</p>
+<p><strong>Question</strong>:</p>
+<blockquote>
+<div><p>What does the <code class="docutils literal notranslate"><span class="pre">valid</span></code> field in MissionStatus/RobotState structures indicate,
+and when does it return false?</p>
+</div></blockquote>
+<p><strong>Answer</strong>:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">valid</span></code> field indicates <strong>whether asynchronous data reception or service call was successful</strong>.</p>
+<p><strong>RobotState.valid</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">true</span></code>: Odometry data has been received successfully</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">false</span></code>: No odometry data received yet</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// valid may be false immediately after connection</span>
+<span class="n">client</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ROBOT_ID&quot;</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">subscribeOdometry</span><span class="p">([](</span><span class="k">const</span><span class="w"> </span><span class="n">RobotState</span><span class="o">&amp;</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* ... */</span><span class="w"> </span><span class="p">});</span>
+
+<span class="c1">// Query after a moment</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">getRobotState</span><span class="p">();</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">state</span><span class="p">.</span><span class="n">valid</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// First odometry message not yet received</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Waiting for odometry...&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>MissionStatus.valid</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">true</span></code>: <code class="docutils literal notranslate"><span class="pre">getMissionStatus()</span></code> service call succeeded</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">false</span></code>: Service call failed (timeout, etc.)</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">getMissionStatus</span><span class="p">();</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">status</span><span class="p">.</span><span class="n">valid</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// No response received (timeout or disconnection)</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Failed to get mission status&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Common causes when valid is false</strong>:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Situation</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Before robot connection</p></td>
+<td><p>Querying data before calling <code class="docutils literal notranslate"><span class="pre">connect()</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Right after connection</p></td>
+<td><p>Subscriber hasn’t received the first message yet (wait 1-2 seconds)</p></td>
+</tr>
+<tr class="row-even"><td><p>Service timeout</p></td>
+<td><p>No response within 5 seconds</p></td>
+</tr>
+<tr class="row-odd"><td><p>Network disconnection</p></td>
+<td><p>Connection to robot is lost</p></td>
+</tr>
+<tr class="row-even"><td><p>Plugin not loaded</p></td>
+<td><p>The plugin providing the service is not loaded</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Recommended pattern</strong>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Always check valid before using data</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">getRobotState</span><span class="p">();</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="p">.</span><span class="n">valid</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Position: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;, &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Data not available yet&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Or use callback approach (callback is only called when data is valid)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">subscribeOdometry</span><span class="p">([](</span><span class="k">const</span><span class="w"> </span><span class="n">RobotState</span><span class="o">&amp;</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// state.valid is always true here</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Position: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;, &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
 <section id="related-documentation">
 <h2>Related Documentation<a class="headerlink" href="#related-documentation" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>raisin_master documentation</strong>: Robot setup and plugin loading</p></li>
 <li><p><strong>raisin_plugin documentation</strong>: Autonomy, Fast-LIO plugin details</p></li>
 </ul>
-</section>
-</section>
 <hr class="docutils" />
-<section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
+</section>
 </section>
 
 
