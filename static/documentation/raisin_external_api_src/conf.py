@@ -26,7 +26,6 @@ html_copy_source = False
 
 # RTD theme options
 html_theme_options = {
-    'display_version': False,
     'prev_next_buttons_location': None,
     'collapse_navigation': False,  # Keep sidebar expanded after navigation
     'sticky_navigation': True,     # Sidebar follows scroll
