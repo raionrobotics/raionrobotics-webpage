@@ -1,0 +1,582 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Example Reference &mdash; Raisin External API Reference 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=a96ab77e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=a12e3537"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/custom.js?v=9472045f"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Direct Network API" href="direct_network.html" />
+    <link rel="prev" title="Integration Package" href="integration.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Raisin External API Reference
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#architecture">Architecture</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="integration.html">Integration Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="integration.html#id1">패키지 구성</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integration.html#id2">시스템 요구사항</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integration.html#id3">네트워크 요구사항</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integration.html#robot-id">Robot ID 확인</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Example Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">헤더 포함</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">기본 워크플로우</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-types">Data Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#raisinclient-methods">RaisinClient Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gps">GPS 사용 시 주의사항</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="direct_network.html">Direct Network API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="direct_network.html#id1">헤더 포함</a></li>
+<li class="toctree-l2"><a class="reference internal" href="direct_network.html#id2">연결 패턴</a></li>
+<li class="toctree-l2"><a class="reference internal" href="direct_network.html#id3">서비스 클라이언트 생성</a></li>
+<li class="toctree-l2"><a class="reference internal" href="direct_network.html#id4">서비스 호출 예시</a></li>
+<li class="toctree-l2"><a class="reference internal" href="direct_network.html#id5">구독자 생성</a></li>
+<li class="toctree-l2"><a class="reference internal" href="direct_network.html#joy">Joy 제어 서비스 호출</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="service_reference.html">Service Interface Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#planning-set-waypoints">planning/set_waypoints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#planning-get-waypoints">planning/get_waypoints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#planning-append-waypoint">planning/append_waypoint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#set-map-setlasermap">set_map (SetLaserMap)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#waypoint-message">Waypoint Message</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#set-listen-joy">set_listen (Joy 제어)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#robot-state-topic">robot_state (Topic)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Complete Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#waypoint">기본 Waypoint 제어</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#id1">실시간 모니터링</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#id2">무한 순찰</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#id3">로봇 상태 모니터링</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#id4">배터리 모니터링</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#id5">수동/자율 제어 전환</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#odometry">Odometry 모니터링 (현재 위치)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#pointcloud-lidar">PointCloud 구독 (LiDAR)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#localization">맵 로드 및 Localization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#id6">미션 상태 조회</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gui_demo.html">GUI Demo (simple_gui)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gui_demo.html#id1">실행 방법</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui_demo.html#id2">워크플로우</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui_demo.html#id3">키보드 단축키</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui_demo.html#id4">마우스 조작</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui_demo.html#id5">상태 표시</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cmake.html">CMake Integration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cmake.html#cmakelists-txt">CMakeLists.txt 예시</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cmake.html#id1">빌드 방법</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cmake.html#rpath">RPATH 설정 (선택)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cmake.html#id2">예제 프로젝트 구조</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#id1">연결 문제</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#id2">로봇에 연결되지 않음</a></li>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#id3">서비스 타임아웃</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#id4">맵 로드 문제</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#map-saved-service-timeout">“Map saved.” 대신 “service timeout”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#pcd">PCD 파일을 찾을 수 없음</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#waypoint">Waypoint 문제</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#id5">로봇이 움직이지 않음</a></li>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#id6">좌표가 맞지 않음</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#id7">구독 문제</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#id8">콜백이 호출되지 않음</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#id9">빌드 문제</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#id10">라이브러리를 찾을 수 없음</a></li>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#id11">실행 시 라이브러리 로드 실패</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#id12">도움 요청</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#id1">일반</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-raisinclient-direct-network">Q: RaisinClient와 Direct Network의 차이점은?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-gps">Q: GPS 없이도 사용할 수 있나요?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q">Q: 여러 로봇을 동시에 제어할 수 있나요?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#waypoint">Waypoint</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-waypoint-frame">Q: Waypoint frame은 왜 중요한가요?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#id2">Q: 무한 순찰은 어떻게 설정하나요?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-waypoint">Q: 순찰 중 Waypoint를 추가할 수 있나요?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#id3">제어</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#id4">Q: 수동/자율 제어 전환은 어떻게 하나요?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#id5">Q: 긴급 정지는 어떻게 하나요?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#id6">데이터</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-odometry">Q: Odometry 데이터는 어떤 좌표계인가요?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-pointcloud">Q: PointCloud 데이터 형식은?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#id7">Q: 배터리 잔량은 어떻게 확인하나요?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#id8">호환성</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#id9">Q: 어떤 로봇을 지원하나요?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-windows">Q: Windows에서 사용할 수 있나요?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-arm64-jetson">Q: ARM64 (Jetson 등)에서 사용할 수 있나요?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Raisin External API Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API Example Reference</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="api-example-reference">
+<h1>API Example Reference<a class="headerlink" href="#api-example-reference" title="Link to this heading"></a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">RaisinClient</span></code> 래퍼 클래스를 사용한 예제 코드입니다. 필요에 따라 수정하여 사용하세요.</p>
+<section id="id1">
+<h2>헤더 포함<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;raisin_sdk/raisin_client.hpp&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h2>기본 워크플로우<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// 1. 클라이언트 생성</span>
+<span class="n">raisin_sdk</span><span class="o">::</span><span class="n">RaisinClient</span><span class="w"> </span><span class="n">client</span><span class="p">(</span><span class="s">&quot;my_app&quot;</span><span class="p">);</span>
+
+<span class="c1">// 2. 로봇 연결</span>
+<span class="n">client</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ROBOT_ID&quot;</span><span class="p">);</span>
+
+<span class="c1">// 3. 맵 로드 (Localization 활성화)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">setMap</span><span class="p">(</span><span class="s">&quot;/path/to/map.pcd&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;my_map&quot;</span><span class="p">);</span>
+
+<span class="c1">// 4. Waypoint 설정 (frame은 반드시 map_name과 동일해야 함!)</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="o">&gt;</span><span class="w"> </span><span class="n">waypoints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;my_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span><span class="w">   </span><span class="c1">// &quot;my_map&quot; 사용</span>
+<span class="w">    </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;my_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">),</span>
+<span class="p">};</span>
+<span class="n">client</span><span class="p">.</span><span class="n">setWaypoints</span><span class="p">(</span><span class="n">waypoints</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+
+<span class="c1">// 5. 상태 모니터링</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">getMissionStatus</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+<section id="data-types">
+<span id="id3"></span><h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<p><strong>Waypoint</strong> - 네비게이션 목표 지점</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">Waypoint</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">frame</span><span class="p">;</span><span class="w">  </span><span class="c1">// 좌표 프레임 (중요!)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">;</span><span class="w">     </span><span class="c1">// 좌표</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">use_z</span><span class="p">;</span><span class="w">         </span><span class="c1">// Z 좌표 사용 여부</span>
+<span class="p">};</span>
+
+<span class="c1">// 생성 방법</span>
+<span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;map_name&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">);</span><span class="w">           </span><span class="c1">// 맵 좌표</span>
+<span class="n">Waypoint</span><span class="o">::</span><span class="n">GPS</span><span class="p">(</span><span class="n">latitude</span><span class="p">,</span><span class="w"> </span><span class="n">longitude</span><span class="p">);</span><span class="w">   </span><span class="c1">// GPS 좌표 (GPS 모듈 필요)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>frame 이름은 setMap()에서 지정한 map_name과 반드시 일치해야 합니다!</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// 올바른 예시</span>
+<span class="n">client</span><span class="p">.</span><span class="n">setMap</span><span class="p">(</span><span class="s">&quot;/path/map.pcd&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;office_map&quot;</span><span class="p">);</span>
+<span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;office_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span><span class="w">  </span><span class="c1">// ✓ 동일한 이름</span>
+
+<span class="c1">// 잘못된 예시</span>
+<span class="n">client</span><span class="p">.</span><span class="n">setMap</span><span class="p">(</span><span class="s">&quot;/path/map.pcd&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;office_map&quot;</span><span class="p">);</span>
+<span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span><span class="w">  </span><span class="c1">// ✗ 이름 불일치 - 동작 안함!</span>
+</pre></div>
+</div>
+</div>
+<p><strong>MissionStatus</strong> - 미션 상태</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">MissionStatus</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Waypoint</span><span class="o">&gt;</span><span class="w"> </span><span class="n">waypoints</span><span class="p">;</span><span class="w">  </span><span class="c1">// 현재 waypoint 목록</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">current_index</span><span class="p">;</span><span class="w">            </span><span class="c1">// 현재 목표 인덱스</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">repetition</span><span class="p">;</span><span class="w">               </span><span class="c1">// 남은 반복 횟수 (0=무한)</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">valid</span><span class="p">;</span><span class="w">                       </span><span class="c1">// 데이터 유효성</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>ServiceResult</strong> - 서비스 호출 결과</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">ServiceResult</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">success</span><span class="p">;</span><span class="w">         </span><span class="c1">// 성공 여부</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">message</span><span class="p">;</span><span class="w">  </span><span class="c1">// 결과 메시지</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>RobotState</strong> - 로봇 상태 (Odometry)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">RobotState</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">;</span><span class="w">    </span><span class="c1">// 위치 (meters)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">yaw</span><span class="p">;</span><span class="w">        </span><span class="c1">// 방향 (radians)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">vx</span><span class="p">,</span><span class="w"> </span><span class="n">vy</span><span class="p">;</span><span class="w">     </span><span class="c1">// 선속도 (m/s)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">omega</span><span class="p">;</span><span class="w">      </span><span class="c1">// 각속도 (rad/s)</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">valid</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>Point3D</strong> - 포인트 클라우드 점</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">Point3D</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">;</span><span class="w"> </span><span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>ActuatorInfo</strong> - 액추에이터(모터) 정보</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">ActuatorInfo</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w">           </span><span class="c1">// 모터 이름 (e.g., &quot;FR_hip&quot;, &quot;FL_thigh&quot;)</span>
+<span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">status</span><span class="p">;</span><span class="w">            </span><span class="c1">// 상태 코드 (0 = 정상)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">temperature</span><span class="p">;</span><span class="w">         </span><span class="c1">// 모터 온도 (°C)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">position</span><span class="p">;</span><span class="w">            </span><span class="c1">// 관절 위치 (rad)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">velocity</span><span class="p">;</span><span class="w">            </span><span class="c1">// 관절 속도 (rad/s)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">effort</span><span class="p">;</span><span class="w">              </span><span class="c1">// 관절 토크 (Nm)</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>LocomotionState</strong> - 로봇 locomotion 상태 열거형</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">LocomotionState</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">int32_t</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">COMM_DISABLED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">      </span><span class="c1">// 통신 비활성</span>
+<span class="w">    </span><span class="n">COMM_ENABLED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">       </span><span class="c1">// 통신 활성</span>
+<span class="w">    </span><span class="n">MOTOR_READY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">        </span><span class="c1">// 모터 준비</span>
+<span class="w">    </span><span class="n">MOTOR_COMMUTATION</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">  </span><span class="c1">// 모터 정류 중</span>
+<span class="w">    </span><span class="n">MOTOR_ENABLED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">      </span><span class="c1">// 모터 활성</span>
+<span class="w">    </span><span class="n">IN_TEST_MODE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">       </span><span class="c1">// 테스트 모드</span>
+<span class="w">    </span><span class="n">STANDING_MODE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">      </span><span class="c1">// 서있는 상태</span>
+<span class="w">    </span><span class="n">IN_CONTROL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">         </span><span class="c1">// 제어 중 (걷기)</span>
+<span class="w">    </span><span class="n">SITDOWN_MODE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">       </span><span class="c1">// 앉은 상태</span>
+<span class="w">    </span><span class="n">MOTOR_DISABLED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">9</span><span class="w">      </span><span class="c1">// 모터 비활성</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>JoySourceType</strong> - 조이스틱 제어 소스 타입</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">JoySourceType</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">int32_t</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">JOY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">           </span><span class="c1">// 수동 조이스틱 제어</span>
+<span class="w">    </span><span class="n">VEL_CMD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">       </span><span class="c1">// 자율주행 속도 명령</span>
+<span class="w">    </span><span class="n">NUM_SOURCES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w">    </span><span class="c1">// 제어 소스 없음</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>ExtendedRobotState</strong> - 확장 로봇 상태 (배터리, 모터 상태 포함)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">ExtendedRobotState</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// 위치 및 속도</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">;</span><span class="w">             </span><span class="c1">// 위치 (meters)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">yaw</span><span class="p">;</span><span class="w">                 </span><span class="c1">// 방향 (radians)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">vx</span><span class="p">,</span><span class="w"> </span><span class="n">vy</span><span class="p">;</span><span class="w">              </span><span class="c1">// 선속도 (m/s)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">omega</span><span class="p">;</span><span class="w">               </span><span class="c1">// 각속도 (rad/s)</span>
+
+<span class="w">    </span><span class="c1">// Locomotion 상태</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">locomotion_state</span><span class="p">;</span><span class="w">   </span><span class="c1">// LocomotionState 열거형 값 (0-9)</span>
+
+<span class="w">    </span><span class="c1">// 배터리 정보</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">voltage</span><span class="p">;</span><span class="w">             </span><span class="c1">// 현재 전압 (V)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">current</span><span class="p">;</span><span class="w">             </span><span class="c1">// 전류 (A)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">max_voltage</span><span class="p">;</span><span class="w">         </span><span class="c1">// 최대 전압</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">min_voltage</span><span class="p">;</span><span class="w">         </span><span class="c1">// 최소 전압</span>
+
+<span class="w">    </span><span class="c1">// 온도</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">body_temperature</span><span class="p">;</span><span class="w">    </span><span class="c1">// 본체 온도 (°C)</span>
+
+<span class="w">    </span><span class="c1">// 조이스틱 제어 상태</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">joy_listen_type</span><span class="p">;</span><span class="w">    </span><span class="c1">// JoySourceType 열거형 값</span>
+
+<span class="w">    </span><span class="c1">// 액추에이터 상태</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ActuatorInfo</span><span class="o">&gt;</span><span class="w"> </span><span class="n">actuators</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">valid</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// 유틸리티 메서드</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">getLocomotionStateName</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w">  </span><span class="c1">// 상태명 문자열</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">getJoySourceName</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w">        </span><span class="c1">// 제어 소스명 문자열</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">isOperational</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w">                  </span><span class="c1">// 서있거나 걷는 중인지</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">hasActuatorError</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w">               </span><span class="c1">// 모터 에러 여부</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="raisinclient-methods">
+<h2>RaisinClient Methods<a class="headerlink" href="#raisinclient-methods" title="Link to this heading"></a></h2>
+<p><strong>connect()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="nf">connect</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">robot_id</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">timeout_sec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>로봇에 연결합니다.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">robot_id</span></code>: Robot ID 또는 IP 주소</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">timeout_sec</span></code>: 연결 타임아웃 (초)</p></li>
+<li><p><strong>반환</strong>: 연결 성공 여부</p></li>
+</ul>
+<p><strong>setMap()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">setMap</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">pcd_path</span><span class="p">,</span>
+<span class="w">                     </span><span class="kt">double</span><span class="w"> </span><span class="n">initial_x</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">initial_y</span><span class="p">,</span>
+<span class="w">                     </span><span class="kt">double</span><span class="w"> </span><span class="n">initial_z</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">initial_yaw</span><span class="p">,</span>
+<span class="w">                     </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">map_name</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>PCD 맵 파일을 로드하고 Localization을 초기화합니다.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pcd_path</span></code>: PCD 파일 경로 (<strong>클라이언트 PC에 있는 파일</strong>, 로봇으로 전송됨)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initial_x/y/z</span></code>: 맵 내 로봇 초기 위치 (로봇이 물리적으로 있는 위치를 맵 좌표로 입력)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initial_yaw</span></code>: 초기 방향 (radians)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">map_name</span></code>: 맵 프레임 이름 (<strong>Waypoint frame과 일치해야 함</strong>)</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>PCD 맵은 사전에 SLAM으로 생성해야 합니다. raisin_gui의 Mapping 기능을 사용하거나,
+Fast-LIO 플러그인으로 직접 생성할 수 있습니다.</p>
+</div>
+<p><strong>setWaypoints()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">setWaypoints</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Waypoint</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">waypoints</span><span class="p">,</span>
+<span class="w">                            </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">repetition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                            </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">start_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Waypoint 목록을 설정하고 네비게이션을 시작합니다.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">waypoints</span></code>: Waypoint 목록</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">repetition</span></code>: 반복 횟수</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">0</span></code> = 무한 순찰</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1</span></code> = 1회 통과 (기본값)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">N</span></code> = N회 반복</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">start_index</span></code>: 시작 waypoint 인덱스</p></li>
+</ul>
+<p><strong>getMissionStatus()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">MissionStatus</span><span class="w"> </span><span class="nf">getMissionStatus</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>현재 미션 상태를 조회합니다.</p>
+<p><strong>appendWaypoint()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">appendWaypoint</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Waypoint</span><span class="o">&amp;</span><span class="w"> </span><span class="n">waypoint</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>현재 미션 큐에 waypoint를 추가합니다.</p>
+<p><strong>stopNavigation()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">stopNavigation</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>자율주행을 중지합니다 (빈 waypoint 목록 설정).</p>
+<p><strong>startPatrol()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">startPatrol</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Waypoint</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">waypoints</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>무한 순찰을 시작합니다 ( <code class="docutils literal notranslate"><span class="pre">setWaypoints(waypoints,</span> <span class="pre">0)</span></code> 과 동일).</p>
+<p><strong>subscribeOdometry()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">subscribeOdometry</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">RobotState</span><span class="o">&amp;</span><span class="p">)</span><span class="o">&gt;</span><span class="w"> </span><span class="n">callback</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Odometry 데이터를 실시간 구독합니다.</p>
+<p><strong>subscribePointCloud()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">subscribePointCloud</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Point3D</span><span class="o">&gt;&amp;</span><span class="p">)</span><span class="o">&gt;</span><span class="w"> </span><span class="n">callback</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>LiDAR 포인트 클라우드를 실시간 구독합니다.</p>
+<p><strong>getRobotState() / getLatestPointCloud()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">RobotState</span><span class="w"> </span><span class="nf">getRobotState</span><span class="p">();</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Point3D</span><span class="o">&gt;</span><span class="w"> </span><span class="n">getLatestPointCloud</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>마지막으로 수신한 데이터를 반환합니다 (thread-safe).</p>
+<p><strong>loadPCD() (static)</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Point3D</span><span class="o">&gt;</span><span class="w"> </span><span class="n">loadPCD</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">pcd_path</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>PCD 파일을 로드합니다 (로봇 전송 없이 시각화용).</p>
+<p><strong>subscribeRobotState()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">subscribeRobotState</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">ExtendedRobotState</span><span class="o">&amp;</span><span class="p">)</span><span class="o">&gt;</span><span class="w"> </span><span class="n">callback</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>확장 로봇 상태를 실시간 구독합니다. 배터리 정보, locomotion 상태, 액추에이터 상태 등을 포함합니다.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">subscribeRobotState</span><span class="p">([](</span><span class="k">const</span><span class="w"> </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">ExtendedRobotState</span><span class="o">&amp;</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Locomotion: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">getLocomotionStateName</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Battery: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">voltage</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;V&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Control: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">getJoySourceName</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="p">.</span><span class="n">hasActuatorError</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Warning: Actuator error detected!&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p><strong>getExtendedRobotState()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ExtendedRobotState</span><span class="w"> </span><span class="nf">getExtendedRobotState</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>마지막으로 수신한 확장 로봇 상태를 반환합니다 (thread-safe).
+<code class="docutils literal notranslate"><span class="pre">subscribeRobotState()</span></code> 를 먼저 호출해야 유효한 데이터를 얻을 수 있습니다.</p>
+<p><strong>findGuiNetworkId()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">findGuiNetworkId</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;gui&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>연결된 GUI의 네트워크 ID를 찾습니다.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">prefix</span></code>: GUI ID 접두사 (기본값: “gui”)</p></li>
+<li><p><strong>반환</strong>: GUI 네트워크 ID (예: “gui53-230486654196”), 없으면 빈 문자열</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">guiId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">findGuiNetworkId</span><span class="p">();</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Connected GUI: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">guiId</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>setManualControl()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="n">setManualControl</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">gui_network_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>수동 조이스틱 제어를 활성화합니다 (joy/gui).
+GUI 네트워크 ID를 자동 감지하여 해당 GUI에서 조이스틱 명령을 받을 수 있도록 합니다.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">gui_network_id</span></code>: GUI 네트워크 ID (빈 문자열이면 자동 감지, 감지 실패 시 기존 ID 유지)</p></li>
+<li><p><strong>반환</strong>: 서비스 호출 결과</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>GUI 네트워크 ID를 자동 감지하지 못해도 서비스 호출은 성공합니다.
+이 경우 로봇에 기존에 설정된 network_id가 유지됩니다.</p>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">setManualControl</span><span class="p">();</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Manual control enabled&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>setAutonomousControl()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">setAutonomousControl</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>자율주행 제어를 활성화합니다 (vel_cmd/autonomy).</p>
+<ul class="simple">
+<li><p><strong>반환</strong>: 서비스 호출 결과</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">setAutonomousControl</span><span class="p">();</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Autonomous control enabled&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>releaseControl()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="n">releaseControl</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;joy/gui&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>제어권을 해제합니다 (None 상태로 전환).</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">source</span></code>: 해제할 제어 소스 (“joy/gui” 또는 “vel_cmd/autonomy”)</p></li>
+<li><p><strong>반환</strong>: 서비스 호출 결과</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">releaseControl</span><span class="p">(</span><span class="s">&quot;joy/gui&quot;</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">releaseControl</span><span class="p">(</span><span class="s">&quot;vel_cmd/autonomy&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>제어 상태는 <code class="docutils literal notranslate"><span class="pre">ExtendedRobotState.joy_listen_type</span></code> 으로 확인할 수 있습니다:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">JOY</span> <span class="pre">(0)</span></code>: 수동 조이스틱 제어 활성 (joy/gui)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VEL_CMD</span> <span class="pre">(1)</span></code>: 자율주행 속도 명령 수신 중 (vel_cmd/autonomy)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NONE</span> <span class="pre">(2)</span></code>: 제어 소스 없음</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">setManualControl()</span></code> 호출 시 GUI의 와이파이 아이콘이 초록색으로 변합니다.</p>
+</div>
+</section>
+<section id="gps">
+<h2>GPS 사용 시 주의사항<a class="headerlink" href="#gps" title="Link to this heading"></a></h2>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Waypoint</span><span class="o">::</span><span class="n">GPS</span><span class="p">(</span><span class="mf">37.5665</span><span class="p">,</span><span class="w"> </span><span class="mf">126.9780</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>GPS 모듈이 로봇에 장착</strong> 되어 있어야 합니다</p></li>
+<li><p>GPS fix가 유효해야 합니다 (<code class="docutils literal notranslate"><span class="pre">/fix</span></code> 토픽)</p></li>
+<li><p>GPS가 없으면 <code class="docutils literal notranslate"><span class="pre">setWaypoints()</span></code> 는 성공하지만 로봇이 목표에 도달하지 못합니다</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Raion Robotics..</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -3,65 +3,93 @@
     display: none !important;
 }
 
-/* Hide the top-level "Raisin External API Reference" item and show children directly */
-.local-toc > ul > li > a {
+/* Hide + icons for collapsed items */
+.wy-menu-vertical li span.toctree-expand {
     display: none !important;
 }
 
-/* Also hide the +/- button for the top-level item */
-.local-toc > ul > li > button.toctree-expand {
-    display: none !important;
+/* Show - icon only for expanded (current) categories */
+.wy-menu-vertical li.toctree-l1.current > a span.toctree-expand {
+    display: inline-block !important;
 }
 
-/* Promote the nested ul to top level visually */
-.local-toc > ul > li > ul {
-    margin-left: 0 !important;
-    padding-left: 0 !important;
+/* Change + to - for expanded items */
+.wy-menu-vertical li.toctree-l1.current > a span.toctree-expand::before {
+    content: "\f068" !important;  /* Font Awesome minus icon */
 }
 
-/* Default state for all items - no special styling */
-.wy-menu-vertical li a {
-    color: #404040 !important;
+/* ===== RESET ALL LINK STATES TO SAME COLOR ===== */
+.wy-menu-vertical a,
+.wy-menu-vertical a:visited,
+.wy-menu-vertical a:link,
+.wy-menu-vertical a:active {
+    text-decoration: none !important;
+}
+
+/* ===== TOP LEVEL ITEMS (white text on dark background) ===== */
+.wy-menu-vertical li.toctree-l1 > a,
+.wy-menu-vertical li.toctree-l1 > a:visited,
+.wy-menu-vertical li.toctree-l1 > a:link {
+    color: #ffffff !important;
     background: transparent !important;
+    font-weight: normal !important;
 }
 
-/* Hover state */
-.wy-menu-vertical li a:hover {
-    background: #e3e3e3 !important;
+.wy-menu-vertical li.toctree-l1 > a:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
 }
 
-/* Current/expanded parent item - dark background like RTD theme */
-.wy-menu-vertical li.current > a {
+/* ===== EXPANDED SECTION HEADER (dark background) ===== */
+.wy-menu-vertical li.toctree-l1.current > a,
+.wy-menu-vertical li.toctree-l1.current > a:visited,
+.wy-menu-vertical li.toctree-l1.current > a:link {
     background: #343131 !important;
     color: #ffffff !important;
     font-weight: normal !important;
 }
 
-/* Sub-items under expanded parent - light gray background */
-.wy-menu-vertical li.current > ul {
-    background: #e3e3e3 !important;
+/* ===== SUB-ITEMS (dark text on light background) ===== */
+.wy-menu-vertical li.toctree-l1.current > ul {
+    background: rgba(255, 255, 255, 0.1) !important;
 }
 
-.wy-menu-vertical li.current > ul li a {
+/* All sub-items - same color, normal weight */
+.wy-menu-vertical li.toctree-l1.current > ul li a,
+.wy-menu-vertical li.toctree-l1.current > ul li a:visited,
+.wy-menu-vertical li.toctree-l1.current > ul li a:link {
     color: #404040 !important;
+    background: transparent !important;
+    font-weight: normal !important;
+}
+
+.wy-menu-vertical li.toctree-l1.current > ul li a:hover {
+    background: rgba(0, 0, 0, 0.05) !important;
+}
+
+/* ===== CURRENT PAGE ITEM ONLY - bold and darker ===== */
+.wy-menu-vertical a.current,
+.wy-menu-vertical li.toctree-l1.current > ul li a.current,
+.wy-menu-vertical li.toctree-l2.current > ul li a.current,
+.wy-menu-vertical li a.current {
+    color: #333333 !important;
+    font-weight: bold !important;
+    background: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ===== NESTED CURRENT SECTIONS ===== */
+.wy-menu-vertical li.toctree-l2.current > ul {
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.wy-menu-vertical li.toctree-l2.current > ul li a,
+.wy-menu-vertical li.toctree-l2.current > ul li a:visited,
+.wy-menu-vertical li.toctree-l2.current > ul li a:link {
+    color: #404040 !important;
+    font-weight: normal !important;
     background: transparent !important;
 }
 
-.wy-menu-vertical li.current > ul li a:hover {
-    background: #d6d6d6 !important;
-}
-
-/* Nested expanded items */
-.wy-menu-vertical li.current > ul li.current > a {
-    background: #c9c9c9 !important;
-    color: #404040 !important;
-}
-
-.wy-menu-vertical li.current > ul li.current > ul {
-    background: #fafafa !important;
-}
-
-/* Third level items */
-.wy-menu-vertical li.current > ul li.current > ul li a {
-    color: #404040 !important;
+/* Caption (CONTENTS:) styling */
+.wy-menu-vertical .caption {
+    color: #55a5d9 !important;
 }

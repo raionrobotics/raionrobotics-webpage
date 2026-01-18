@@ -1,0 +1,658 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Service Interface Reference &mdash; Raisin External API Reference 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=a96ab77e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=a12e3537"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/custom.js?v=9472045f"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Complete Examples" href="examples.html" />
+    <link rel="prev" title="Direct Network API" href="direct_network.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Raisin External API Reference
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#architecture">Architecture</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="integration.html">Integration Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="integration.html#id1">패키지 구성</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integration.html#id2">시스템 요구사항</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integration.html#id3">네트워크 요구사항</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integration.html#robot-id">Robot ID 확인</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_example.html">API Example Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_example.html#id1">헤더 포함</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_example.html#id2">기본 워크플로우</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_example.html#data-types">Data Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_example.html#raisinclient-methods">RaisinClient Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_example.html#gps">GPS 사용 시 주의사항</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="direct_network.html">Direct Network API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="direct_network.html#id1">헤더 포함</a></li>
+<li class="toctree-l2"><a class="reference internal" href="direct_network.html#id2">연결 패턴</a></li>
+<li class="toctree-l2"><a class="reference internal" href="direct_network.html#id3">서비스 클라이언트 생성</a></li>
+<li class="toctree-l2"><a class="reference internal" href="direct_network.html#id4">서비스 호출 예시</a></li>
+<li class="toctree-l2"><a class="reference internal" href="direct_network.html#id5">구독자 생성</a></li>
+<li class="toctree-l2"><a class="reference internal" href="direct_network.html#joy">Joy 제어 서비스 호출</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Service Interface Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#planning-set-waypoints">planning/set_waypoints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#planning-get-waypoints">planning/get_waypoints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#planning-append-waypoint">planning/append_waypoint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#set-map-setlasermap">set_map (SetLaserMap)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#waypoint-message">Waypoint Message</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#set-listen-joy">set_listen (Joy 제어)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#robot-state-topic">robot_state (Topic)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Complete Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#waypoint">기본 Waypoint 제어</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#id1">실시간 모니터링</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#id2">무한 순찰</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#id3">로봇 상태 모니터링</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#id4">배터리 모니터링</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#id5">수동/자율 제어 전환</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#odometry">Odometry 모니터링 (현재 위치)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#pointcloud-lidar">PointCloud 구독 (LiDAR)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#localization">맵 로드 및 Localization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#id6">미션 상태 조회</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gui_demo.html">GUI Demo (simple_gui)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gui_demo.html#id1">실행 방법</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui_demo.html#id2">워크플로우</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui_demo.html#id3">키보드 단축키</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui_demo.html#id4">마우스 조작</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui_demo.html#id5">상태 표시</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cmake.html">CMake Integration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cmake.html#cmakelists-txt">CMakeLists.txt 예시</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cmake.html#id1">빌드 방법</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cmake.html#rpath">RPATH 설정 (선택)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cmake.html#id2">예제 프로젝트 구조</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#id1">연결 문제</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#id2">로봇에 연결되지 않음</a></li>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#id3">서비스 타임아웃</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#id4">맵 로드 문제</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#map-saved-service-timeout">“Map saved.” 대신 “service timeout”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#pcd">PCD 파일을 찾을 수 없음</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#waypoint">Waypoint 문제</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#id5">로봇이 움직이지 않음</a></li>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#id6">좌표가 맞지 않음</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#id7">구독 문제</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#id8">콜백이 호출되지 않음</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#id9">빌드 문제</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#id10">라이브러리를 찾을 수 없음</a></li>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#id11">실행 시 라이브러리 로드 실패</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#id12">도움 요청</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#id1">일반</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-raisinclient-direct-network">Q: RaisinClient와 Direct Network의 차이점은?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-gps">Q: GPS 없이도 사용할 수 있나요?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q">Q: 여러 로봇을 동시에 제어할 수 있나요?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#waypoint">Waypoint</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-waypoint-frame">Q: Waypoint frame은 왜 중요한가요?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#id2">Q: 무한 순찰은 어떻게 설정하나요?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-waypoint">Q: 순찰 중 Waypoint를 추가할 수 있나요?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#id3">제어</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#id4">Q: 수동/자율 제어 전환은 어떻게 하나요?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#id5">Q: 긴급 정지는 어떻게 하나요?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#id6">데이터</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-odometry">Q: Odometry 데이터는 어떤 좌표계인가요?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-pointcloud">Q: PointCloud 데이터 형식은?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#id7">Q: 배터리 잔량은 어떻게 확인하나요?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#id8">호환성</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#id9">Q: 어떤 로봇을 지원하나요?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-windows">Q: Windows에서 사용할 수 있나요?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-arm64-jetson">Q: ARM64 (Jetson 등)에서 사용할 수 있나요?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Raisin External API Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Service Interface Reference</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="service-interface-reference">
+<h1>Service Interface Reference<a class="headerlink" href="#service-interface-reference" title="Link to this heading"></a></h1>
+<p>사용 가능한 서비스 인터페이스 정의입니다.</p>
+<section id="planning-set-waypoints">
+<h2>planning/set_waypoints<a class="headerlink" href="#planning-set-waypoints" title="Link to this heading"></a></h2>
+<p>Waypoint 목록을 설정합니다.</p>
+<p><strong>Request:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>waypoints</p></td>
+<td><p>Waypoint[]</p></td>
+<td><p>Waypoint 배열</p></td>
+</tr>
+<tr class="row-odd"><td><p>repetition</p></td>
+<td><p>uint8</p></td>
+<td><p>반복 횟수 (0=무한)</p></td>
+</tr>
+<tr class="row-even"><td><p>current_index</p></td>
+<td><p>uint8</p></td>
+<td><p>시작 인덱스</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>성공 여부</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>결과 메시지</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>가능한 Response 메시지:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;set</span> <span class="pre">waypoint</span> <span class="pre">success&quot;</span></code> - 성공</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;waypoint</span> <span class="pre">list</span> <span class="pre">is</span> <span class="pre">empty&quot;</span></code> - waypoint가 비어있음</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - 서비스 응답 없음</p></li>
+</ul>
+</section>
+<section id="planning-get-waypoints">
+<h2>planning/get_waypoints<a class="headerlink" href="#planning-get-waypoints" title="Link to this heading"></a></h2>
+<p>현재 미션 상태를 조회합니다.</p>
+<p><strong>Request:</strong> (empty)</p>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>성공 여부</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>결과 메시지</p></td>
+</tr>
+<tr class="row-even"><td><p>waypoints</p></td>
+<td><p>Waypoint[]</p></td>
+<td><p>현재 waypoint 목록</p></td>
+</tr>
+<tr class="row-odd"><td><p>repetition</p></td>
+<td><p>uint8</p></td>
+<td><p>남은 반복 횟수</p></td>
+</tr>
+<tr class="row-even"><td><p>current_index</p></td>
+<td><p>uint8</p></td>
+<td><p>현재 목표 인덱스</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="planning-append-waypoint">
+<h2>planning/append_waypoint<a class="headerlink" href="#planning-append-waypoint" title="Link to this heading"></a></h2>
+<p>Waypoint를 큐에 추가합니다.</p>
+<p><strong>Request:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>waypoint</p></td>
+<td><p>Waypoint</p></td>
+<td><p>추가할 waypoint</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>성공 여부</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>결과 메시지</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="set-map-setlasermap">
+<h2>set_map (SetLaserMap)<a class="headerlink" href="#set-map-setlasermap" title="Link to this heading"></a></h2>
+<p>PCD 맵을 로드하고 Localization을 초기화합니다.</p>
+<p><strong>Request:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>name</p></td>
+<td><p>string</p></td>
+<td><p>맵 프레임 이름</p></td>
+</tr>
+<tr class="row-odd"><td><p>pc</p></td>
+<td><p>PointCloud2</p></td>
+<td><p>포인트 클라우드 데이터</p></td>
+</tr>
+<tr class="row-even"><td><p>initial_pose</p></td>
+<td><p>Pose</p></td>
+<td><p>초기 로봇 자세</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>성공 여부</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>결과 메시지</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>가능한 Response 메시지:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Map</span> <span class="pre">saved.&quot;</span></code> - 성공</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - Fast-LIO 플러그인 미로드</p></li>
+</ul>
+</section>
+<section id="waypoint-message">
+<h2>Waypoint Message<a class="headerlink" href="#waypoint-message" title="Link to this heading"></a></h2>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>string frame      # 좌표 프레임: &quot;map_name&quot;, &quot;gps&quot;, &quot;odom&quot;
+float64 x         # X 좌표 (GPS: latitude)
+float64 y         # Y 좌표 (GPS: longitude)
+float64 z         # Z 좌표 (GPS: altitude)
+bool use_z        # Z 좌표 검사 여부
+</pre></div>
+</div>
+</section>
+<section id="set-listen-joy">
+<h2>set_listen (Joy 제어)<a class="headerlink" href="#set-listen-joy" title="Link to this heading"></a></h2>
+<p>수동 조이스틱 제어를 활성화/비활성화합니다.</p>
+<p><strong>Request:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>data</p></td>
+<td><p>string</p></td>
+<td><p>제어 명령 문자열</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Request data 형식:</strong></p>
+<ul class="simple">
+<li><p>활성화: <code class="docutils literal notranslate"><span class="pre">&quot;토픽명&lt;&amp;&gt;클라이언트ID&quot;</span></code> (예: <code class="docutils literal notranslate"><span class="pre">&quot;joy&lt;&amp;&gt;my_app&quot;</span></code>)</p></li>
+<li><p>비활성화: <code class="docutils literal notranslate"><span class="pre">&quot;토픽명&lt;&amp;&gt;&lt;CLOSE&gt;&quot;</span></code> (예: <code class="docutils literal notranslate"><span class="pre">&quot;joy&lt;&amp;&gt;&lt;CLOSE&gt;&quot;</span></code>)</p></li>
+</ul>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>성공 여부</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>결과 메시지</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="robot-state-topic">
+<h2>robot_state (Topic)<a class="headerlink" href="#robot-state-topic" title="Link to this heading"></a></h2>
+<p>로봇의 상태 정보를 발행하는 토픽입니다.</p>
+<p><strong>토픽명:</strong> <code class="docutils literal notranslate"><span class="pre">robot_state</span></code></p>
+<p><strong>메시지 필드:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 20.0%" />
+<col style="width: 55.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>actuator_states</p></td>
+<td><p>ActuatorState[]</p></td>
+<td><p>액추에이터(모터) 상태 배열</p></td>
+</tr>
+<tr class="row-odd"><td><p>base_pos</p></td>
+<td><p>double[3]</p></td>
+<td><p>베이스 위치 [x, y, z]</p></td>
+</tr>
+<tr class="row-even"><td><p>base_quat</p></td>
+<td><p>double[4]</p></td>
+<td><p>베이스 쿼터니언 [x, y, z, w]</p></td>
+</tr>
+<tr class="row-odd"><td><p>base_lin_vel</p></td>
+<td><p>double[3]</p></td>
+<td><p>선속도 [vx, vy, vz]</p></td>
+</tr>
+<tr class="row-even"><td><p>base_ang_vel</p></td>
+<td><p>double[3]</p></td>
+<td><p>각속도 [wx, wy, wz]</p></td>
+</tr>
+<tr class="row-odd"><td><p>voltage</p></td>
+<td><p>double</p></td>
+<td><p>현재 배터리 전압 (V)</p></td>
+</tr>
+<tr class="row-even"><td><p>current</p></td>
+<td><p>double</p></td>
+<td><p>현재 전류 (A)</p></td>
+</tr>
+<tr class="row-odd"><td><p>max_voltage</p></td>
+<td><p>double</p></td>
+<td><p>최대 전압</p></td>
+</tr>
+<tr class="row-even"><td><p>min_voltage</p></td>
+<td><p>double</p></td>
+<td><p>최소 전압</p></td>
+</tr>
+<tr class="row-odd"><td><p>body_temperature</p></td>
+<td><p>double</p></td>
+<td><p>본체 온도 (°C)</p></td>
+</tr>
+<tr class="row-even"><td><p>state</p></td>
+<td><p>int32</p></td>
+<td><p>Locomotion 상태 (0-9)</p></td>
+</tr>
+<tr class="row-odd"><td><p>joy_listen_type</p></td>
+<td><p>int32</p></td>
+<td><p>Joy 소스 타입 (0=JOY, 1=VEL_CMD, 2=NONE)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>ActuatorState 메시지:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>name</p></td>
+<td><p>string</p></td>
+<td><p>모터 이름 (예: “FR_hip”)</p></td>
+</tr>
+<tr class="row-odd"><td><p>position</p></td>
+<td><p>double</p></td>
+<td><p>관절 위치 (rad)</p></td>
+</tr>
+<tr class="row-even"><td><p>velocity</p></td>
+<td><p>double</p></td>
+<td><p>관절 속도 (rad/s)</p></td>
+</tr>
+<tr class="row-odd"><td><p>effort</p></td>
+<td><p>double</p></td>
+<td><p>관절 토크 (Nm)</p></td>
+</tr>
+<tr class="row-even"><td><p>status</p></td>
+<td><p>uint16</p></td>
+<td><p>상태 코드 (0 = 정상)</p></td>
+</tr>
+<tr class="row-odd"><td><p>temperature</p></td>
+<td><p>double</p></td>
+<td><p>모터 온도 (°C)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Locomotion State 값:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 85.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>값</p></th>
+<th class="head"><p>상태</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>COMM_DISABLED (통신 비활성)</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>COMM_ENABLED (통신 활성)</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>MOTOR_READY (모터 준비)</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>MOTOR_COMMUTATION (모터 정류 중)</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>MOTOR_ENABLED (모터 활성)</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>IN_TEST_MODE (테스트 모드)</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>STANDING_MODE (서있는 상태)</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>IN_CONTROL (제어 중/걷기)</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>SITDOWN_MODE (앉은 상태)</p></td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>MOTOR_DISABLED (모터 비활성)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Raion Robotics..</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

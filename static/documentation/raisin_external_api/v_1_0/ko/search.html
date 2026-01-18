@@ -3,15 +3,15 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Raisin External API v1.0.0 &mdash; Raisin External API Reference 1.0.0 documentation</title>
+  <title>Search &mdash; Raisin External API Reference 1.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=a96ab77e" />
 
   
+    
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=a12e3537"></script>
@@ -19,8 +19,9 @@
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="_static/custom.js?v=9472045f"></script>
     <script src="_static/js/theme.js"></script>
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Overview" href="sections/overview.html" /> 
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="search" title="Search" href="#" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -31,12 +32,12 @@
 
           
           
-          <a href="#" class="icon icon-home">
+          <a href="index.html" class="icon icon-home">
             Raisin External API Reference
               <img src="_static/logo_f2-02.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="#" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -179,15 +180,15 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">Raisin External API Reference</a>
+          <a href="index.html">Raisin External API Reference</a>
       </nav>
 
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Raisin External API v1.0.0</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Search</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -196,111 +197,18 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="raisin-external-api-v1-0-0">
-<h1>Raisin External API v1.0.0<a class="headerlink" href="#raisin-external-api-v1-0-0" title="Link to this heading"></a></h1>
-<p>외부 시스템에서 Raibo2의 자율주행 기능을 제어하기 위한 API 문서입니다.</p>
-<p><a class="reference external" href="../en/index.html">English Version</a></p>
-<section id="system-requirements">
-<h2>System Requirements<a class="headerlink" href="#system-requirements" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p><strong>OS</strong>: Ubuntu 22.04 이상</p></li>
-<li><p><strong>Architecture</strong>: x86_64, arm64</p></li>
-<li><p><strong>Dependencies</strong>: Eigen3, OpenSSL, PCL</p></li>
-</ul>
-</section>
-<section id="chapters">
-<h2>Chapters<a class="headerlink" href="#chapters" title="Link to this heading"></a></h2>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="sections/overview.html">Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sections/overview.html#architecture">Architecture</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="sections/integration.html">Integration Package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sections/integration.html#id1">패키지 구성</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/integration.html#id2">시스템 요구사항</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/integration.html#id3">네트워크 요구사항</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/integration.html#robot-id">Robot ID 확인</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="sections/api_example.html">API Example Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sections/api_example.html#id1">헤더 포함</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/api_example.html#id2">기본 워크플로우</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/api_example.html#data-types">Data Types</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/api_example.html#raisinclient-methods">RaisinClient Methods</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/api_example.html#gps">GPS 사용 시 주의사항</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="sections/direct_network.html">Direct Network API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sections/direct_network.html#id1">헤더 포함</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/direct_network.html#id2">연결 패턴</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/direct_network.html#id3">서비스 클라이언트 생성</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/direct_network.html#id4">서비스 호출 예시</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/direct_network.html#id5">구독자 생성</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/direct_network.html#joy">Joy 제어 서비스 호출</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="sections/service_reference.html">Service Interface Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sections/service_reference.html#planning-set-waypoints">planning/set_waypoints</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/service_reference.html#planning-get-waypoints">planning/get_waypoints</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/service_reference.html#planning-append-waypoint">planning/append_waypoint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/service_reference.html#set-map-setlasermap">set_map (SetLaserMap)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/service_reference.html#waypoint-message">Waypoint Message</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/service_reference.html#set-listen-joy">set_listen (Joy 제어)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/service_reference.html#robot-state-topic">robot_state (Topic)</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="sections/examples.html">Complete Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sections/examples.html#waypoint">기본 Waypoint 제어</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/examples.html#id1">실시간 모니터링</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/examples.html#id2">무한 순찰</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/examples.html#id3">로봇 상태 모니터링</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/examples.html#id4">배터리 모니터링</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/examples.html#id5">수동/자율 제어 전환</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/examples.html#odometry">Odometry 모니터링 (현재 위치)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/examples.html#pointcloud-lidar">PointCloud 구독 (LiDAR)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/examples.html#localization">맵 로드 및 Localization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/examples.html#id6">미션 상태 조회</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="sections/gui_demo.html">GUI Demo (simple_gui)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sections/gui_demo.html#id1">실행 방법</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/gui_demo.html#id2">워크플로우</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/gui_demo.html#id3">키보드 단축키</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/gui_demo.html#id4">마우스 조작</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/gui_demo.html#id5">상태 표시</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="sections/cmake.html">CMake Integration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sections/cmake.html#cmakelists-txt">CMakeLists.txt 예시</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/cmake.html#id1">빌드 방법</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/cmake.html#rpath">RPATH 설정 (선택)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/cmake.html#id2">예제 프로젝트 구조</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="sections/troubleshooting.html">Troubleshooting</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sections/troubleshooting.html#id1">연결 문제</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/troubleshooting.html#id4">맵 로드 문제</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/troubleshooting.html#waypoint">Waypoint 문제</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/troubleshooting.html#id7">구독 문제</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/troubleshooting.html#id9">빌드 문제</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/troubleshooting.html#id12">도움 요청</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="sections/faq.html">FAQ</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sections/faq.html#id1">일반</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/faq.html#waypoint">Waypoint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/faq.html#id3">제어</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/faq.html#id6">데이터</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sections/faq.html#id8">호환성</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</section>
-</section>
+  <noscript>
+  <div id="fallback" class="admonition warning">
+    <p class="last">
+      Please activate JavaScript to enable the search functionality.
+    </p>
+  </div>
+  </noscript>
 
+  
+  <div id="search-results">
+  
+  </div>
 
            </div>
           </div>
@@ -323,7 +231,14 @@
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+  <script>
+    jQuery(function() { Search.loadIndex("searchindex.js"); });
+  </script>
+  
+  <script id="searchindexloader"></script>
+   
+
 
 </body>
 </html>

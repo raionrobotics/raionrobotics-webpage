@@ -1,0 +1,295 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Overview &mdash; Raisin External API Reference 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=a96ab77e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=a12e3537"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/custom.js?v=9472045f"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Integration Package" href="integration.html" />
+    <link rel="prev" title="Raisin External API v1.0.0" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Raisin External API Reference
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#architecture">Architecture</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="integration.html">Integration Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="integration.html#package-contents">Package Contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integration.html#system-requirements">System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integration.html#network-requirements">Network Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integration.html#finding-robot-id">Finding Robot ID</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_example.html">API Example Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_example.html#include-header">Include Header</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_example.html#basic-workflow">Basic Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_example.html#data-types">Data Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_example.html#raisinclient-methods">RaisinClient Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_example.html#gps-usage-notes">GPS Usage Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="direct_network.html">Direct Network API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="direct_network.html#include-headers">Include Headers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="direct_network.html#connection-pattern">Connection Pattern</a></li>
+<li class="toctree-l2"><a class="reference internal" href="direct_network.html#creating-service-clients">Creating Service Clients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="direct_network.html#service-call-example">Service Call Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="direct_network.html#creating-subscribers">Creating Subscribers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="direct_network.html#joy-control-service-call">Joy Control Service Call</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="service_reference.html">Service Interface Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#planning-set-waypoints">planning/set_waypoints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#planning-get-waypoints">planning/get_waypoints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#planning-append-waypoint">planning/append_waypoint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#set-map-setlasermap">set_map (SetLaserMap)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#waypoint-message">Waypoint Message</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#set-listen-joy-control">set_listen (Joy Control)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#robot-state-topic">robot_state (Topic)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Complete Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#basic-waypoint-control">Basic Waypoint Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#real-time-monitoring">Real-time Monitoring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#infinite-patrol">Infinite Patrol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#robot-state-monitoring">Robot State Monitoring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#battery-monitoring">Battery Monitoring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#manual-autonomous-control-switching">Manual/Autonomous Control Switching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#odometry-monitoring-current-position">Odometry Monitoring (Current Position)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#pointcloud-subscription-lidar">PointCloud Subscription (LiDAR)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#map-loading-and-localization">Map Loading and Localization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#mission-status-query">Mission Status Query</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gui_demo.html">GUI Demo (simple_gui)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gui_demo.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui_demo.html#workflow">Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui_demo.html#keyboard-shortcuts">Keyboard Shortcuts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui_demo.html#mouse-controls">Mouse Controls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui_demo.html#status-display">Status Display</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cmake.html">CMake Integration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cmake.html#cmakelists-txt-example">CMakeLists.txt Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cmake.html#build-instructions">Build Instructions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cmake.html#rpath-configuration-optional">RPATH Configuration (Optional)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cmake.html#example-project-structure">Example Project Structure</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#connection-issues">Connection Issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#cannot-connect-to-robot">Cannot Connect to Robot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#service-timeout">Service Timeout</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#map-loading-issues">Map Loading Issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#service-timeout-instead-of-map-saved">“service timeout” Instead of “Map saved.”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#cannot-find-pcd-file">Cannot Find PCD File</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#waypoint-issues">Waypoint Issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#robot-does-not-move">Robot Does Not Move</a></li>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#coordinates-don-t-match">Coordinates Don’t Match</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#subscription-issues">Subscription Issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#callback-not-being-called">Callback Not Being Called</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#build-issues">Build Issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#cannot-find-library">Cannot Find Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="troubleshooting.html#library-load-failure-at-runtime">Library Load Failure at Runtime</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#getting-help">Getting Help</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#general">General</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-what-s-the-difference-between-raisinclient-and-direct-network">Q: What’s the difference between RaisinClient and Direct Network?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-can-i-use-it-without-gps">Q: Can I use it without GPS?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-can-i-control-multiple-robots-simultaneously">Q: Can I control multiple robots simultaneously?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#waypoints">Waypoints</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-why-is-the-waypoint-frame-important">Q: Why is the Waypoint frame important?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-how-do-i-set-up-infinite-patrol">Q: How do I set up infinite patrol?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-can-i-add-waypoints-during-patrol">Q: Can I add waypoints during patrol?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#control">Control</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-how-do-i-switch-between-manual-and-autonomous-control">Q: How do I switch between manual and autonomous control?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-how-do-i-emergency-stop">Q: How do I emergency stop?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#data">Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-what-coordinate-system-is-odometry-data-in">Q: What coordinate system is Odometry data in?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-what-is-the-pointcloud-data-format">Q: What is the PointCloud data format?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-how-do-i-check-battery-level">Q: How do I check battery level?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#compatibility">Compatibility</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-which-robots-are-supported">Q: Which robots are supported?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-can-i-use-it-on-windows">Q: Can I use it on Windows?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#q-can-i-use-it-on-arm64-jetson-etc">Q: Can I use it on ARM64 (Jetson, etc.)?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Raisin External API Reference</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Overview</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h1>
+<p>Raisin provides two integration methods for external systems:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Method</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Use Case</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>API Example</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">RaisinClient</span></code> wrapper class example code</p></td>
+<td><p>Quick start, reference implementation</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Direct Network</strong></p></td>
+<td><p>Direct use of <code class="docutils literal notranslate"><span class="pre">raisin_network</span></code> library</p></td>
+<td><p>Custom service calls, fine-grained control</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>API Example (RaisinClient)</strong> is example code, not an officially supported SDK.
+It is a reference implementation showing how to integrate with the Raisin platform.
+Modify it as needed for your use case.</p>
+</div>
+<section id="architecture">
+<h2>Architecture<a class="headerlink" href="#architecture" title="Link to this heading"></a></h2>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>+----------------------------------------------+
+|            External Application              |
++----------------------------------------------+
+|  Option A: API Example                       |
+|  +----------------------------------------+  |
+|  |  #include &quot;raisin_client.hpp&quot;          |  |
+|  |  RaisinClient client;                  |  |
+|  |  client.connect(&quot;ROBOT_ID&quot;);           |  |
+|  |  client.setMap(...);                   |  |
+|  |  client.setWaypoints(...);             |  |
+|  +----------------------------------------+  |
++----------------------------------------------+
+|  Option B: Direct Network                    |
+|  +----------------------------------------+  |
+|  |  raisin::Network network;              |  |
+|  |  raisin::Node node;                    |  |
+|  |  auto client = node.createClient       |  |
+|  |      &lt;SetWaypoints&gt;(...);              |  |
+|  +----------------------------------------+  |
++----------------------------------------------+
+                    |
+                    | WebSocket
+                    v
++----------------------------------------------+
+|                   Raibo2                     |
+|  +------------------+  +------------------+  |
+|  | Autonomy Plugin  |  | Fast-LIO Plugin  |  |
+|  | - Waypoints      |  | - Localization   |  |
+|  | - Navigation     |  | - Map Loading    |  |
+|  +------------------+  +------------------+  |
++----------------------------------------------+
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Raion Robotics..</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
