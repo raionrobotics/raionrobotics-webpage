@@ -3,12 +3,19 @@
     display: none !important;
 }
 
-/* Hide toctree expand/collapse icons (+ marks) */
-.wy-menu-vertical li span.toctree-expand,
-.wy-menu-vertical li.toctree-l1 span.toctree-expand,
-.wy-menu-vertical li.toctree-l2 span.toctree-expand,
-.wy-menu-vertical li.toctree-l3 span.toctree-expand {
+/* Hide + icons for collapsed items */
+.wy-menu-vertical li span.toctree-expand {
     display: none !important;
+}
+
+/* Show - icon only for expanded (current) categories */
+.wy-menu-vertical li.toctree-l1.current > a span.toctree-expand {
+    display: inline-block !important;
+}
+
+/* Change + to - for expanded items */
+.wy-menu-vertical li.toctree-l1.current > a span.toctree-expand::before {
+    content: "\f068" !important;  /* Font Awesome minus icon */
 }
 
 /* ===== RESET ALL LINK STATES TO SAME COLOR ===== */
