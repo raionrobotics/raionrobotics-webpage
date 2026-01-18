@@ -3,6 +3,14 @@
     display: none !important;
 }
 
+/* Hide toctree expand/collapse icons (+ marks) */
+.wy-menu-vertical li span.toctree-expand,
+.wy-menu-vertical li.toctree-l1 span.toctree-expand,
+.wy-menu-vertical li.toctree-l2 span.toctree-expand,
+.wy-menu-vertical li.toctree-l3 span.toctree-expand {
+    display: none !important;
+}
+
 /* ===== RESET ALL LINK STATES TO SAME COLOR ===== */
 .wy-menu-vertical a,
 .wy-menu-vertical a:visited,
@@ -52,7 +60,10 @@
 }
 
 /* ===== CURRENT PAGE ITEM ONLY - bold and darker ===== */
-.wy-menu-vertical a.current {
+.wy-menu-vertical a.current,
+.wy-menu-vertical li.toctree-l1.current > ul li a.current,
+.wy-menu-vertical li.toctree-l2.current > ul li a.current,
+.wy-menu-vertical li a.current {
     color: #333333 !important;
     font-weight: bold !important;
     background: transparent !important;
