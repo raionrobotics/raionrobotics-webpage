@@ -22,10 +22,13 @@ Waypoint 목록을 설정합니다.
      - Waypoint 배열
    * - repetition
      - uint8
-     - 반복 횟수 (0=무한)
+     - 반복 횟수 (infinite_loop가 true면 무시됨)
    * - current_index
      - uint8
      - 시작 인덱스
+   * - infinite_loop
+     - bool
+     - 무한 순찰 여부
 
 **Response:**
 
@@ -76,10 +79,13 @@ planning/get_waypoints
      - 현재 waypoint 목록
    * - repetition
      - uint8
-     - 남은 반복 횟수
+     - 남은 반복 횟수 (infinite_loop가 true면 무시됨)
    * - current_index
      - uint8
      - 현재 목표 인덱스
+   * - infinite_loop
+     - bool
+     - 무한 순찰 여부
 
 planning/append_waypoint
 ------------------------
@@ -170,6 +176,168 @@ Waypoint Message
     float64 y         # Y 좌표 (GPS: longitude)
     float64 z         # Z 좌표 (GPS: altitude)
     bool use_z        # Z 좌표 검사 여부
+
+stand_up
+--------
+
+로봇을 일어서게 합니다.
+
+**Request:** (empty)
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - 성공 여부
+   * - message
+     - string
+     - 결과 메시지
+
+**가능한 Response 메시지:**
+
+- ``"Trigger: started"`` - 성공
+- ``"service timeout"`` - 서비스 응답 없음
+
+sit_down
+--------
+
+로봇을 앉게 합니다.
+
+**Request:** (empty)
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - 성공 여부
+   * - message
+     - string
+     - 결과 메시지
+
+**가능한 Response 메시지:**
+
+- ``"Trigger: started"`` - 성공
+- ``"service timeout"`` - 서비스 응답 없음
+
+planning/list_waypoints_files
+-----------------------------
+
+저장된 순찰 경로 파일 목록을 조회합니다.
+
+**Request:** (empty)
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - 성공 여부
+   * - message
+     - string
+     - 결과 메시지
+   * - files
+     - string[]
+     - 파일 이름 목록
+
+**가능한 Response 메시지:**
+
+- ``"Found N files"`` - 성공 (N개 파일 발견)
+- ``"service timeout"`` - 서비스 응답 없음
+
+planning/load_waypoints_file
+----------------------------
+
+저장된 순찰 경로 파일을 로드합니다.
+
+**Request:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - filename
+     - string
+     - 로드할 파일 이름 (확장자 제외)
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - 성공 여부
+   * - message
+     - string
+     - 결과 메시지
+
+**가능한 Response 메시지:**
+
+- ``"Waypoints loaded from: filename"`` - 성공
+- ``"File not found: filename"`` - 파일 없음
+- ``"service timeout"`` - 서비스 응답 없음
+
+planning/resume_patrol
+----------------------
+
+현재 로드된 순찰 경로에서 가장 가까운 waypoint부터 순찰을 재개합니다.
+
+**Request:** (empty)
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - 성공 여부
+   * - message
+     - string
+     - 결과 메시지
+   * - waypoint_index
+     - uint8
+     - 재개 시작 waypoint 인덱스
+
+**가능한 Response 메시지:**
+
+- ``"Resuming from waypoint N"`` - 성공 (N번 waypoint부터 시작)
+- ``"No waypoints loaded"`` - 경로가 로드되지 않음
+- ``"service timeout"`` - 서비스 응답 없음
+
+.. note::
+    ``planning/load_waypoints_file`` 로 경로를 먼저 로드해야 합니다.
 
 set_listen (Joy 제어)
 ---------------------
@@ -286,10 +454,45 @@ robot_state (Topic)
      - 관절 토크 (Nm)
    * - status
      - uint16
-     - 상태 코드 (0 = 정상)
+     - CiA402 상태 코드 (아래 참조)
    * - temperature
      - double
      - 모터 온도 (°C)
+
+**Actuator Status 코드 (CiA402 EtherCAT 표준):**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 15 30 55
+
+   * - 값
+     - 상태
+     - 설명
+   * - 0
+     - NOT_READY_TO_SWITCH_ON
+     - 준비 안됨 (**에러**)
+   * - 8
+     - FAULT
+     - 결함 (**에러**)
+   * - 33
+     - READY_TO_SWITCH_ON
+     - 스위치온 준비 (정상 대기)
+   * - 35
+     - SWITCHED_ON
+     - 스위치온 (정상)
+   * - 39
+     - OPERATION_ENABLED
+     - 동작 활성화 (정상 운전)
+   * - 99
+     - ECAT_CONN_ERROR
+     - EtherCAT 연결 에러 (**에러**)
+
+.. warning::
+    **status 해석 주의:**
+
+    - ``status == 0`` 은 "정상"이 **아닙니다**! NOT_READY 에러 상태입니다.
+    - 정상 운전 중인 상태는 ``status == 39`` (OPERATION_ENABLED) 입니다.
+    - 에러 판단: ``status == 0 || status == 8 || status == 99``
 
 **Locomotion State 값:**
 
@@ -319,3 +522,181 @@ robot_state (Topic)
      - SITDOWN_MODE (앉은 상태)
    * - 9
      - MOTOR_DISABLED (모터 비활성)
+
+list_map_files
+--------------
+
+로봇에 저장된 맵 파일 목록을 조회합니다.
+
+**Request:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - directory
+     - string
+     - 조회할 디렉토리 (빈 문자열이면 기본 디렉토리)
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - 성공 여부
+   * - message
+     - string
+     - 결과 메시지
+   * - files
+     - string[]
+     - 맵 파일 이름 목록
+
+save_laser_map
+--------------
+
+현재 맵을 로봇에 저장합니다.
+
+**Request:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - name
+     - string
+     - 저장할 맵 이름
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - 성공 여부
+   * - message
+     - string
+     - 결과 메시지
+
+**가능한 Response 메시지:**
+
+- ``"Map saved."`` - 성공
+- ``"service timeout"`` - 서비스 응답 없음
+
+load_laser_map
+--------------
+
+로봇에 저장된 맵을 로드합니다.
+
+**Request:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - name
+     - string
+     - 로드할 맵 이름
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - 성공 여부
+   * - message
+     - string
+     - 결과 메시지
+
+**가능한 Response 메시지:**
+
+- ``"Map loaded."`` - 성공
+- ``"Map not found"`` - 맵 파일 없음
+- ``"service timeout"`` - 서비스 응답 없음
+
+start_mapping
+-------------
+
+매핑 모드를 시작합니다.
+
+**Request:** (empty)
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - 성공 여부
+   * - message
+     - string
+     - 결과 메시지
+
+**가능한 Response 메시지:**
+
+- ``"Trigger: started"`` - 성공
+- ``"service timeout"`` - 서비스 응답 없음
+
+.. note::
+    매핑 중에는 로봇을 수동으로 조작하여 환경을 스캔해야 합니다.
+
+stop_mapping
+------------
+
+매핑 모드를 중지합니다.
+
+**Request:** (empty)
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - 성공 여부
+   * - message
+     - string
+     - 결과 메시지
+
+**가능한 Response 메시지:**
+
+- ``"Trigger: started"`` - 성공
+- ``"service timeout"`` - 서비스 응답 없음
+
+.. note::
+    매핑 중지 후 ``save_laser_map`` 으로 맵을 저장할 수 있습니다.

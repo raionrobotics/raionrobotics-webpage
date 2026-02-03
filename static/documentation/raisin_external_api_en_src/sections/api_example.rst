@@ -73,7 +73,8 @@ Data Types
     struct MissionStatus {
         std::vector<Waypoint> waypoints;  // Current waypoint list
         uint8_t current_index;            // Current target index
-        uint8_t repetition;               // Remaining laps (0=infinite)
+        uint8_t repetition;               // Remaining laps (ignored if infinite_loop is true)
+        bool infinite_loop;               // Whether patrol repeats indefinitely
         bool valid;                       // Data validity
     };
 
@@ -110,11 +111,51 @@ Data Types
 
     struct ActuatorInfo {
         std::string name;           // Motor name (e.g., "FR_hip", "FL_thigh")
-        uint16_t status;            // Status code (0 = normal)
+        uint16_t status;            // CiA402 status code (see below)
         double temperature;         // Motor temperature (°C)
         double position;            // Joint position (rad)
         double velocity;            // Joint velocity (rad/s)
         double effort;              // Joint torque (Nm)
+    };
+
+**CiA402StatusWord** - Actuator status codes (EtherCAT CiA402 standard)
+
+.. code-block:: cpp
+
+    enum class CiA402StatusWord : uint16_t {
+        NOT_READY_TO_SWITCH_ON = 0,   // Not ready (error state)
+        FAULT = 8,                     // Fault (error state)
+        READY_TO_SWITCH_ON = 33,       // Ready to switch on (normal standby)
+        SWITCHED_ON = 35,              // Switched on (normal)
+        OPERATION_ENABLED = 39,        // Operation enabled (normal operation)
+        ECAT_CONN_ERROR = 99           // EtherCAT connection error
+    };
+
+.. note::
+    **Status value interpretation:**
+
+    - ``0``, ``8``, ``99`` = **Error states** (red warning required)
+    - ``33``, ``35`` = **Normal standby** (motor ready/waiting)
+    - ``39`` = **Normal operation** (motor running)
+
+**ResumePatrolResult** - Resume patrol result
+
+.. code-block:: cpp
+
+    struct ResumePatrolResult {
+        bool success;           // Success flag
+        std::string message;    // Result message
+        uint8_t waypoint_index; // Starting waypoint index
+    };
+
+**ListFilesResult** - File list query result
+
+.. code-block:: cpp
+
+    struct ListFilesResult {
+        bool success;                    // Success flag
+        std::string message;             // Result message
+        std::vector<std::string> files;  // File name list
     };
 
 **LocomotionState** - Robot locomotion state enum
@@ -223,18 +264,19 @@ Loads a PCD map file and initializes localization.
 
     ServiceResult setWaypoints(const std::vector<Waypoint>& waypoints,
                                 uint8_t repetition = 1,
-                                uint8_t start_index = 0);
+                                uint8_t start_index = 0,
+                                bool infinite_loop = false);
 
 Sets waypoint list and starts navigation.
 
 - ``waypoints``: Waypoint list
-- ``repetition``: Repeat count
+- ``repetition``: Repeat count (ignored if ``infinite_loop`` is ``true``)
 
-  - ``0`` = infinite patrol
   - ``1`` = single pass (default)
   - ``N`` = repeat N times
 
 - ``start_index``: Starting waypoint index
+- ``infinite_loop``: Whether to repeat indefinitely (``true`` = infinite patrol)
 
 **getMissionStatus()**
 
@@ -266,7 +308,7 @@ Stops autonomous navigation (sets empty waypoint list).
 
     ServiceResult startPatrol(const std::vector<Waypoint>& waypoints);
 
-Starts infinite patrol (equivalent to ``setWaypoints(waypoints, 0)``).
+Starts infinite patrol (equivalent to ``setWaypoints(waypoints, 1, 0, true)``).
 
 **subscribeOdometry()**
 
@@ -410,6 +452,303 @@ Releases control (switches to None state).
     - ``NONE (2)``: No control source
 
     When ``setManualControl()`` is called, the GUI's wifi icon turns green.
+
+Locomotion Control
+------------------
+
+**standUp()**
+
+.. code-block:: cpp
+
+    ServiceResult standUp();
+
+Makes the robot stand up.
+
+- **Returns**: Service call result
+
+.. code-block:: cpp
+
+    auto result = client.standUp();
+    if (result.success) {
+        std::cout << "Robot standing up" << std::endl;
+    }
+
+.. warning::
+    Ensure the robot is in a safe position before calling.
+    Should be called when locomotion state is ``SITDOWN_MODE`` or ``STANDING_MODE``.
+
+**sitDown()**
+
+.. code-block:: cpp
+
+    ServiceResult sitDown();
+
+Makes the robot sit down.
+
+- **Returns**: Service call result
+
+.. code-block:: cpp
+
+    auto result = client.sitDown();
+    if (result.success) {
+        std::cout << "Robot sitting down" << std::endl;
+    }
+
+.. note::
+    Can be called even when robot is in ``IN_CONTROL`` (walking) state.
+    The robot will safely stop and sit down.
+
+Patrol Route Management
+-----------------------
+
+**listWaypointsFiles()**
+
+.. code-block:: cpp
+
+    ListFilesResult listWaypointsFiles();
+
+Lists saved patrol route files.
+
+- **Returns**: File list result
+
+.. code-block:: cpp
+
+    auto result = client.listWaypointsFiles();
+    if (result.success) {
+        std::cout << "Available routes:" << std::endl;
+        for (const auto& file : result.files) {
+            std::cout << "  - " << file << std::endl;
+        }
+    }
+
+**loadWaypointsFile()**
+
+.. code-block:: cpp
+
+    ServiceResult loadWaypointsFile(const std::string& filename);
+
+Loads a saved patrol route file.
+
+- ``filename``: File name to load (without extension)
+- **Returns**: Service call result
+
+.. code-block:: cpp
+
+    auto result = client.loadWaypointsFile("office_patrol");
+    if (result.success) {
+        std::cout << "Route loaded successfully" << std::endl;
+    }
+
+**resumePatrol()**
+
+.. code-block:: cpp
+
+    ResumePatrolResult resumePatrol();
+
+Resumes patrol from the nearest waypoint in the currently loaded route.
+
+- **Returns**: Resume patrol result (success, message, starting waypoint index)
+
+.. code-block:: cpp
+
+    auto result = client.resumePatrol();
+    if (result.success) {
+        std::cout << "Resuming from waypoint " << (int)result.waypoint_index << std::endl;
+    }
+
+.. note::
+    Must load a route with ``loadWaypointsFile()`` first.
+    Automatically finds the nearest waypoint from the robot's current position.
+
+**loadAndResumePatrol()**
+
+.. code-block:: cpp
+
+    ResumePatrolResult loadAndResumePatrol(const std::string& filename);
+
+Loads a patrol route and immediately resumes from the nearest waypoint.
+Combines ``loadWaypointsFile()`` + ``resumePatrol()`` in one call.
+
+- ``filename``: File name to load (without extension)
+- **Returns**: Resume patrol result
+
+.. code-block:: cpp
+
+    auto result = client.loadAndResumePatrol("office_patrol");
+    if (result.success) {
+        std::cout << "Patrol started from waypoint " << (int)result.waypoint_index << std::endl;
+    } else {
+        std::cerr << "Failed: " << result.message << std::endl;
+    }
+
+Map Management
+--------------
+
+**listMapFiles()**
+
+.. code-block:: cpp
+
+    ListFilesResult listMapFiles(const std::string& directory = "");
+
+Lists map files saved on the robot.
+
+- ``directory``: Directory to query (default map directory if empty)
+- **Returns**: File list result
+
+.. code-block:: cpp
+
+    auto result = client.listMapFiles();
+    if (result.success) {
+        std::cout << "Available maps:" << std::endl;
+        for (const auto& file : result.files) {
+            std::cout << "  - " << file << std::endl;
+        }
+    }
+
+**saveMap()**
+
+.. code-block:: cpp
+
+    ServiceResult saveMap(const std::string& name);
+
+Saves the current map to the robot.
+
+- ``name``: Map name to save
+- **Returns**: Service call result
+
+.. code-block:: cpp
+
+    auto result = client.saveMap("office_floor1");
+    if (result.success) {
+        std::cout << "Map saved successfully" << std::endl;
+    }
+
+.. note::
+    Use this to save maps created in mapping mode.
+
+**loadMapFromRobot()**
+
+.. code-block:: cpp
+
+    ServiceResult loadMapFromRobot(const std::string& name);
+
+Loads a map saved on the robot.
+
+- ``name``: Map name to load
+- **Returns**: Service call result
+
+.. code-block:: cpp
+
+    auto result = client.loadMapFromRobot("office_floor1");
+    if (result.success) {
+        std::cout << "Map loaded successfully" << std::endl;
+    }
+
+.. note::
+    Unlike ``setMap()``, this loads a map already saved on the robot.
+    Initial position uses the position when the map was saved.
+
+**startMapping()**
+
+.. code-block:: cpp
+
+    ServiceResult startMapping();
+
+Starts mapping mode.
+
+- **Returns**: Service call result
+
+.. code-block:: cpp
+
+    auto result = client.startMapping();
+    if (result.success) {
+        std::cout << "Mapping started" << std::endl;
+    }
+
+.. warning::
+    During mapping, manually operate the robot to scan the environment.
+    Enable manual control with ``setManualControl()`` before using.
+
+**stopMapping()**
+
+.. code-block:: cpp
+
+    ServiceResult stopMapping();
+
+Stops mapping mode.
+
+- **Returns**: Service call result
+
+.. code-block:: cpp
+
+    auto result = client.stopMapping();
+    if (result.success) {
+        std::cout << "Mapping stopped" << std::endl;
+        // Save the map
+        client.saveMap("new_map");
+    }
+
+Actuator Status Helpers
+-----------------------
+
+**isActuatorStatusError()**
+
+.. code-block:: cpp
+
+    bool isActuatorStatusError(uint16_t status);
+
+Checks if an actuator status code indicates an error state.
+
+- ``status``: CiA402 status code
+- **Returns**: ``true`` if error state
+
+.. code-block:: cpp
+
+    for (const auto& act : state.actuators) {
+        if (raisin_sdk::isActuatorStatusError(act.status)) {
+            std::cerr << act.name << " has error!" << std::endl;
+        }
+    }
+
+**getActuatorStatusName()**
+
+.. code-block:: cpp
+
+    std::string getActuatorStatusName(uint16_t status);
+
+Converts an actuator status code to a human-readable string.
+
+- ``status``: CiA402 status code
+- **Returns**: Status name string
+
+.. list-table::
+   :header-rows: 1
+   :widths: 15 35 50
+
+   * - Code
+     - Return Value
+     - Description
+   * - 0
+     - "NOT_READY"
+     - Not ready (error)
+   * - 8
+     - "FAULT"
+     - Fault (error)
+   * - 33
+     - "READY"
+     - Ready to switch on
+   * - 35
+     - "SWITCHED_ON"
+     - Switched on
+   * - 39
+     - "OPERATIONAL"
+     - Operating (normal)
+   * - 99
+     - "ECAT_ERROR"
+     - EtherCAT error
+   * - Other
+     - "UNKNOWN(N)"
+     - Unknown state
 
 GPS Usage Notes
 ---------------

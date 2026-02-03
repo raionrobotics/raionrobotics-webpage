@@ -22,10 +22,13 @@ Sets the waypoint list.
      - Waypoint array
    * - repetition
      - uint8
-     - Repeat count (0=infinite)
+     - Repeat count (ignored if infinite_loop is true)
    * - current_index
      - uint8
      - Starting index
+   * - infinite_loop
+     - bool
+     - Whether to repeat indefinitely
 
 **Response:**
 
@@ -76,10 +79,13 @@ Queries current mission status.
      - Current waypoint list
    * - repetition
      - uint8
-     - Remaining laps
+     - Remaining laps (ignored if infinite_loop is true)
    * - current_index
      - uint8
      - Current target index
+   * - infinite_loop
+     - bool
+     - Whether patrol repeats indefinitely
 
 planning/append_waypoint
 ------------------------
@@ -286,10 +292,45 @@ Topic that publishes robot state information.
      - Joint torque (Nm)
    * - status
      - uint16
-     - Status code (0 = normal)
+     - CiA402 status code (see below)
    * - temperature
      - double
      - Motor temperature (°C)
+
+**Actuator Status Codes (CiA402 EtherCAT Standard):**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 15 30 55
+
+   * - Value
+     - State
+     - Description
+   * - 0
+     - NOT_READY_TO_SWITCH_ON
+     - Not ready (**error**)
+   * - 8
+     - FAULT
+     - Fault (**error**)
+   * - 33
+     - READY_TO_SWITCH_ON
+     - Ready to switch on (normal standby)
+   * - 35
+     - SWITCHED_ON
+     - Switched on (normal)
+   * - 39
+     - OPERATION_ENABLED
+     - Operation enabled (normal operation)
+   * - 99
+     - ECAT_CONN_ERROR
+     - EtherCAT connection error (**error**)
+
+.. warning::
+    **Status interpretation:**
+
+    - ``status == 0`` is **NOT** "normal"! It's a NOT_READY error state.
+    - Normal operation state is ``status == 39`` (OPERATION_ENABLED).
+    - Error detection: ``status == 0 || status == 8 || status == 99``
 
 **Locomotion State values:**
 
@@ -319,3 +360,343 @@ Topic that publishes robot state information.
      - SITDOWN_MODE (Sitting)
    * - 9
      - MOTOR_DISABLED (Motor disabled)
+
+stand_up
+--------
+
+Makes the robot stand up.
+
+**Request:** (empty)
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - Success flag
+   * - message
+     - string
+     - Result message
+
+**Possible Response Messages:**
+
+- ``"Trigger: started"`` - Success
+- ``"service timeout"`` - No service response
+
+sit_down
+--------
+
+Makes the robot sit down.
+
+**Request:** (empty)
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - Success flag
+   * - message
+     - string
+     - Result message
+
+**Possible Response Messages:**
+
+- ``"Trigger: started"`` - Success
+- ``"service timeout"`` - No service response
+
+planning/list_waypoints_files
+-----------------------------
+
+Lists saved patrol route files.
+
+**Request:** (empty)
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - Success flag
+   * - message
+     - string
+     - Result message
+   * - files
+     - string[]
+     - File name list
+
+**Possible Response Messages:**
+
+- ``"Found N files"`` - Success (N files found)
+- ``"service timeout"`` - No service response
+
+planning/load_waypoints_file
+----------------------------
+
+Loads a saved patrol route file.
+
+**Request:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - filename
+     - string
+     - File name to load (without extension)
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - Success flag
+   * - message
+     - string
+     - Result message
+
+**Possible Response Messages:**
+
+- ``"Waypoints loaded from: filename"`` - Success
+- ``"File not found: filename"`` - File not found
+- ``"service timeout"`` - No service response
+
+planning/resume_patrol
+----------------------
+
+Resumes patrol from the nearest waypoint in the currently loaded route.
+
+**Request:** (empty)
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - Success flag
+   * - message
+     - string
+     - Result message
+   * - waypoint_index
+     - uint8
+     - Starting waypoint index
+
+**Possible Response Messages:**
+
+- ``"Resuming from waypoint N"`` - Success (starting from waypoint N)
+- ``"No waypoints loaded"`` - No route loaded
+- ``"service timeout"`` - No service response
+
+.. note::
+    Must load a route with ``planning/load_waypoints_file`` first.
+
+list_map_files
+--------------
+
+Lists map files saved on the robot.
+
+**Request:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - directory
+     - string
+     - Directory to query (default directory if empty)
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - Success flag
+   * - message
+     - string
+     - Result message
+   * - files
+     - string[]
+     - Map file name list
+
+save_laser_map
+--------------
+
+Saves the current map to the robot.
+
+**Request:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - name
+     - string
+     - Map name to save
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - Success flag
+   * - message
+     - string
+     - Result message
+
+**Possible Response Messages:**
+
+- ``"Map saved."`` - Success
+- ``"service timeout"`` - No service response
+
+load_laser_map
+--------------
+
+Loads a map saved on the robot.
+
+**Request:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - name
+     - string
+     - Map name to load
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - Success flag
+   * - message
+     - string
+     - Result message
+
+**Possible Response Messages:**
+
+- ``"Map loaded."`` - Success
+- ``"Map not found"`` - Map file not found
+- ``"service timeout"`` - No service response
+
+start_mapping
+-------------
+
+Starts mapping mode.
+
+**Request:** (empty)
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - Success flag
+   * - message
+     - string
+     - Result message
+
+**Possible Response Messages:**
+
+- ``"Trigger: started"`` - Success
+- ``"service timeout"`` - No service response
+
+.. note::
+    During mapping, manually operate the robot to scan the environment.
+
+stop_mapping
+------------
+
+Stops mapping mode.
+
+**Request:** (empty)
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - Success flag
+   * - message
+     - string
+     - Result message
+
+**Possible Response Messages:**
+
+- ``"Trigger: started"`` - Success
+- ``"service timeout"`` - No service response
+
+.. note::
+    After stopping mapping, save the map with ``save_laser_map``.
