@@ -61,11 +61,19 @@
 <li class="toctree-l2"><a class="reference internal" href="api_example.html#include-header">Include Header</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_example.html#basic-workflow">Basic Workflow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_example.html#data-types">Data Types</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api_example.html#raisinclient-methods">RaisinClient Methods</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api_example.html#locomotion-control">Locomotion Control</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api_example.html#patrol-route-management">Patrol Route Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api_example.html#map-management">Map Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api_example.html#actuator-status-helpers">Actuator Status Helpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_example.html#raisinclient-methods">RaisinClient Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_example.html#connection">Connection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_example.html#map-loading">Map Loading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_example.html#waypoint-navigation">Waypoint Navigation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_example.html#patrol-route-management">Patrol Route Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_example.html#graph-management">Graph Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_example.html#subscriptions">Subscriptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_example.html#getters-thread-safe">Getters (Thread-safe)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_example.html#control-mode">Control Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_example.html#locomotion-control">Locomotion Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_example.html#actuator-status-helpers">Actuator Status Helpers</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="api_example.html#gps-usage-notes">GPS Usage Notes</a></li>
 </ul>
 </li>
@@ -79,23 +87,51 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Service Interface Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#planning-set-waypoints">planning/set_waypoints</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#planning-get-waypoints">planning/get_waypoints</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#planning-append-waypoint">planning/append_waypoint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#set-map-setlasermap">set_map (SetLaserMap)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#waypoint-message">Waypoint Message</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#set-listen-joy-control">set_listen (Joy Control)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#robot-state-topic">robot_state (Topic)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#stand-up">stand_up</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#sit-down">sit_down</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#planning-list-waypoints-files">planning/list_waypoints_files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#planning-load-waypoints-file">planning/load_waypoints_file</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#planning-resume-patrol">planning/resume_patrol</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#list-map-files">list_map_files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#save-laser-map">save_laser_map</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#load-laser-map">load_laser_map</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#start-mapping">start_mapping</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#stop-mapping">stop_mapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#navigation-services">Navigation Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#planning-set-waypoints">planning/set_waypoints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#planning-get-waypoints">planning/get_waypoints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#planning-refine-waypoints">planning/refine_waypoints</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#patrol-route-services">Patrol Route Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#planning-list-waypoints-files">planning/list_waypoints_files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#planning-load-waypoints-file">planning/load_waypoints_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#planning-save-waypoints-file">planning/save_waypoints_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#planning-resume-patrol">planning/resume_patrol</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#graph-services">Graph Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#save-graph-file">save_graph_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#load-graph-file">load_graph_file</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#map-services">Map Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#list-map-files">list_map_files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#load-laser-map">load_laser_map</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-map-setlasermap">set_map (SetLaserMap)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#locomotion-services">Locomotion Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#stand-up">stand_up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sit-down">sit_down</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#control-mode-services">Control Mode Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#set-listen-joy-control">set_listen (Joy Control)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#message-types">Message Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#waypoint">Waypoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#graphnode">GraphNode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#graphedge">GraphEdge</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#topics">Topics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#robot-state">robot_state</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#odometry">/Odometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cloud-registered">/cloud_registered</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Complete Examples</a><ul>
@@ -206,8 +242,10 @@
   <section id="service-interface-reference">
 <h1>Service Interface Reference<a class="headerlink" href="#service-interface-reference" title="Link to this heading"></a></h1>
 <p>Available service interface definitions.</p>
+<section id="navigation-services">
+<h2>Navigation Services<a class="headerlink" href="#navigation-services" title="Link to this heading"></a></h2>
 <section id="planning-set-waypoints">
-<h2>planning/set_waypoints<a class="headerlink" href="#planning-set-waypoints" title="Link to this heading"></a></h2>
+<h3>planning/set_waypoints<a class="headerlink" href="#planning-set-waypoints" title="Link to this heading"></a></h3>
 <p>Sets the waypoint list.</p>
 <p><strong>Request:</strong></p>
 <table class="docutils align-default">
@@ -273,7 +311,7 @@
 </ul>
 </section>
 <section id="planning-get-waypoints">
-<h2>planning/get_waypoints<a class="headerlink" href="#planning-get-waypoints" title="Link to this heading"></a></h2>
+<h3>planning/get_waypoints<a class="headerlink" href="#planning-get-waypoints" title="Link to this heading"></a></h3>
 <p>Queries current mission status.</p>
 <p><strong>Request:</strong> (empty)</p>
 <p><strong>Response:</strong></p>
@@ -317,9 +355,9 @@
 </tbody>
 </table>
 </section>
-<section id="planning-append-waypoint">
-<h2>planning/append_waypoint<a class="headerlink" href="#planning-append-waypoint" title="Link to this heading"></a></h2>
-<p>Appends a waypoint to the queue.</p>
+<section id="planning-refine-waypoints">
+<h3>planning/refine_waypoints<a class="headerlink" href="#planning-refine-waypoints" title="Link to this heading"></a></h3>
+<p>Optimizes waypoints using A* algorithm on the graph.</p>
 <p><strong>Request:</strong></p>
 <table class="docutils align-default">
 <colgroup>
@@ -334,9 +372,139 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>waypoint</p></td>
-<td><p>Waypoint</p></td>
-<td><p>Waypoint to append</p></td>
+<tr class="row-even"><td><p>waypoints</p></td>
+<td><p>Waypoint[]</p></td>
+<td><p>Input waypoint array</p></td>
+</tr>
+<tr class="row-odd"><td><p>nodes</p></td>
+<td><p>GraphNode[]</p></td>
+<td><p>Graph node array</p></td>
+</tr>
+<tr class="row-even"><td><p>edges</p></td>
+<td><p>GraphEdge[]</p></td>
+<td><p>Graph edge array</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>Success flag</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>Result message</p></td>
+</tr>
+<tr class="row-even"><td><p>refined_waypoints</p></td>
+<td><p>Waypoint[]</p></td>
+<td><p>Optimized waypoint list (follows graph path)</p></td>
+</tr>
+<tr class="row-odd"><td><p>path_node_ids</p></td>
+<td><p>int32[]</p></td>
+<td><p>Node IDs forming the path</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Possible Response Messages:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Refined</span> <span class="pre">N</span> <span class="pre">waypoints&quot;</span></code> - Success</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;No</span> <span class="pre">graph</span> <span class="pre">nodes</span> <span class="pre">provided&quot;</span></code> - Empty nodes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - No service response</p></li>
+</ul>
+</section>
+</section>
+<section id="patrol-route-services">
+<h2>Patrol Route Services<a class="headerlink" href="#patrol-route-services" title="Link to this heading"></a></h2>
+<section id="planning-list-waypoints-files">
+<h3>planning/list_waypoints_files<a class="headerlink" href="#planning-list-waypoints-files" title="Link to this heading"></a></h3>
+<p>Lists saved patrol route files.</p>
+<p><strong>Request:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>directory</p></td>
+<td><p>string</p></td>
+<td><p>Directory to query (default directory if empty)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>Success flag</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>Result message</p></td>
+</tr>
+<tr class="row-even"><td><p>files</p></td>
+<td><p>string[]</p></td>
+<td><p>File name list</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Possible Response Messages:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Found</span> <span class="pre">N</span> <span class="pre">files&quot;</span></code> - Success (N files found)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - No service response</p></li>
+</ul>
+</section>
+<section id="planning-load-waypoints-file">
+<h3>planning/load_waypoints_file<a class="headerlink" href="#planning-load-waypoints-file" title="Link to this heading"></a></h3>
+<p>Loads a saved patrol route file.</p>
+<p><strong>Request:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>name</p></td>
+<td><p>string</p></td>
+<td><p>File name to load (without extension)</p></td>
 </tr>
 </tbody>
 </table>
@@ -364,10 +532,16 @@
 </tr>
 </tbody>
 </table>
+<p><strong>Possible Response Messages:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Waypoints</span> <span class="pre">loaded</span> <span class="pre">from:</span> <span class="pre">filename&quot;</span></code> - Success</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;File</span> <span class="pre">not</span> <span class="pre">found:</span> <span class="pre">filename&quot;</span></code> - File not found</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - No service response</p></li>
+</ul>
 </section>
-<section id="set-map-setlasermap">
-<h2>set_map (SetLaserMap)<a class="headerlink" href="#set-map-setlasermap" title="Link to this heading"></a></h2>
-<p>Loads PCD map and initializes localization.</p>
+<section id="planning-save-waypoints-file">
+<h3>planning/save_waypoints_file<a class="headerlink" href="#planning-save-waypoints-file" title="Link to this heading"></a></h3>
+<p>Saves current waypoints to a file.</p>
 <p><strong>Request:</strong></p>
 <table class="docutils align-default">
 <colgroup>
@@ -384,13 +558,349 @@
 <tbody>
 <tr class="row-even"><td><p>name</p></td>
 <td><p>string</p></td>
-<td><p>Map frame name</p></td>
+<td><p>File name to save (without extension)</p></td>
 </tr>
-<tr class="row-odd"><td><p>pc</p></td>
-<td><p>PointCloud2</p></td>
-<td><p>Point cloud data</p></td>
+</tbody>
+</table>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
-<tr class="row-even"><td><p>initial_pose</p></td>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>Success flag</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>Result message</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Possible Response Messages:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Waypoints</span> <span class="pre">saved</span> <span class="pre">to:</span> <span class="pre">filename&quot;</span></code> - Success</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - No service response</p></li>
+</ul>
+</section>
+<section id="planning-resume-patrol">
+<h3>planning/resume_patrol<a class="headerlink" href="#planning-resume-patrol" title="Link to this heading"></a></h3>
+<p>Resumes patrol from the nearest waypoint in the currently loaded route.</p>
+<p><strong>Request:</strong> (empty)</p>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>Success flag</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>Result message</p></td>
+</tr>
+<tr class="row-even"><td><p>waypoint_index</p></td>
+<td><p>uint8</p></td>
+<td><p>Starting waypoint index</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Possible Response Messages:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Resuming</span> <span class="pre">from</span> <span class="pre">waypoint</span> <span class="pre">N&quot;</span></code> - Success (starting from waypoint N)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;No</span> <span class="pre">waypoints</span> <span class="pre">loaded&quot;</span></code> - No route loaded</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - No service response</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Must load a route with <code class="docutils literal notranslate"><span class="pre">planning/load_waypoints_file</span></code> first.</p>
+</div>
+</section>
+</section>
+<section id="graph-services">
+<h2>Graph Services<a class="headerlink" href="#graph-services" title="Link to this heading"></a></h2>
+<section id="save-graph-file">
+<h3>save_graph_file<a class="headerlink" href="#save-graph-file" title="Link to this heading"></a></h3>
+<p>Saves a graph to a file.</p>
+<p><strong>Request:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>name</p></td>
+<td><p>string</p></td>
+<td><p>File name to save</p></td>
+</tr>
+<tr class="row-odd"><td><p>nodes</p></td>
+<td><p>GraphNode[]</p></td>
+<td><p>Graph node array</p></td>
+</tr>
+<tr class="row-even"><td><p>edges</p></td>
+<td><p>GraphEdge[]</p></td>
+<td><p>Graph edge array</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>Success flag</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>Result message</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Possible Response Messages:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Graph</span> <span class="pre">saved</span> <span class="pre">to:</span> <span class="pre">filename&quot;</span></code> - Success</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - No service response</p></li>
+</ul>
+</section>
+<section id="load-graph-file">
+<h3>load_graph_file<a class="headerlink" href="#load-graph-file" title="Link to this heading"></a></h3>
+<p>Loads a saved graph file.</p>
+<p><strong>Request:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>name</p></td>
+<td><p>string</p></td>
+<td><p>File name to load</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>Success flag</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>Result message</p></td>
+</tr>
+<tr class="row-even"><td><p>nodes</p></td>
+<td><p>GraphNode[]</p></td>
+<td><p>Loaded node array</p></td>
+</tr>
+<tr class="row-odd"><td><p>edges</p></td>
+<td><p>GraphEdge[]</p></td>
+<td><p>Loaded edge array</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Possible Response Messages:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Graph</span> <span class="pre">loaded</span> <span class="pre">from:</span> <span class="pre">filename&quot;</span></code> - Success</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;File</span> <span class="pre">not</span> <span class="pre">found:</span> <span class="pre">filename&quot;</span></code> - File not found</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - No service response</p></li>
+</ul>
+</section>
+</section>
+<section id="map-services">
+<h2>Map Services<a class="headerlink" href="#map-services" title="Link to this heading"></a></h2>
+<section id="list-map-files">
+<h3>list_map_files<a class="headerlink" href="#list-map-files" title="Link to this heading"></a></h3>
+<p>Lists map files saved on the robot.</p>
+<p><strong>Request:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>directory</p></td>
+<td><p>string</p></td>
+<td><p>Directory to query (default directory if empty)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>Success flag</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>Result message</p></td>
+</tr>
+<tr class="row-even"><td><p>files</p></td>
+<td><p>string[]</p></td>
+<td><p>Map file name list</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="load-laser-map">
+<h3>load_laser_map<a class="headerlink" href="#load-laser-map" title="Link to this heading"></a></h3>
+<p>Loads a map saved on the robot.</p>
+<p><strong>Request:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>name</p></td>
+<td><p>string</p></td>
+<td><p>Map name to load</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>Success flag</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>Result message</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Possible Response Messages:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Map</span> <span class="pre">loaded.&quot;</span></code> - Success</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Map</span> <span class="pre">not</span> <span class="pre">found&quot;</span></code> - Map file not found</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - No service response</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the SDK, <code class="docutils literal notranslate"><span class="pre">loadMap()</span></code> method calls this service and automatically loads the graph and default route.</p>
+</div>
+</section>
+<section id="set-map-setlasermap">
+<h3>set_map (SetLaserMap)<a class="headerlink" href="#set-map-setlasermap" title="Link to this heading"></a></h3>
+<p>Sets the initial pose for localization.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the SDK, use the <code class="docutils literal notranslate"><span class="pre">setInitialPose()</span></code> method to call this service.
+Must call <code class="docutils literal notranslate"><span class="pre">loadMap()</span></code> first to load the map.</p>
+</div>
+<p><strong>Request:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>name</p></td>
+<td><p>string</p></td>
+<td><p>Map frame name (map name loaded via loadMap)</p></td>
+</tr>
+<tr class="row-odd"><td><p>initial_pose</p></td>
 <td><p>Pose</p></td>
 <td><p>Initial robot pose</p></td>
 </tr>
@@ -426,18 +936,82 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - Fast-LIO plugin not loaded</p></li>
 </ul>
 </section>
-<section id="waypoint-message">
-<h2>Waypoint Message<a class="headerlink" href="#waypoint-message" title="Link to this heading"></a></h2>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>string frame      # Coordinate frame: &quot;map_name&quot;, &quot;gps&quot;, &quot;odom&quot;
-float64 x         # X coordinate (GPS: latitude)
-float64 y         # Y coordinate (GPS: longitude)
-float64 z         # Z coordinate (GPS: altitude)
-bool use_z        # Whether to check Z coordinate
-</pre></div>
-</div>
 </section>
+<section id="locomotion-services">
+<h2>Locomotion Services<a class="headerlink" href="#locomotion-services" title="Link to this heading"></a></h2>
+<section id="stand-up">
+<h3>stand_up<a class="headerlink" href="#stand-up" title="Link to this heading"></a></h3>
+<p>Makes the robot stand up.</p>
+<p><strong>Request:</strong> (empty)</p>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>Success flag</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>Result message</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Possible Response Messages:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Trigger:</span> <span class="pre">started&quot;</span></code> - Success</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - No service response</p></li>
+</ul>
+</section>
+<section id="sit-down">
+<h3>sit_down<a class="headerlink" href="#sit-down" title="Link to this heading"></a></h3>
+<p>Makes the robot sit down.</p>
+<p><strong>Request:</strong> (empty)</p>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>Success flag</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>Result message</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Possible Response Messages:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Trigger:</span> <span class="pre">started&quot;</span></code> - Success</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - No service response</p></li>
+</ul>
+</section>
+</section>
+<section id="control-mode-services">
+<h2>Control Mode Services<a class="headerlink" href="#control-mode-services" title="Link to this heading"></a></h2>
 <section id="set-listen-joy-control">
-<h2>set_listen (Joy Control)<a class="headerlink" href="#set-listen-joy-control" title="Link to this heading"></a></h2>
+<h3>set_listen (Joy Control)<a class="headerlink" href="#set-listen-joy-control" title="Link to this heading"></a></h3>
 <p>Enables/disables manual joystick control.</p>
 <p><strong>Request:</strong></p>
 <table class="docutils align-default">
@@ -461,8 +1035,9 @@ bool use_z        # Whether to check Z coordinate
 </table>
 <p><strong>Request data format:</strong></p>
 <ul class="simple">
-<li><p>Enable: <code class="docutils literal notranslate"><span class="pre">&quot;topic_name&lt;&amp;&gt;client_id&quot;</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;joy&lt;&amp;&gt;my_app&quot;</span></code>)</p></li>
-<li><p>Disable: <code class="docutils literal notranslate"><span class="pre">&quot;topic_name&lt;&amp;&gt;&lt;CLOSE&gt;&quot;</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;joy&lt;&amp;&gt;&lt;CLOSE&gt;&quot;</span></code>)</p></li>
+<li><p>Enable manual control: <code class="docutils literal notranslate"><span class="pre">&quot;joy/gui&lt;&amp;&gt;network_id&quot;</span></code></p></li>
+<li><p>Enable autonomous control: <code class="docutils literal notranslate"><span class="pre">&quot;vel_cmd/autonomy&quot;</span></code></p></li>
+<li><p>Release control: <code class="docutils literal notranslate"><span class="pre">&quot;topic_name&lt;&amp;&gt;&lt;CLOSE&gt;&quot;</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;joy/gui&lt;&amp;&gt;&lt;CLOSE&gt;&quot;</span></code>)</p></li>
 </ul>
 <p><strong>Response:</strong></p>
 <table class="docutils align-default">
@@ -489,8 +1064,41 @@ bool use_z        # Whether to check Z coordinate
 </tbody>
 </table>
 </section>
-<section id="robot-state-topic">
-<h2>robot_state (Topic)<a class="headerlink" href="#robot-state-topic" title="Link to this heading"></a></h2>
+</section>
+<section id="message-types">
+<h2>Message Types<a class="headerlink" href="#message-types" title="Link to this heading"></a></h2>
+<section id="waypoint">
+<h3>Waypoint<a class="headerlink" href="#waypoint" title="Link to this heading"></a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>string frame      # Coordinate frame: &quot;map_name&quot;, &quot;gps&quot;, &quot;odom&quot;
+float64 x         # X coordinate (GPS: latitude)
+float64 y         # Y coordinate (GPS: longitude)
+float64 z         # Z coordinate (GPS: altitude)
+bool use_z        # Whether to check Z coordinate
+</pre></div>
+</div>
+</section>
+<section id="graphnode">
+<h3>GraphNode<a class="headerlink" href="#graphnode" title="Link to this heading"></a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>int32 id          # Node ID
+float64 x         # X coordinate
+float64 y         # Y coordinate
+float64 z         # Z coordinate
+</pre></div>
+</div>
+</section>
+<section id="graphedge">
+<h3>GraphEdge<a class="headerlink" href="#graphedge" title="Link to this heading"></a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>int32 from_node   # Start node ID
+int32 to_node     # End node ID
+float64 cost      # Edge cost (distance)
+</pre></div>
+</div>
+</section>
+</section>
+<section id="topics">
+<h2>Topics<a class="headerlink" href="#topics" title="Link to this heading"></a></h2>
+<section id="robot-state">
+<h3>robot_state<a class="headerlink" href="#robot-state" title="Link to this heading"></a></h3>
 <p>Topic that publishes robot state information.</p>
 <p><strong>Topic name:</strong> <code class="docutils literal notranslate"><span class="pre">robot_state</span></code></p>
 <p><strong>Message fields:</strong></p>
@@ -545,7 +1153,7 @@ bool use_z        # Whether to check Z coordinate
 </tr>
 <tr class="row-odd"><td><p>body_temperature</p></td>
 <td><p>double</p></td>
-<td><p>Body temperature (°C)</p></td>
+<td><p>Body temperature (C)</p></td>
 </tr>
 <tr class="row-even"><td><p>state</p></td>
 <td><p>int32</p></td>
@@ -593,7 +1201,7 @@ bool use_z        # Whether to check Z coordinate
 </tr>
 <tr class="row-odd"><td><p>temperature</p></td>
 <td><p>double</p></td>
-<td><p>Motor temperature (°C)</p></td>
+<td><p>Motor temperature (C)</p></td>
 </tr>
 </tbody>
 </table>
@@ -691,443 +1299,23 @@ bool use_z        # Whether to check Z coordinate
 </tbody>
 </table>
 </section>
-<section id="stand-up">
-<h2>stand_up<a class="headerlink" href="#stand-up" title="Link to this heading"></a></h2>
-<p>Makes the robot stand up.</p>
-<p><strong>Request:</strong> (empty)</p>
-<p><strong>Response:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>success</p></td>
-<td><p>bool</p></td>
-<td><p>Success flag</p></td>
-</tr>
-<tr class="row-odd"><td><p>message</p></td>
-<td><p>string</p></td>
-<td><p>Result message</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Possible Response Messages:</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Trigger:</span> <span class="pre">started&quot;</span></code> - Success</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - No service response</p></li>
-</ul>
-</section>
-<section id="sit-down">
-<h2>sit_down<a class="headerlink" href="#sit-down" title="Link to this heading"></a></h2>
-<p>Makes the robot sit down.</p>
-<p><strong>Request:</strong> (empty)</p>
-<p><strong>Response:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>success</p></td>
-<td><p>bool</p></td>
-<td><p>Success flag</p></td>
-</tr>
-<tr class="row-odd"><td><p>message</p></td>
-<td><p>string</p></td>
-<td><p>Result message</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Possible Response Messages:</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Trigger:</span> <span class="pre">started&quot;</span></code> - Success</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - No service response</p></li>
-</ul>
-</section>
-<section id="planning-list-waypoints-files">
-<h2>planning/list_waypoints_files<a class="headerlink" href="#planning-list-waypoints-files" title="Link to this heading"></a></h2>
-<p>Lists saved patrol route files.</p>
-<p><strong>Request:</strong> (empty)</p>
-<p><strong>Response:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>success</p></td>
-<td><p>bool</p></td>
-<td><p>Success flag</p></td>
-</tr>
-<tr class="row-odd"><td><p>message</p></td>
-<td><p>string</p></td>
-<td><p>Result message</p></td>
-</tr>
-<tr class="row-even"><td><p>files</p></td>
-<td><p>string[]</p></td>
-<td><p>File name list</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Possible Response Messages:</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Found</span> <span class="pre">N</span> <span class="pre">files&quot;</span></code> - Success (N files found)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - No service response</p></li>
-</ul>
-</section>
-<section id="planning-load-waypoints-file">
-<h2>planning/load_waypoints_file<a class="headerlink" href="#planning-load-waypoints-file" title="Link to this heading"></a></h2>
-<p>Loads a saved patrol route file.</p>
-<p><strong>Request:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>filename</p></td>
-<td><p>string</p></td>
-<td><p>File name to load (without extension)</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Response:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>success</p></td>
-<td><p>bool</p></td>
-<td><p>Success flag</p></td>
-</tr>
-<tr class="row-odd"><td><p>message</p></td>
-<td><p>string</p></td>
-<td><p>Result message</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Possible Response Messages:</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Waypoints</span> <span class="pre">loaded</span> <span class="pre">from:</span> <span class="pre">filename&quot;</span></code> - Success</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;File</span> <span class="pre">not</span> <span class="pre">found:</span> <span class="pre">filename&quot;</span></code> - File not found</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - No service response</p></li>
-</ul>
-</section>
-<section id="planning-resume-patrol">
-<h2>planning/resume_patrol<a class="headerlink" href="#planning-resume-patrol" title="Link to this heading"></a></h2>
-<p>Resumes patrol from the nearest waypoint in the currently loaded route.</p>
-<p><strong>Request:</strong> (empty)</p>
-<p><strong>Response:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>success</p></td>
-<td><p>bool</p></td>
-<td><p>Success flag</p></td>
-</tr>
-<tr class="row-odd"><td><p>message</p></td>
-<td><p>string</p></td>
-<td><p>Result message</p></td>
-</tr>
-<tr class="row-even"><td><p>waypoint_index</p></td>
-<td><p>uint8</p></td>
-<td><p>Starting waypoint index</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Possible Response Messages:</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Resuming</span> <span class="pre">from</span> <span class="pre">waypoint</span> <span class="pre">N&quot;</span></code> - Success (starting from waypoint N)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;No</span> <span class="pre">waypoints</span> <span class="pre">loaded&quot;</span></code> - No route loaded</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - No service response</p></li>
-</ul>
+<section id="odometry">
+<h3>/Odometry<a class="headerlink" href="#odometry" title="Link to this heading"></a></h3>
+<p>Raw odometry topic from Fast-LIO output.</p>
+<p><strong>Topic name:</strong> <code class="docutils literal notranslate"><span class="pre">/Odometry</span></code></p>
+<p><strong>Message type:</strong> nav_msgs/Odometry</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Must load a route with <code class="docutils literal notranslate"><span class="pre">planning/load_waypoints_file</span></code> first.</p>
+<p>To get position in map frame, use <code class="docutils literal notranslate"><span class="pre">subscribeMapOdometry()</span></code>.
+It subscribes to <code class="docutils literal notranslate"><span class="pre">/{map_name}/{robot_id}/Odometry</span></code> topic.</p>
 </div>
 </section>
-<section id="list-map-files">
-<h2>list_map_files<a class="headerlink" href="#list-map-files" title="Link to this heading"></a></h2>
-<p>Lists map files saved on the robot.</p>
-<p><strong>Request:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>directory</p></td>
-<td><p>string</p></td>
-<td><p>Directory to query (default directory if empty)</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Response:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>success</p></td>
-<td><p>bool</p></td>
-<td><p>Success flag</p></td>
-</tr>
-<tr class="row-odd"><td><p>message</p></td>
-<td><p>string</p></td>
-<td><p>Result message</p></td>
-</tr>
-<tr class="row-even"><td><p>files</p></td>
-<td><p>string[]</p></td>
-<td><p>Map file name list</p></td>
-</tr>
-</tbody>
-</table>
+<section id="cloud-registered">
+<h3>/cloud_registered<a class="headerlink" href="#cloud-registered" title="Link to this heading"></a></h3>
+<p>Real-time LiDAR point cloud topic.</p>
+<p><strong>Topic name:</strong> <code class="docutils literal notranslate"><span class="pre">/cloud_registered</span></code></p>
+<p><strong>Message type:</strong> sensor_msgs/PointCloud2</p>
 </section>
-<section id="save-laser-map">
-<h2>save_laser_map<a class="headerlink" href="#save-laser-map" title="Link to this heading"></a></h2>
-<p>Saves the current map to the robot.</p>
-<p><strong>Request:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>name</p></td>
-<td><p>string</p></td>
-<td><p>Map name to save</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Response:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>success</p></td>
-<td><p>bool</p></td>
-<td><p>Success flag</p></td>
-</tr>
-<tr class="row-odd"><td><p>message</p></td>
-<td><p>string</p></td>
-<td><p>Result message</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Possible Response Messages:</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Map</span> <span class="pre">saved.&quot;</span></code> - Success</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - No service response</p></li>
-</ul>
-</section>
-<section id="load-laser-map">
-<h2>load_laser_map<a class="headerlink" href="#load-laser-map" title="Link to this heading"></a></h2>
-<p>Loads a map saved on the robot.</p>
-<p><strong>Request:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>name</p></td>
-<td><p>string</p></td>
-<td><p>Map name to load</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Response:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>success</p></td>
-<td><p>bool</p></td>
-<td><p>Success flag</p></td>
-</tr>
-<tr class="row-odd"><td><p>message</p></td>
-<td><p>string</p></td>
-<td><p>Result message</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Possible Response Messages:</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Map</span> <span class="pre">loaded.&quot;</span></code> - Success</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Map</span> <span class="pre">not</span> <span class="pre">found&quot;</span></code> - Map file not found</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - No service response</p></li>
-</ul>
-</section>
-<section id="start-mapping">
-<h2>start_mapping<a class="headerlink" href="#start-mapping" title="Link to this heading"></a></h2>
-<p>Starts mapping mode.</p>
-<p><strong>Request:</strong> (empty)</p>
-<p><strong>Response:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>success</p></td>
-<td><p>bool</p></td>
-<td><p>Success flag</p></td>
-</tr>
-<tr class="row-odd"><td><p>message</p></td>
-<td><p>string</p></td>
-<td><p>Result message</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Possible Response Messages:</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Trigger:</span> <span class="pre">started&quot;</span></code> - Success</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - No service response</p></li>
-</ul>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>During mapping, manually operate the robot to scan the environment.</p>
-</div>
-</section>
-<section id="stop-mapping">
-<h2>stop_mapping<a class="headerlink" href="#stop-mapping" title="Link to this heading"></a></h2>
-<p>Stops mapping mode.</p>
-<p><strong>Request:</strong> (empty)</p>
-<p><strong>Response:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>success</p></td>
-<td><p>bool</p></td>
-<td><p>Success flag</p></td>
-</tr>
-<tr class="row-odd"><td><p>message</p></td>
-<td><p>string</p></td>
-<td><p>Result message</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Possible Response Messages:</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Trigger:</span> <span class="pre">started&quot;</span></code> - Success</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - No service response</p></li>
-</ul>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>After stopping mapping, save the map with <code class="docutils literal notranslate"><span class="pre">save_laser_map</span></code>.</p>
-</div>
 </section>
 </section>
 

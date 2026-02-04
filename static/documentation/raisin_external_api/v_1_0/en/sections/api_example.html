@@ -61,11 +61,19 @@
 <li class="toctree-l2"><a class="reference internal" href="#include-header">Include Header</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#basic-workflow">Basic Workflow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#data-types">Data Types</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#raisinclient-methods">RaisinClient Methods</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#locomotion-control">Locomotion Control</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#patrol-route-management">Patrol Route Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#map-management">Map Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#actuator-status-helpers">Actuator Status Helpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#raisinclient-methods">RaisinClient Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#connection">Connection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#map-loading">Map Loading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#waypoint-navigation">Waypoint Navigation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#patrol-route-management">Patrol Route Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#graph-management">Graph Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#subscriptions">Subscriptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getters-thread-safe">Getters (Thread-safe)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#control-mode">Control Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#locomotion-control">Locomotion Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#actuator-status-helpers">Actuator Status Helpers</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#gps-usage-notes">GPS Usage Notes</a></li>
 </ul>
 </li>
@@ -79,23 +87,51 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="service_reference.html">Service Interface Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#planning-set-waypoints">planning/set_waypoints</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#planning-get-waypoints">planning/get_waypoints</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#planning-append-waypoint">planning/append_waypoint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#set-map-setlasermap">set_map (SetLaserMap)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#waypoint-message">Waypoint Message</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#set-listen-joy-control">set_listen (Joy Control)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#robot-state-topic">robot_state (Topic)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#stand-up">stand_up</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#sit-down">sit_down</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#planning-list-waypoints-files">planning/list_waypoints_files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#planning-load-waypoints-file">planning/load_waypoints_file</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#planning-resume-patrol">planning/resume_patrol</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#list-map-files">list_map_files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#save-laser-map">save_laser_map</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#load-laser-map">load_laser_map</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#start-mapping">start_mapping</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#stop-mapping">stop_mapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#navigation-services">Navigation Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#planning-set-waypoints">planning/set_waypoints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#planning-get-waypoints">planning/get_waypoints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#planning-refine-waypoints">planning/refine_waypoints</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#patrol-route-services">Patrol Route Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#planning-list-waypoints-files">planning/list_waypoints_files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#planning-load-waypoints-file">planning/load_waypoints_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#planning-save-waypoints-file">planning/save_waypoints_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#planning-resume-patrol">planning/resume_patrol</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#graph-services">Graph Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#save-graph-file">save_graph_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#load-graph-file">load_graph_file</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#map-services">Map Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#list-map-files">list_map_files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#load-laser-map">load_laser_map</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#set-map-setlasermap">set_map (SetLaserMap)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#locomotion-services">Locomotion Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#stand-up">stand_up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#sit-down">sit_down</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#control-mode-services">Control Mode Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#set-listen-joy-control">set_listen (Joy Control)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#message-types">Message Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#waypoint">Waypoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#graphnode">GraphNode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#graphedge">GraphEdge</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#topics">Topics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#robot-state">robot_state</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#odometry">/Odometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#cloud-registered">/cloud_registered</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Complete Examples</a><ul>
@@ -220,17 +256,26 @@
 <span class="c1">// 2. Connect to robot</span>
 <span class="n">client</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ROBOT_ID&quot;</span><span class="p">);</span>
 
-<span class="c1">// 3. Load map (enables localization)</span>
-<span class="n">client</span><span class="p">.</span><span class="n">setMap</span><span class="p">(</span><span class="s">&quot;/path/to/map.pcd&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;my_map&quot;</span><span class="p">);</span>
+<span class="c1">// 3. Load map from robot storage (auto-loads graph and default route)</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">mapResult</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">loadMap</span><span class="p">(</span><span class="s">&quot;my_map&quot;</span><span class="p">);</span>
+<span class="c1">// mapResult.graphNodes, mapResult.graphEdges, mapResult.waypoints are available</span>
 
-<span class="c1">// 4. Set waypoints (frame MUST match map_name!)</span>
+<span class="c1">// 4. Set initial pose to start localization</span>
+<span class="n">client</span><span class="p">.</span><span class="n">setInitialPose</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span><span class="w">  </span><span class="c1">// x, y, yaw</span>
+
+<span class="c1">// 5. Subscribe to map odometry (position in map frame)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">subscribeMapOdometry</span><span class="p">([](</span><span class="k">const</span><span class="w"> </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">RobotState</span><span class="o">&amp;</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Position: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;, &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="c1">// 6. Set waypoints (frame MUST match map_name!)</span>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="o">&gt;</span><span class="w"> </span><span class="n">waypoints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;my_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span><span class="w">   </span><span class="c1">// Use &quot;my_map&quot;</span>
 <span class="w">    </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;my_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">),</span>
 <span class="p">};</span>
 <span class="n">client</span><span class="p">.</span><span class="n">setWaypoints</span><span class="p">(</span><span class="n">waypoints</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
 
-<span class="c1">// 5. Monitor status</span>
+<span class="c1">// 7. Monitor status</span>
 <span class="k">auto</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">getMissionStatus</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -247,17 +292,18 @@
 <span class="c1">// Creation methods</span>
 <span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;map_name&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">);</span><span class="w">           </span><span class="c1">// Map coordinates</span>
 <span class="n">Waypoint</span><span class="o">::</span><span class="n">GPS</span><span class="p">(</span><span class="n">latitude</span><span class="p">,</span><span class="w"> </span><span class="n">longitude</span><span class="p">);</span><span class="w">   </span><span class="c1">// GPS coordinates (requires GPS module)</span>
+<span class="n">Waypoint</span><span class="o">::</span><span class="n">Map</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">);</span><span class="w">               </span><span class="c1">// Local map coordinates</span>
 </pre></div>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p><strong>The frame name MUST match the map_name specified in setMap()!</strong></p>
+<p><strong>The frame name MUST match the map_name specified in loadMap()!</strong></p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Correct example</span>
-<span class="n">client</span><span class="p">.</span><span class="n">setMap</span><span class="p">(</span><span class="s">&quot;/path/map.pcd&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;office_map&quot;</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">loadMap</span><span class="p">(</span><span class="s">&quot;office_map&quot;</span><span class="p">);</span>
 <span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;office_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span><span class="w">  </span><span class="c1">// Same name</span>
 
 <span class="c1">// Wrong example</span>
-<span class="n">client</span><span class="p">.</span><span class="n">setMap</span><span class="p">(</span><span class="s">&quot;/path/map.pcd&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;office_map&quot;</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">loadMap</span><span class="p">(</span><span class="s">&quot;office_map&quot;</span><span class="p">);</span>
 <span class="n">Waypoint</span><span class="p">(</span><span class="s">&quot;map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span><span class="w">  </span><span class="c1">// Name mismatch - won&#39;t work!</span>
 </pre></div>
 </div>
@@ -279,6 +325,51 @@
 <span class="p">};</span>
 </pre></div>
 </div>
+<p><strong>GraphNode</strong> - Path planning graph node</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">GraphNode</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w">     </span><span class="c1">// Node ID</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">;</span><span class="w"> </span><span class="c1">// Coordinates</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>GraphEdge</strong> - Path planning graph edge</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">GraphEdge</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">from_node</span><span class="p">;</span><span class="w">  </span><span class="c1">// Start node ID</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">to_node</span><span class="p">;</span><span class="w">    </span><span class="c1">// End node ID</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">cost</span><span class="p">;</span><span class="w">        </span><span class="c1">// Edge cost (distance)</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>LoadMapResult</strong> - Map load result (includes graph and routes)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">LoadMapResult</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">success</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">message</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">mapName</span><span class="p">;</span><span class="w">                      </span><span class="c1">// Loaded map name</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">GraphNode</span><span class="o">&gt;</span><span class="w"> </span><span class="n">graphNodes</span><span class="p">;</span><span class="w">        </span><span class="c1">// Auto-loaded graph nodes</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">GraphEdge</span><span class="o">&gt;</span><span class="w"> </span><span class="n">graphEdges</span><span class="p">;</span><span class="w">        </span><span class="c1">// Auto-loaded graph edges</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Waypoint</span><span class="o">&gt;</span><span class="w"> </span><span class="n">waypoints</span><span class="p">;</span><span class="w">          </span><span class="c1">// Auto-loaded default route (route_1)</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">availableRoutes</span><span class="p">;</span><span class="w"> </span><span class="c1">// List of available routes</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>LoadGraphResult</strong> - Graph load result</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">LoadGraphResult</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">success</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">message</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">GraphNode</span><span class="o">&gt;</span><span class="w"> </span><span class="n">nodes</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">GraphEdge</span><span class="o">&gt;</span><span class="w"> </span><span class="n">edges</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>RefineWaypointsResult</strong> - Waypoint optimization result</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">RefineWaypointsResult</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">success</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">message</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Waypoint</span><span class="o">&gt;</span><span class="w"> </span><span class="n">refined_waypoints</span><span class="p">;</span><span class="w">  </span><span class="c1">// Optimized waypoints (follow graph)</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">path_node_ids</span><span class="p">;</span><span class="w">       </span><span class="c1">// Node IDs forming the path</span>
+<span class="p">};</span>
+</pre></div>
+</div>
 <p><strong>RobotState</strong> - Robot state (Odometry)</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">RobotState</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">;</span><span class="w">    </span><span class="c1">// Position (meters)</span>
@@ -297,7 +388,7 @@
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">ActuatorInfo</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name</span><span class="p">;</span><span class="w">           </span><span class="c1">// Motor name (e.g., &quot;FR_hip&quot;, &quot;FL_thigh&quot;)</span>
 <span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">status</span><span class="p">;</span><span class="w">            </span><span class="c1">// CiA402 status code (see below)</span>
-<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">temperature</span><span class="p">;</span><span class="w">         </span><span class="c1">// Motor temperature (°C)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">temperature</span><span class="p">;</span><span class="w">         </span><span class="c1">// Motor temperature (C)</span>
 <span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">position</span><span class="p">;</span><span class="w">            </span><span class="c1">// Joint position (rad)</span>
 <span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">velocity</span><span class="p">;</span><span class="w">            </span><span class="c1">// Joint velocity (rad/s)</span>
 <span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">effort</span><span class="p">;</span><span class="w">              </span><span class="c1">// Joint torque (Nm)</span>
@@ -381,7 +472,7 @@
 <span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">min_voltage</span><span class="p">;</span><span class="w">         </span><span class="c1">// Minimum voltage</span>
 
 <span class="w">    </span><span class="c1">// Temperature</span>
-<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">body_temperature</span><span class="p">;</span><span class="w">    </span><span class="c1">// Body temperature (°C)</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">body_temperature</span><span class="p">;</span><span class="w">    </span><span class="c1">// Body temperature (C)</span>
 
 <span class="w">    </span><span class="c1">// Joystick control state</span>
 <span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">joy_listen_type</span><span class="p">;</span><span class="w">    </span><span class="c1">// JoySourceType enum value</span>
@@ -396,41 +487,93 @@
 <span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">getJoySourceName</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w">        </span><span class="c1">// Control source name string</span>
 <span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">isOperational</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w">                  </span><span class="c1">// Whether standing or walking</span>
 <span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">hasActuatorError</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w">               </span><span class="c1">// Whether any motor has error</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">getActuatorsWithErrors</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"> </span><span class="c1">// Error motor list</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">allActuatorsOperational</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w">        </span><span class="c1">// All motors running</span>
 <span class="p">};</span>
 </pre></div>
 </div>
 </section>
 <section id="raisinclient-methods">
 <h2>RaisinClient Methods<a class="headerlink" href="#raisinclient-methods" title="Link to this heading"></a></h2>
+<section id="connection">
+<h3>Connection<a class="headerlink" href="#connection" title="Link to this heading"></a></h3>
 <p><strong>connect()</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="nf">connect</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">robot_id</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">timeout_sec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="nf">connect</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">robot_id</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">timeout_sec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">             </span><span class="n">std</span><span class="o">::</span><span class="n">atomic</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;*</span><span class="w"> </span><span class="n">cancel_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Connects to the robot.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">robot_id</span></code>: Robot ID or IP address</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">timeout_sec</span></code>: Connection timeout (seconds)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cancel_token</span></code>: Optional cancellation flag</p></li>
 <li><p><strong>Returns</strong>: Connection success</p></li>
 </ul>
-<p><strong>setMap()</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">setMap</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">pcd_path</span><span class="p">,</span>
-<span class="w">                     </span><span class="kt">double</span><span class="w"> </span><span class="n">initial_x</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">initial_y</span><span class="p">,</span>
-<span class="w">                     </span><span class="kt">double</span><span class="w"> </span><span class="n">initial_z</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">initial_yaw</span><span class="p">,</span>
-<span class="w">                     </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">map_name</span><span class="p">);</span>
+<p><strong>disconnect()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">disconnect</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>Loads a PCD map file and initializes localization.</p>
+<p>Disconnects from the robot.</p>
+<p><strong>isConnected()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="nf">isConnected</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Returns the current connection status.</p>
+</section>
+<section id="map-loading">
+<h3>Map Loading<a class="headerlink" href="#map-loading" title="Link to this heading"></a></h3>
+<p><strong>loadMap()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">LoadMapResult</span><span class="w"> </span><span class="nf">loadMap</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">name</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Loads a map saved on the robot and auto-loads associated graph and default route.</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">pcd_path</span></code>: PCD file path (<strong>file on client PC</strong>, transferred to robot)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">initial_x/y/z</span></code>: Robot initial position in map (enter map coordinates where the robot is physically located)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">initial_yaw</span></code>: Initial heading (radians)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">map_name</span></code>: Map frame name (<strong>must match Waypoint frame</strong>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: Map name (e.g., “my_map”)</p></li>
+<li><p><strong>Returns</strong>: LoadMapResult with graph, waypoints, and available routes</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">loadMap</span><span class="p">(</span><span class="s">&quot;office_map&quot;</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Graph: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="n">graphNodes</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; nodes&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Route: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="n">waypoints</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; waypoints&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Available routes: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="n">availableRoutes</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">loadMap()</span></code> automatically:
+1. Loads the PCD map from robot storage
+2. Loads the graph file (if exists)
+3. Loads the default route “route_1” (if exists)
+4. Lists available routes for the map</p>
+</div>
+<p><strong>setInitialPose()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">setInitialPose</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">yaw</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Sets the initial pose for localization on the loaded map.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>: Initial position in map frame</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">yaw</span></code>: Initial heading (radians)</p></li>
+<li><p><strong>Returns</strong>: Service result</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>PCD maps must be pre-generated using SLAM. Use raisin_gui’s Mapping feature or
-generate directly with the Fast-LIO plugin.</p>
+<p>Must call <code class="docutils literal notranslate"><span class="pre">loadMap()</span></code> first. This starts localization at the specified position.</p>
 </div>
+<p><strong>getLoadedMapName()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">getLoadedMapName</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Returns the currently loaded map name.</p>
+<p><strong>listMapFiles()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ListFilesResult</span><span class="w"> </span><span class="nf">listMapFiles</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Lists map files saved on the robot.</p>
+</section>
+<section id="waypoint-navigation">
+<h3>Waypoint Navigation<a class="headerlink" href="#waypoint-navigation" title="Link to this heading"></a></h3>
 <p><strong>setWaypoints()</strong></p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">setWaypoints</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Waypoint</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">waypoints</span><span class="p">,</span>
 <span class="w">                            </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">repetition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
@@ -455,47 +598,152 @@ generate directly with the Fast-LIO plugin.</p>
 </pre></div>
 </div>
 <p>Queries current mission status.</p>
-<p><strong>appendWaypoint()</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">appendWaypoint</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Waypoint</span><span class="o">&amp;</span><span class="w"> </span><span class="n">waypoint</span><span class="p">);</span>
+</section>
+<section id="patrol-route-management">
+<h3>Patrol Route Management<a class="headerlink" href="#patrol-route-management" title="Link to this heading"></a></h3>
+<p><strong>listWaypointsFiles()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ListFilesResult</span><span class="w"> </span><span class="n">listWaypointsFiles</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">directory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Appends a waypoint to the current mission queue.</p>
-<p><strong>stopNavigation()</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">stopNavigation</span><span class="p">();</span>
+<p>Lists saved patrol route files.</p>
+<p><strong>loadWaypointsFile()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">loadWaypointsFile</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">name</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Stops autonomous navigation (sets empty waypoint list).</p>
-<p><strong>startPatrol()</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">startPatrol</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Waypoint</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">waypoints</span><span class="p">);</span>
+<p>Loads a saved patrol route file.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: File name to load (without extension)</p></li>
+</ul>
+<p><strong>saveWaypointsFile()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">saveWaypointsFile</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">name</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Starts infinite patrol (equivalent to <code class="docutils literal notranslate"><span class="pre">setWaypoints(waypoints,</span> <span class="pre">1,</span> <span class="pre">0,</span> <span class="pre">true)</span></code>).</p>
+<p>Saves the current waypoints to a file on the robot.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: File name to save (without extension)</p></li>
+<li><p><strong>Returns</strong>: Service result</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">setWaypoints</span><span class="p">(</span><span class="n">myWaypoints</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">saveWaypointsFile</span><span class="p">(</span><span class="s">&quot;my_route&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>resumePatrol()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ResumePatrolResult</span><span class="w"> </span><span class="nf">resumePatrol</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Resumes patrol from the nearest waypoint in the currently loaded route.</p>
+<ul class="simple">
+<li><p><strong>Returns</strong>: Resume patrol result (success, message, starting waypoint index)</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Must load a route with <code class="docutils literal notranslate"><span class="pre">loadWaypointsFile()</span></code> first.</p>
+</div>
+</section>
+<section id="graph-management">
+<h3>Graph Management<a class="headerlink" href="#graph-management" title="Link to this heading"></a></h3>
+<p><strong>saveGraphFile()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">saveGraphFile</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">name</span><span class="p">,</span>
+<span class="w">                             </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">GraphNode</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">nodes</span><span class="p">,</span>
+<span class="w">                             </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">GraphEdge</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">edges</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Saves a graph to a file on the robot.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: Graph file name</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nodes</span></code>: Graph nodes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">edges</span></code>: Graph edges</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">GraphNode</span><span class="o">&gt;</span><span class="w"> </span><span class="n">nodes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">}</span>
+<span class="p">};</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">GraphEdge</span><span class="o">&gt;</span><span class="w"> </span><span class="n">edges</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">},</span><span class="w">  </span><span class="c1">// Node 0 -&gt; 1, cost 5.0</span>
+<span class="w">    </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">},</span><span class="w">  </span><span class="c1">// Bidirectional</span>
+<span class="w">    </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">}</span>
+<span class="p">};</span>
+<span class="n">client</span><span class="p">.</span><span class="n">saveGraphFile</span><span class="p">(</span><span class="s">&quot;my_map/graph&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">nodes</span><span class="p">,</span><span class="w"> </span><span class="n">edges</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>loadGraphFile()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">LoadGraphResult</span><span class="w"> </span><span class="nf">loadGraphFile</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">name</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Loads a graph file from the robot.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: Graph file name</p></li>
+<li><p><strong>Returns</strong>: LoadGraphResult with nodes and edges</p></li>
+</ul>
+<p><strong>refineWaypoints()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">RefineWaypointsResult</span><span class="w"> </span><span class="nf">refineWaypoints</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Waypoint</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">waypoints</span><span class="p">,</span>
+<span class="w">                                       </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">GraphNode</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">nodes</span><span class="p">,</span>
+<span class="w">                                       </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">GraphEdge</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">edges</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Optimizes waypoints using A* algorithm on the graph.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">waypoints</span></code>: Input waypoints to refine</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nodes</span></code>: Graph nodes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">edges</span></code>: Graph edges</p></li>
+<li><p><strong>Returns</strong>: RefineWaypointsResult with optimized waypoints and path</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Get graph from loadMap result</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">mapResult</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">loadMap</span><span class="p">(</span><span class="s">&quot;office_map&quot;</span><span class="p">);</span>
+
+<span class="c1">// Define waypoints</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">Waypoint</span><span class="o">&gt;</span><span class="w"> </span><span class="n">waypoints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">{</span><span class="s">&quot;office_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="s">&quot;office_map&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">10.0</span><span class="p">,</span><span class="w"> </span><span class="mf">10.0</span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// Refine waypoints using graph</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">refined</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">refineWaypoints</span><span class="p">(</span><span class="n">waypoints</span><span class="p">,</span>
+<span class="w">                                       </span><span class="n">mapResult</span><span class="p">.</span><span class="n">graphNodes</span><span class="p">,</span>
+<span class="w">                                       </span><span class="n">mapResult</span><span class="p">.</span><span class="n">graphEdges</span><span class="p">);</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">refined</span><span class="p">.</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Use refined waypoints (follows graph edges)</span>
+<span class="w">    </span><span class="n">client</span><span class="p">.</span><span class="n">setWaypoints</span><span class="p">(</span><span class="n">refined</span><span class="p">.</span><span class="n">refined_waypoints</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="subscriptions">
+<h3>Subscriptions<a class="headerlink" href="#subscriptions" title="Link to this heading"></a></h3>
+<p><strong>subscribeMapOdometry()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">subscribeMapOdometry</span><span class="p">(</span><span class="n">OdometryCallback</span><span class="w"> </span><span class="n">callback</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Subscribes to robot odometry in the map frame.
+Must call <code class="docutils literal notranslate"><span class="pre">loadMap()</span></code> and <code class="docutils literal notranslate"><span class="pre">setInitialPose()</span></code> first.</p>
+<p>Topic: <code class="docutils literal notranslate"><span class="pre">/{map_name}/{robot_id}/Odometry</span></code></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">loadMap</span><span class="p">(</span><span class="s">&quot;office_map&quot;</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">setInitialPose</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span>
+
+<span class="n">client</span><span class="p">.</span><span class="n">subscribeMapOdometry</span><span class="p">([](</span><span class="k">const</span><span class="w"> </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">RobotState</span><span class="o">&amp;</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Position in map: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;, &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">});</span>
+</pre></div>
+</div>
 <p><strong>subscribeOdometry()</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">subscribeOdometry</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">RobotState</span><span class="o">&amp;</span><span class="p">)</span><span class="o">&gt;</span><span class="w"> </span><span class="n">callback</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">subscribeOdometry</span><span class="p">(</span><span class="n">OdometryCallback</span><span class="w"> </span><span class="n">callback</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Subscribes to real-time odometry data.</p>
+<p>Subscribes to raw odometry (odom frame, Fast-LIO output).
+Use <code class="docutils literal notranslate"><span class="pre">subscribeMapOdometry()</span></code> for map-aligned coordinates.</p>
 <p><strong>subscribePointCloud()</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">subscribePointCloud</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Point3D</span><span class="o">&gt;&amp;</span><span class="p">)</span><span class="o">&gt;</span><span class="w"> </span><span class="n">callback</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">subscribePointCloud</span><span class="p">(</span><span class="n">PointCloudCallback</span><span class="w"> </span><span class="n">callback</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Subscribes to real-time LiDAR point cloud.</p>
-<p><strong>getRobotState() / getLatestPointCloud()</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">RobotState</span><span class="w"> </span><span class="nf">getRobotState</span><span class="p">();</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Point3D</span><span class="o">&gt;</span><span class="w"> </span><span class="n">getLatestPointCloud</span><span class="p">();</span>
-</pre></div>
-</div>
-<p>Returns last received data (thread-safe).</p>
-<p><strong>loadPCD() (static)</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Point3D</span><span class="o">&gt;</span><span class="w"> </span><span class="n">loadPCD</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">pcd_path</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>Loads a PCD file (for visualization without sending to robot).</p>
 <p><strong>subscribeRobotState()</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">subscribeRobotState</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">ExtendedRobotState</span><span class="o">&amp;</span><span class="p">)</span><span class="o">&gt;</span><span class="w"> </span><span class="n">callback</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">subscribeRobotState</span><span class="p">(</span><span class="n">ExtendedRobotStateCallback</span><span class="w"> </span><span class="n">callback</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Subscribes to extended robot state in real-time. Includes battery information, locomotion state, actuator status, etc.</p>
+<p>Subscribes to extended robot state. Includes battery, locomotion state, actuator status.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">subscribeRobotState</span><span class="p">([](</span><span class="k">const</span><span class="w"> </span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">ExtendedRobotState</span><span class="o">&amp;</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Locomotion: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">getLocomotionStateName</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 <span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Battery: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">voltage</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;V&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
@@ -507,319 +755,77 @@ generate directly with the Fast-LIO plugin.</p>
 <span class="p">});</span>
 </pre></div>
 </div>
+</section>
+<section id="getters-thread-safe">
+<h3>Getters (Thread-safe)<a class="headerlink" href="#getters-thread-safe" title="Link to this heading"></a></h3>
+<p><strong>getRobotState()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">RobotState</span><span class="w"> </span><span class="nf">getRobotState</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Returns last received odometry state.</p>
 <p><strong>getExtendedRobotState()</strong></p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ExtendedRobotState</span><span class="w"> </span><span class="nf">getExtendedRobotState</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>Returns last received extended robot state (thread-safe).
-Must call <code class="docutils literal notranslate"><span class="pre">subscribeRobotState()</span></code> first to get valid data.</p>
-<p><strong>findGuiNetworkId()</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">findGuiNetworkId</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;gui&quot;</span><span class="p">);</span>
+<p>Returns last received extended robot state.</p>
+<p><strong>getLatestPointCloud()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Point3D</span><span class="o">&gt;</span><span class="w"> </span><span class="n">getLatestPointCloud</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>Finds the connected GUI’s network ID.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">prefix</span></code>: GUI ID prefix (default: “gui”)</p></li>
-<li><p><strong>Returns</strong>: GUI network ID (e.g., “gui53-230486654196”), empty string if not found</p></li>
-</ul>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">guiId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">findGuiNetworkId</span><span class="p">();</span>
-<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Connected GUI: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">guiId</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</pre></div>
-</div>
+<p>Returns last received point cloud.</p>
+</section>
+<section id="control-mode">
+<h3>Control Mode<a class="headerlink" href="#control-mode" title="Link to this heading"></a></h3>
 <p><strong>setManualControl()</strong></p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="n">setManualControl</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">gui_network_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Enables manual joystick control (joy/gui).
-Auto-detects the GUI network ID to receive joystick commands from that GUI.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">gui_network_id</span></code>: GUI network ID (auto-detected if empty, keeps existing ID if detection fails)</p></li>
-<li><p><strong>Returns</strong>: Service call result</p></li>
-</ul>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Even if GUI network ID auto-detection fails, the service call will succeed.
-In this case, the existing network_id configured on the robot is preserved.</p>
-</div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">setManualControl</span><span class="p">();</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Manual control enabled&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
+<p>Enables manual joystick control (joy/gui).</p>
 <p><strong>setAutonomousControl()</strong></p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">setAutonomousControl</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>Enables autonomous control (vel_cmd/autonomy).</p>
-<ul class="simple">
-<li><p><strong>Returns</strong>: Service call result</p></li>
-</ul>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">setAutonomousControl</span><span class="p">();</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Autonomous control enabled&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
 <p><strong>releaseControl()</strong></p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="n">releaseControl</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;joy/gui&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Releases control (switches to None state).</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">source</span></code>: Control source to release (“joy/gui” or “vel_cmd/autonomy”)</p></li>
-<li><p><strong>Returns</strong>: Service call result</p></li>
-</ul>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">releaseControl</span><span class="p">(</span><span class="s">&quot;joy/gui&quot;</span><span class="p">);</span>
-<span class="n">client</span><span class="p">.</span><span class="n">releaseControl</span><span class="p">(</span><span class="s">&quot;vel_cmd/autonomy&quot;</span><span class="p">);</span>
+<p><strong>findGuiNetworkId()</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">findGuiNetworkId</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;gui&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Control state can be checked via <code class="docutils literal notranslate"><span class="pre">ExtendedRobotState.joy_listen_type</span></code>:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">JOY</span> <span class="pre">(0)</span></code>: Manual joystick control active (joy/gui)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">VEL_CMD</span> <span class="pre">(1)</span></code>: Receiving autonomous velocity commands (vel_cmd/autonomy)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">NONE</span> <span class="pre">(2)</span></code>: No control source</p></li>
-</ul>
-<p>When <code class="docutils literal notranslate"><span class="pre">setManualControl()</span></code> is called, the GUI’s wifi icon turns green.</p>
-</div>
+<p>Finds the connected GUI’s network ID.</p>
 </section>
 <section id="locomotion-control">
-<h2>Locomotion Control<a class="headerlink" href="#locomotion-control" title="Link to this heading"></a></h2>
+<h3>Locomotion Control<a class="headerlink" href="#locomotion-control" title="Link to this heading"></a></h3>
 <p><strong>standUp()</strong></p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">standUp</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>Makes the robot stand up.</p>
-<ul class="simple">
-<li><p><strong>Returns</strong>: Service call result</p></li>
-</ul>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">standUp</span><span class="p">();</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Robot standing up&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Ensure the robot is in a safe position before calling.
-Should be called when locomotion state is <code class="docutils literal notranslate"><span class="pre">SITDOWN_MODE</span></code> or <code class="docutils literal notranslate"><span class="pre">STANDING_MODE</span></code>.</p>
+<p>Ensure the robot is in a safe position before calling.</p>
 </div>
 <p><strong>sitDown()</strong></p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">sitDown</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>Makes the robot sit down.</p>
-<ul class="simple">
-<li><p><strong>Returns</strong>: Service call result</p></li>
-</ul>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">sitDown</span><span class="p">();</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Robot sitting down&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Can be called even when robot is in <code class="docutils literal notranslate"><span class="pre">IN_CONTROL</span></code> (walking) state.
-The robot will safely stop and sit down.</p>
-</div>
-</section>
-<section id="patrol-route-management">
-<h2>Patrol Route Management<a class="headerlink" href="#patrol-route-management" title="Link to this heading"></a></h2>
-<p><strong>listWaypointsFiles()</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ListFilesResult</span><span class="w"> </span><span class="nf">listWaypointsFiles</span><span class="p">();</span>
-</pre></div>
-</div>
-<p>Lists saved patrol route files.</p>
-<ul class="simple">
-<li><p><strong>Returns</strong>: File list result</p></li>
-</ul>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">listWaypointsFiles</span><span class="p">();</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Available routes:&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="n">files</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;  - &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p><strong>loadWaypointsFile()</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">loadWaypointsFile</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">filename</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>Loads a saved patrol route file.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">filename</span></code>: File name to load (without extension)</p></li>
-<li><p><strong>Returns</strong>: Service call result</p></li>
-</ul>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">loadWaypointsFile</span><span class="p">(</span><span class="s">&quot;office_patrol&quot;</span><span class="p">);</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Route loaded successfully&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p><strong>resumePatrol()</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ResumePatrolResult</span><span class="w"> </span><span class="nf">resumePatrol</span><span class="p">();</span>
-</pre></div>
-</div>
-<p>Resumes patrol from the nearest waypoint in the currently loaded route.</p>
-<ul class="simple">
-<li><p><strong>Returns</strong>: Resume patrol result (success, message, starting waypoint index)</p></li>
-</ul>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">resumePatrol</span><span class="p">();</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Resuming from waypoint &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">result</span><span class="p">.</span><span class="n">waypoint_index</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Must load a route with <code class="docutils literal notranslate"><span class="pre">loadWaypointsFile()</span></code> first.
-Automatically finds the nearest waypoint from the robot’s current position.</p>
-</div>
-<p><strong>loadAndResumePatrol()</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ResumePatrolResult</span><span class="w"> </span><span class="nf">loadAndResumePatrol</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">filename</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>Loads a patrol route and immediately resumes from the nearest waypoint.
-Combines <code class="docutils literal notranslate"><span class="pre">loadWaypointsFile()</span></code> + <code class="docutils literal notranslate"><span class="pre">resumePatrol()</span></code> in one call.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">filename</span></code>: File name to load (without extension)</p></li>
-<li><p><strong>Returns</strong>: Resume patrol result</p></li>
-</ul>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">loadAndResumePatrol</span><span class="p">(</span><span class="s">&quot;office_patrol&quot;</span><span class="p">);</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Patrol started from waypoint &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">result</span><span class="p">.</span><span class="n">waypoint_index</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Failed: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="n">message</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</section>
-<section id="map-management">
-<h2>Map Management<a class="headerlink" href="#map-management" title="Link to this heading"></a></h2>
-<p><strong>listMapFiles()</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ListFilesResult</span><span class="w"> </span><span class="n">listMapFiles</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">directory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>Lists map files saved on the robot.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">directory</span></code>: Directory to query (default map directory if empty)</p></li>
-<li><p><strong>Returns</strong>: File list result</p></li>
-</ul>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">listMapFiles</span><span class="p">();</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Available maps:&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="n">files</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;  - &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p><strong>saveMap()</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">saveMap</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">name</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>Saves the current map to the robot.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: Map name to save</p></li>
-<li><p><strong>Returns</strong>: Service call result</p></li>
-</ul>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">saveMap</span><span class="p">(</span><span class="s">&quot;office_floor1&quot;</span><span class="p">);</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Map saved successfully&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Use this to save maps created in mapping mode.</p>
-</div>
-<p><strong>loadMapFromRobot()</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">loadMapFromRobot</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">name</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>Loads a map saved on the robot.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: Map name to load</p></li>
-<li><p><strong>Returns</strong>: Service call result</p></li>
-</ul>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">loadMapFromRobot</span><span class="p">(</span><span class="s">&quot;office_floor1&quot;</span><span class="p">);</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Map loaded successfully&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Unlike <code class="docutils literal notranslate"><span class="pre">setMap()</span></code>, this loads a map already saved on the robot.
-Initial position uses the position when the map was saved.</p>
-</div>
-<p><strong>startMapping()</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">startMapping</span><span class="p">();</span>
-</pre></div>
-</div>
-<p>Starts mapping mode.</p>
-<ul class="simple">
-<li><p><strong>Returns</strong>: Service call result</p></li>
-</ul>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">startMapping</span><span class="p">();</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Mapping started&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>During mapping, manually operate the robot to scan the environment.
-Enable manual control with <code class="docutils literal notranslate"><span class="pre">setManualControl()</span></code> before using.</p>
-</div>
-<p><strong>stopMapping()</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ServiceResult</span><span class="w"> </span><span class="nf">stopMapping</span><span class="p">();</span>
-</pre></div>
-</div>
-<p>Stops mapping mode.</p>
-<ul class="simple">
-<li><p><strong>Returns</strong>: Service call result</p></li>
-</ul>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="n">stopMapping</span><span class="p">();</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">success</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Mapping stopped&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="w">    </span><span class="c1">// Save the map</span>
-<span class="w">    </span><span class="n">client</span><span class="p">.</span><span class="n">saveMap</span><span class="p">(</span><span class="s">&quot;new_map&quot;</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-</div>
 </section>
 <section id="actuator-status-helpers">
-<h2>Actuator Status Helpers<a class="headerlink" href="#actuator-status-helpers" title="Link to this heading"></a></h2>
+<h3>Actuator Status Helpers<a class="headerlink" href="#actuator-status-helpers" title="Link to this heading"></a></h3>
 <p><strong>isActuatorStatusError()</strong></p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="nf">isActuatorStatusError</span><span class="p">(</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">status</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Checks if an actuator status code indicates an error state.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">status</span></code>: CiA402 status code</p></li>
-<li><p><strong>Returns</strong>: <code class="docutils literal notranslate"><span class="pre">true</span></code> if error state</p></li>
-</ul>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">act</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">actuators</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">raisin_sdk</span><span class="o">::</span><span class="n">isActuatorStatusError</span><span class="p">(</span><span class="n">act</span><span class="p">.</span><span class="n">status</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">act</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; has error!&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
 <p><strong>getActuatorStatusName()</strong></p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">getActuatorStatusName</span><span class="p">(</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">status</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Converts an actuator status code to a human-readable string.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">status</span></code>: CiA402 status code</p></li>
-<li><p><strong>Returns</strong>: Status name string</p></li>
-</ul>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 15.0%" />
@@ -850,19 +856,16 @@ Enable manual control with <code class="docutils literal notranslate"><span clas
 <td><p>Switched on</p></td>
 </tr>
 <tr class="row-even"><td><p>39</p></td>
-<td><p>“OPERATIONAL”</p></td>
+<td><p>“ENABLED”</p></td>
 <td><p>Operating (normal)</p></td>
 </tr>
 <tr class="row-odd"><td><p>99</p></td>
 <td><p>“ECAT_ERROR”</p></td>
 <td><p>EtherCAT error</p></td>
 </tr>
-<tr class="row-even"><td><p>Other</p></td>
-<td><p>“UNKNOWN(N)”</p></td>
-<td><p>Unknown state</p></td>
-</tr>
 </tbody>
 </table>
+</section>
 </section>
 <section id="gps-usage-notes">
 <h2>GPS Usage Notes<a class="headerlink" href="#gps-usage-notes" title="Link to this heading"></a></h2>

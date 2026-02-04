@@ -3,8 +3,11 @@ Service Interface Reference
 
 Available service interface definitions.
 
+Navigation Services
+-------------------
+
 planning/set_waypoints
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 Sets the waypoint list.
 
@@ -53,7 +56,7 @@ Sets the waypoint list.
 - ``"service timeout"`` - No service response
 
 planning/get_waypoints
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 Queries current mission status.
 
@@ -87,10 +90,10 @@ Queries current mission status.
      - bool
      - Whether patrol repeats indefinitely
 
-planning/append_waypoint
-------------------------
+planning/refine_waypoints
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Appends a waypoint to the queue.
+Optimizes waypoints using A* algorithm on the graph.
 
 **Request:**
 
@@ -101,9 +104,106 @@ Appends a waypoint to the queue.
    * - Field
      - Type
      - Description
-   * - waypoint
-     - Waypoint
-     - Waypoint to append
+   * - waypoints
+     - Waypoint[]
+     - Input waypoint array
+   * - nodes
+     - GraphNode[]
+     - Graph node array
+   * - edges
+     - GraphEdge[]
+     - Graph edge array
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - Success flag
+   * - message
+     - string
+     - Result message
+   * - refined_waypoints
+     - Waypoint[]
+     - Optimized waypoint list (follows graph path)
+   * - path_node_ids
+     - int32[]
+     - Node IDs forming the path
+
+**Possible Response Messages:**
+
+- ``"Refined N waypoints"`` - Success
+- ``"No graph nodes provided"`` - Empty nodes
+- ``"service timeout"`` - No service response
+
+Patrol Route Services
+---------------------
+
+planning/list_waypoints_files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Lists saved patrol route files.
+
+**Request:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - directory
+     - string
+     - Directory to query (default directory if empty)
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - Success flag
+   * - message
+     - string
+     - Result message
+   * - files
+     - string[]
+     - File name list
+
+**Possible Response Messages:**
+
+- ``"Found N files"`` - Success (N files found)
+- ``"service timeout"`` - No service response
+
+planning/load_waypoints_file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Loads a saved patrol route file.
+
+**Request:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - name
+     - string
+     - File name to load (without extension)
 
 **Response:**
 
@@ -121,10 +221,16 @@ Appends a waypoint to the queue.
      - string
      - Result message
 
-set_map (SetLaserMap)
----------------------
+**Possible Response Messages:**
 
-Loads PCD map and initializes localization.
+- ``"Waypoints loaded from: filename"`` - Success
+- ``"File not found: filename"`` - File not found
+- ``"service timeout"`` - No service response
+
+planning/save_waypoints_file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Saves current waypoints to a file.
 
 **Request:**
 
@@ -137,10 +243,262 @@ Loads PCD map and initializes localization.
      - Description
    * - name
      - string
-     - Map frame name
-   * - pc
-     - PointCloud2
-     - Point cloud data
+     - File name to save (without extension)
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - Success flag
+   * - message
+     - string
+     - Result message
+
+**Possible Response Messages:**
+
+- ``"Waypoints saved to: filename"`` - Success
+- ``"service timeout"`` - No service response
+
+planning/resume_patrol
+~~~~~~~~~~~~~~~~~~~~~~
+
+Resumes patrol from the nearest waypoint in the currently loaded route.
+
+**Request:** (empty)
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - Success flag
+   * - message
+     - string
+     - Result message
+   * - waypoint_index
+     - uint8
+     - Starting waypoint index
+
+**Possible Response Messages:**
+
+- ``"Resuming from waypoint N"`` - Success (starting from waypoint N)
+- ``"No waypoints loaded"`` - No route loaded
+- ``"service timeout"`` - No service response
+
+.. note::
+    Must load a route with ``planning/load_waypoints_file`` first.
+
+Graph Services
+--------------
+
+save_graph_file
+~~~~~~~~~~~~~~~
+
+Saves a graph to a file.
+
+**Request:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - name
+     - string
+     - File name to save
+   * - nodes
+     - GraphNode[]
+     - Graph node array
+   * - edges
+     - GraphEdge[]
+     - Graph edge array
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - Success flag
+   * - message
+     - string
+     - Result message
+
+**Possible Response Messages:**
+
+- ``"Graph saved to: filename"`` - Success
+- ``"service timeout"`` - No service response
+
+load_graph_file
+~~~~~~~~~~~~~~~
+
+Loads a saved graph file.
+
+**Request:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - name
+     - string
+     - File name to load
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - Success flag
+   * - message
+     - string
+     - Result message
+   * - nodes
+     - GraphNode[]
+     - Loaded node array
+   * - edges
+     - GraphEdge[]
+     - Loaded edge array
+
+**Possible Response Messages:**
+
+- ``"Graph loaded from: filename"`` - Success
+- ``"File not found: filename"`` - File not found
+- ``"service timeout"`` - No service response
+
+Map Services
+------------
+
+list_map_files
+~~~~~~~~~~~~~~
+
+Lists map files saved on the robot.
+
+**Request:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - directory
+     - string
+     - Directory to query (default directory if empty)
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - Success flag
+   * - message
+     - string
+     - Result message
+   * - files
+     - string[]
+     - Map file name list
+
+load_laser_map
+~~~~~~~~~~~~~~
+
+Loads a map saved on the robot.
+
+**Request:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - name
+     - string
+     - Map name to load
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - Success flag
+   * - message
+     - string
+     - Result message
+
+**Possible Response Messages:**
+
+- ``"Map loaded."`` - Success
+- ``"Map not found"`` - Map file not found
+- ``"service timeout"`` - No service response
+
+.. note::
+    In the SDK, ``loadMap()`` method calls this service and automatically loads the graph and default route.
+
+set_map (SetLaserMap)
+~~~~~~~~~~~~~~~~~~~~~
+
+Sets the initial pose for localization.
+
+.. note::
+    In the SDK, use the ``setInitialPose()`` method to call this service.
+    Must call ``loadMap()`` first to load the map.
+
+**Request:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - name
+     - string
+     - Map frame name (map name loaded via loadMap)
    * - initial_pose
      - Pose
      - Initial robot pose
@@ -166,19 +524,70 @@ Loads PCD map and initializes localization.
 - ``"Map saved."`` - Success
 - ``"service timeout"`` - Fast-LIO plugin not loaded
 
-Waypoint Message
-----------------
+Locomotion Services
+-------------------
 
-.. code-block:: text
+stand_up
+~~~~~~~~
 
-    string frame      # Coordinate frame: "map_name", "gps", "odom"
-    float64 x         # X coordinate (GPS: latitude)
-    float64 y         # Y coordinate (GPS: longitude)
-    float64 z         # Z coordinate (GPS: altitude)
-    bool use_z        # Whether to check Z coordinate
+Makes the robot stand up.
+
+**Request:** (empty)
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - Success flag
+   * - message
+     - string
+     - Result message
+
+**Possible Response Messages:**
+
+- ``"Trigger: started"`` - Success
+- ``"service timeout"`` - No service response
+
+sit_down
+~~~~~~~~
+
+Makes the robot sit down.
+
+**Request:** (empty)
+
+**Response:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 60
+
+   * - Field
+     - Type
+     - Description
+   * - success
+     - bool
+     - Success flag
+   * - message
+     - string
+     - Result message
+
+**Possible Response Messages:**
+
+- ``"Trigger: started"`` - Success
+- ``"service timeout"`` - No service response
+
+Control Mode Services
+---------------------
 
 set_listen (Joy Control)
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Enables/disables manual joystick control.
 
@@ -197,8 +606,9 @@ Enables/disables manual joystick control.
 
 **Request data format:**
 
-- Enable: ``"topic_name<&>client_id"`` (e.g., ``"joy<&>my_app"``)
-- Disable: ``"topic_name<&><CLOSE>"`` (e.g., ``"joy<&><CLOSE>"``)
+- Enable manual control: ``"joy/gui<&>network_id"``
+- Enable autonomous control: ``"vel_cmd/autonomy"``
+- Release control: ``"topic_name<&><CLOSE>"`` (e.g., ``"joy/gui<&><CLOSE>"``)
 
 **Response:**
 
@@ -216,8 +626,44 @@ Enables/disables manual joystick control.
      - string
      - Result message
 
-robot_state (Topic)
--------------------
+Message Types
+-------------
+
+Waypoint
+~~~~~~~~
+
+.. code-block:: text
+
+    string frame      # Coordinate frame: "map_name", "gps", "odom"
+    float64 x         # X coordinate (GPS: latitude)
+    float64 y         # Y coordinate (GPS: longitude)
+    float64 z         # Z coordinate (GPS: altitude)
+    bool use_z        # Whether to check Z coordinate
+
+GraphNode
+~~~~~~~~~
+
+.. code-block:: text
+
+    int32 id          # Node ID
+    float64 x         # X coordinate
+    float64 y         # Y coordinate
+    float64 z         # Z coordinate
+
+GraphEdge
+~~~~~~~~~
+
+.. code-block:: text
+
+    int32 from_node   # Start node ID
+    int32 to_node     # End node ID
+    float64 cost      # Edge cost (distance)
+
+Topics
+------
+
+robot_state
+~~~~~~~~~~~
 
 Topic that publishes robot state information.
 
@@ -261,7 +707,7 @@ Topic that publishes robot state information.
      - Minimum voltage
    * - body_temperature
      - double
-     - Body temperature (°C)
+     - Body temperature (C)
    * - state
      - int32
      - Locomotion state (0-9)
@@ -295,7 +741,7 @@ Topic that publishes robot state information.
      - CiA402 status code (see below)
    * - temperature
      - double
-     - Motor temperature (°C)
+     - Motor temperature (C)
 
 **Actuator Status Codes (CiA402 EtherCAT Standard):**
 
@@ -361,342 +807,24 @@ Topic that publishes robot state information.
    * - 9
      - MOTOR_DISABLED (Motor disabled)
 
-stand_up
---------
+/Odometry
+~~~~~~~~~
 
-Makes the robot stand up.
+Raw odometry topic from Fast-LIO output.
 
-**Request:** (empty)
+**Topic name:** ``/Odometry``
 
-**Response:**
-
-.. list-table::
-   :header-rows: 1
-   :widths: 20 20 60
-
-   * - Field
-     - Type
-     - Description
-   * - success
-     - bool
-     - Success flag
-   * - message
-     - string
-     - Result message
-
-**Possible Response Messages:**
-
-- ``"Trigger: started"`` - Success
-- ``"service timeout"`` - No service response
-
-sit_down
---------
-
-Makes the robot sit down.
-
-**Request:** (empty)
-
-**Response:**
-
-.. list-table::
-   :header-rows: 1
-   :widths: 20 20 60
-
-   * - Field
-     - Type
-     - Description
-   * - success
-     - bool
-     - Success flag
-   * - message
-     - string
-     - Result message
-
-**Possible Response Messages:**
-
-- ``"Trigger: started"`` - Success
-- ``"service timeout"`` - No service response
-
-planning/list_waypoints_files
------------------------------
-
-Lists saved patrol route files.
-
-**Request:** (empty)
-
-**Response:**
-
-.. list-table::
-   :header-rows: 1
-   :widths: 20 20 60
-
-   * - Field
-     - Type
-     - Description
-   * - success
-     - bool
-     - Success flag
-   * - message
-     - string
-     - Result message
-   * - files
-     - string[]
-     - File name list
-
-**Possible Response Messages:**
-
-- ``"Found N files"`` - Success (N files found)
-- ``"service timeout"`` - No service response
-
-planning/load_waypoints_file
-----------------------------
-
-Loads a saved patrol route file.
-
-**Request:**
-
-.. list-table::
-   :header-rows: 1
-   :widths: 20 20 60
-
-   * - Field
-     - Type
-     - Description
-   * - filename
-     - string
-     - File name to load (without extension)
-
-**Response:**
-
-.. list-table::
-   :header-rows: 1
-   :widths: 20 20 60
-
-   * - Field
-     - Type
-     - Description
-   * - success
-     - bool
-     - Success flag
-   * - message
-     - string
-     - Result message
-
-**Possible Response Messages:**
-
-- ``"Waypoints loaded from: filename"`` - Success
-- ``"File not found: filename"`` - File not found
-- ``"service timeout"`` - No service response
-
-planning/resume_patrol
-----------------------
-
-Resumes patrol from the nearest waypoint in the currently loaded route.
-
-**Request:** (empty)
-
-**Response:**
-
-.. list-table::
-   :header-rows: 1
-   :widths: 20 20 60
-
-   * - Field
-     - Type
-     - Description
-   * - success
-     - bool
-     - Success flag
-   * - message
-     - string
-     - Result message
-   * - waypoint_index
-     - uint8
-     - Starting waypoint index
-
-**Possible Response Messages:**
-
-- ``"Resuming from waypoint N"`` - Success (starting from waypoint N)
-- ``"No waypoints loaded"`` - No route loaded
-- ``"service timeout"`` - No service response
+**Message type:** nav_msgs/Odometry
 
 .. note::
-    Must load a route with ``planning/load_waypoints_file`` first.
+    To get position in map frame, use ``subscribeMapOdometry()``.
+    It subscribes to ``/{map_name}/{robot_id}/Odometry`` topic.
 
-list_map_files
---------------
+/cloud_registered
+~~~~~~~~~~~~~~~~~
 
-Lists map files saved on the robot.
+Real-time LiDAR point cloud topic.
 
-**Request:**
+**Topic name:** ``/cloud_registered``
 
-.. list-table::
-   :header-rows: 1
-   :widths: 20 20 60
-
-   * - Field
-     - Type
-     - Description
-   * - directory
-     - string
-     - Directory to query (default directory if empty)
-
-**Response:**
-
-.. list-table::
-   :header-rows: 1
-   :widths: 20 20 60
-
-   * - Field
-     - Type
-     - Description
-   * - success
-     - bool
-     - Success flag
-   * - message
-     - string
-     - Result message
-   * - files
-     - string[]
-     - Map file name list
-
-save_laser_map
---------------
-
-Saves the current map to the robot.
-
-**Request:**
-
-.. list-table::
-   :header-rows: 1
-   :widths: 20 20 60
-
-   * - Field
-     - Type
-     - Description
-   * - name
-     - string
-     - Map name to save
-
-**Response:**
-
-.. list-table::
-   :header-rows: 1
-   :widths: 20 20 60
-
-   * - Field
-     - Type
-     - Description
-   * - success
-     - bool
-     - Success flag
-   * - message
-     - string
-     - Result message
-
-**Possible Response Messages:**
-
-- ``"Map saved."`` - Success
-- ``"service timeout"`` - No service response
-
-load_laser_map
---------------
-
-Loads a map saved on the robot.
-
-**Request:**
-
-.. list-table::
-   :header-rows: 1
-   :widths: 20 20 60
-
-   * - Field
-     - Type
-     - Description
-   * - name
-     - string
-     - Map name to load
-
-**Response:**
-
-.. list-table::
-   :header-rows: 1
-   :widths: 20 20 60
-
-   * - Field
-     - Type
-     - Description
-   * - success
-     - bool
-     - Success flag
-   * - message
-     - string
-     - Result message
-
-**Possible Response Messages:**
-
-- ``"Map loaded."`` - Success
-- ``"Map not found"`` - Map file not found
-- ``"service timeout"`` - No service response
-
-start_mapping
--------------
-
-Starts mapping mode.
-
-**Request:** (empty)
-
-**Response:**
-
-.. list-table::
-   :header-rows: 1
-   :widths: 20 20 60
-
-   * - Field
-     - Type
-     - Description
-   * - success
-     - bool
-     - Success flag
-   * - message
-     - string
-     - Result message
-
-**Possible Response Messages:**
-
-- ``"Trigger: started"`` - Success
-- ``"service timeout"`` - No service response
-
-.. note::
-    During mapping, manually operate the robot to scan the environment.
-
-stop_mapping
-------------
-
-Stops mapping mode.
-
-**Request:** (empty)
-
-**Response:**
-
-.. list-table::
-   :header-rows: 1
-   :widths: 20 20 60
-
-   * - Field
-     - Type
-     - Description
-   * - success
-     - bool
-     - Success flag
-   * - message
-     - string
-     - Result message
-
-**Possible Response Messages:**
-
-- ``"Trigger: started"`` - Success
-- ``"service timeout"`` - No service response
-
-.. note::
-    After stopping mapping, save the map with ``save_laser_map``.
+**Message type:** sensor_msgs/PointCloud2

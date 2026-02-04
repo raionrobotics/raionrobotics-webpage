@@ -62,9 +62,13 @@
 <li class="toctree-l2"><a class="reference internal" href="api_example.html#id2">기본 워크플로우</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_example.html#data-types">Data Types</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_example.html#raisinclient-methods">RaisinClient Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_example.html#map-management">Map Management (새로운 방식)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_example.html#waypoint-navigation">Waypoint Navigation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_example.html#subscription-methods">Subscription Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_example.html#control-mode-switching">Control Mode Switching</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_example.html#locomotion-control">Locomotion Control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_example.html#patrol-route-management">Patrol Route Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api_example.html#map-management">Map Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_example.html#graph-management">Graph Management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_example.html#actuator-status-helpers">Actuator Status Helpers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_example.html#gps">GPS 사용 시 주의사항</a></li>
 </ul>
@@ -79,23 +83,51 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Service Interface Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#planning-set-waypoints">planning/set_waypoints</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#planning-get-waypoints">planning/get_waypoints</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#planning-append-waypoint">planning/append_waypoint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#set-map-setlasermap">set_map (SetLaserMap)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#waypoint-message">Waypoint Message</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#stand-up">stand_up</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#sit-down">sit_down</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#planning-list-waypoints-files">planning/list_waypoints_files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#planning-load-waypoints-file">planning/load_waypoints_file</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#planning-resume-patrol">planning/resume_patrol</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#set-listen-joy">set_listen (Joy 제어)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#robot-state-topic">robot_state (Topic)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#list-map-files">list_map_files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#save-laser-map">save_laser_map</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#load-laser-map">load_laser_map</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#start-mapping">start_mapping</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#stop-mapping">stop_mapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#navigation-services">Navigation Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#planning-set-waypoints">planning/set_waypoints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#planning-get-waypoints">planning/get_waypoints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#planning-refine-waypoints">planning/refine_waypoints</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#patrol-route-services">Patrol Route Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#planning-list-waypoints-files">planning/list_waypoints_files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#planning-load-waypoints-file">planning/load_waypoints_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#planning-save-waypoints-file">planning/save_waypoints_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#planning-resume-patrol">planning/resume_patrol</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#graph-services">Graph Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#save-graph-file">save_graph_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#load-graph-file">load_graph_file</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#map-services">Map Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#list-map-files">list_map_files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#load-laser-map">load_laser_map</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-map-setlasermap">set_map (SetLaserMap)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#locomotion-services">Locomotion Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#stand-up">stand_up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sit-down">sit_down</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#control-mode-services">Control Mode Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#set-listen-joy">set_listen (Joy 제어)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#message-types">Message Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#waypoint">Waypoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#graphnode">GraphNode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#graphedge">GraphEdge</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#topics">Topics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#robot-state">robot_state</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#odometry">/Odometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cloud-registered">/cloud_registered</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Complete Examples</a><ul>
@@ -206,8 +238,10 @@
   <section id="service-interface-reference">
 <h1>Service Interface Reference<a class="headerlink" href="#service-interface-reference" title="Link to this heading"></a></h1>
 <p>사용 가능한 서비스 인터페이스 정의입니다.</p>
+<section id="navigation-services">
+<h2>Navigation Services<a class="headerlink" href="#navigation-services" title="Link to this heading"></a></h2>
 <section id="planning-set-waypoints">
-<h2>planning/set_waypoints<a class="headerlink" href="#planning-set-waypoints" title="Link to this heading"></a></h2>
+<h3>planning/set_waypoints<a class="headerlink" href="#planning-set-waypoints" title="Link to this heading"></a></h3>
 <p>Waypoint 목록을 설정합니다.</p>
 <p><strong>Request:</strong></p>
 <table class="docutils align-default">
@@ -273,7 +307,7 @@
 </ul>
 </section>
 <section id="planning-get-waypoints">
-<h2>planning/get_waypoints<a class="headerlink" href="#planning-get-waypoints" title="Link to this heading"></a></h2>
+<h3>planning/get_waypoints<a class="headerlink" href="#planning-get-waypoints" title="Link to this heading"></a></h3>
 <p>현재 미션 상태를 조회합니다.</p>
 <p><strong>Request:</strong> (empty)</p>
 <p><strong>Response:</strong></p>
@@ -317,9 +351,9 @@
 </tbody>
 </table>
 </section>
-<section id="planning-append-waypoint">
-<h2>planning/append_waypoint<a class="headerlink" href="#planning-append-waypoint" title="Link to this heading"></a></h2>
-<p>Waypoint를 큐에 추가합니다.</p>
+<section id="planning-refine-waypoints">
+<h3>planning/refine_waypoints<a class="headerlink" href="#planning-refine-waypoints" title="Link to this heading"></a></h3>
+<p>A* 알고리즘을 사용하여 그래프 상에서 waypoint를 최적화합니다.</p>
 <p><strong>Request:</strong></p>
 <table class="docutils align-default">
 <colgroup>
@@ -334,9 +368,17 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>waypoint</p></td>
-<td><p>Waypoint</p></td>
-<td><p>추가할 waypoint</p></td>
+<tr class="row-even"><td><p>waypoints</p></td>
+<td><p>Waypoint[]</p></td>
+<td><p>입력 waypoint 배열</p></td>
+</tr>
+<tr class="row-odd"><td><p>nodes</p></td>
+<td><p>GraphNode[]</p></td>
+<td><p>그래프 노드 배열</p></td>
+</tr>
+<tr class="row-even"><td><p>edges</p></td>
+<td><p>GraphEdge[]</p></td>
+<td><p>그래프 엣지 배열</p></td>
 </tr>
 </tbody>
 </table>
@@ -362,152 +404,49 @@
 <td><p>string</p></td>
 <td><p>결과 메시지</p></td>
 </tr>
-</tbody>
-</table>
-</section>
-<section id="set-map-setlasermap">
-<h2>set_map (SetLaserMap)<a class="headerlink" href="#set-map-setlasermap" title="Link to this heading"></a></h2>
-<p>PCD 맵을 로드하고 Localization을 초기화합니다.</p>
-<p><strong>Request:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
+<tr class="row-even"><td><p>refined_waypoints</p></td>
+<td><p>Waypoint[]</p></td>
+<td><p>최적화된 waypoint 목록 (그래프 경로를 따름)</p></td>
 </tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>name</p></td>
-<td><p>string</p></td>
-<td><p>맵 프레임 이름</p></td>
-</tr>
-<tr class="row-odd"><td><p>pc</p></td>
-<td><p>PointCloud2</p></td>
-<td><p>포인트 클라우드 데이터</p></td>
-</tr>
-<tr class="row-even"><td><p>initial_pose</p></td>
-<td><p>Pose</p></td>
-<td><p>초기 로봇 자세</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Response:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>success</p></td>
-<td><p>bool</p></td>
-<td><p>성공 여부</p></td>
-</tr>
-<tr class="row-odd"><td><p>message</p></td>
-<td><p>string</p></td>
-<td><p>결과 메시지</p></td>
+<tr class="row-odd"><td><p>path_node_ids</p></td>
+<td><p>int32[]</p></td>
+<td><p>경로를 구성하는 노드 ID 목록</p></td>
 </tr>
 </tbody>
 </table>
 <p><strong>가능한 Response 메시지:</strong></p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Map</span> <span class="pre">saved.&quot;</span></code> - 성공</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - Fast-LIO 플러그인 미로드</p></li>
-</ul>
-</section>
-<section id="waypoint-message">
-<h2>Waypoint Message<a class="headerlink" href="#waypoint-message" title="Link to this heading"></a></h2>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>string frame      # 좌표 프레임: &quot;map_name&quot;, &quot;gps&quot;, &quot;odom&quot;
-float64 x         # X 좌표 (GPS: latitude)
-float64 y         # Y 좌표 (GPS: longitude)
-float64 z         # Z 좌표 (GPS: altitude)
-bool use_z        # Z 좌표 검사 여부
-</pre></div>
-</div>
-</section>
-<section id="stand-up">
-<h2>stand_up<a class="headerlink" href="#stand-up" title="Link to this heading"></a></h2>
-<p>로봇을 일어서게 합니다.</p>
-<p><strong>Request:</strong> (empty)</p>
-<p><strong>Response:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>success</p></td>
-<td><p>bool</p></td>
-<td><p>성공 여부</p></td>
-</tr>
-<tr class="row-odd"><td><p>message</p></td>
-<td><p>string</p></td>
-<td><p>결과 메시지</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>가능한 Response 메시지:</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Trigger:</span> <span class="pre">started&quot;</span></code> - 성공</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Refined</span> <span class="pre">N</span> <span class="pre">waypoints&quot;</span></code> - 성공</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;No</span> <span class="pre">graph</span> <span class="pre">nodes</span> <span class="pre">provided&quot;</span></code> - 노드가 비어있음</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - 서비스 응답 없음</p></li>
 </ul>
 </section>
-<section id="sit-down">
-<h2>sit_down<a class="headerlink" href="#sit-down" title="Link to this heading"></a></h2>
-<p>로봇을 앉게 합니다.</p>
-<p><strong>Request:</strong> (empty)</p>
-<p><strong>Response:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>success</p></td>
-<td><p>bool</p></td>
-<td><p>성공 여부</p></td>
-</tr>
-<tr class="row-odd"><td><p>message</p></td>
-<td><p>string</p></td>
-<td><p>결과 메시지</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>가능한 Response 메시지:</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Trigger:</span> <span class="pre">started&quot;</span></code> - 성공</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - 서비스 응답 없음</p></li>
-</ul>
 </section>
+<section id="patrol-route-services">
+<h2>Patrol Route Services<a class="headerlink" href="#patrol-route-services" title="Link to this heading"></a></h2>
 <section id="planning-list-waypoints-files">
-<h2>planning/list_waypoints_files<a class="headerlink" href="#planning-list-waypoints-files" title="Link to this heading"></a></h2>
+<h3>planning/list_waypoints_files<a class="headerlink" href="#planning-list-waypoints-files" title="Link to this heading"></a></h3>
 <p>저장된 순찰 경로 파일 목록을 조회합니다.</p>
-<p><strong>Request:</strong> (empty)</p>
+<p><strong>Request:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>directory</p></td>
+<td><p>string</p></td>
+<td><p>조회할 디렉토리 (빈 문자열이면 기본 디렉토리)</p></td>
+</tr>
+</tbody>
+</table>
 <p><strong>Response:</strong></p>
 <table class="docutils align-default">
 <colgroup>
@@ -543,7 +482,7 @@ bool use_z        # Z 좌표 검사 여부
 </ul>
 </section>
 <section id="planning-load-waypoints-file">
-<h2>planning/load_waypoints_file<a class="headerlink" href="#planning-load-waypoints-file" title="Link to this heading"></a></h2>
+<h3>planning/load_waypoints_file<a class="headerlink" href="#planning-load-waypoints-file" title="Link to this heading"></a></h3>
 <p>저장된 순찰 경로 파일을 로드합니다.</p>
 <p><strong>Request:</strong></p>
 <table class="docutils align-default">
@@ -559,7 +498,7 @@ bool use_z        # Z 좌표 검사 여부
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>filename</p></td>
+<tr class="row-even"><td><p>name</p></td>
 <td><p>string</p></td>
 <td><p>로드할 파일 이름 (확장자 제외)</p></td>
 </tr>
@@ -596,8 +535,61 @@ bool use_z        # Z 좌표 검사 여부
 <li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - 서비스 응답 없음</p></li>
 </ul>
 </section>
+<section id="planning-save-waypoints-file">
+<h3>planning/save_waypoints_file<a class="headerlink" href="#planning-save-waypoints-file" title="Link to this heading"></a></h3>
+<p>현재 waypoint를 파일로 저장합니다.</p>
+<p><strong>Request:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>name</p></td>
+<td><p>string</p></td>
+<td><p>저장할 파일 이름 (확장자 제외)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>성공 여부</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>결과 메시지</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>가능한 Response 메시지:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Waypoints</span> <span class="pre">saved</span> <span class="pre">to:</span> <span class="pre">filename&quot;</span></code> - 성공</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - 서비스 응답 없음</p></li>
+</ul>
+</section>
 <section id="planning-resume-patrol">
-<h2>planning/resume_patrol<a class="headerlink" href="#planning-resume-patrol" title="Link to this heading"></a></h2>
+<h3>planning/resume_patrol<a class="headerlink" href="#planning-resume-patrol" title="Link to this heading"></a></h3>
 <p>현재 로드된 순찰 경로에서 가장 가까운 waypoint부터 순찰을 재개합니다.</p>
 <p><strong>Request:</strong> (empty)</p>
 <p><strong>Response:</strong></p>
@@ -639,8 +631,383 @@ bool use_z        # Z 좌표 검사 여부
 <p><code class="docutils literal notranslate"><span class="pre">planning/load_waypoints_file</span></code> 로 경로를 먼저 로드해야 합니다.</p>
 </div>
 </section>
+</section>
+<section id="graph-services">
+<h2>Graph Services<a class="headerlink" href="#graph-services" title="Link to this heading"></a></h2>
+<section id="save-graph-file">
+<h3>save_graph_file<a class="headerlink" href="#save-graph-file" title="Link to this heading"></a></h3>
+<p>그래프를 파일로 저장합니다.</p>
+<p><strong>Request:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>name</p></td>
+<td><p>string</p></td>
+<td><p>저장할 파일 이름</p></td>
+</tr>
+<tr class="row-odd"><td><p>nodes</p></td>
+<td><p>GraphNode[]</p></td>
+<td><p>그래프 노드 배열</p></td>
+</tr>
+<tr class="row-even"><td><p>edges</p></td>
+<td><p>GraphEdge[]</p></td>
+<td><p>그래프 엣지 배열</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>성공 여부</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>결과 메시지</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>가능한 Response 메시지:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Graph</span> <span class="pre">saved</span> <span class="pre">to:</span> <span class="pre">filename&quot;</span></code> - 성공</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - 서비스 응답 없음</p></li>
+</ul>
+</section>
+<section id="load-graph-file">
+<h3>load_graph_file<a class="headerlink" href="#load-graph-file" title="Link to this heading"></a></h3>
+<p>저장된 그래프 파일을 로드합니다.</p>
+<p><strong>Request:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>name</p></td>
+<td><p>string</p></td>
+<td><p>로드할 파일 이름</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>성공 여부</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>결과 메시지</p></td>
+</tr>
+<tr class="row-even"><td><p>nodes</p></td>
+<td><p>GraphNode[]</p></td>
+<td><p>로드된 노드 배열</p></td>
+</tr>
+<tr class="row-odd"><td><p>edges</p></td>
+<td><p>GraphEdge[]</p></td>
+<td><p>로드된 엣지 배열</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>가능한 Response 메시지:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Graph</span> <span class="pre">loaded</span> <span class="pre">from:</span> <span class="pre">filename&quot;</span></code> - 성공</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;File</span> <span class="pre">not</span> <span class="pre">found:</span> <span class="pre">filename&quot;</span></code> - 파일 없음</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - 서비스 응답 없음</p></li>
+</ul>
+</section>
+</section>
+<section id="map-services">
+<h2>Map Services<a class="headerlink" href="#map-services" title="Link to this heading"></a></h2>
+<section id="list-map-files">
+<h3>list_map_files<a class="headerlink" href="#list-map-files" title="Link to this heading"></a></h3>
+<p>로봇에 저장된 맵 파일 목록을 조회합니다.</p>
+<p><strong>Request:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>directory</p></td>
+<td><p>string</p></td>
+<td><p>조회할 디렉토리 (빈 문자열이면 기본 디렉토리)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>성공 여부</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>결과 메시지</p></td>
+</tr>
+<tr class="row-even"><td><p>files</p></td>
+<td><p>string[]</p></td>
+<td><p>맵 파일 이름 목록</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="load-laser-map">
+<h3>load_laser_map<a class="headerlink" href="#load-laser-map" title="Link to this heading"></a></h3>
+<p>로봇에 저장된 맵을 로드합니다.</p>
+<p><strong>Request:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>name</p></td>
+<td><p>string</p></td>
+<td><p>로드할 맵 이름</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>성공 여부</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>결과 메시지</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>가능한 Response 메시지:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Map</span> <span class="pre">loaded.&quot;</span></code> - 성공</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Map</span> <span class="pre">not</span> <span class="pre">found&quot;</span></code> - 맵 파일 없음</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - 서비스 응답 없음</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>SDK에서는 <code class="docutils literal notranslate"><span class="pre">loadMap()</span></code> 메소드가 이 서비스를 호출하고, 자동으로 그래프와 기본 경로도 로드합니다.</p>
+</div>
+</section>
+<section id="set-map-setlasermap">
+<h3>set_map (SetLaserMap)<a class="headerlink" href="#set-map-setlasermap" title="Link to this heading"></a></h3>
+<p>Localization 초기 자세를 설정합니다.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>SDK에서는 <code class="docutils literal notranslate"><span class="pre">setInitialPose()</span></code> 메소드를 사용하여 이 서비스를 호출합니다.
+먼저 <code class="docutils literal notranslate"><span class="pre">loadMap()</span></code> 으로 맵을 로드한 후에 호출해야 합니다.</p>
+</div>
+<p><strong>Request:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>name</p></td>
+<td><p>string</p></td>
+<td><p>맵 프레임 이름 (loadMap으로 로드된 맵 이름)</p></td>
+</tr>
+<tr class="row-odd"><td><p>initial_pose</p></td>
+<td><p>Pose</p></td>
+<td><p>초기 로봇 자세</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>성공 여부</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>결과 메시지</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>가능한 Response 메시지:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Map</span> <span class="pre">saved.&quot;</span></code> - 성공</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - Fast-LIO 플러그인 미로드</p></li>
+</ul>
+</section>
+</section>
+<section id="locomotion-services">
+<h2>Locomotion Services<a class="headerlink" href="#locomotion-services" title="Link to this heading"></a></h2>
+<section id="stand-up">
+<h3>stand_up<a class="headerlink" href="#stand-up" title="Link to this heading"></a></h3>
+<p>로봇을 일어서게 합니다.</p>
+<p><strong>Request:</strong> (empty)</p>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>성공 여부</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>결과 메시지</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>가능한 Response 메시지:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Trigger:</span> <span class="pre">started&quot;</span></code> - 성공</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - 서비스 응답 없음</p></li>
+</ul>
+</section>
+<section id="sit-down">
+<h3>sit_down<a class="headerlink" href="#sit-down" title="Link to this heading"></a></h3>
+<p>로봇을 앉게 합니다.</p>
+<p><strong>Request:</strong> (empty)</p>
+<p><strong>Response:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>success</p></td>
+<td><p>bool</p></td>
+<td><p>성공 여부</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p>string</p></td>
+<td><p>결과 메시지</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>가능한 Response 메시지:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Trigger:</span> <span class="pre">started&quot;</span></code> - 성공</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - 서비스 응답 없음</p></li>
+</ul>
+</section>
+</section>
+<section id="control-mode-services">
+<h2>Control Mode Services<a class="headerlink" href="#control-mode-services" title="Link to this heading"></a></h2>
 <section id="set-listen-joy">
-<h2>set_listen (Joy 제어)<a class="headerlink" href="#set-listen-joy" title="Link to this heading"></a></h2>
+<h3>set_listen (Joy 제어)<a class="headerlink" href="#set-listen-joy" title="Link to this heading"></a></h3>
 <p>수동 조이스틱 제어를 활성화/비활성화합니다.</p>
 <p><strong>Request:</strong></p>
 <table class="docutils align-default">
@@ -664,8 +1031,9 @@ bool use_z        # Z 좌표 검사 여부
 </table>
 <p><strong>Request data 형식:</strong></p>
 <ul class="simple">
-<li><p>활성화: <code class="docutils literal notranslate"><span class="pre">&quot;토픽명&lt;&amp;&gt;클라이언트ID&quot;</span></code> (예: <code class="docutils literal notranslate"><span class="pre">&quot;joy&lt;&amp;&gt;my_app&quot;</span></code>)</p></li>
-<li><p>비활성화: <code class="docutils literal notranslate"><span class="pre">&quot;토픽명&lt;&amp;&gt;&lt;CLOSE&gt;&quot;</span></code> (예: <code class="docutils literal notranslate"><span class="pre">&quot;joy&lt;&amp;&gt;&lt;CLOSE&gt;&quot;</span></code>)</p></li>
+<li><p>수동 제어 활성화: <code class="docutils literal notranslate"><span class="pre">&quot;joy/gui&lt;&amp;&gt;네트워크ID&quot;</span></code></p></li>
+<li><p>자율 주행 활성화: <code class="docutils literal notranslate"><span class="pre">&quot;vel_cmd/autonomy&quot;</span></code></p></li>
+<li><p>제어 해제: <code class="docutils literal notranslate"><span class="pre">&quot;토픽명&lt;&amp;&gt;&lt;CLOSE&gt;&quot;</span></code> (예: <code class="docutils literal notranslate"><span class="pre">&quot;joy/gui&lt;&amp;&gt;&lt;CLOSE&gt;&quot;</span></code>)</p></li>
 </ul>
 <p><strong>Response:</strong></p>
 <table class="docutils align-default">
@@ -692,8 +1060,41 @@ bool use_z        # Z 좌표 검사 여부
 </tbody>
 </table>
 </section>
-<section id="robot-state-topic">
-<h2>robot_state (Topic)<a class="headerlink" href="#robot-state-topic" title="Link to this heading"></a></h2>
+</section>
+<section id="message-types">
+<h2>Message Types<a class="headerlink" href="#message-types" title="Link to this heading"></a></h2>
+<section id="waypoint">
+<h3>Waypoint<a class="headerlink" href="#waypoint" title="Link to this heading"></a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>string frame      # 좌표 프레임: &quot;map_name&quot;, &quot;gps&quot;, &quot;odom&quot;
+float64 x         # X 좌표 (GPS: latitude)
+float64 y         # Y 좌표 (GPS: longitude)
+float64 z         # Z 좌표 (GPS: altitude)
+bool use_z        # Z 좌표 검사 여부
+</pre></div>
+</div>
+</section>
+<section id="graphnode">
+<h3>GraphNode<a class="headerlink" href="#graphnode" title="Link to this heading"></a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>int32 id          # 노드 ID
+float64 x         # X 좌표
+float64 y         # Y 좌표
+float64 z         # Z 좌표
+</pre></div>
+</div>
+</section>
+<section id="graphedge">
+<h3>GraphEdge<a class="headerlink" href="#graphedge" title="Link to this heading"></a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>int32 from_node   # 시작 노드 ID
+int32 to_node     # 끝 노드 ID
+float64 cost      # 엣지 비용 (거리)
+</pre></div>
+</div>
+</section>
+</section>
+<section id="topics">
+<h2>Topics<a class="headerlink" href="#topics" title="Link to this heading"></a></h2>
+<section id="robot-state">
+<h3>robot_state<a class="headerlink" href="#robot-state" title="Link to this heading"></a></h3>
 <p>로봇의 상태 정보를 발행하는 토픽입니다.</p>
 <p><strong>토픽명:</strong> <code class="docutils literal notranslate"><span class="pre">robot_state</span></code></p>
 <p><strong>메시지 필드:</strong></p>
@@ -894,240 +1295,23 @@ bool use_z        # Z 좌표 검사 여부
 </tbody>
 </table>
 </section>
-<section id="list-map-files">
-<h2>list_map_files<a class="headerlink" href="#list-map-files" title="Link to this heading"></a></h2>
-<p>로봇에 저장된 맵 파일 목록을 조회합니다.</p>
-<p><strong>Request:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>directory</p></td>
-<td><p>string</p></td>
-<td><p>조회할 디렉토리 (빈 문자열이면 기본 디렉토리)</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Response:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>success</p></td>
-<td><p>bool</p></td>
-<td><p>성공 여부</p></td>
-</tr>
-<tr class="row-odd"><td><p>message</p></td>
-<td><p>string</p></td>
-<td><p>결과 메시지</p></td>
-</tr>
-<tr class="row-even"><td><p>files</p></td>
-<td><p>string[]</p></td>
-<td><p>맵 파일 이름 목록</p></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="save-laser-map">
-<h2>save_laser_map<a class="headerlink" href="#save-laser-map" title="Link to this heading"></a></h2>
-<p>현재 맵을 로봇에 저장합니다.</p>
-<p><strong>Request:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>name</p></td>
-<td><p>string</p></td>
-<td><p>저장할 맵 이름</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Response:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>success</p></td>
-<td><p>bool</p></td>
-<td><p>성공 여부</p></td>
-</tr>
-<tr class="row-odd"><td><p>message</p></td>
-<td><p>string</p></td>
-<td><p>결과 메시지</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>가능한 Response 메시지:</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Map</span> <span class="pre">saved.&quot;</span></code> - 성공</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - 서비스 응답 없음</p></li>
-</ul>
-</section>
-<section id="load-laser-map">
-<h2>load_laser_map<a class="headerlink" href="#load-laser-map" title="Link to this heading"></a></h2>
-<p>로봇에 저장된 맵을 로드합니다.</p>
-<p><strong>Request:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>name</p></td>
-<td><p>string</p></td>
-<td><p>로드할 맵 이름</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Response:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>success</p></td>
-<td><p>bool</p></td>
-<td><p>성공 여부</p></td>
-</tr>
-<tr class="row-odd"><td><p>message</p></td>
-<td><p>string</p></td>
-<td><p>결과 메시지</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>가능한 Response 메시지:</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Map</span> <span class="pre">loaded.&quot;</span></code> - 성공</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Map</span> <span class="pre">not</span> <span class="pre">found&quot;</span></code> - 맵 파일 없음</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - 서비스 응답 없음</p></li>
-</ul>
-</section>
-<section id="start-mapping">
-<h2>start_mapping<a class="headerlink" href="#start-mapping" title="Link to this heading"></a></h2>
-<p>매핑 모드를 시작합니다.</p>
-<p><strong>Request:</strong> (empty)</p>
-<p><strong>Response:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>success</p></td>
-<td><p>bool</p></td>
-<td><p>성공 여부</p></td>
-</tr>
-<tr class="row-odd"><td><p>message</p></td>
-<td><p>string</p></td>
-<td><p>결과 메시지</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>가능한 Response 메시지:</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Trigger:</span> <span class="pre">started&quot;</span></code> - 성공</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - 서비스 응답 없음</p></li>
-</ul>
+<section id="odometry">
+<h3>/Odometry<a class="headerlink" href="#odometry" title="Link to this heading"></a></h3>
+<p>Fast-LIO 출력의 raw odometry 토픽입니다.</p>
+<p><strong>토픽명:</strong> <code class="docutils literal notranslate"><span class="pre">/Odometry</span></code></p>
+<p><strong>메시지 타입:</strong> nav_msgs/Odometry</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>매핑 중에는 로봇을 수동으로 조작하여 환경을 스캔해야 합니다.</p>
+<p>맵 프레임에서의 위치를 얻으려면 <code class="docutils literal notranslate"><span class="pre">subscribeMapOdometry()</span></code> 를 사용하세요.
+<code class="docutils literal notranslate"><span class="pre">/{map_name}/{robot_id}/Odometry</span></code> 토픽을 구독합니다.</p>
 </div>
 </section>
-<section id="stop-mapping">
-<h2>stop_mapping<a class="headerlink" href="#stop-mapping" title="Link to this heading"></a></h2>
-<p>매핑 모드를 중지합니다.</p>
-<p><strong>Request:</strong> (empty)</p>
-<p><strong>Response:</strong></p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>success</p></td>
-<td><p>bool</p></td>
-<td><p>성공 여부</p></td>
-</tr>
-<tr class="row-odd"><td><p>message</p></td>
-<td><p>string</p></td>
-<td><p>결과 메시지</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>가능한 Response 메시지:</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Trigger:</span> <span class="pre">started&quot;</span></code> - 성공</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;service</span> <span class="pre">timeout&quot;</span></code> - 서비스 응답 없음</p></li>
-</ul>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>매핑 중지 후 <code class="docutils literal notranslate"><span class="pre">save_laser_map</span></code> 으로 맵을 저장할 수 있습니다.</p>
-</div>
+<section id="cloud-registered">
+<h3>/cloud_registered<a class="headerlink" href="#cloud-registered" title="Link to this heading"></a></h3>
+<p>실시간 LiDAR 포인트 클라우드 토픽입니다.</p>
+<p><strong>토픽명:</strong> <code class="docutils literal notranslate"><span class="pre">/cloud_registered</span></code></p>
+<p><strong>메시지 타입:</strong> sensor_msgs/PointCloud2</p>
+</section>
 </section>
 </section>
 

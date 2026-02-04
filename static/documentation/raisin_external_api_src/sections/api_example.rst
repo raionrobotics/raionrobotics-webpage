@@ -21,17 +21,24 @@ API Example Reference
     // 2. 로봇 연결
     client.connect("ROBOT_ID");
 
-    // 3. 맵 로드 (Localization 활성화)
-    client.setMap("/path/to/map.pcd", 0.0, 0.0, 0.0, 0.0, "my_map");
+    // 3. 로봇에 저장된 맵 로드 (graph, waypoints 자동 로드)
+    auto mapResult = client.loadMap("my_map");
+    if (mapResult.success) {
+        std::cout << "Graph nodes: " << mapResult.graphNodes.size() << std::endl;
+        std::cout << "Waypoints: " << mapResult.waypoints.size() << std::endl;
+    }
 
-    // 4. Waypoint 설정 (frame은 반드시 map_name과 동일해야 함!)
+    // 4. 초기 위치 설정 (Localization 시작)
+    client.setInitialPose(0.0, 0.0, 0.0);  // x, y, yaw
+
+    // 5. Waypoint 설정 (frame은 반드시 map_name과 동일해야 함!)
     std::vector<raisin_sdk::Waypoint> waypoints = {
         raisin_sdk::Waypoint("my_map", 5.0, 0.0),   // "my_map" 사용
         raisin_sdk::Waypoint("my_map", 5.0, 5.0),
     };
     client.setWaypoints(waypoints, 1);
 
-    // 5. 상태 모니터링
+    // 6. 상태 모니터링
     auto status = client.getMissionStatus();
 
 .. _data-types:
@@ -54,16 +61,17 @@ Data Types
     Waypoint::GPS(latitude, longitude);   // GPS 좌표 (GPS 모듈 필요)
 
 .. warning::
-    **frame 이름은 setMap()에서 지정한 map_name과 반드시 일치해야 합니다!**
+    **frame 이름은 loadMap()에서 지정한 map_name과 반드시 일치해야 합니다!**
 
     .. code-block:: cpp
 
         // 올바른 예시
-        client.setMap("/path/map.pcd", 0, 0, 0, 0, "office_map");
+        client.loadMap("office_map");
+        client.setInitialPose(0, 0, 0);
         Waypoint("office_map", 5.0, 0.0);  // ✓ 동일한 이름
 
         // 잘못된 예시
-        client.setMap("/path/map.pcd", 0, 0, 0, 0, "office_map");
+        client.loadMap("office_map");
         Waypoint("map", 5.0, 0.0);  // ✗ 이름 불일치 - 동작 안함!
 
 **MissionStatus** - 미션 상태
@@ -104,6 +112,61 @@ Data Types
 .. code-block:: cpp
 
     struct Point3D { float x, y, z; };
+
+**GraphNode** - 경로 그래프 노드
+
+.. code-block:: cpp
+
+    struct GraphNode {
+        int32_t id;        // 노드 ID
+        double x, y, z;    // 좌표
+    };
+
+**GraphEdge** - 경로 그래프 엣지
+
+.. code-block:: cpp
+
+    struct GraphEdge {
+        int32_t from_node;  // 시작 노드 ID
+        int32_t to_node;    // 끝 노드 ID
+        double cost;        // 비용 (거리)
+    };
+
+**LoadMapResult** - 맵 로드 결과
+
+.. code-block:: cpp
+
+    struct LoadMapResult {
+        bool success;
+        std::string message;
+        std::string mapName;                      // 로드된 맵 이름
+        std::vector<GraphNode> graphNodes;        // 자동 로드된 그래프 노드
+        std::vector<GraphEdge> graphEdges;        // 자동 로드된 그래프 엣지
+        std::vector<Waypoint> waypoints;          // 자동 로드된 기본 경로 (route_1)
+        std::vector<std::string> availableRoutes; // 사용 가능한 경로 목록
+    };
+
+**LoadGraphResult** - 그래프 로드 결과
+
+.. code-block:: cpp
+
+    struct LoadGraphResult {
+        bool success;
+        std::string message;
+        std::vector<GraphNode> nodes;
+        std::vector<GraphEdge> edges;
+    };
+
+**RefineWaypointsResult** - 경로 최적화 결과
+
+.. code-block:: cpp
+
+    struct RefineWaypointsResult {
+        bool success;
+        std::string message;
+        std::vector<Waypoint> refined_waypoints;  // 최적화된 waypoints
+        std::vector<int32_t> path_node_ids;       // 경로를 구성하는 노드 ID
+    };
 
 **ActuatorInfo** - 액추에이터(모터) 정보
 
@@ -221,6 +284,8 @@ Data Types
         std::string getJoySourceName() const;        // 제어 소스명 문자열
         bool isOperational() const;                  // 서있거나 걷는 중인지
         bool hasActuatorError() const;               // 모터 에러 여부
+        std::vector<std::string> getActuatorsWithErrors() const;  // 에러 모터 목록
+        bool allActuatorsOperational() const;        // 모든 모터 정상 여부
     };
 
 RaisinClient Methods
@@ -230,33 +295,118 @@ RaisinClient Methods
 
 .. code-block:: cpp
 
-    bool connect(const std::string& robot_id, int timeout_sec = 10);
+    bool connect(const std::string& robot_id, int timeout_sec = 10,
+                 std::atomic<bool>* cancel_token = nullptr);
 
 로봇에 연결합니다.
 
 - ``robot_id``: Robot ID 또는 IP 주소
 - ``timeout_sec``: 연결 타임아웃 (초)
+- ``cancel_token``: 연결 취소용 플래그 (optional)
 - **반환**: 연결 성공 여부
 
-**setMap()**
+**disconnect()**
 
 .. code-block:: cpp
 
-    ServiceResult setMap(const std::string& pcd_path,
-                         double initial_x, double initial_y,
-                         double initial_z, double initial_yaw,
-                         const std::string& map_name);
+    void disconnect();
 
-PCD 맵 파일을 로드하고 Localization을 초기화합니다.
+로봇과의 연결을 종료합니다.
 
-- ``pcd_path``: PCD 파일 경로 (**클라이언트 PC에 있는 파일**, 로봇으로 전송됨)
-- ``initial_x/y/z``: 맵 내 로봇 초기 위치 (로봇이 물리적으로 있는 위치를 맵 좌표로 입력)
-- ``initial_yaw``: 초기 방향 (radians)
-- ``map_name``: 맵 프레임 이름 (**Waypoint frame과 일치해야 함**)
+**isConnected()**
+
+.. code-block:: cpp
+
+    bool isConnected() const;
+
+연결 상태를 확인합니다.
+
+Map Management (새로운 방식)
+----------------------------
+
+**listMapFiles()**
+
+.. code-block:: cpp
+
+    ListFilesResult listMapFiles();
+
+로봇에 저장된 맵 파일 목록을 조회합니다.
+
+.. code-block:: cpp
+
+    auto result = client.listMapFiles();
+    if (result.success) {
+        std::cout << "Available maps:" << std::endl;
+        for (const auto& file : result.files) {
+            std::cout << "  - " << file << std::endl;
+        }
+    }
+
+**loadMap()**
+
+.. code-block:: cpp
+
+    LoadMapResult loadMap(const std::string& name);
+
+로봇에 저장된 맵을 로드합니다. 연관된 그래프와 기본 경로(route_1)를 자동으로 로드합니다.
+
+- ``name``: 맵 이름 (예: "office_floor1")
+- **반환**: 로드 결과 (그래프 노드/엣지, 웨이포인트, 사용 가능한 경로 목록 포함)
+
+.. code-block:: cpp
+
+    auto result = client.loadMap("office_floor1");
+    if (result.success) {
+        std::cout << "Map loaded: " << result.mapName << std::endl;
+        std::cout << "Graph: " << result.graphNodes.size() << " nodes, "
+                  << result.graphEdges.size() / 2 << " edges" << std::endl;
+        std::cout << "Default route: " << result.waypoints.size() << " waypoints" << std::endl;
+        std::cout << "Available routes:" << std::endl;
+        for (const auto& route : result.availableRoutes) {
+            std::cout << "  - " << route << std::endl;
+        }
+    }
+
+**setInitialPose()**
+
+.. code-block:: cpp
+
+    ServiceResult setInitialPose(double x, double y, double yaw);
+
+맵 로드 후 초기 위치를 설정하여 Localization을 시작합니다.
+
+- ``x``, ``y``: 맵 내 초기 위치 (로봇이 물리적으로 있는 위치)
+- ``yaw``: 초기 방향 (radians)
+- **반환**: 서비스 호출 결과
+
+.. code-block:: cpp
+
+    // loadMap() 호출 후 사용
+    auto result = client.setInitialPose(0.0, 0.0, 0.0);
+    if (result.success) {
+        std::cout << "Localization started" << std::endl;
+    }
 
 .. note::
-    PCD 맵은 사전에 SLAM으로 생성해야 합니다. raisin_gui의 Mapping 기능을 사용하거나,
-    Fast-LIO 플러그인으로 직접 생성할 수 있습니다.
+    ``loadMap()`` 을 먼저 호출해야 합니다. 맵 없이 호출하면 실패합니다.
+
+**getLoadedMapName()**
+
+.. code-block:: cpp
+
+    std::string getLoadedMapName() const;
+
+현재 로드된 맵 이름을 반환합니다.
+
+.. code-block:: cpp
+
+    std::string mapName = client.getLoadedMapName();
+    if (!mapName.empty()) {
+        std::cout << "Current map: " << mapName << std::endl;
+    }
+
+Waypoint Navigation
+-------------------
 
 **setWaypoints()**
 
@@ -286,43 +436,38 @@ Waypoint 목록을 설정하고 네비게이션을 시작합니다.
 
 현재 미션 상태를 조회합니다.
 
-**appendWaypoint()**
+Subscription Methods
+--------------------
+
+**subscribeMapOdometry()**
 
 .. code-block:: cpp
 
-    ServiceResult appendWaypoint(const Waypoint& waypoint);
+    void subscribeMapOdometry(OdometryCallback callback);
 
-현재 미션 큐에 waypoint를 추가합니다.
-
-**stopNavigation()**
-
-.. code-block:: cpp
-
-    ServiceResult stopNavigation();
-
-자율주행을 중지합니다 (빈 waypoint 목록 설정).
-
-**startPatrol()**
+맵 프레임에서의 Odometry 데이터를 실시간 구독합니다.
+``setInitialPose()`` 성공 후 사용해야 맵 좌표계 위치를 받을 수 있습니다.
 
 .. code-block:: cpp
 
-    ServiceResult startPatrol(const std::vector<Waypoint>& waypoints);
-
-무한 순찰을 시작합니다 ( ``setWaypoints(waypoints, 1, 0, true)`` 과 동일).
+    client.subscribeMapOdometry([](const raisin_sdk::RobotState& state) {
+        std::cout << "Map position: " << state.x << ", " << state.y << std::endl;
+    });
 
 **subscribeOdometry()**
 
 .. code-block:: cpp
 
-    void subscribeOdometry(std::function<void(const RobotState&)> callback);
+    void subscribeOdometry(OdometryCallback callback);
 
-Odometry 데이터를 실시간 구독합니다.
+Odom 프레임에서의 Odometry 데이터를 실시간 구독합니다 (Fast-LIO 원본 출력).
+맵 좌표가 필요하면 ``subscribeMapOdometry()`` 를 사용하세요.
 
 **subscribePointCloud()**
 
 .. code-block:: cpp
 
-    void subscribePointCloud(std::function<void(const std::vector<Point3D>&)> callback);
+    void subscribePointCloud(PointCloudCallback callback);
 
 LiDAR 포인트 클라우드를 실시간 구독합니다.
 
@@ -335,19 +480,11 @@ LiDAR 포인트 클라우드를 실시간 구독합니다.
 
 마지막으로 수신한 데이터를 반환합니다 (thread-safe).
 
-**loadPCD() (static)**
-
-.. code-block:: cpp
-
-    static std::vector<Point3D> loadPCD(const std::string& pcd_path);
-
-PCD 파일을 로드합니다 (로봇 전송 없이 시각화용).
-
 **subscribeRobotState()**
 
 .. code-block:: cpp
 
-    void subscribeRobotState(std::function<void(const ExtendedRobotState&)> callback);
+    void subscribeRobotState(ExtendedRobotStateCallback callback);
 
 확장 로봇 상태를 실시간 구독합니다. 배터리 정보, locomotion 상태, 액추에이터 상태 등을 포함합니다.
 
@@ -372,6 +509,9 @@ PCD 파일을 로드합니다 (로봇 전송 없이 시각화용).
 마지막으로 수신한 확장 로봇 상태를 반환합니다 (thread-safe).
 ``subscribeRobotState()`` 를 먼저 호출해야 유효한 데이터를 얻을 수 있습니다.
 
+Control Mode Switching
+----------------------
+
 **findGuiNetworkId()**
 
 .. code-block:: cpp
@@ -383,11 +523,6 @@ PCD 파일을 로드합니다 (로봇 전송 없이 시각화용).
 - ``prefix``: GUI ID 접두사 (기본값: "gui")
 - **반환**: GUI 네트워크 ID (예: "gui53-230486654196"), 없으면 빈 문자열
 
-.. code-block:: cpp
-
-    std::string guiId = client.findGuiNetworkId();
-    std::cout << "Connected GUI: " << guiId << std::endl;
-
 **setManualControl()**
 
 .. code-block:: cpp
@@ -396,13 +531,6 @@ PCD 파일을 로드합니다 (로봇 전송 없이 시각화용).
 
 수동 조이스틱 제어를 활성화합니다 (joy/gui).
 GUI 네트워크 ID를 자동 감지하여 해당 GUI에서 조이스틱 명령을 받을 수 있도록 합니다.
-
-- ``gui_network_id``: GUI 네트워크 ID (빈 문자열이면 자동 감지, 감지 실패 시 기존 ID 유지)
-- **반환**: 서비스 호출 결과
-
-.. note::
-    GUI 네트워크 ID를 자동 감지하지 못해도 서비스 호출은 성공합니다.
-    이 경우 로봇에 기존에 설정된 network_id가 유지됩니다.
 
 .. code-block:: cpp
 
@@ -418,8 +546,6 @@ GUI 네트워크 ID를 자동 감지하여 해당 GUI에서 조이스틱 명령�
     ServiceResult setAutonomousControl();
 
 자율주행 제어를 활성화합니다 (vel_cmd/autonomy).
-
-- **반환**: 서비스 호출 결과
 
 .. code-block:: cpp
 
@@ -437,21 +563,20 @@ GUI 네트워크 ID를 자동 감지하여 해당 GUI에서 조이스틱 명령�
 제어권을 해제합니다 (None 상태로 전환).
 
 - ``source``: 해제할 제어 소스 ("joy/gui" 또는 "vel_cmd/autonomy")
-- **반환**: 서비스 호출 결과
 
 .. code-block:: cpp
 
     client.releaseControl("joy/gui");
     client.releaseControl("vel_cmd/autonomy");
 
-.. note::
-    제어 상태는 ``ExtendedRobotState.joy_listen_type`` 으로 확인할 수 있습니다:
+**setListenSource()** (저수준 API)
 
-    - ``JOY (0)``: 수동 조이스틱 제어 활성 (joy/gui)
-    - ``VEL_CMD (1)``: 자율주행 속도 명령 수신 중 (vel_cmd/autonomy)
-    - ``NONE (2)``: 제어 소스 없음
+.. code-block:: cpp
 
-    ``setManualControl()`` 호출 시 GUI의 와이파이 아이콘이 초록색으로 변합니다.
+    ServiceResult setListenSource(const std::string& topic_name,
+                                   const std::string& network_id = "");
+
+직접 listen source를 설정합니다.
 
 Locomotion Control
 ------------------
@@ -463,15 +588,6 @@ Locomotion Control
     ServiceResult standUp();
 
 로봇을 일어서게 합니다.
-
-- **반환**: 서비스 호출 결과
-
-.. code-block:: cpp
-
-    auto result = client.standUp();
-    if (result.success) {
-        std::cout << "Robot standing up" << std::endl;
-    }
 
 .. warning::
     로봇이 안전한 위치에 있는지 확인한 후 호출하세요.
@@ -485,15 +601,6 @@ Locomotion Control
 
 로봇을 앉게 합니다.
 
-- **반환**: 서비스 호출 결과
-
-.. code-block:: cpp
-
-    auto result = client.sitDown();
-    if (result.success) {
-        std::cout << "Robot sitting down" << std::endl;
-    }
-
 .. note::
     로봇이 ``IN_CONTROL`` (걷는 중) 상태에서도 호출 가능합니다.
     로봇은 안전하게 멈추고 앉습니다.
@@ -505,11 +612,9 @@ Patrol Route Management
 
 .. code-block:: cpp
 
-    ListFilesResult listWaypointsFiles();
+    ListFilesResult listWaypointsFiles(const std::string& directory = "");
 
 저장된 순찰 경로 파일 목록을 조회합니다.
-
-- **반환**: 파일 목록 결과
 
 .. code-block:: cpp
 
@@ -525,18 +630,34 @@ Patrol Route Management
 
 .. code-block:: cpp
 
-    ServiceResult loadWaypointsFile(const std::string& filename);
+    ServiceResult loadWaypointsFile(const std::string& name);
 
 저장된 순찰 경로 파일을 로드합니다.
 
-- ``filename``: 로드할 파일 이름 (확장자 제외)
-- **반환**: 서비스 호출 결과
+- ``name``: 로드할 파일 이름 (예: "my_map/paths/route_1")
 
 .. code-block:: cpp
 
-    auto result = client.loadWaypointsFile("office_patrol");
+    auto result = client.loadWaypointsFile("office_floor1/paths/route_1");
     if (result.success) {
         std::cout << "Route loaded successfully" << std::endl;
+    }
+
+**saveWaypointsFile()**
+
+.. code-block:: cpp
+
+    ServiceResult saveWaypointsFile(const std::string& name);
+
+현재 waypoints를 파일로 저장합니다.
+
+- ``name``: 저장할 파일 이름 (확장자 제외)
+
+.. code-block:: cpp
+
+    auto result = client.saveWaypointsFile("my_map/paths/custom_route");
+    if (result.success) {
+        std::cout << "Route saved successfully" << std::endl;
     }
 
 **resumePatrol()**
@@ -547,8 +668,6 @@ Patrol Route Management
 
 현재 로드된 순찰 경로에서 가장 가까운 waypoint부터 순찰을 재개합니다.
 
-- **반환**: 순찰 재개 결과 (성공 여부, 메시지, 시작 waypoint 인덱스)
-
 .. code-block:: cpp
 
     auto result = client.resumePatrol();
@@ -558,134 +677,85 @@ Patrol Route Management
 
 .. note::
     ``loadWaypointsFile()`` 로 경로를 먼저 로드해야 합니다.
-    로봇의 현재 위치에서 가장 가까운 waypoint를 자동으로 찾아 순찰을 시작합니다.
 
-**loadAndResumePatrol()**
+Graph Management
+----------------
 
-.. code-block:: cpp
-
-    ResumePatrolResult loadAndResumePatrol(const std::string& filename);
-
-순찰 경로를 로드하고 즉시 가장 가까운 waypoint부터 순찰을 재개합니다.
-``loadWaypointsFile()`` + ``resumePatrol()`` 을 한 번에 수행합니다.
-
-- ``filename``: 로드할 파일 이름 (확장자 제외)
-- **반환**: 순찰 재개 결과
+**loadGraphFile()**
 
 .. code-block:: cpp
 
-    auto result = client.loadAndResumePatrol("office_patrol");
+    LoadGraphResult loadGraphFile(const std::string& name);
+
+그래프 파일을 로드합니다.
+
+- ``name``: 그래프 파일 이름 (예: "my_map/graph")
+
+.. code-block:: cpp
+
+    auto result = client.loadGraphFile("office_floor1/graph");
     if (result.success) {
-        std::cout << "Patrol started from waypoint " << (int)result.waypoint_index << std::endl;
-    } else {
-        std::cerr << "Failed: " << result.message << std::endl;
+        std::cout << "Graph loaded: " << result.nodes.size() << " nodes, "
+                  << result.edges.size() << " edges" << std::endl;
     }
 
-Map Management
---------------
-
-**listMapFiles()**
+**saveGraphFile()**
 
 .. code-block:: cpp
 
-    ListFilesResult listMapFiles(const std::string& directory = "");
+    ServiceResult saveGraphFile(const std::string& name,
+                                 const std::vector<GraphNode>& nodes,
+                                 const std::vector<GraphEdge>& edges);
 
-로봇에 저장된 맵 파일 목록을 조회합니다.
-
-- ``directory``: 조회할 디렉토리 (빈 문자열이면 기본 맵 디렉토리)
-- **반환**: 파일 목록 결과
+그래프를 파일로 저장합니다.
 
 .. code-block:: cpp
 
-    auto result = client.listMapFiles();
+    std::vector<raisin_sdk::GraphNode> nodes = {
+        {0, 0.0, 0.0, 0.0},
+        {1, 5.0, 0.0, 0.0},
+        {2, 5.0, 5.0, 0.0},
+    };
+    std::vector<raisin_sdk::GraphEdge> edges = {
+        {0, 1, 5.0},
+        {1, 0, 5.0},
+        {1, 2, 5.0},
+        {2, 1, 5.0},
+    };
+
+    auto result = client.saveGraphFile("my_map/graph", nodes, edges);
+
+**refineWaypoints()**
+
+.. code-block:: cpp
+
+    RefineWaypointsResult refineWaypoints(const std::vector<Waypoint>& waypoints,
+                                           const std::vector<GraphNode>& nodes,
+                                           const std::vector<GraphEdge>& edges);
+
+A* 알고리즘을 사용하여 그래프 기반으로 waypoints를 최적화합니다.
+입력 waypoints 사이의 경로를 그래프 노드를 따라가도록 세분화합니다.
+
+.. code-block:: cpp
+
+    // 시작점과 끝점만 지정
+    std::vector<raisin_sdk::Waypoint> waypoints = {
+        raisin_sdk::Waypoint("office_floor1", 0.0, 0.0),
+        raisin_sdk::Waypoint("office_floor1", 10.0, 10.0),
+    };
+
+    // 그래프 기반 경로 최적화
+    auto result = client.refineWaypoints(waypoints, graphNodes, graphEdges);
     if (result.success) {
-        std::cout << "Available maps:" << std::endl;
-        for (const auto& file : result.files) {
-            std::cout << "  - " << file << std::endl;
+        std::cout << "Refined path: " << result.refined_waypoints.size() << " waypoints" << std::endl;
+        std::cout << "Path nodes: ";
+        for (auto id : result.path_node_ids) {
+            std::cout << id << " -> ";
         }
-    }
+        std::cout << "end" << std::endl;
 
-**saveMap()**
-
-.. code-block:: cpp
-
-    ServiceResult saveMap(const std::string& name);
-
-현재 맵을 로봇에 저장합니다.
-
-- ``name``: 저장할 맵 이름
-- **반환**: 서비스 호출 결과
-
-.. code-block:: cpp
-
-    auto result = client.saveMap("office_floor1");
-    if (result.success) {
-        std::cout << "Map saved successfully" << std::endl;
-    }
-
-.. note::
-    매핑 모드에서 생성된 맵을 저장할 때 사용합니다.
-
-**loadMapFromRobot()**
-
-.. code-block:: cpp
-
-    ServiceResult loadMapFromRobot(const std::string& name);
-
-로봇에 저장된 맵을 로드합니다.
-
-- ``name``: 로드할 맵 이름
-- **반환**: 서비스 호출 결과
-
-.. code-block:: cpp
-
-    auto result = client.loadMapFromRobot("office_floor1");
-    if (result.success) {
-        std::cout << "Map loaded successfully" << std::endl;
-    }
-
-.. note::
-    ``setMap()`` 과 달리 로봇에 이미 저장된 맵을 로드합니다.
-    초기 위치는 맵 저장 시점의 위치가 사용됩니다.
-
-**startMapping()**
-
-.. code-block:: cpp
-
-    ServiceResult startMapping();
-
-매핑 모드를 시작합니다.
-
-- **반환**: 서비스 호출 결과
-
-.. code-block:: cpp
-
-    auto result = client.startMapping();
-    if (result.success) {
-        std::cout << "Mapping started" << std::endl;
-    }
-
-.. warning::
-    매핑 중에는 로봇을 수동으로 조작하여 환경을 스캔해야 합니다.
-    ``setManualControl()`` 로 수동 제어를 활성화한 후 사용하세요.
-
-**stopMapping()**
-
-.. code-block:: cpp
-
-    ServiceResult stopMapping();
-
-매핑 모드를 중지합니다.
-
-- **반환**: 서비스 호출 결과
-
-.. code-block:: cpp
-
-    auto result = client.stopMapping();
-    if (result.success) {
-        std::cout << "Mapping stopped" << std::endl;
-        // 맵 저장
-        client.saveMap("new_map");
+        // 최적화된 경로로 네비게이션 시작
+        client.setWaypoints(result.refined_waypoints, 1);
     }
 
 Actuator Status Helpers
@@ -698,9 +768,6 @@ Actuator Status Helpers
     bool isActuatorStatusError(uint16_t status);
 
 액추에이터 상태 코드가 에러 상태인지 확인합니다.
-
-- ``status``: CiA402 상태 코드
-- **반환**: 에러 상태이면 ``true``
 
 .. code-block:: cpp
 
@@ -717,9 +784,6 @@ Actuator Status Helpers
     std::string getActuatorStatusName(uint16_t status);
 
 액추에이터 상태 코드를 사람이 읽을 수 있는 문자열로 변환합니다.
-
-- ``status``: CiA402 상태 코드
-- **반환**: 상태 이름 문자열
 
 .. list-table::
    :header-rows: 1
@@ -741,7 +805,7 @@ Actuator Status Helpers
      - "SWITCHED_ON"
      - 스위치온
    * - 39
-     - "OPERATIONAL"
+     - "ENABLED"
      - 동작 중 (정상)
    * - 99
      - "ECAT_ERROR"

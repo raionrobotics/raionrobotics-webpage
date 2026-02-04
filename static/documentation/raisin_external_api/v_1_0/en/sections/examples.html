@@ -61,11 +61,19 @@
 <li class="toctree-l2"><a class="reference internal" href="api_example.html#include-header">Include Header</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_example.html#basic-workflow">Basic Workflow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_example.html#data-types">Data Types</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api_example.html#raisinclient-methods">RaisinClient Methods</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api_example.html#locomotion-control">Locomotion Control</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api_example.html#patrol-route-management">Patrol Route Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api_example.html#map-management">Map Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api_example.html#actuator-status-helpers">Actuator Status Helpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_example.html#raisinclient-methods">RaisinClient Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_example.html#connection">Connection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_example.html#map-loading">Map Loading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_example.html#waypoint-navigation">Waypoint Navigation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_example.html#patrol-route-management">Patrol Route Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_example.html#graph-management">Graph Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_example.html#subscriptions">Subscriptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_example.html#getters-thread-safe">Getters (Thread-safe)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_example.html#control-mode">Control Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_example.html#locomotion-control">Locomotion Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_example.html#actuator-status-helpers">Actuator Status Helpers</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="api_example.html#gps-usage-notes">GPS Usage Notes</a></li>
 </ul>
 </li>
@@ -79,23 +87,51 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="service_reference.html">Service Interface Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#planning-set-waypoints">planning/set_waypoints</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#planning-get-waypoints">planning/get_waypoints</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#planning-append-waypoint">planning/append_waypoint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#set-map-setlasermap">set_map (SetLaserMap)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#waypoint-message">Waypoint Message</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#set-listen-joy-control">set_listen (Joy Control)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#robot-state-topic">robot_state (Topic)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#stand-up">stand_up</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#sit-down">sit_down</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#planning-list-waypoints-files">planning/list_waypoints_files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#planning-load-waypoints-file">planning/load_waypoints_file</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#planning-resume-patrol">planning/resume_patrol</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#list-map-files">list_map_files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#save-laser-map">save_laser_map</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#load-laser-map">load_laser_map</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#start-mapping">start_mapping</a></li>
-<li class="toctree-l2"><a class="reference internal" href="service_reference.html#stop-mapping">stop_mapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#navigation-services">Navigation Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#planning-set-waypoints">planning/set_waypoints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#planning-get-waypoints">planning/get_waypoints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#planning-refine-waypoints">planning/refine_waypoints</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#patrol-route-services">Patrol Route Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#planning-list-waypoints-files">planning/list_waypoints_files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#planning-load-waypoints-file">planning/load_waypoints_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#planning-save-waypoints-file">planning/save_waypoints_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#planning-resume-patrol">planning/resume_patrol</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#graph-services">Graph Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#save-graph-file">save_graph_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#load-graph-file">load_graph_file</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#map-services">Map Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#list-map-files">list_map_files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#load-laser-map">load_laser_map</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#set-map-setlasermap">set_map (SetLaserMap)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#locomotion-services">Locomotion Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#stand-up">stand_up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#sit-down">sit_down</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#control-mode-services">Control Mode Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#set-listen-joy-control">set_listen (Joy Control)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#message-types">Message Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#waypoint">Waypoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#graphnode">GraphNode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#graphedge">GraphEdge</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#topics">Topics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#robot-state">robot_state</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#odometry">/Odometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="service_reference.html#cloud-registered">/cloud_registered</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Complete Examples</a><ul>
