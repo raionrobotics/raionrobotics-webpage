@@ -30,7 +30,6 @@ CMakeLists.txt Example
     find_package(Eigen3 REQUIRED)
     find_package(OpenSSL REQUIRED)
     find_package(PCL REQUIRED)
-    find_package(OpenCV REQUIRED)
 
     # Create executable
     add_executable(my_controller src/main.cpp)
@@ -49,7 +48,6 @@ CMakeLists.txt Example
         OpenSSL::SSL
         OpenSSL::Crypto
         ${PCL_LIBRARIES}
-        ${OpenCV_LIBS}
         pthread
     )
 

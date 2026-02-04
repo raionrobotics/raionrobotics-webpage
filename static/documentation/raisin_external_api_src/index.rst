@@ -25,7 +25,6 @@ Chapters
    sections/direct_network
    sections/service_reference
    sections/examples
-   sections/gui_demo
    sections/cmake
    sections/troubleshooting
    sections/faq
