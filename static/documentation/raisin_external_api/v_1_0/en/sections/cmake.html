@@ -21,7 +21,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Troubleshooting" href="troubleshooting.html" />
-    <link rel="prev" title="GUI Demo (simple_gui)" href="gui_demo.html" /> 
+    <link rel="prev" title="Complete Examples" href="examples.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -62,6 +62,10 @@
 <li class="toctree-l2"><a class="reference internal" href="api_example.html#basic-workflow">Basic Workflow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_example.html#data-types">Data Types</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_example.html#raisinclient-methods">RaisinClient Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_example.html#locomotion-control">Locomotion Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_example.html#patrol-route-management">Patrol Route Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_example.html#map-management">Map Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_example.html#actuator-status-helpers">Actuator Status Helpers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_example.html#gps-usage-notes">GPS Usage Notes</a></li>
 </ul>
 </li>
@@ -82,6 +86,16 @@
 <li class="toctree-l2"><a class="reference internal" href="service_reference.html#waypoint-message">Waypoint Message</a></li>
 <li class="toctree-l2"><a class="reference internal" href="service_reference.html#set-listen-joy-control">set_listen (Joy Control)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="service_reference.html#robot-state-topic">robot_state (Topic)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#stand-up">stand_up</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#sit-down">sit_down</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#planning-list-waypoints-files">planning/list_waypoints_files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#planning-load-waypoints-file">planning/load_waypoints_file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#planning-resume-patrol">planning/resume_patrol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#list-map-files">list_map_files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#save-laser-map">save_laser_map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#load-laser-map">load_laser_map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#start-mapping">start_mapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service_reference.html#stop-mapping">stop_mapping</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Complete Examples</a><ul>
@@ -95,14 +109,6 @@
 <li class="toctree-l2"><a class="reference internal" href="examples.html#pointcloud-subscription-lidar">PointCloud Subscription (LiDAR)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html#map-loading-and-localization">Map Loading and Localization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html#mission-status-query">Mission Status Query</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="gui_demo.html">GUI Demo (simple_gui)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="gui_demo.html#usage">Usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gui_demo.html#workflow">Workflow</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gui_demo.html#keyboard-shortcuts">Keyboard Shortcuts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gui_demo.html#mouse-controls">Mouse Controls</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gui_demo.html#status-display">Status Display</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">CMake Integration</a><ul>
@@ -224,7 +230,6 @@
 <span class="nb">find_package</span><span class="p">(</span><span class="s">Eigen3</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
 <span class="nb">find_package</span><span class="p">(</span><span class="s">OpenSSL</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
 <span class="nb">find_package</span><span class="p">(</span><span class="s">PCL</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
-<span class="nb">find_package</span><span class="p">(</span><span class="s">OpenCV</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
 
 <span class="c"># Create executable</span>
 <span class="nb">add_executable</span><span class="p">(</span><span class="s">my_controller</span><span class="w"> </span><span class="s">src/main.cpp</span><span class="p">)</span>
@@ -243,7 +248,6 @@
 <span class="w">    </span><span class="s">OpenSSL::SSL</span>
 <span class="w">    </span><span class="s">OpenSSL::Crypto</span>
 <span class="w">    </span><span class="o">${</span><span class="nv">PCL_LIBRARIES</span><span class="o">}</span>
-<span class="w">    </span><span class="o">${</span><span class="nv">OpenCV_LIBS</span><span class="o">}</span>
 <span class="w">    </span><span class="s">pthread</span>
 <span class="p">)</span>
 
