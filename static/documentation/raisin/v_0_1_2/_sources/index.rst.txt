@@ -1,0 +1,30 @@
+#############################
+Raisin v\ |raisin_version|
+#############################
+
+Raisin is a software framework of Raion Robotics.
+It is designed to control and communicate with robots.
+It is composed of raisin packages.
+Raisin packages are cmake packages that follow raisin cmake guidelines.
+Core raisin packages are distributed as a binary package, and can be pulled from Raion Robotics repository.
+
+System requirements
+=====================
+
+* Supported OS: Ubuntu 20.04 or higher
+* Supported CPU architecture: X86 and arm
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Chapters
+
+   sections/Introduction
+   sections/Installation
+   sections/RaisinNetwork
+   sections/Plugin
+   sections/Parameter
+   sections/DataLogger
+   sections/RaiboNode
+   sections/RaisinGui
+   sections/Ros2Messages
+   sections/Reference

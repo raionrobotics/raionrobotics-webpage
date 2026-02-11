@@ -1,0 +1,11 @@
+table.fixed-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+table.fixed-table td,
+table.fixed-table th {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+}

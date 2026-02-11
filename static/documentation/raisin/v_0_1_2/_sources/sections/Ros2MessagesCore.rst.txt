@@ -1,0 +1,801 @@
+#######################
+Core ROS2 Message Types
+#######################
+
+Definitions are sourced from ``release/install/raisin_ros2_messages/ubuntu/22.04/x86_64/release/messages``. Only the public message schemas are documented here.
+
+Messages
+********
+
+builtin_interfaces
+==================
+
+- ``Duration``:
+  - Fields:
+    - ``int32 sec``
+    - ``uint32 nanosec``
+
+- ``Time``:
+  - Fields:
+    - ``int32 sec``
+    - ``uint32 nanosec``
+
+std_msgs
+========
+
+- ``Bool``:
+  - Fields:
+    - ``bool data``
+
+- ``Byte``:
+  - Fields:
+    - ``byte data``
+
+- ``ByteMultiArray``:
+  - Fields:
+    - ``MultiArrayLayout layout``
+    - ``byte[] data``
+
+- ``Char``:
+  - Fields:
+    - ``char data``
+
+- ``ColorRGBA``:
+  - Fields:
+    - ``float32 r``
+    - ``float32 g``
+    - ``float32 b``
+    - ``float32 a``
+
+- ``Empty``:
+  - Fields:
+    - (none)
+
+- ``Float32``:
+  - Fields:
+    - ``float32 data``
+
+- ``Float32MultiArray``:
+  - Fields:
+    - ``MultiArrayLayout layout``
+    - ``float32[] data``
+
+- ``Float64``:
+  - Fields:
+    - ``float64 data``
+
+- ``Float64MultiArray``:
+  - Fields:
+    - ``MultiArrayLayout layout``
+    - ``float64[] data``
+
+- ``Header``:
+  - Fields:
+    - ``builtin_interfaces/Time stamp``
+    - ``string frame_id``
+
+- ``Int16``:
+  - Fields:
+    - ``int16 data``
+
+- ``Int16MultiArray``:
+  - Fields:
+    - ``MultiArrayLayout layout``
+    - ``int16[] data``
+
+- ``Int32``:
+  - Fields:
+    - ``int32 data``
+
+- ``Int32MultiArray``:
+  - Fields:
+    - ``MultiArrayLayout layout``
+    - ``int32[] data``
+
+- ``Int64``:
+  - Fields:
+    - ``int64 data``
+
+- ``Int64MultiArray``:
+  - Fields:
+    - ``MultiArrayLayout layout``
+    - ``int64[] data``
+
+- ``Int8``:
+  - Fields:
+    - ``int8 data``
+
+- ``Int8MultiArray``:
+  - Fields:
+    - ``MultiArrayLayout layout``
+    - ``int8[] data``
+
+- ``MultiArrayDimension``:
+  - Fields:
+    - ``string label``
+    - ``uint32 size``
+    - ``uint32 stride``
+
+- ``MultiArrayLayout``:
+  - Fields:
+    - ``MultiArrayDimension[] dim``
+    - ``uint32 data_offset``
+
+- ``String``:
+  - Fields:
+    - ``string data``
+
+- ``UInt16``:
+  - Fields:
+    - ``uint16 data``
+
+- ``UInt16MultiArray``:
+  - Fields:
+    - ``MultiArrayLayout layout``
+    - ``uint16[] data``
+
+- ``UInt32``:
+  - Fields:
+    - ``uint32 data``
+
+- ``UInt32MultiArray``:
+  - Fields:
+    - ``MultiArrayLayout layout``
+    - ``uint32[] data``
+
+- ``UInt64``:
+  - Fields:
+    - ``uint64 data``
+
+- ``UInt64MultiArray``:
+  - Fields:
+    - ``MultiArrayLayout layout``
+    - ``uint64[] data``
+
+- ``UInt8``:
+  - Fields:
+    - ``uint8 data``
+
+- ``UInt8MultiArray``:
+  - Fields:
+    - ``MultiArrayLayout layout``
+    - ``uint8[] data``
+
+geometry_msgs
+=============
+
+- ``Accel``:
+  - Fields:
+    - ``Vector3 linear``
+    - ``Vector3 angular``
+
+- ``AccelStamped``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``Accel accel``
+
+- ``AccelWithCovariance``:
+  - Fields:
+    - ``Accel accel``
+    - ``float64[36] covariance``
+
+- ``AccelWithCovarianceStamped``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``AccelWithCovariance accel``
+
+- ``Inertia``:
+  - Fields:
+    - ``float64 m``
+    - ``geometry_msgs/Vector3 com``
+    - ``float64 ixx``
+    - ``float64 ixy``
+    - ``float64 ixz``
+    - ``float64 iyy``
+    - ``float64 iyz``
+    - ``float64 izz``
+
+- ``InertiaStamped``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``Inertia inertia``
+
+- ``Point``:
+  - Fields:
+    - ``float64 x``
+    - ``float64 y``
+    - ``float64 z``
+
+- ``Point32``:
+  - Fields:
+    - ``float32 x``
+    - ``float32 y``
+    - ``float32 z``
+
+- ``PointStamped``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``Point point``
+
+- ``Polygon``:
+  - Fields:
+    - ``Point32[] points``
+
+- ``PolygonInstance``:
+  - Fields:
+    - ``geometry_msgs/Polygon polygon``
+    - ``int64 id``
+
+- ``PolygonInstanceStamped``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``geometry_msgs/PolygonInstance polygon``
+
+- ``PolygonStamped``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``Polygon polygon``
+
+- ``Pose``:
+  - Fields:
+    - ``Point position``
+    - ``Quaternion orientation``
+
+- ``Pose2D``:
+  - Fields:
+    - ``float64 x``
+    - ``float64 y``
+    - ``float64 theta``
+
+- ``PoseArray``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``Pose[] poses``
+
+- ``PoseStamped``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``Pose pose``
+
+- ``PoseWithCovariance``:
+  - Fields:
+    - ``Pose pose``
+    - ``float64[36] covariance``
+
+- ``PoseWithCovarianceStamped``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``PoseWithCovariance pose``
+
+- ``Quaternion``:
+  - Fields:
+    - ``float64 x``
+    - ``float64 y``
+    - ``float64 z``
+    - ``float64 w``
+
+- ``QuaternionStamped``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``Quaternion quaternion``
+
+- ``Transform``:
+  - Fields:
+    - ``Vector3 translation``
+    - ``Quaternion rotation``
+
+- ``TransformStamped``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``string child_frame_id``
+    - ``Transform transform``
+
+- ``Twist``:
+  - Fields:
+    - ``Vector3 linear``
+    - ``Vector3 angular``
+
+- ``TwistStamped``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``Twist twist``
+
+- ``TwistWithCovariance``:
+  - Fields:
+    - ``Twist twist``
+    - ``float64[36] covariance``
+
+- ``TwistWithCovarianceStamped``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``TwistWithCovariance twist``
+
+- ``Vector3``:
+  - Fields:
+    - ``float64 x``
+    - ``float64 y``
+    - ``float64 z``
+
+- ``Vector3Stamped``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``Vector3 vector``
+
+- ``VelocityStamped``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``string body_frame_id``
+    - ``string reference_frame_id``
+    - ``Twist velocity``
+
+- ``Wrench``:
+  - Fields:
+    - ``Vector3 force``
+    - ``Vector3 torque``
+
+- ``WrenchStamped``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``Wrench wrench``
+
+sensor_msgs
+===========
+
+- ``BatteryState``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``float32 voltage``
+    - ``float32 temperature``
+    - ``float32 current``
+    - ``float32 charge``
+    - ``float32 capacity``
+    - ``float32 design_capacity``
+    - ``float32 percentage``
+    - ``uint8 power_supply_status``
+    - ``uint8 power_supply_health``
+    - ``uint8 power_supply_technology``
+    - ``bool present``
+    - ``float32[] cell_voltage``
+    - ``float32[] cell_temperature``
+    - ``string location``
+    - ``string serial_number``
+  - Constants:
+    - ``uint8 POWER_SUPPLY_STATUS_UNKNOWN=0``
+    - ``uint8 POWER_SUPPLY_STATUS_CHARGING=1``
+    - ``uint8 POWER_SUPPLY_STATUS_DISCHARGING=2``
+    - ``uint8 POWER_SUPPLY_STATUS_NOT_CHARGING=3``
+    - ``uint8 POWER_SUPPLY_STATUS_FULL=4``
+    - ``uint8 POWER_SUPPLY_HEALTH_UNKNOWN=0``
+    - ``uint8 POWER_SUPPLY_HEALTH_GOOD=1``
+    - ``uint8 POWER_SUPPLY_HEALTH_OVERHEAT=2``
+    - ``uint8 POWER_SUPPLY_HEALTH_DEAD=3``
+    - ``uint8 POWER_SUPPLY_HEALTH_OVERVOLTAGE=4``
+    - ``uint8 POWER_SUPPLY_HEALTH_UNSPEC_FAILURE=5``
+    - ``uint8 POWER_SUPPLY_HEALTH_COLD=6``
+    - ``uint8 POWER_SUPPLY_HEALTH_WATCHDOG_TIMER_EXPIRE=7``
+    - ``uint8 POWER_SUPPLY_HEALTH_SAFETY_TIMER_EXPIRE=8``
+    - ``uint8 POWER_SUPPLY_TECHNOLOGY_UNKNOWN=0``
+    - ``uint8 POWER_SUPPLY_TECHNOLOGY_NIMH=1``
+    - ``uint8 POWER_SUPPLY_TECHNOLOGY_LION=2``
+    - ``uint8 POWER_SUPPLY_TECHNOLOGY_LIPO=3``
+    - ``uint8 POWER_SUPPLY_TECHNOLOGY_LIFE=4``
+    - ``uint8 POWER_SUPPLY_TECHNOLOGY_NICD=5``
+    - ``uint8 POWER_SUPPLY_TECHNOLOGY_LIMN=6``
+    - ``uint8 POWER_SUPPLY_TECHNOLOGY_TERNARY=7``
+    - ``uint8 POWER_SUPPLY_TECHNOLOGY_VRLA=8``
+
+- ``CameraInfo``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``uint32 height``
+    - ``uint32 width``
+    - ``string distortion_model``
+    - ``float64[] d``
+    - ``float64[9] k``
+    - ``float64[9] r``
+    - ``float64[12] p``
+    - ``uint32 binning_x``
+    - ``uint32 binning_y``
+    - ``RegionOfInterest roi``
+
+- ``ChannelFloat32``:
+  - Fields:
+    - ``string name``
+    - ``float32[] values``
+
+- ``CompressedImage``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``string format``
+    - ``uint8[] data``
+
+- ``FluidPressure``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``float64 fluid_pressure``
+    - ``float64 variance``
+
+- ``Illuminance``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``float64 illuminance``
+    - ``float64 variance``
+
+- ``Image``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``uint32 height``
+    - ``uint32 width``
+    - ``string encoding``
+    - ``uint8 is_bigendian``
+    - ``uint32 step``
+    - ``uint8[] data``
+
+- ``Imu``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``geometry_msgs/Quaternion orientation``
+    - ``float64[9] orientation_covariance``
+    - ``geometry_msgs/Vector3 angular_velocity``
+    - ``float64[9] angular_velocity_covariance``
+    - ``geometry_msgs/Vector3 linear_acceleration``
+    - ``float64[9] linear_acceleration_covariance``
+
+- ``JointState``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``string[] name``
+    - ``float64[] position``
+    - ``float64[] velocity``
+    - ``float64[] effort``
+
+- ``Joy``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``float32[] axes``
+    - ``int32[] buttons``
+
+- ``JoyFeedback``:
+  - Fields:
+    - ``uint8 type``
+    - ``uint8 id``
+    - ``float32 intensity``
+  - Constants:
+    - ``uint8 TYPE_LED=0``
+    - ``uint8 TYPE_RUMBLE=1``
+    - ``uint8 TYPE_BUZZER=2``
+
+- ``JoyFeedbackArray``:
+  - Fields:
+    - ``JoyFeedback[] array``
+
+- ``LaserEcho``:
+  - Fields:
+    - ``float32[] echoes``
+
+- ``LaserScan``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``float32 angle_min``
+    - ``float32 angle_max``
+    - ``float32 angle_increment``
+    - ``float32 time_increment``
+    - ``float32 scan_time``
+    - ``float32 range_min``
+    - ``float32 range_max``
+    - ``float32[] ranges``
+    - ``float32[] intensities``
+
+- ``MagneticField``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``geometry_msgs/Vector3 magnetic_field``
+    - ``float64[9] magnetic_field_covariance``
+
+- ``MultiDOFJointState``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``string[] joint_names``
+    - ``geometry_msgs/Transform[] transforms``
+    - ``geometry_msgs/Twist[] twist``
+    - ``geometry_msgs/Wrench[] wrench``
+
+- ``MultiEchoLaserScan``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``float32 angle_min``
+    - ``float32 angle_max``
+    - ``float32 angle_increment``
+    - ``float32 time_increment``
+    - ``float32 scan_time``
+    - ``float32 range_min``
+    - ``float32 range_max``
+    - ``LaserEcho[] ranges``
+    - ``LaserEcho[] intensities``
+
+- ``NavSatFix``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``NavSatStatus status``
+    - ``float64 latitude``
+    - ``float64 longitude``
+    - ``float64 altitude``
+    - ``float64[9] position_covariance``
+    - ``uint8 position_covariance_type``
+  - Constants:
+    - ``uint8 COVARIANCE_TYPE_UNKNOWN=0``
+    - ``uint8 COVARIANCE_TYPE_APPROXIMATED=1``
+    - ``uint8 COVARIANCE_TYPE_DIAGONAL_KNOWN=2``
+    - ``uint8 COVARIANCE_TYPE_KNOWN=3``
+
+- ``NavSatStatus``:
+  - Fields:
+    - ``int8 status``
+    - ``uint16 service``
+  - Constants:
+    - ``int8 STATUS_UNKNOWN=-2``
+    - ``int8 STATUS_NO_FIX=-1``
+    - ``int8 STATUS_FIX=0``
+    - ``int8 STATUS_SBAS_FIX=1``
+    - ``int8 STATUS_GBAS_FIX=2``
+    - ``uint16 SERVICE_UNKNOWN=0``
+    - ``uint16 SERVICE_GPS=1``
+    - ``uint16 SERVICE_GLONASS=2``
+    - ``uint16 SERVICE_COMPASS=4``
+    - ``uint16 SERVICE_GALILEO=8``
+
+- ``PointCloud``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``geometry_msgs/Point32[] points``
+    - ``ChannelFloat32[] channels``
+
+- ``PointCloud2``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``uint32 height``
+    - ``uint32 width``
+    - ``PointField[] fields``
+    - ``bool is_bigendian``
+    - ``uint32 point_step``
+    - ``uint32 row_step``
+    - ``uint8[] data``
+    - ``bool is_dense``
+
+- ``PointField``:
+  - Fields:
+    - ``string name``
+    - ``uint32 offset``
+    - ``uint8 datatype``
+    - ``uint32 count``
+  - Constants:
+    - ``uint8 INT8=1``
+    - ``uint8 UINT8=2``
+    - ``uint8 INT16=3``
+    - ``uint8 UINT16=4``
+    - ``uint8 INT32=5``
+    - ``uint8 UINT32=6``
+    - ``uint8 FLOAT32=7``
+    - ``uint8 FLOAT64=8``
+
+- ``Range``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``uint8 radiation_type``
+    - ``float32 field_of_view``
+    - ``float32 min_range``
+    - ``float32 max_range``
+    - ``float32 range``
+    - ``float32 variance``
+  - Constants:
+    - ``uint8 ULTRASOUND=0``
+    - ``uint8 INFRARED=1``
+
+- ``RegionOfInterest``:
+  - Fields:
+    - ``uint32 x_offset``
+    - ``uint32 y_offset``
+    - ``uint32 height``
+    - ``uint32 width``
+    - ``bool do_rectify``
+
+- ``RelativeHumidity``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``float64 relative_humidity``
+    - ``float64 variance``
+
+- ``Temperature``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``float64 temperature``
+    - ``float64 variance``
+
+- ``TimeReference``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``builtin_interfaces/Time time_ref``
+    - ``string source``
+
+nav_msgs
+========
+
+- ``GridCells``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``float32 cell_width``
+    - ``float32 cell_height``
+    - ``geometry_msgs/Point[] cells``
+
+- ``MapMetaData``:
+  - Fields:
+    - ``builtin_interfaces/Time map_load_time``
+    - ``float32 resolution``
+    - ``uint32 width``
+    - ``uint32 height``
+    - ``geometry_msgs/Pose origin``
+
+- ``OccupancyGrid``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``MapMetaData info``
+    - ``int8[] data``
+
+- ``Odometry``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``string child_frame_id``
+    - ``geometry_msgs/PoseWithCovariance pose``
+    - ``geometry_msgs/TwistWithCovariance twist``
+
+- ``Path``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``geometry_msgs/PoseStamped[] poses``
+
+trajectory_msgs
+===============
+
+- ``JointTrajectory``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``string[] joint_names``
+    - ``JointTrajectoryPoint[] points``
+
+- ``JointTrajectoryPoint``:
+  - Fields:
+    - ``float64[] positions``
+    - ``float64[] velocities``
+    - ``float64[] accelerations``
+    - ``float64[] effort``
+    - ``builtin_interfaces/Duration time_from_start``
+
+- ``MultiDOFJointTrajectory``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``string[] joint_names``
+    - ``MultiDOFJointTrajectoryPoint[] points``
+
+- ``MultiDOFJointTrajectoryPoint``:
+  - Fields:
+    - ``geometry_msgs/Transform[] transforms``
+    - ``geometry_msgs/Twist[] velocities``
+    - ``geometry_msgs/Twist[] accelerations``
+    - ``builtin_interfaces/Duration time_from_start``
+
+tf2_msgs
+========
+
+- ``TF2Error``:
+  - Fields:
+    - ``uint8 error``
+    - ``string error_string``
+  - Constants:
+    - ``uint8 NO_ERROR=0``
+    - ``uint8 LOOKUP_ERROR=1``
+    - ``uint8 CONNECTIVITY_ERROR=2``
+    - ``uint8 EXTRAPOLATION_ERROR=3``
+    - ``uint8 INVALID_ARGUMENT_ERROR=4``
+    - ``uint8 TIMEOUT_ERROR=5``
+    - ``uint8 TRANSFORM_ERROR=6``
+
+- ``TFMessage``:
+  - Fields:
+    - ``geometry_msgs/TransformStamped[] transforms``
+
+unique_identifier_msgs
+======================
+
+- ``UUID``:
+  - Fields:
+    - ``uint8[16] uuid``
+
+rosgraph_msgs
+=============
+
+- ``Clock``:
+  - Fields:
+    - ``builtin_interfaces/Time clock``
+
+Services
+********
+
+std_srvs
+========
+
+- ``Empty``:
+  - Request fields:
+    - (none)
+  - Response fields:
+    - (none)
+
+- ``SetBool``:
+  - Request fields:
+    - ``bool data``
+  - Response fields:
+    - ``bool success``
+    - ``string message``
+
+- ``Trigger``:
+  - Request fields:
+    - (none)
+  - Response fields:
+    - ``bool success``
+    - ``string message``
+
+sensor_msgs
+===========
+
+- ``SetCameraInfo``:
+  - Request fields:
+    - ``sensor_msgs/CameraInfo camera_info``
+  - Response fields:
+    - ``bool success``
+    - ``string status_message``
+
+nav_msgs
+========
+
+- ``GetMap``:
+  - Request fields:
+    - (none)
+  - Response fields:
+    - ``OccupancyGrid map``
+
+- ``GetPlan``:
+  - Request fields:
+    - ``geometry_msgs/PoseStamped start``
+    - ``geometry_msgs/PoseStamped goal``
+    - ``float32 tolerance``
+  - Response fields:
+    - ``Path plan``
+
+- ``LoadMap``:
+  - Request fields:
+    - ``string map_url``
+  - Response fields:
+    - ``nav_msgs/OccupancyGrid map``
+    - ``uint8 result``
+  - Response constants:
+    - ``uint8 RESULT_SUCCESS=0``
+    - ``uint8 RESULT_MAP_DOES_NOT_EXIST=1``
+    - ``uint8 RESULT_INVALID_MAP_DATA=2``
+    - ``uint8 RESULT_INVALID_MAP_METADATA=3``
+    - ``uint8 RESULT_UNDEFINED_FAILURE=255``
+
+- ``SetMap``:
+  - Request fields:
+    - ``nav_msgs/OccupancyGrid map``
+    - ``geometry_msgs/PoseWithCovarianceStamped initial_pose``
+  - Response fields:
+    - ``bool success``
+
+tf2_msgs
+========
+
+- ``FrameGraph``:
+  - Request fields:
+    - (none)
+  - Response fields:
+    - ``string frame_yaml``
+

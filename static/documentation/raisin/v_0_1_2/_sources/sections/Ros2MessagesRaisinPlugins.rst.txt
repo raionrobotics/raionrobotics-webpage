@@ -1,0 +1,109 @@
+###########################
+Raisin Plugin Message Types
+###########################
+
+Definitions are sourced from ``release/install/raisin_ros2_messages/ubuntu/22.04/x86_64/release/messages``. Only the public message schemas are documented here.
+
+Messages
+********
+
+raisin_fast_lio_plugin
+======================
+
+- ``Pose6D``:
+  - Fields:
+    - ``float64 offset_time``
+    - ``float64[3] acc``
+    - ``float64[3] gyr``
+    - ``float64[3] vel``
+    - ``float64[3] pos``
+    - ``float64[9] rot``
+
+raisin_ffmpeg_image_transport
+=============================
+
+- ``FFMPEGPacket``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``uint8[] data``
+    - ``int32 width``
+    - ``int32 height``
+    - ``string encoding``
+    - ``uint64 pts``
+    - ``uint8 flags``
+    - ``bool is_bigendian``
+
+raisin_livox_lidar_plugin
+=========================
+
+- ``CustomMsg``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``uint64 timebase``
+    - ``uint32 point_num``
+    - ``uint8 lidar_id``
+    - ``uint8[3] rsvd``
+    - ``CustomPoint[] points``
+
+- ``CustomPoint``:
+  - Fields:
+    - ``uint32 offset_time``
+    - ``float32 x``
+    - ``float32 y``
+    - ``float32 z``
+    - ``uint8 reflectivity``
+    - ``uint8 tag``
+    - ``uint8 line``
+
+raisin_thread_pool
+==================
+
+- ``ThreadPoolProfile``:
+  - Fields:
+    - (none)
+
+- ``ThreadProfile``:
+  - Fields:
+    - (none)
+
+raisin_yolov8_msg
+=================
+
+- ``DetectedObject``:
+  - Fields:
+    - ``string class_name``
+    - ``float32 confidence``
+    - ``int32 x``
+    - ``int32 y``
+    - ``int32 width``
+    - ``int32 height``
+
+Services
+********
+
+raisin_grid_mapping_plugin
+==========================
+
+- ``GetInpaintmap``:
+  - Request fields:
+    - (none)
+  - Response fields:
+    - ``bool success``
+    - ``string message``
+    - ``int32 sample_x``
+    - ``int32 sample_y``
+    - ``float64 size_x``
+    - ``float64 size_y``
+    - ``float64 center_x``
+    - ``float64 center_y``
+    - ``float64[] inpaint_height_vec``
+
+raisin_yolov8_msg
+=================
+
+- ``Detection``:
+  - Request fields:
+    - ``sensor_msgs/Image image``
+  - Response fields:
+    - ``DetectedObject[] detection``
+

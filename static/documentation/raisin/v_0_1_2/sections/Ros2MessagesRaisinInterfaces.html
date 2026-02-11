@@ -1,0 +1,778 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raisin Interfaces Message Types &mdash; raisin 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-dropdown.css?v=995e94df" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-bootstrap.min.css?v=21c0b90a" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4b025565" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Raisin Plugin Message Types" href="Ros2MessagesRaisinPlugins.html" />
+    <link rel="prev" title="ROS2 Message Types" href="Ros2Messages.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            raisin
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Chapters</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinNetwork.html">Raisin Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Plugin.html">Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Parameter.html">Parameter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DataLogger.html">DataLogger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaiboNode.html">RaiboNode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinGui.html">Raisin Gui</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Ros2Messages.html">ROS2 Message Types</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Raisin Interfaces Message Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#messages">Messages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#raisin-interfaces">raisin_interfaces</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#services">Services</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">raisin_interfaces</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesRaisinPlugins.html">Raisin Plugin Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesRaisinTests.html">Raisin Test Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesCore.html">Core ROS2 Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesRuntime.html">ROS2 Runtime and Introspection Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesVisualization.html">Visualization and Diagnostics Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesGnss.html">GNSS and RTCM Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesTestMsgs.html">ROS2 Test Message Types</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Reference.html">Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">raisin</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="Ros2Messages.html">ROS2 Message Types</a></li>
+      <li class="breadcrumb-item active">Raisin Interfaces Message Types</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="raisin-interfaces-message-types">
+<h1>Raisin Interfaces Message Types<a class="headerlink" href="#raisin-interfaces-message-types" title="Link to this heading"></a></h1>
+<p>Definitions are sourced from <code class="docutils literal notranslate"><span class="pre">release/install/raisin_ros2_messages/ubuntu/22.04/x86_64/release/messages</span></code>. Only the public message schemas are documented here.</p>
+<section id="messages">
+<h2>Messages<a class="headerlink" href="#messages" title="Link to this heading"></a></h2>
+<section id="raisin-interfaces">
+<h3>raisin_interfaces<a class="headerlink" href="#raisin-interfaces" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">ActuatorState</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">position</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">velocity</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">effort</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint16</span> <span class="pre">status</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">temperature</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ActuatorStates</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">num_actuators</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ActuatorState[]</span> <span class="pre">actuator_states</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AudioData</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8[]</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Command</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">x_pos</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">y_pos</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">x_vel</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">y_vel</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">yaw_rate</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">pitch_angle</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">body_height</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">pan_dir</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">tilt_dir</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FfmpegPacket</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8[]</span> <span class="pre">data</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">width</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">height</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">encoding</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint64</span> <span class="pre">pts</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">flags</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">is_bigendian</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Heightmap</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">sample_x</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">sample_y</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">size_x</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">size_y</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">center_x</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">center_y</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[]</span> <span class="pre">height_vec</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8[]</span> <span class="pre">color</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Imu</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">quaternion_w</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">quaternion_x</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">quaternion_y</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">quaternion_z</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">angular_velocity_x</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">angular_velocity_y</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">angular_velocity_z</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">linear_acceleration_x</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">linear_acceleration_y</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">linear_acceleration_z</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JointState</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">joint_position</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">joint_velocity</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JointStates</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">timestamp</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">num_joints</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JointState[]</span> <span class="pre">joint_states</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JointTarget</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">target_position</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">target_velocity</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">p_gain</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">d_gain</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JointTargets</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">num_joints</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JointTarget[]</span> <span class="pre">joint_targets</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JoyListen</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">topic</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">network_id</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">selected</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">online</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JoyRange</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[]</span> <span class="pre">p_scale</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[]</span> <span class="pre">n_scale</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Log</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">data</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int8</span> <span class="pre">level</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ModuleList</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string[]</span> <span class="pre">controllers</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">loaded_controller</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">raisin_interfaces/PluginState[]</span> <span class="pre">plugin_states</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Parameter</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">value</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">type</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string[]</span> <span class="pre">options</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PasswordStatus</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">int8</span> <span class="pre">status</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int64</span> <span class="pre">failed_attempts</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int64</span> <span class="pre">lockout_time</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int64</span> <span class="pre">failed_attempts_max</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PluginState</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">is_loaded</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">is_loadable</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">is_unloadable</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Pose</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">timestamp</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[3]</span> <span class="pre">position</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[4]</span> <span class="pre">quaternion</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">QuadrupedState</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[3]</span> <span class="pre">position</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[4]</span> <span class="pre">quaternion</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[12]</span> <span class="pre">joint_positon</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RobotState</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">timestamp</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ActuatorState[]</span> <span class="pre">actuator_states</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[3]</span> <span class="pre">base_pos</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[4]</span> <span class="pre">base_quat</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[3]</span> <span class="pre">base_lin_vel</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[3]</span> <span class="pre">base_ang_vel</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Imu</span> <span class="pre">imu</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">max_voltage</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">min_voltage</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">max_current</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">voltage</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">current</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">body_temperature</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">state</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">joy_listen_type</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JoyListen[]</span> <span class="pre">joy_listen_state</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ScopeTimeMeasurement</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">id</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">total_time</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">count</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">State</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[3]</span> <span class="pre">position</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[9]</span> <span class="pre">orientation</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[3]</span> <span class="pre">translation</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[9]</span> <span class="pre">rotation</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TaskProfile</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">execute_count</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint64</span> <span class="pre">delay_sum</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint64</span> <span class="pre">execution_time</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ThreadPoolProfile</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ThreadProfile[]</span> <span class="pre">thread_pool_profiles</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ThreadProfile</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TaskProfile[]</span> <span class="pre">event_task_profiles</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TaskProfile[]</span> <span class="pre">periodic_task_profiles</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TimeProfile</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">cpu_usage</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">memory_usage</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">disk_usage</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">cpu_temperature</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ScopeTimeMeasurement[]</span> <span class="pre">scope_measurements</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VelocityCommand</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">x_vel</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">y_vel</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">yaw_rate</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Waypoint</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">frame</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">x</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">y</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">z</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">use_z</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+</section>
+<section id="services">
+<h2>Services<a class="headerlink" href="#services" title="Link to this heading"></a></h2>
+<section id="id1">
+<h3>raisin_interfaces<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">AppendWaypoint</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Waypoint</span> <span class="pre">waypoint</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">message</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AudioDevices</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(none)</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">string[]</span> <span class="pre">devices</span></code>
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">message</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Float64</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">message</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Float64AndAxis</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">int8</span> <span class="pre">pnb</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int16</span> <span class="pre">axis</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">message</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GetFloat64</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(none)</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">message</span></code>
+- <code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">data</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GetParameters</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(none)</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">Parameter[]</span> <span class="pre">param</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GetWaypoints</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(none)</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">message</span></code>
+- <code class="docutils literal notranslate"><span class="pre">Waypoint[]</span> <span class="pre">waypoints</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">repetition</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">current_index</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Log</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">data</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int8</span> <span class="pre">level</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">message</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LogTree</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(none)</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">username</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">prefix</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">ssh_port</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string[]</span> <span class="pre">dirs</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int32[]</span> <span class="pre">sizes</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Password</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">id</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">pw</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">message</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RobotDescription</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(none)</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code>
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">is_real_robot</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">robot_model</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">robot_nickname</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">serial_number</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">driver_version</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">robot_software_version</span></code>
+- <code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">max_voltage</span></code>
+- <code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">min_voltage</span></code>
+- <code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">max_current</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SetLaserMap</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/PointCloud2</span> <span class="pre">pc</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Pose</span> <span class="pre">initial_pose</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">message</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SetParameter</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Parameter</span> <span class="pre">param</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">message</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SetPoseWithCovarianceStamped</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/PoseWithCovarianceStamped</span> <span class="pre">pose</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">message</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SetWaypoints</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Waypoint[]</span> <span class="pre">waypoints</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">repetition</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">current_index</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">message</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">String</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">message</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">StringAndBool</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">data</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">flag</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">message</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Terrain</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string[]</span> <span class="pre">param_name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[]</span> <span class="pre">param</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">message</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Vector3</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">x</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">y</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span> <span class="pre">z</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">message</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Waypoints</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Waypoint[]</span> <span class="pre">waypoints</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int8</span> <span class="pre">repetition</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">message</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Ros2Messages.html" class="btn btn-neutral float-left" title="ROS2 Message Types" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Ros2MessagesRaisinPlugins.html" class="btn btn-neutral float-right" title="Raisin Plugin Message Types" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Raion Robotics..</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

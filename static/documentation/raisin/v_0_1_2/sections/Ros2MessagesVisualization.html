@@ -1,0 +1,613 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visualization and Diagnostics Message Types &mdash; raisin 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-dropdown.css?v=995e94df" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-bootstrap.min.css?v=21c0b90a" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4b025565" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="GNSS and RTCM Message Types" href="Ros2MessagesGnss.html" />
+    <link rel="prev" title="ROS2 Runtime and Introspection Message Types" href="Ros2MessagesRuntime.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            raisin
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Chapters</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinNetwork.html">Raisin Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Plugin.html">Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Parameter.html">Parameter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DataLogger.html">DataLogger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaiboNode.html">RaiboNode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinGui.html">Raisin Gui</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Ros2Messages.html">ROS2 Message Types</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesRaisinInterfaces.html">Raisin Interfaces Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesRaisinPlugins.html">Raisin Plugin Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesRaisinTests.html">Raisin Test Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesCore.html">Core ROS2 Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesRuntime.html">ROS2 Runtime and Introspection Message Types</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Visualization and Diagnostics Message Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#messages">Messages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#visualization-msgs">visualization_msgs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#diagnostic-msgs">diagnostic_msgs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pcl-msgs">pcl_msgs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#shape-msgs">shape_msgs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stereo-msgs">stereo_msgs</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#services">Services</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">visualization_msgs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">diagnostic_msgs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">pcl_msgs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesGnss.html">GNSS and RTCM Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesTestMsgs.html">ROS2 Test Message Types</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Reference.html">Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">raisin</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="Ros2Messages.html">ROS2 Message Types</a></li>
+      <li class="breadcrumb-item active">Visualization and Diagnostics Message Types</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="visualization-and-diagnostics-message-types">
+<h1>Visualization and Diagnostics Message Types<a class="headerlink" href="#visualization-and-diagnostics-message-types" title="Link to this heading"></a></h1>
+<p>Definitions are sourced from <code class="docutils literal notranslate"><span class="pre">release/install/raisin_ros2_messages/ubuntu/22.04/x86_64/release/messages</span></code>. Only the public message schemas are documented here.</p>
+<section id="messages">
+<h2>Messages<a class="headerlink" href="#messages" title="Link to this heading"></a></h2>
+<section id="visualization-msgs">
+<h3>visualization_msgs<a class="headerlink" href="#visualization-msgs" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">ImageMarker</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">ns</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">id</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">type</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">action</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Point</span> <span class="pre">position</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">scale</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/ColorRGBA</span> <span class="pre">outline_color</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">filled</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/ColorRGBA</span> <span class="pre">fill_color</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">builtin_interfaces/Duration</span> <span class="pre">lifetime</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Point[]</span> <span class="pre">points</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/ColorRGBA[]</span> <span class="pre">outline_colors</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Constants:
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">CIRCLE=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">LINE_STRIP=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">LINE_LIST=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">POLYGON=3</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">POINTS=4</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">ADD=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">REMOVE=1</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">InteractiveMarker</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Pose</span> <span class="pre">pose</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">description</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">scale</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MenuEntry[]</span> <span class="pre">menu_entries</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">InteractiveMarkerControl[]</span> <span class="pre">controls</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">InteractiveMarkerControl</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Quaternion</span> <span class="pre">orientation</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">orientation_mode</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">interaction_mode</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">always_visible</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Marker[]</span> <span class="pre">markers</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">independent_marker_orientation</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">description</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Constants:
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">INHERIT=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FIXED=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">VIEW_FACING=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">NONE=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">MENU=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">BUTTON=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">MOVE_AXIS=3</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">MOVE_PLANE=4</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">ROTATE_AXIS=5</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">MOVE_ROTATE=6</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">MOVE_3D=7</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">ROTATE_3D=8</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">MOVE_ROTATE_3D=9</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">InteractiveMarkerFeedback</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">client_id</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">marker_name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">control_name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">event_type</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Pose</span> <span class="pre">pose</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">menu_entry_id</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Point</span> <span class="pre">mouse_point</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">mouse_point_valid</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Constants:
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">KEEP_ALIVE=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">POSE_UPDATE=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">MENU_SELECT=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">BUTTON_CLICK=3</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">MOUSE_DOWN=4</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">MOUSE_UP=5</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">InteractiveMarkerInit</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">server_id</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint64</span> <span class="pre">seq_num</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">InteractiveMarker[]</span> <span class="pre">markers</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">InteractiveMarkerPose</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Pose</span> <span class="pre">pose</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">name</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">InteractiveMarkerUpdate</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">server_id</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint64</span> <span class="pre">seq_num</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">type</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">InteractiveMarker[]</span> <span class="pre">markers</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">InteractiveMarkerPose[]</span> <span class="pre">poses</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string[]</span> <span class="pre">erases</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Constants:
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">KEEP_ALIVE=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">UPDATE=1</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Marker</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">ns</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">id</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">type</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">action</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Pose</span> <span class="pre">pose</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Vector3</span> <span class="pre">scale</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/ColorRGBA</span> <span class="pre">color</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">builtin_interfaces/Duration</span> <span class="pre">lifetime</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">frame_locked</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Point[]</span> <span class="pre">points</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/ColorRGBA[]</span> <span class="pre">colors</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">texture_resource</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/CompressedImage</span> <span class="pre">texture</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UVCoordinate[]</span> <span class="pre">uv_coordinates</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">text</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">mesh_resource</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MeshFile</span> <span class="pre">mesh_file</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">mesh_use_embedded_materials</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Constants:
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">ARROW=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">CUBE=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">SPHERE=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">CYLINDER=3</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">LINE_STRIP=4</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">LINE_LIST=5</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">CUBE_LIST=6</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">SPHERE_LIST=7</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">POINTS=8</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">TEXT_VIEW_FACING=9</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">MESH_RESOURCE=10</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">TRIANGLE_LIST=11</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">ARROW_STRIP=12</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">ADD=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">MODIFY=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">DELETE=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">DELETEALL=3</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MarkerArray</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Marker[]</span> <span class="pre">markers</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MenuEntry</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">id</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32</span> <span class="pre">parent_id</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">title</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">command</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">command_type</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Constants:
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">FEEDBACK=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">ROSRUN=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">ROSLAUNCH=2</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MeshFile</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">filename</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8[]</span> <span class="pre">data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UVCoordinate</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">u</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">v</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="diagnostic-msgs">
+<h3>diagnostic_msgs<a class="headerlink" href="#diagnostic-msgs" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">DiagnosticArray</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DiagnosticStatus[]</span> <span class="pre">status</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DiagnosticStatus</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">byte</span> <span class="pre">level</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">message</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">hardware_id</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">KeyValue[]</span> <span class="pre">values</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Constants:
+- <code class="docutils literal notranslate"><span class="pre">byte</span> <span class="pre">OK=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">byte</span> <span class="pre">WARN=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">byte</span> <span class="pre">ERROR=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">byte</span> <span class="pre">STALE=3</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">KeyValue</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">key</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">value</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="pcl-msgs">
+<h3>pcl_msgs<a class="headerlink" href="#pcl-msgs" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">ModelCoefficients</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32[]</span> <span class="pre">values</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PointIndices</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int32[]</span> <span class="pre">indices</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PolygonMesh</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/PointCloud2</span> <span class="pre">cloud</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Vertices[]</span> <span class="pre">polygons</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Vertices</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32[]</span> <span class="pre">vertices</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="shape-msgs">
+<h3>shape_msgs<a class="headerlink" href="#shape-msgs" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Mesh</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MeshTriangle[]</span> <span class="pre">triangles</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Point[]</span> <span class="pre">vertices</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MeshTriangle</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uint32[3]</span> <span class="pre">vertex_indices</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Plane</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[4]</span> <span class="pre">coef</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SolidPrimitive</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">type</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64[&lt;=3]</span> <span class="pre">dimensions</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs/Polygon</span> <span class="pre">polygon</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Constants:
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">BOX=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">SPHERE=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">CYLINDER=3</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">CONE=4</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">PRISM=5</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">BOX_X=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">BOX_Y=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">BOX_Z=2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">SPHERE_RADIUS=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">CYLINDER_HEIGHT=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">CYLINDER_RADIUS=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">CONE_HEIGHT=0</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">CONE_RADIUS=1</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">PRISM_HEIGHT=0</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="stereo-msgs">
+<h3>stereo_msgs<a class="headerlink" href="#stereo-msgs" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">DisparityImage</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs/Header</span> <span class="pre">header</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/Image</span> <span class="pre">image</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">f</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">t</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs/RegionOfInterest</span> <span class="pre">valid_window</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">min_disparity</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">max_disparity</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float32</span> <span class="pre">delta_d</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+</section>
+<section id="services">
+<h2>Services<a class="headerlink" href="#services" title="Link to this heading"></a></h2>
+<section id="id1">
+<h3>visualization_msgs<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">GetInteractiveMarkers</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(none)</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">uint64</span> <span class="pre">sequence_number</span></code>
+- <code class="docutils literal notranslate"><span class="pre">InteractiveMarker[]</span> <span class="pre">markers</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id2">
+<h3>diagnostic_msgs<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">AddDiagnostics</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">load_namespace</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code>
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">message</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SelfTest</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(none)</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">id</span></code>
+- <code class="docutils literal notranslate"><span class="pre">byte</span> <span class="pre">passed</span></code>
+- <code class="docutils literal notranslate"><span class="pre">DiagnosticStatus[]</span> <span class="pre">status</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id3">
+<h3>pcl_msgs<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">UpdateFilename</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">filename</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">success</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Ros2MessagesRuntime.html" class="btn btn-neutral float-left" title="ROS2 Runtime and Introspection Message Types" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Ros2MessagesGnss.html" class="btn btn-neutral float-right" title="GNSS and RTCM Message Types" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Raion Robotics..</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

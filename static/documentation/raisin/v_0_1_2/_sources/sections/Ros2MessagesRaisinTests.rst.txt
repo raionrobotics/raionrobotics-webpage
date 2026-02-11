@@ -1,0 +1,64 @@
+#########################
+Raisin Test Message Types
+#########################
+
+Definitions are sourced from ``release/install/raisin_ros2_messages/ubuntu/22.04/x86_64/release/messages``. Only the public message schemas are documented here.
+
+Messages
+********
+
+raisin_tests
+============
+
+- ``FibonacciFeedback``:
+  - Fields:
+    - ``int32[] partial_sequence``
+
+- ``FibonacciFeedbackMessage``:
+  - Fields:
+    - ``FibonacciFeedback feedback``
+    - ``unique_identifier_msgs/UUID goal_id``
+
+- ``FibonacciGoal``:
+  - Fields:
+    - ``int32 order``
+
+- ``FibonacciResult``:
+  - Fields:
+    - ``int32[] sequence``
+
+Services
+********
+
+raisin_tests
+============
+
+- ``FibonacciGetResult``:
+  - Request fields:
+    - ``unique_identifier_msgs/UUID goal_id``
+  - Response fields:
+    - ``FibonacciResult result``
+    - ``uint8 status``
+
+- ``FibonacciSendGoal``:
+  - Request fields:
+    - ``FibonacciGoal goal``
+    - ``unique_identifier_msgs/UUID goal_id``
+  - Response fields:
+    - ``bool accepted``
+    - ``builtin_interfaces/Time stamp``
+
+Actions
+*******
+
+raisin_tests
+============
+
+- ``Fibonacci``:
+  - Goal fields:
+    - ``int32 order``
+  - Result fields:
+    - ``int32[] sequence``
+  - Feedback fields:
+    - ``int32[] partial_sequence``
+

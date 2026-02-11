@@ -1,0 +1,537 @@
+############################################
+ROS2 Runtime and Introspection Message Types
+############################################
+
+Definitions are sourced from ``release/install/raisin_ros2_messages/ubuntu/22.04/x86_64/release/messages``. Only the public message schemas are documented here.
+
+Messages
+********
+
+rcl_interfaces
+==============
+
+- ``FloatingPointRange``:
+  - Fields:
+    - ``float64 from_value``
+    - ``float64 to_value``
+    - ``float64 step``
+
+- ``IntegerRange``:
+  - Fields:
+    - ``int64 from_value``
+    - ``int64 to_value``
+    - ``uint64 step``
+
+- ``ListParametersResult``:
+  - Fields:
+    - ``string[] names``
+    - ``string[] prefixes``
+
+- ``Log``:
+  - Fields:
+    - ``builtin_interfaces/Time stamp``
+    - ``uint8 level``
+    - ``string name``
+    - ``string msg``
+    - ``string file``
+    - ``string function``
+    - ``uint32 line``
+  - Constants:
+    - ``uint8 DEBUG=10``
+    - ``uint8 INFO=20``
+    - ``uint8 WARN=30``
+    - ``uint8 ERROR=40``
+    - ``uint8 FATAL=50``
+
+- ``Parameter``:
+  - Fields:
+    - ``string name``
+    - ``ParameterValue value``
+
+- ``ParameterDescriptor``:
+  - Fields:
+    - ``string name``
+    - ``uint8 type``
+    - ``string description``
+    - ``string additional_constraints``
+    - ``bool read_only``
+    - ``bool dynamic_typing``
+    - ``FloatingPointRange[<=1] floating_point_range``
+    - ``IntegerRange[<=1] integer_range``
+
+- ``ParameterEvent``:
+  - Fields:
+    - ``builtin_interfaces/Time stamp``
+    - ``string node``
+    - ``Parameter[] new_parameters``
+    - ``Parameter[] changed_parameters``
+    - ``Parameter[] deleted_parameters``
+
+- ``ParameterEventDescriptors``:
+  - Fields:
+    - ``ParameterDescriptor[] new_parameters``
+    - ``ParameterDescriptor[] changed_parameters``
+    - ``ParameterDescriptor[] deleted_parameters``
+
+- ``ParameterType``:
+  - Fields:
+    - (none)
+  - Constants:
+    - ``uint8 PARAMETER_NOT_SET=0``
+    - ``uint8 PARAMETER_BOOL=1``
+    - ``uint8 PARAMETER_INTEGER=2``
+    - ``uint8 PARAMETER_DOUBLE=3``
+    - ``uint8 PARAMETER_STRING=4``
+    - ``uint8 PARAMETER_BYTE_ARRAY=5``
+    - ``uint8 PARAMETER_BOOL_ARRAY=6``
+    - ``uint8 PARAMETER_INTEGER_ARRAY=7``
+    - ``uint8 PARAMETER_DOUBLE_ARRAY=8``
+    - ``uint8 PARAMETER_STRING_ARRAY=9``
+
+- ``ParameterValue``:
+  - Fields:
+    - ``uint8 type``
+    - ``bool bool_value``
+    - ``int64 integer_value``
+    - ``float64 double_value``
+    - ``string string_value``
+    - ``byte[] byte_array_value``
+    - ``bool[] bool_array_value``
+    - ``int64[] integer_array_value``
+    - ``float64[] double_array_value``
+    - ``string[] string_array_value``
+
+- ``SetParametersResult``:
+  - Fields:
+    - ``bool successful``
+    - ``string reason``
+
+type_description_interfaces
+===========================
+
+- ``Field``:
+  - Fields:
+    - ``string name``
+    - ``FieldType type``
+    - ``string default_value``
+
+- ``FieldType``:
+  - Fields:
+    - ``uint8 type_id``
+    - ``uint64 capacity``
+    - ``uint64 string_capacity``
+    - ``string<=255 nested_type_name``
+  - Constants:
+    - ``uint8 FIELD_TYPE_NOT_SET=0``
+    - ``uint8 FIELD_TYPE_NESTED_TYPE=1``
+    - ``uint8 FIELD_TYPE_INT8=2``
+    - ``uint8 FIELD_TYPE_UINT8=3``
+    - ``uint8 FIELD_TYPE_INT16=4``
+    - ``uint8 FIELD_TYPE_UINT16=5``
+    - ``uint8 FIELD_TYPE_INT32=6``
+    - ``uint8 FIELD_TYPE_UINT32=7``
+    - ``uint8 FIELD_TYPE_INT64=8``
+    - ``uint8 FIELD_TYPE_UINT64=9``
+    - ``uint8 FIELD_TYPE_FLOAT=10``
+    - ``uint8 FIELD_TYPE_DOUBLE=11``
+    - ``uint8 FIELD_TYPE_LONG_DOUBLE=12``
+    - ``uint8 FIELD_TYPE_CHAR=13``
+    - ``uint8 FIELD_TYPE_WCHAR=14``
+    - ``uint8 FIELD_TYPE_BOOLEAN=15``
+    - ``uint8 FIELD_TYPE_BYTE=16``
+    - ``uint8 FIELD_TYPE_STRING=17``
+    - ``uint8 FIELD_TYPE_WSTRING=18``
+    - ``uint8 FIELD_TYPE_FIXED_STRING=19``
+    - ``uint8 FIELD_TYPE_FIXED_WSTRING=20``
+    - ``uint8 FIELD_TYPE_BOUNDED_STRING=21``
+    - ``uint8 FIELD_TYPE_BOUNDED_WSTRING=22``
+    - ``uint8 FIELD_TYPE_NESTED_TYPE_ARRAY=49``
+    - ``uint8 FIELD_TYPE_INT8_ARRAY=50``
+    - ``uint8 FIELD_TYPE_UINT8_ARRAY=51``
+    - ``uint8 FIELD_TYPE_INT16_ARRAY=52``
+    - ``uint8 FIELD_TYPE_UINT16_ARRAY=53``
+    - ``uint8 FIELD_TYPE_INT32_ARRAY=54``
+    - ``uint8 FIELD_TYPE_UINT32_ARRAY=55``
+    - ``uint8 FIELD_TYPE_INT64_ARRAY=56``
+    - ``uint8 FIELD_TYPE_UINT64_ARRAY=57``
+    - ``uint8 FIELD_TYPE_FLOAT_ARRAY=58``
+    - ``uint8 FIELD_TYPE_DOUBLE_ARRAY=59``
+    - ``uint8 FIELD_TYPE_LONG_DOUBLE_ARRAY=60``
+    - ``uint8 FIELD_TYPE_CHAR_ARRAY=61``
+    - ``uint8 FIELD_TYPE_WCHAR_ARRAY=62``
+    - ``uint8 FIELD_TYPE_BOOLEAN_ARRAY=63``
+    - ``uint8 FIELD_TYPE_BYTE_ARRAY=64``
+    - ``uint8 FIELD_TYPE_STRING_ARRAY=65``
+    - ``uint8 FIELD_TYPE_WSTRING_ARRAY=66``
+    - ``uint8 FIELD_TYPE_FIXED_STRING_ARRAY=67``
+    - ``uint8 FIELD_TYPE_FIXED_WSTRING_ARRAY=68``
+    - ``uint8 FIELD_TYPE_BOUNDED_STRING_ARRAY=69``
+    - ``uint8 FIELD_TYPE_BOUNDED_WSTRING_ARRAY=70``
+    - ``uint8 FIELD_TYPE_NESTED_TYPE_BOUNDED_SEQUENCE=97``
+    - ``uint8 FIELD_TYPE_INT8_BOUNDED_SEQUENCE=98``
+    - ``uint8 FIELD_TYPE_UINT8_BOUNDED_SEQUENCE=99``
+    - ``uint8 FIELD_TYPE_INT16_BOUNDED_SEQUENCE=100``
+    - ``uint8 FIELD_TYPE_UINT16_BOUNDED_SEQUENCE=101``
+    - ``uint8 FIELD_TYPE_INT32_BOUNDED_SEQUENCE=102``
+    - ``uint8 FIELD_TYPE_UINT32_BOUNDED_SEQUENCE=103``
+    - ``uint8 FIELD_TYPE_INT64_BOUNDED_SEQUENCE=104``
+    - ``uint8 FIELD_TYPE_UINT64_BOUNDED_SEQUENCE=105``
+    - ``uint8 FIELD_TYPE_FLOAT_BOUNDED_SEQUENCE=106``
+    - ``uint8 FIELD_TYPE_DOUBLE_BOUNDED_SEQUENCE=107``
+    - ``uint8 FIELD_TYPE_LONG_DOUBLE_BOUNDED_SEQUENCE=108``
+    - ``uint8 FIELD_TYPE_CHAR_BOUNDED_SEQUENCE=109``
+    - ``uint8 FIELD_TYPE_WCHAR_BOUNDED_SEQUENCE=110``
+    - ``uint8 FIELD_TYPE_BOOLEAN_BOUNDED_SEQUENCE=111``
+    - ``uint8 FIELD_TYPE_BYTE_BOUNDED_SEQUENCE=112``
+    - ``uint8 FIELD_TYPE_STRING_BOUNDED_SEQUENCE=113``
+    - ``uint8 FIELD_TYPE_WSTRING_BOUNDED_SEQUENCE=114``
+    - ``uint8 FIELD_TYPE_FIXED_STRING_BOUNDED_SEQUENCE=115``
+    - ``uint8 FIELD_TYPE_FIXED_WSTRING_BOUNDED_SEQUENCE=116``
+    - ``uint8 FIELD_TYPE_BOUNDED_STRING_BOUNDED_SEQUENCE=117``
+    - ``uint8 FIELD_TYPE_BOUNDED_WSTRING_BOUNDED_SEQUENCE=118``
+    - ``uint8 FIELD_TYPE_NESTED_TYPE_UNBOUNDED_SEQUENCE=145``
+    - ``uint8 FIELD_TYPE_INT8_UNBOUNDED_SEQUENCE=146``
+    - ``uint8 FIELD_TYPE_UINT8_UNBOUNDED_SEQUENCE=147``
+    - ``uint8 FIELD_TYPE_INT16_UNBOUNDED_SEQUENCE=148``
+    - ``uint8 FIELD_TYPE_UINT16_UNBOUNDED_SEQUENCE=149``
+    - ``uint8 FIELD_TYPE_INT32_UNBOUNDED_SEQUENCE=150``
+    - ``uint8 FIELD_TYPE_UINT32_UNBOUNDED_SEQUENCE=151``
+    - ``uint8 FIELD_TYPE_INT64_UNBOUNDED_SEQUENCE=152``
+    - ``uint8 FIELD_TYPE_UINT64_UNBOUNDED_SEQUENCE=153``
+    - ``uint8 FIELD_TYPE_FLOAT_UNBOUNDED_SEQUENCE=154``
+    - ``uint8 FIELD_TYPE_DOUBLE_UNBOUNDED_SEQUENCE=155``
+    - ``uint8 FIELD_TYPE_LONG_DOUBLE_UNBOUNDED_SEQUENCE=156``
+    - ``uint8 FIELD_TYPE_CHAR_UNBOUNDED_SEQUENCE=157``
+    - ``uint8 FIELD_TYPE_WCHAR_UNBOUNDED_SEQUENCE=158``
+    - ``uint8 FIELD_TYPE_BOOLEAN_UNBOUNDED_SEQUENCE=159``
+    - ``uint8 FIELD_TYPE_BYTE_UNBOUNDED_SEQUENCE=160``
+    - ``uint8 FIELD_TYPE_STRING_UNBOUNDED_SEQUENCE=161``
+    - ``uint8 FIELD_TYPE_WSTRING_UNBOUNDED_SEQUENCE=162``
+    - ``uint8 FIELD_TYPE_FIXED_STRING_UNBOUNDED_SEQUENCE=163``
+    - ``uint8 FIELD_TYPE_FIXED_WSTRING_UNBOUNDED_SEQUENCE=164``
+    - ``uint8 FIELD_TYPE_BOUNDED_STRING_UNBOUNDED_SEQUENCE=165``
+    - ``uint8 FIELD_TYPE_BOUNDED_WSTRING_UNBOUNDED_SEQUENCE=166``
+
+- ``IndividualTypeDescription``:
+  - Fields:
+    - ``string<=255 type_name``
+    - ``Field[] fields``
+
+- ``KeyValue``:
+  - Fields:
+    - ``string key``
+    - ``string value``
+
+- ``TypeDescription``:
+  - Fields:
+    - ``IndividualTypeDescription type_description``
+    - ``IndividualTypeDescription[] referenced_type_descriptions``
+
+- ``TypeSource``:
+  - Fields:
+    - ``string type_name``
+    - ``string encoding``
+    - ``string raw_file_contents``
+
+lifecycle_msgs
+==============
+
+- ``State``:
+  - Fields:
+    - ``uint8 id``
+    - ``string label``
+  - Constants:
+    - ``uint8 PRIMARY_STATE_UNKNOWN=0``
+    - ``uint8 PRIMARY_STATE_UNCONFIGURED=1``
+    - ``uint8 PRIMARY_STATE_INACTIVE=2``
+    - ``uint8 PRIMARY_STATE_ACTIVE=3``
+    - ``uint8 PRIMARY_STATE_FINALIZED=4``
+    - ``uint8 TRANSITION_STATE_CONFIGURING=10``
+    - ``uint8 TRANSITION_STATE_CLEANINGUP=11``
+    - ``uint8 TRANSITION_STATE_SHUTTINGDOWN=12``
+    - ``uint8 TRANSITION_STATE_ACTIVATING=13``
+    - ``uint8 TRANSITION_STATE_DEACTIVATING=14``
+    - ``uint8 TRANSITION_STATE_ERRORPROCESSING=15``
+
+- ``Transition``:
+  - Fields:
+    - ``uint8 id``
+    - ``string label``
+  - Constants:
+    - ``uint8 TRANSITION_CREATE=0``
+    - ``uint8 TRANSITION_CONFIGURE=1``
+    - ``uint8 TRANSITION_CLEANUP=2``
+    - ``uint8 TRANSITION_ACTIVATE=3``
+    - ``uint8 TRANSITION_DEACTIVATE=4``
+    - ``uint8 TRANSITION_UNCONFIGURED_SHUTDOWN=5``
+    - ``uint8 TRANSITION_INACTIVE_SHUTDOWN=6``
+    - ``uint8 TRANSITION_ACTIVE_SHUTDOWN=7``
+    - ``uint8 TRANSITION_DESTROY=8``
+    - ``uint8 TRANSITION_ON_CONFIGURE_SUCCESS=10``
+    - ``uint8 TRANSITION_ON_CONFIGURE_FAILURE=11``
+    - ``uint8 TRANSITION_ON_CONFIGURE_ERROR=12``
+    - ``uint8 TRANSITION_ON_CLEANUP_SUCCESS=20``
+    - ``uint8 TRANSITION_ON_CLEANUP_FAILURE=21``
+    - ``uint8 TRANSITION_ON_CLEANUP_ERROR=22``
+    - ``uint8 TRANSITION_ON_ACTIVATE_SUCCESS=30``
+    - ``uint8 TRANSITION_ON_ACTIVATE_FAILURE=31``
+    - ``uint8 TRANSITION_ON_ACTIVATE_ERROR=32``
+    - ``uint8 TRANSITION_ON_DEACTIVATE_SUCCESS=40``
+    - ``uint8 TRANSITION_ON_DEACTIVATE_FAILURE=41``
+    - ``uint8 TRANSITION_ON_DEACTIVATE_ERROR=42``
+    - ``uint8 TRANSITION_ON_SHUTDOWN_SUCCESS=50``
+    - ``uint8 TRANSITION_ON_SHUTDOWN_FAILURE=51``
+    - ``uint8 TRANSITION_ON_SHUTDOWN_ERROR=52``
+    - ``uint8 TRANSITION_ON_ERROR_SUCCESS=60``
+    - ``uint8 TRANSITION_ON_ERROR_FAILURE=61``
+    - ``uint8 TRANSITION_ON_ERROR_ERROR=62``
+    - ``uint8 TRANSITION_CALLBACK_SUCCESS=97``
+    - ``uint8 TRANSITION_CALLBACK_FAILURE=98``
+    - ``uint8 TRANSITION_CALLBACK_ERROR=99``
+
+- ``TransitionDescription``:
+  - Fields:
+    - ``Transition transition``
+    - ``State start_state``
+    - ``State goal_state``
+
+- ``TransitionEvent``:
+  - Fields:
+    - ``uint64 timestamp``
+    - ``Transition transition``
+    - ``State start_state``
+    - ``State goal_state``
+
+service_msgs
+============
+
+- ``ServiceEventInfo``:
+  - Fields:
+    - ``uint8 event_type``
+    - ``builtin_interfaces/Time stamp``
+    - ``char[16] client_gid``
+    - ``int64 sequence_number``
+  - Constants:
+    - ``uint8 REQUEST_SENT=0``
+    - ``uint8 REQUEST_RECEIVED=1``
+    - ``uint8 RESPONSE_SENT=2``
+    - ``uint8 RESPONSE_RECEIVED=3``
+
+action_msgs
+===========
+
+- ``GoalInfo``:
+  - Fields:
+    - ``unique_identifier_msgs/UUID goal_id``
+    - ``builtin_interfaces/Time stamp``
+
+- ``GoalStatus``:
+  - Fields:
+    - ``GoalInfo goal_info``
+    - ``int8 status``
+  - Constants:
+    - ``int8 STATUS_UNKNOWN=0``
+    - ``int8 STATUS_ACCEPTED=1``
+    - ``int8 STATUS_EXECUTING=2``
+    - ``int8 STATUS_CANCELING=3``
+    - ``int8 STATUS_SUCCEEDED=4``
+    - ``int8 STATUS_CANCELED=5``
+    - ``int8 STATUS_ABORTED=6``
+
+- ``GoalStatusArray``:
+  - Fields:
+    - ``GoalStatus[] status_list``
+
+actionlib_msgs
+==============
+
+- ``GoalID``:
+  - Fields:
+    - ``builtin_interfaces/Time stamp``
+    - ``string id``
+
+- ``GoalStatus``:
+  - Fields:
+    - ``GoalID goal_id``
+    - ``uint8 status``
+    - ``string text``
+  - Constants:
+    - ``uint8 PENDING=0``
+    - ``uint8 ACTIVE=1``
+    - ``uint8 PREEMPTED=2``
+    - ``uint8 SUCCEEDED=3``
+    - ``uint8 ABORTED=4``
+    - ``uint8 REJECTED=5``
+    - ``uint8 PREEMPTING=6``
+    - ``uint8 RECALLING=7``
+    - ``uint8 RECALLED=8``
+    - ``uint8 LOST=9``
+
+- ``GoalStatusArray``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``GoalStatus[] status_list``
+
+statistics_msgs
+===============
+
+- ``MetricsMessage``:
+  - Fields:
+    - ``string measurement_source_name``
+    - ``string metrics_source``
+    - ``string unit``
+    - ``builtin_interfaces/Time window_start``
+    - ``builtin_interfaces/Time window_stop``
+    - ``StatisticDataPoint[] statistics``
+
+- ``StatisticDataPoint``:
+  - Fields:
+    - ``uint8 data_type``
+    - ``float64 data``
+
+- ``StatisticDataType``:
+  - Fields:
+    - (none)
+  - Constants:
+    - ``uint8 STATISTICS_DATA_TYPE_UNINITIALIZED=0``
+    - ``uint8 STATISTICS_DATA_TYPE_AVERAGE=1``
+    - ``uint8 STATISTICS_DATA_TYPE_MINIMUM=2``
+    - ``uint8 STATISTICS_DATA_TYPE_MAXIMUM=3``
+    - ``uint8 STATISTICS_DATA_TYPE_STDDEV=4``
+    - ``uint8 STATISTICS_DATA_TYPE_SAMPLE_COUNT=5``
+
+Services
+********
+
+rcl_interfaces
+==============
+
+- ``DescribeParameters``:
+  - Request fields:
+    - ``string[] names``
+  - Response fields:
+    - ``ParameterDescriptor[] descriptors``
+
+- ``GetParameterTypes``:
+  - Request fields:
+    - ``string[] names``
+  - Response fields:
+    - ``uint8[] types``
+
+- ``GetParameters``:
+  - Request fields:
+    - ``string[] names``
+  - Response fields:
+    - ``ParameterValue[] values``
+
+- ``ListParameters``:
+  - Request fields:
+    - ``string[] prefixes``
+    - ``uint64 depth``
+  - Request constants:
+    - ``uint64 DEPTH_RECURSIVE=0``
+  - Response fields:
+    - ``ListParametersResult result``
+
+- ``SetParameters``:
+  - Request fields:
+    - ``Parameter[] parameters``
+  - Response fields:
+    - ``SetParametersResult[] results``
+
+- ``SetParametersAtomically``:
+  - Request fields:
+    - ``Parameter[] parameters``
+  - Response fields:
+    - ``SetParametersResult result``
+
+type_description_interfaces
+===========================
+
+- ``GetTypeDescription``:
+  - Request fields:
+    - ``string type_name``
+    - ``string type_hash``
+    - ``bool include_type_sources``
+  - Response fields:
+    - ``bool successful``
+    - ``string failure_reason``
+    - ``TypeDescription type_description``
+    - ``TypeSource[] type_sources``
+    - ``KeyValue[] extra_information``
+
+lifecycle_msgs
+==============
+
+- ``ChangeState``:
+  - Request fields:
+    - ``Transition transition``
+  - Response fields:
+    - ``bool success``
+
+- ``GetAvailableStates``:
+  - Request fields:
+    - (none)
+  - Response fields:
+    - ``State[] available_states``
+
+- ``GetAvailableTransitions``:
+  - Request fields:
+    - (none)
+  - Response fields:
+    - ``TransitionDescription[] available_transitions``
+
+- ``GetState``:
+  - Request fields:
+    - (none)
+  - Response fields:
+    - ``State current_state``
+
+composition_interfaces
+======================
+
+- ``ListNodes``:
+  - Request fields:
+    - (none)
+  - Response fields:
+    - ``string[] full_node_names``
+    - ``uint64[] unique_ids``
+
+- ``LoadNode``:
+  - Request fields:
+    - ``string package_name``
+    - ``string plugin_name``
+    - ``string node_name``
+    - ``string node_namespace``
+    - ``uint8 log_level``
+    - ``string[] remap_rules``
+    - ``rcl_interfaces/Parameter[] parameters``
+    - ``rcl_interfaces/Parameter[] extra_arguments``
+  - Response fields:
+    - ``bool success``
+    - ``string error_message``
+    - ``string full_node_name``
+    - ``uint64 unique_id``
+
+- ``UnloadNode``:
+  - Request fields:
+    - ``uint64 unique_id``
+  - Response fields:
+    - ``bool success``
+    - ``string error_message``
+
+action_msgs
+===========
+
+- ``CancelGoal``:
+  - Request fields:
+    - ``GoalInfo goal_info``
+  - Response fields:
+    - ``int8 return_code``
+    - ``GoalInfo[] goals_canceling``
+  - Response constants:
+    - ``int8 ERROR_NONE=0``
+    - ``int8 ERROR_REJECTED=1``
+    - ``int8 ERROR_UNKNOWN_GOAL_ID=2``
+    - ``int8 ERROR_GOAL_TERMINATED=3``
+

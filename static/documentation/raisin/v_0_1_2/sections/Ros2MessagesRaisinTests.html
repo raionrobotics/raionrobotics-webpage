@@ -1,0 +1,243 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raisin Test Message Types &mdash; raisin 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-dropdown.css?v=995e94df" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-bootstrap.min.css?v=21c0b90a" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4b025565" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Core ROS2 Message Types" href="Ros2MessagesCore.html" />
+    <link rel="prev" title="Raisin Plugin Message Types" href="Ros2MessagesRaisinPlugins.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            raisin
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Chapters</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinNetwork.html">Raisin Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Plugin.html">Plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Parameter.html">Parameter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DataLogger.html">DataLogger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaiboNode.html">RaiboNode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinGui.html">Raisin Gui</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Ros2Messages.html">ROS2 Message Types</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesRaisinInterfaces.html">Raisin Interfaces Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesRaisinPlugins.html">Raisin Plugin Message Types</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Raisin Test Message Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#messages">Messages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#raisin-tests">raisin_tests</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#services">Services</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">raisin_tests</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#actions">Actions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">raisin_tests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesCore.html">Core ROS2 Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesRuntime.html">ROS2 Runtime and Introspection Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesVisualization.html">Visualization and Diagnostics Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesGnss.html">GNSS and RTCM Message Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ros2MessagesTestMsgs.html">ROS2 Test Message Types</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Reference.html">Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">raisin</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="Ros2Messages.html">ROS2 Message Types</a></li>
+      <li class="breadcrumb-item active">Raisin Test Message Types</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="raisin-test-message-types">
+<h1>Raisin Test Message Types<a class="headerlink" href="#raisin-test-message-types" title="Link to this heading"></a></h1>
+<p>Definitions are sourced from <code class="docutils literal notranslate"><span class="pre">release/install/raisin_ros2_messages/ubuntu/22.04/x86_64/release/messages</span></code>. Only the public message schemas are documented here.</p>
+<section id="messages">
+<h2>Messages<a class="headerlink" href="#messages" title="Link to this heading"></a></h2>
+<section id="raisin-tests">
+<h3>raisin_tests<a class="headerlink" href="#raisin-tests" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">FibonacciFeedback</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">int32[]</span> <span class="pre">partial_sequence</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FibonacciFeedbackMessage</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">FibonacciFeedback</span> <span class="pre">feedback</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unique_identifier_msgs/UUID</span> <span class="pre">goal_id</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FibonacciGoal</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">order</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FibonacciResult</span></code>:
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">int32[]</span> <span class="pre">sequence</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+</section>
+<section id="services">
+<h2>Services<a class="headerlink" href="#services" title="Link to this heading"></a></h2>
+<section id="id1">
+<h3>raisin_tests<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">FibonacciGetResult</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">unique_identifier_msgs/UUID</span> <span class="pre">goal_id</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">FibonacciResult</span> <span class="pre">result</span></code>
+- <code class="docutils literal notranslate"><span class="pre">uint8</span> <span class="pre">status</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FibonacciSendGoal</span></code>:
+- Request fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">FibonacciGoal</span> <span class="pre">goal</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unique_identifier_msgs/UUID</span> <span class="pre">goal_id</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Response fields:
+- <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">accepted</span></code>
+- <code class="docutils literal notranslate"><span class="pre">builtin_interfaces/Time</span> <span class="pre">stamp</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="actions">
+<h2>Actions<a class="headerlink" href="#actions" title="Link to this heading"></a></h2>
+<section id="id2">
+<h3>raisin_tests<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Fibonacci</span></code>:
+- Goal fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">int32</span> <span class="pre">order</span></code></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Result fields:
+- <code class="docutils literal notranslate"><span class="pre">int32[]</span> <span class="pre">sequence</span></code></p></li>
+<li><p>Feedback fields:
+- <code class="docutils literal notranslate"><span class="pre">int32[]</span> <span class="pre">partial_sequence</span></code></p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Ros2MessagesRaisinPlugins.html" class="btn btn-neutral float-left" title="Raisin Plugin Message Types" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Ros2MessagesCore.html" class="btn btn-neutral float-right" title="Core ROS2 Message Types" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Raion Robotics..</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

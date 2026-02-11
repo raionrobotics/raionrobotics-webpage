@@ -1,0 +1,403 @@
+###############################
+Raisin Interfaces Message Types
+###############################
+
+Definitions are sourced from ``release/install/raisin_ros2_messages/ubuntu/22.04/x86_64/release/messages``. Only the public message schemas are documented here.
+
+Messages
+********
+
+raisin_interfaces
+=================
+
+- ``ActuatorState``:
+  - Fields:
+    - ``string name``
+    - ``float64 position``
+    - ``float64 velocity``
+    - ``float64 effort``
+    - ``uint16 status``
+    - ``float64 temperature``
+
+- ``ActuatorStates``:
+  - Fields:
+    - ``int32 num_actuators``
+    - ``ActuatorState[] actuator_states``
+
+- ``AudioData``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``uint8[] data``
+
+- ``Command``:
+  - Fields:
+    - ``float64 x_pos``
+    - ``float64 y_pos``
+    - ``float64 x_vel``
+    - ``float64 y_vel``
+    - ``float64 yaw_rate``
+    - ``float64 pitch_angle``
+    - ``float64 body_height``
+    - ``float64 pan_dir``
+    - ``float64 tilt_dir``
+
+- ``FfmpegPacket``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``uint8[] data``
+    - ``int32 width``
+    - ``int32 height``
+    - ``string encoding``
+    - ``uint64 pts``
+    - ``uint8 flags``
+    - ``bool is_bigendian``
+
+- ``Heightmap``:
+  - Fields:
+    - ``int32 sample_x``
+    - ``int32 sample_y``
+    - ``float64 size_x``
+    - ``float64 size_y``
+    - ``float64 center_x``
+    - ``float64 center_y``
+    - ``float64[] height_vec``
+    - ``uint8[] color``
+
+- ``Imu``:
+  - Fields:
+    - ``float64 quaternion_w``
+    - ``float64 quaternion_x``
+    - ``float64 quaternion_y``
+    - ``float64 quaternion_z``
+    - ``float64 angular_velocity_x``
+    - ``float64 angular_velocity_y``
+    - ``float64 angular_velocity_z``
+    - ``float64 linear_acceleration_x``
+    - ``float64 linear_acceleration_y``
+    - ``float64 linear_acceleration_z``
+
+- ``JointState``:
+  - Fields:
+    - ``float64 joint_position``
+    - ``float64 joint_velocity``
+
+- ``JointStates``:
+  - Fields:
+    - ``float64 timestamp``
+    - ``int32 num_joints``
+    - ``JointState[] joint_states``
+
+- ``JointTarget``:
+  - Fields:
+    - ``float64 target_position``
+    - ``float64 target_velocity``
+    - ``float64 p_gain``
+    - ``float64 d_gain``
+
+- ``JointTargets``:
+  - Fields:
+    - ``int32 num_joints``
+    - ``JointTarget[] joint_targets``
+
+- ``JoyListen``:
+  - Fields:
+    - ``string topic``
+    - ``string network_id``
+    - ``bool selected``
+    - ``bool online``
+
+- ``JoyRange``:
+  - Fields:
+    - ``float64[] p_scale``
+    - ``float64[] n_scale``
+
+- ``Log``:
+  - Fields:
+    - ``string data``
+    - ``int8 level``
+
+- ``ModuleList``:
+  - Fields:
+    - ``string[] controllers``
+    - ``int32 loaded_controller``
+    - ``raisin_interfaces/PluginState[] plugin_states``
+
+- ``Parameter``:
+  - Fields:
+    - ``string name``
+    - ``string value``
+    - ``string type``
+    - ``string[] options``
+
+- ``PasswordStatus``:
+  - Fields:
+    - ``int8 status``
+    - ``int64 failed_attempts``
+    - ``int64 lockout_time``
+    - ``int64 failed_attempts_max``
+
+- ``PluginState``:
+  - Fields:
+    - ``string name``
+    - ``bool is_loaded``
+    - ``bool is_loadable``
+    - ``bool is_unloadable``
+
+- ``Pose``:
+  - Fields:
+    - ``float64 timestamp``
+    - ``float64[3] position``
+    - ``float64[4] quaternion``
+
+- ``QuadrupedState``:
+  - Fields:
+    - ``float64[3] position``
+    - ``float64[4] quaternion``
+    - ``float64[12] joint_positon``
+
+- ``RobotState``:
+  - Fields:
+    - ``float64 timestamp``
+    - ``ActuatorState[] actuator_states``
+    - ``float64[3] base_pos``
+    - ``float64[4] base_quat``
+    - ``float64[3] base_lin_vel``
+    - ``float64[3] base_ang_vel``
+    - ``Imu imu``
+    - ``float64 max_voltage``
+    - ``float64 min_voltage``
+    - ``float64 max_current``
+    - ``float64 voltage``
+    - ``float64 current``
+    - ``float64 body_temperature``
+    - ``int32 state``
+    - ``int32 joy_listen_type``
+    - ``JoyListen[] joy_listen_state``
+
+- ``ScopeTimeMeasurement``:
+  - Fields:
+    - ``string id``
+    - ``float64 total_time``
+    - ``int32 count``
+
+- ``State``:
+  - Fields:
+    - ``std_msgs/Header header``
+    - ``float64[3] position``
+    - ``float64[9] orientation``
+    - ``float64[3] translation``
+    - ``float64[9] rotation``
+
+- ``TaskProfile``:
+  - Fields:
+    - ``string name``
+    - ``uint32 execute_count``
+    - ``uint64 delay_sum``
+    - ``uint64 execution_time``
+
+- ``ThreadPoolProfile``:
+  - Fields:
+    - ``ThreadProfile[] thread_pool_profiles``
+
+- ``ThreadProfile``:
+  - Fields:
+    - ``TaskProfile[] event_task_profiles``
+    - ``TaskProfile[] periodic_task_profiles``
+
+- ``TimeProfile``:
+  - Fields:
+    - ``float32 cpu_usage``
+    - ``float32 memory_usage``
+    - ``float32 disk_usage``
+    - ``float32 cpu_temperature``
+    - ``ScopeTimeMeasurement[] scope_measurements``
+
+- ``VelocityCommand``:
+  - Fields:
+    - ``float64 x_vel``
+    - ``float64 y_vel``
+    - ``float64 yaw_rate``
+
+- ``Waypoint``:
+  - Fields:
+    - ``string frame``
+    - ``float64 x``
+    - ``float64 y``
+    - ``float64 z``
+    - ``bool use_z``
+
+Services
+********
+
+raisin_interfaces
+=================
+
+- ``AppendWaypoint``:
+  - Request fields:
+    - ``Waypoint waypoint``
+  - Response fields:
+    - ``bool success``
+    - ``string message``
+
+- ``AudioDevices``:
+  - Request fields:
+    - (none)
+  - Response fields:
+    - ``string[] devices``
+    - ``bool success``
+    - ``string message``
+
+- ``Float64``:
+  - Request fields:
+    - ``float64 data``
+  - Response fields:
+    - ``bool success``
+    - ``string message``
+
+- ``Float64AndAxis``:
+  - Request fields:
+    - ``int8 pnb``
+    - ``int16 axis``
+    - ``float64 data``
+  - Response fields:
+    - ``bool success``
+    - ``string message``
+
+- ``GetFloat64``:
+  - Request fields:
+    - (none)
+  - Response fields:
+    - ``bool success``
+    - ``string message``
+    - ``float64 data``
+
+- ``GetParameters``:
+  - Request fields:
+    - (none)
+  - Response fields:
+    - ``Parameter[] param``
+
+- ``GetWaypoints``:
+  - Request fields:
+    - (none)
+  - Response fields:
+    - ``bool success``
+    - ``string message``
+    - ``Waypoint[] waypoints``
+    - ``uint8 repetition``
+    - ``uint8 current_index``
+
+- ``Log``:
+  - Request fields:
+    - ``string data``
+    - ``int8 level``
+  - Response fields:
+    - ``bool success``
+    - ``string message``
+
+- ``LogTree``:
+  - Request fields:
+    - (none)
+  - Response fields:
+    - ``string username``
+    - ``string prefix``
+    - ``string ssh_port``
+    - ``string[] dirs``
+    - ``int32[] sizes``
+
+- ``Password``:
+  - Request fields:
+    - ``string id``
+    - ``string pw``
+  - Response fields:
+    - ``bool success``
+    - ``string message``
+
+- ``RobotDescription``:
+  - Request fields:
+    - (none)
+  - Response fields:
+    - ``bool success``
+    - ``bool is_real_robot``
+    - ``string robot_model``
+    - ``string robot_nickname``
+    - ``string serial_number``
+    - ``string driver_version``
+    - ``string robot_software_version``
+    - ``float64 max_voltage``
+    - ``float64 min_voltage``
+    - ``float64 max_current``
+
+- ``SetLaserMap``:
+  - Request fields:
+    - ``string name``
+    - ``sensor_msgs/PointCloud2 pc``
+    - ``geometry_msgs/Pose initial_pose``
+  - Response fields:
+    - ``bool success``
+    - ``string message``
+
+- ``SetParameter``:
+  - Request fields:
+    - ``Parameter param``
+  - Response fields:
+    - ``bool success``
+    - ``string message``
+
+- ``SetPoseWithCovarianceStamped``:
+  - Request fields:
+    - ``geometry_msgs/PoseWithCovarianceStamped pose``
+  - Response fields:
+    - ``bool success``
+    - ``string message``
+
+- ``SetWaypoints``:
+  - Request fields:
+    - ``Waypoint[] waypoints``
+    - ``uint8 repetition``
+    - ``uint8 current_index``
+  - Response fields:
+    - ``bool success``
+    - ``string message``
+
+- ``String``:
+  - Request fields:
+    - ``string data``
+  - Response fields:
+    - ``bool success``
+    - ``string message``
+
+- ``StringAndBool``:
+  - Request fields:
+    - ``string data``
+    - ``bool flag``
+  - Response fields:
+    - ``bool success``
+    - ``string message``
+
+- ``Terrain``:
+  - Request fields:
+    - ``string name``
+    - ``string[] param_name``
+    - ``float64[] param``
+  - Response fields:
+    - ``bool success``
+    - ``string message``
+
+- ``Vector3``:
+  - Request fields:
+    - ``float64 x``
+    - ``float64 y``
+    - ``float64 z``
+  - Response fields:
+    - ``bool success``
+    - ``string message``
+
+- ``Waypoints``:
+  - Request fields:
+    - ``Waypoint[] waypoints``
+    - ``int8 repetition``
+  - Response fields:
+    - ``bool success``
+    - ``string message``
+

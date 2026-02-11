@@ -1,0 +1,566 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plugin &mdash; raisin 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-dropdown.css?v=995e94df" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-bootstrap.min.css?v=21c0b90a" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4b025565" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Parameter" href="Parameter.html" />
+    <link rel="prev" title="Raisin Network" href="RaisinNetwork.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            raisin
+              <img src="../_static/logo_f2-02.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Chapters</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinNetwork.html">Raisin Network</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Plugin</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-in-params-yaml">Configuration in params.yaml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#instance-and-loading-behavior">Instance and loading behavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#unload-behavior">Unload behavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#factory-functions">Factory functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#api">API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6raisin6plugin13PluginManagerE"><code class="docutils literal notranslate"><span class="pre">raisin::plugin::PluginManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin13PluginManager4loadERKNSt6stringEdRKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">load()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin13PluginManager11initPluginsERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">initPlugins()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4I0EN6raisin6plugin13PluginManager9getPluginEP1TRKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">getPlugin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin13PluginManager9getPluginERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">getPlugin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin13PluginManager9hasPluginERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">hasPlugin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin13PluginManager6isDoneERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">isDone()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin13PluginManager18getPluginInstancesERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">getPluginInstances()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6raisin6plugin6PluginE"><code class="docutils literal notranslate"><span class="pre">raisin::plugin::Plugin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin6Plugin6PluginERN6raisim5WorldERN6raisim12RaisimServerERN6raisim5WorldERN6raisim12RaisimServerER14GlobalResourceRKNSt6stringERKNSt6stringEb"><code class="docutils literal notranslate"><span class="pre">Plugin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin6Plugin4initEv"><code class="docutils literal notranslate"><span class="pre">init()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin6Plugin7advanceEv"><code class="docutils literal notranslate"><span class="pre">advance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin6Plugin5resetEv"><code class="docutils literal notranslate"><span class="pre">reset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin6Plugin13getPluginTypeEv"><code class="docutils literal notranslate"><span class="pre">getPluginType()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin6Plugin11pluginType_E"><code class="docutils literal notranslate"><span class="pre">pluginType_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin6Plugin9worldHub_E"><code class="docutils literal notranslate"><span class="pre">worldHub_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin6Plugin10serverHub_E"><code class="docutils literal notranslate"><span class="pre">serverHub_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin6Plugin9robotHub_E"><code class="docutils literal notranslate"><span class="pre">robotHub_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin6Plugin9robotSim_E"><code class="docutils literal notranslate"><span class="pre">robotSim_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin6Plugin9worldSim_E"><code class="docutils literal notranslate"><span class="pre">worldSim_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin6Plugin10serverSim_E"><code class="docutils literal notranslate"><span class="pre">serverSim_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin6Plugin10paramRoot_E"><code class="docutils literal notranslate"><span class="pre">paramRoot_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin6Plugin11dataLogger_E"><code class="docutils literal notranslate"><span class="pre">dataLogger_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin6Plugin7logIdx_E"><code class="docutils literal notranslate"><span class="pre">logIdx_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin6Plugin12postPlugins_E"><code class="docutils literal notranslate"><span class="pre">postPlugins_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin6Plugin10terminate_E"><code class="docutils literal notranslate"><span class="pre">terminate_</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6raisin6plugin10PluginTypeE"><code class="docutils literal notranslate"><span class="pre">PluginType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin10PluginType6CUSTOME"><code class="docutils literal notranslate"><span class="pre">CUSTOM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin10PluginType15STATE_ESTIMATORE"><code class="docutils literal notranslate"><span class="pre">STATE_ESTIMATOR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin10PluginType7MAPPINGE"><code class="docutils literal notranslate"><span class="pre">MAPPING</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N6raisin6plugin10PluginType4SLAME"><code class="docutils literal notranslate"><span class="pre">SLAM</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Parameter.html">Parameter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DataLogger.html">DataLogger</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="RaiboNode.html">RaiboNode</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="RaiboNode.html#run">Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="RaiboNode.html#robot-state">Robot State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="RaiboNode.html#interfaces">Interfaces</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="RaiboNode.html#development">Development</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Plugin</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#configuration-in-params-yaml">Configuration in params.yaml</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#instance-and-loading-behavior">Instance and loading behavior</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#unload-behavior">Unload behavior</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#factory-functions">Factory functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Controller.html">Controller</a></li>
+<li class="toctree-l3"><a class="reference internal" href="JoyInterface.html">Joy Interface</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="RaisinGui.html">Raisin Gui</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Ros2Messages.html">ROS2 Message Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Reference.html">Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">raisin</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Plugin</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="plugin">
+<h1>Plugin<a class="headerlink" href="#plugin" title="Link to this heading"></a></h1>
+<p>For incorporating advanced features like state estimation and mapping, Raisin supports plugins.
+Plugins are dynamically loaded shared libraries, and <code class="docutils literal notranslate"><span class="pre">advance()</span></code> is called at a configured rate
+(Hz). There are three common ways to load a plugin:</p>
+<ol class="arabic simple">
+<li><p>Load by <code class="docutils literal notranslate"><span class="pre">raisin_raibo2_node</span></code>: This method loads the plugin from the start of the executable.</p></li>
+<li><p>Load by <code class="docutils literal notranslate"><span class="pre">controller</span></code>: This method loads the plugin concurrently when the controller is loaded.</p></li>
+<li><p>Load by <code class="docutils literal notranslate"><span class="pre">plugin</span></code>: This method loads other plugin concurrently when the plugin is loaded.</p></li>
+</ol>
+<section id="configuration-in-params-yaml">
+<h2>Configuration in params.yaml<a class="headerlink" href="#configuration-in-params-yaml" title="Link to this heading"></a></h2>
+<p>Plugins are declared under a top-level <code class="docutils literal notranslate"><span class="pre">plugin</span></code> section in the package parameters (for example,
+<code class="docutils literal notranslate"><span class="pre">raisin_raibo2/config/params.yaml</span></code>). Use the <em>base</em> plugin name (without the <code class="docutils literal notranslate"><span class="pre">raisin_</span></code> prefix
+and <code class="docutils literal notranslate"><span class="pre">_plugin</span></code> suffix). The rate is in Hz:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>plugin:
+<span class="w">  </span>d430:
+<span class="w">    </span>rate:<span class="w"> </span>1
+<span class="w">    </span>instances:<span class="w"> </span>[d430_front,<span class="w"> </span>d430_rear]
+<span class="w">    </span>active_instances_at_start:<span class="w"> </span>[d430_front,<span class="w"> </span>d430_rear]
+<span class="w">  </span>grid_mapping:
+<span class="w">    </span>rate:<span class="w"> </span>5
+</pre></div>
+</div>
+<p>In this configuration:</p>
+<ul class="simple">
+<li><p><strong>name</strong>: The base plugin name (<code class="docutils literal notranslate"><span class="pre">d430</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">raisin_d430_plugin</span></code>).</p></li>
+<li><p><strong>rate</strong>: How often, in Hz, the plugin’s <code class="docutils literal notranslate"><span class="pre">advance()</span></code> function should be called. If the rate is
+<code class="docutils literal notranslate"><span class="pre">&lt;=</span> <span class="pre">0</span></code>, the plugin is loaded but no periodic loop is started.</p></li>
+<li><p><strong>instances</strong>: Optional list of instance titles to use when creating multiple instances.</p></li>
+<li><p><strong>active_instances_at_start</strong>: Optional list of instance titles to load automatically at startup.</p></li>
+</ul>
+<p>A plugin stores its subscribers, which are packages (for example <code class="docutils literal notranslate"><span class="pre">raisin_raibo2_node</span></code>,
+<code class="docutils literal notranslate"><span class="pre">controller</span></code>, and other <code class="docutils literal notranslate"><span class="pre">plugin</span></code> instances) that configured the plugin.
+A plugin is unloaded if</p>
+<ol class="arabic simple">
+<li><p>There’s no subscriber anymore</p></li>
+<li><p>Another plugin with same pluginType is loaded(refer to the <code class="docutils literal notranslate"><span class="pre">PluginType</span></code>)</p></li>
+</ol>
+<p>If the new plugin’s type is <code class="docutils literal notranslate"><span class="pre">SLAM</span></code>, existing <code class="docutils literal notranslate"><span class="pre">STATE_ESTIMATOR</span></code> and <code class="docutils literal notranslate"><span class="pre">MAPPING</span></code> plugins are also
+unloaded to avoid conflicts.</p>
+</section>
+<section id="instance-and-loading-behavior">
+<h2>Instance and loading behavior<a class="headerlink" href="#instance-and-loading-behavior" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">PluginManager::load</span></code> accepts a base plugin name and an optional instance title. If a title is
+not provided, it will use the first available configured instance title or fall back to
+<code class="docutils literal notranslate"><span class="pre">&lt;plugin_name&gt;:&lt;n&gt;</span></code>.</p></li>
+<li><p>The plugin package parameters can set <code class="docutils literal notranslate"><span class="pre">allow_multiple_instances</span></code> to control whether multiple
+instances of the same base plugin may coexist.</p></li>
+<li><p>A plugin package can declare dependent plugins under its own <code class="docutils literal notranslate"><span class="pre">plugin</span></code> section; these are loaded
+automatically when the parent plugin is loaded.</p></li>
+<li><p>The periodic loop is scheduled on the thread group specified by <code class="docutils literal notranslate"><span class="pre">thread_group</span></code> in the plugin
+package parameters.</p></li>
+</ul>
+</section>
+<section id="unload-behavior">
+<h2>Unload behavior<a class="headerlink" href="#unload-behavior" title="Link to this heading"></a></h2>
+<p>Plugins can be unloaded explicitly or automatically:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">PluginManager::unload(&lt;identifier&gt;)</span></code> accepts either the instance title or the base plugin
+name. If multiple instances exist for a base name, you must specify a title.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PluginManager::removeSubscriber(subscriber_id)</span></code> removes the subscriber from every loaded
+plugin. If a plugin has no remaining subscribers, it is unloaded automatically.</p></li>
+<li><p>The plugin manager periodically checks <code class="docutils literal notranslate"><span class="pre">Plugin::shouldTerminate()</span></code>; any plugin that returns
+true is unloaded on the next check.</p></li>
+</ul>
+<p>Unload flow details:</p>
+<ul class="simple">
+<li><p>The plugin’s periodic loop is stopped first.</p></li>
+<li><p>The shared library is released only when no remaining instances reference it.</p></li>
+<li><p>When unloading a plugin, the manager also detaches it from dependent plugins that listed it as a
+subscriber.</p></li>
+</ul>
+<p>For implementing plugins in Raisin, it’s important to adhere to the naming convention specified.
+Each plugin should be named following the pattern <code class="docutils literal notranslate"><span class="pre">raisin_**_plugin</span></code>, where ** represents a
+descriptive part of the plugin’s functionality.</p>
+<p>For practical implementation examples, refer to the <a class="reference download internal" download="" href="../_downloads/c97e76f05bade9be5bacd07911c04c52/raisin_example_plugin.zip"><code class="xref download docutils literal notranslate"><span class="pre">raisin_example_plugin.zip</span></code></a>.</p>
+</section>
+<section id="factory-functions">
+<h2>Factory functions<a class="headerlink" href="#factory-functions" title="Link to this heading"></a></h2>
+<p>Plugin shared libraries can expose any of the following factory symbols. The loader tries the most
+specific signature first and falls back to <code class="docutils literal notranslate"><span class="pre">create</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">create_with_owner_title_robot</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">create_with_owner_and_title</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">create_with_title</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">create</span></code></p></li>
+</ul>
+</section>
+<section id="api">
+<h2>API<a class="headerlink" href="#api" title="Link to this heading"></a></h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin13PluginManagerE">
+<span id="_CPPv3N6raisin6plugin13PluginManagerE"></span><span id="_CPPv2N6raisin6plugin13PluginManagerE"></span><span id="raisin::plugin::PluginManager"></span><span class="target" id="classraisin_1_1plugin_1_1PluginManager"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PluginManager</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span><a class="headerlink" href="#_CPPv4N6raisin6plugin13PluginManagerE" title="Link to this definition"></a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin13PluginManager4loadERKNSt6stringEdRKNSt6stringERKNSt6stringE">
+<span id="_CPPv3N6raisin6plugin13PluginManager4loadERKNSt6stringEdRKNSt6stringERKNSt6stringE"></span><span id="_CPPv2N6raisin6plugin13PluginManager4loadERKNSt6stringEdRKNSt6stringERKNSt6stringE"></span><span id="raisin::plugin::PluginManager::load__ssCR.double.ssCR.ssCR"></span><span class="target" id="classraisin_1_1plugin_1_1PluginManager_1a41884471933085e45f093364aefacf6e"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">load</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">plugin_name</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">frequency</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">subscriber</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">title</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="s"><span class="pre">&quot;&quot;</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin6plugin13PluginManager4loadERKNSt6stringEdRKNSt6stringERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>plugin_name</strong> – base name of the plugin package (without the raisin_ prefix and _plugin suffix) </p></li>
+<li><p><strong>subscriber</strong> – Another plugin that subscribes to this new plugin </p></li>
+<li><p><strong>title</strong> – unique instance identifier (defaults to “&lt;PLUGIN_NAME&gt;:&lt;INSTANCE_NUMBER&gt;”) </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin13PluginManager11initPluginsERKNSt6stringE">
+<span id="_CPPv3N6raisin6plugin13PluginManager11initPluginsERKNSt6stringE"></span><span id="_CPPv2N6raisin6plugin13PluginManager11initPluginsERKNSt6stringE"></span><span id="raisin::plugin::PluginManager::initPlugins__ssCR"></span><span class="target" id="classraisin_1_1plugin_1_1PluginManager_1a20a7c193c4dbfd105c7e086002bab890"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">initPlugins</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">subscriber</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin6plugin13PluginManager11initPluginsERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Load plugins declared under the provided parameter root. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>subscriber</strong> – Identifier of the initial subscriber (typically the robot using the plugins). </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if all configured plugins attempted to load successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN6raisin6plugin13PluginManager9getPluginEP1TRKNSt6stringE">
+<span id="_CPPv3I0EN6raisin6plugin13PluginManager9getPluginERKNSt6stringE"></span><span id="_CPPv2I0EN6raisin6plugin13PluginManager9getPluginERKNSt6stringE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classraisin_1_1plugin_1_1PluginManager_1a55b833175e6cdac0756717b432109311"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0EN6raisin6plugin13PluginManager9getPluginEP1TRKNSt6stringE" title="raisin::plugin::PluginManager::getPlugin::T"><span class="n"><span class="pre">T</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">getPlugin</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">plugin_identifier</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN6raisin6plugin13PluginManager9getPluginEP1TRKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>plugin_name</strong> – identical to the package name </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>casted <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin"><span class="std std-ref">Plugin</span></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin13PluginManager9getPluginERKNSt6stringE">
+<span id="_CPPv3N6raisin6plugin13PluginManager9getPluginERKNSt6stringE"></span><span id="_CPPv2N6raisin6plugin13PluginManager9getPluginERKNSt6stringE"></span><span id="raisin::plugin::PluginManager::getPlugin__ssCR"></span><span class="target" id="classraisin_1_1plugin_1_1PluginManager_1a65b7de766a37913d646ca0ca2e6044ad"></span><a class="reference internal" href="#_CPPv4N6raisin6plugin6PluginE" title="raisin::plugin::Plugin"><span class="n"><span class="pre">Plugin</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">getPlugin</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">plugin_identifier</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin6plugin13PluginManager9getPluginERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>plugin_identifier</strong> – instance title or base plugin name (base must be unique) </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin"><span class="std std-ref">Plugin</span></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin13PluginManager9hasPluginERKNSt6stringE">
+<span id="_CPPv3N6raisin6plugin13PluginManager9hasPluginERKNSt6stringE"></span><span id="_CPPv2N6raisin6plugin13PluginManager9hasPluginERKNSt6stringE"></span><span id="raisin::plugin::PluginManager::hasPlugin__ssCR"></span><span class="target" id="classraisin_1_1plugin_1_1PluginManager_1ae937643043e6502a9c1536fe12c930e0"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">hasPlugin</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">plugin_identifier</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin6plugin13PluginManager9hasPluginERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>plugin_identifier</strong> – instance title or base plugin name (base returns true if any instance exists) </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>whether the <a class="reference internal" href="#classraisin_1_1plugin_1_1PluginManager"><span class="std std-ref">PluginManager</span></a> holds the <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin"><span class="std std-ref">Plugin</span></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin13PluginManager6isDoneERKNSt6stringE">
+<span id="_CPPv3N6raisin6plugin13PluginManager6isDoneERKNSt6stringE"></span><span id="_CPPv2N6raisin6plugin13PluginManager6isDoneERKNSt6stringE"></span><span id="raisin::plugin::PluginManager::isDone__ssCR"></span><span class="target" id="classraisin_1_1plugin_1_1PluginManager_1af2860933c2a8fd721986f57b991cd5c6"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isDone</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">plugin_identifier</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin6plugin13PluginManager6isDoneERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>plugin_identifier</strong> – instance title or base plugin name </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>whether the <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin"><span class="std std-ref">Plugin</span></a> is done (calls Plugin::isDone()) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin13PluginManager18getPluginInstancesERKNSt6stringE">
+<span id="_CPPv3N6raisin6plugin13PluginManager18getPluginInstancesERKNSt6stringE"></span><span id="_CPPv2N6raisin6plugin13PluginManager18getPluginInstancesERKNSt6stringE"></span><span id="raisin::plugin::PluginManager::getPluginInstances__ssCR"></span><span class="target" id="classraisin_1_1plugin_1_1PluginManager_1a11278ce33f5b7463f5f0d3c20f098874"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getPluginInstances</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">plugin_name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin6plugin13PluginManager18getPluginInstancesERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Returns the instance titles for the specified base plugin. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin6PluginE">
+<span id="_CPPv3N6raisin6plugin6PluginE"></span><span id="_CPPv2N6raisin6plugin6PluginE"></span><span id="raisin::plugin::Plugin"></span><span class="target" id="classraisin_1_1plugin_1_1Plugin"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Plugin</span></span></span><a class="headerlink" href="#_CPPv4N6raisin6plugin6PluginE" title="Link to this definition"></a><br /></dt>
+<dd><p><a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin"><span class="std std-ref">Plugin</span></a> class to control a robot.</p>
+<p>To implement your own <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin"><span class="std std-ref">Plugin</span></a>, inherit this class and implement virtual methods.</p>
+<p><a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin_1ab11fa7dbe376588fb52478d625db1528"><span class="std std-ref">worldHub_</span></a> holds the robot’s estimated state and environment(including height), which are set by plugins.</p>
+<p>Inside <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin_1ab11fa7dbe376588fb52478d625db1528"><span class="std std-ref">worldHub_</span></a>, <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin_1a03c344cc8afc1183a6343c37d520eb13"><span class="std std-ref">robotHub_</span></a> offers sensor data access (encoders, cameras, IMUs) and allows for issuing torque commands.</p>
+<p>Note: <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin_1a6e07caa92316a0af52f4ea3476901938"><span class="std std-ref">worldSim_</span></a> is solely for simulations and must not be used with actual robots.</p>
+<p>Estimated world(<a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin_1ab11fa7dbe376588fb52478d625db1528"><span class="std std-ref">worldHub_</span></a>) is visualized in <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin_1a08653dc6d52e50ddda79a95d64198169"><span class="std std-ref">serverHub_</span></a> (port 8080), and simulated world(<a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin_1a6e07caa92316a0af52f4ea3476901938"><span class="std std-ref">worldSim_</span></a>) is visualized in <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin_1a112106e9f4db6adee5ad196b20b5e175"><span class="std std-ref">serverSim_</span></a> (port 7000). </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin6Plugin6PluginERN6raisim5WorldERN6raisim12RaisimServerERN6raisim5WorldERN6raisim12RaisimServerER14GlobalResourceRKNSt6stringERKNSt6stringEb">
+<span id="_CPPv3N6raisin6plugin6Plugin6PluginERN6raisim5WorldERN6raisim12RaisimServerERN6raisim5WorldERN6raisim12RaisimServerER14GlobalResourceRKNSt6stringERKNSt6stringEb"></span><span id="_CPPv2N6raisin6plugin6Plugin6PluginERN6raisim5WorldERN6raisim12RaisimServerERN6raisim5WorldERN6raisim12RaisimServerER14GlobalResourceRKNSt6stringERKNSt6stringEb"></span><span id="raisin::plugin::Plugin::Plugin__raisim::WorldR.raisim::RaisimServerR.raisim::WorldR.raisim::RaisimServerR.GlobalResourceR.ssCR.ssCR.b"></span><span class="target" id="classraisin_1_1plugin_1_1Plugin_1a7220913334eeea19e234afa9a0bfae8f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Plugin</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">raisim</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">World</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">worldHub</span></span>, <span class="n"><span class="pre">raisim</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">RaisimServer</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">serverHub</span></span>, <span class="n"><span class="pre">raisim</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">World</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">worldSim</span></span>, <span class="n"><span class="pre">raisim</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">RaisimServer</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">serverSim</span></span>, <span class="n"><span class="pre">GlobalResource</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">globalResource</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">owner</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="s"><span class="pre">&quot;&quot;</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">title</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="s"><span class="pre">&quot;&quot;</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">isRealRobot</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin6plugin6Plugin6PluginERN6raisim5WorldERN6raisim12RaisimServerERN6raisim5WorldERN6raisim12RaisimServerER14GlobalResourceRKNSt6stringERKNSt6stringEb" title="Link to this definition"></a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – name of the plugin </p></li>
+<li><p><strong>world</strong> – see <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin_1ab11fa7dbe376588fb52478d625db1528"><span class="std std-ref">worldHub_</span></a></p></li>
+<li><p><strong>server</strong> – see <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin_1a08653dc6d52e50ddda79a95d64198169"><span class="std std-ref">serverHub_</span></a></p></li>
+<li><p><strong>worldSim</strong> – see <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin_1a6e07caa92316a0af52f4ea3476901938"><span class="std std-ref">worldSim_</span></a></p></li>
+<li><p><strong>serverSim</strong> – see <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin_1a112106e9f4db6adee5ad196b20b5e175"><span class="std std-ref">serverSim_</span></a></p></li>
+<li><p><strong>globalResource</strong> – global resources such as paramRoot, dataLogger </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin6Plugin4initEv">
+<span id="_CPPv3N6raisin6plugin6Plugin4initEv"></span><span id="_CPPv2N6raisin6plugin6Plugin4initEv"></span><span id="raisin::plugin::Plugin::init"></span><span class="target" id="classraisin_1_1plugin_1_1Plugin_1a56044133e09559e098a950337e06179f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">init</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin6plugin6Plugin4initEv" title="Link to this definition"></a><br /></dt>
+<dd><p>initialize plugin. this is called only once. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if successful </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin6Plugin7advanceEv">
+<span id="_CPPv3N6raisin6plugin6Plugin7advanceEv"></span><span id="_CPPv2N6raisin6plugin6Plugin7advanceEv"></span><span id="raisin::plugin::Plugin::advance"></span><span class="target" id="classraisin_1_1plugin_1_1Plugin_1abe95c3daeaa30dfdd66a963c29633334"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">advance</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin6plugin6Plugin7advanceEv" title="Link to this definition"></a><br /></dt>
+<dd><p>advance plugin. This is called regularly by <a class="reference internal" href="#classraisin_1_1plugin_1_1PluginManager"><span class="std std-ref">PluginManager</span></a>. robot’s state, or estimated environment should be updated. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if successful </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin6Plugin5resetEv">
+<span id="_CPPv3N6raisin6plugin6Plugin5resetEv"></span><span id="_CPPv2N6raisin6plugin6Plugin5resetEv"></span><span id="raisin::plugin::Plugin::reset"></span><span class="target" id="classraisin_1_1plugin_1_1Plugin_1aae6d44677771b715b18f9caa7f15e154"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">reset</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin6plugin6Plugin5resetEv" title="Link to this definition"></a><br /></dt>
+<dd><p>reset plugin </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>true if successful </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin6Plugin13getPluginTypeEv">
+<span id="_CPPv3N6raisin6plugin6Plugin13getPluginTypeEv"></span><span id="_CPPv2N6raisin6plugin6Plugin13getPluginTypeEv"></span><span id="raisin::plugin::Plugin::getPluginType"></span><span class="target" id="classraisin_1_1plugin_1_1Plugin_1ac89dc58ac51519489ed9d69421a2c1b9"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6raisin6plugin10PluginTypeE" title="raisin::plugin::PluginType"><span class="n"><span class="pre">PluginType</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getPluginType</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6raisin6plugin6Plugin13getPluginTypeEv" title="Link to this definition"></a><br /></dt>
+<dd><p>check <a class="reference internal" href="#namespaceraisin_1_1plugin_1afbe72091cfb20c6c022f6b5566baa357"><span class="std std-ref">PluginType</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin_1a5fe69b3a3d5f72a8bb4a7edfd5beac59"><span class="std std-ref">pluginType_</span></a>. </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-attributes">Protected Attributes</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin6Plugin11pluginType_E">
+<span id="_CPPv3N6raisin6plugin6Plugin11pluginType_E"></span><span id="_CPPv2N6raisin6plugin6Plugin11pluginType_E"></span><span id="raisin::plugin::Plugin::pluginType___PluginType"></span><span class="target" id="classraisin_1_1plugin_1_1Plugin_1a5fe69b3a3d5f72a8bb4a7edfd5beac59"></span><a class="reference internal" href="#_CPPv4N6raisin6plugin10PluginTypeE" title="raisin::plugin::PluginType"><span class="n"><span class="pre">PluginType</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">pluginType_</span></span></span><a class="headerlink" href="#_CPPv4N6raisin6plugin6Plugin11pluginType_E" title="Link to this definition"></a><br /></dt>
+<dd><p>check <a class="reference internal" href="#namespaceraisin_1_1plugin_1afbe72091cfb20c6c022f6b5566baa357"><span class="std std-ref">PluginType</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin6Plugin9worldHub_E">
+<span id="_CPPv3N6raisin6plugin6Plugin9worldHub_E"></span><span id="_CPPv2N6raisin6plugin6Plugin9worldHub_E"></span><span id="raisin::plugin::Plugin::worldHub___raisim::WorldR"></span><span class="target" id="classraisin_1_1plugin_1_1Plugin_1ab11fa7dbe376588fb52478d625db1528"></span><span class="n"><span class="pre">raisim</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">World</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">worldHub_</span></span></span><a class="headerlink" href="#_CPPv4N6raisin6plugin6Plugin9worldHub_E" title="Link to this definition"></a><br /></dt>
+<dd><p>The <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin_1ab11fa7dbe376588fb52478d625db1528"><span class="std std-ref">worldHub_</span></a> object holds the robot’s estimated state and environment(including height), which are set by plugins. Through this variable, you can</p>
+<p>1) set the estimated environment(addHeightMap…)</p>
+<p>2) get the world time (getWolrdTime) </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin6Plugin10serverHub_E">
+<span id="_CPPv3N6raisin6plugin6Plugin10serverHub_E"></span><span id="_CPPv2N6raisin6plugin6Plugin10serverHub_E"></span><span id="raisin::plugin::Plugin::serverHub___raisim::RaisimServerR"></span><span class="target" id="classraisin_1_1plugin_1_1Plugin_1a08653dc6d52e50ddda79a95d64198169"></span><span class="n"><span class="pre">raisim</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">RaisimServer</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">serverHub_</span></span></span><a class="headerlink" href="#_CPPv4N6raisin6plugin6Plugin10serverHub_E" title="Link to this definition"></a><br /></dt>
+<dd><p>This is for visualization of <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin_1ab11fa7dbe376588fb52478d625db1528"><span class="std std-ref">worldHub_</span></a> in port 8080. You can add visualObject through this <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin_1a08653dc6d52e50ddda79a95d64198169"><span class="std std-ref">serverHub_</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin6Plugin9robotHub_E">
+<span id="_CPPv3N6raisin6plugin6Plugin9robotHub_E"></span><span id="_CPPv2N6raisin6plugin6Plugin9robotHub_E"></span><span id="raisin::plugin::Plugin::robotHub___raisim::ArticulatedSystemP"></span><span class="target" id="classraisin_1_1plugin_1_1Plugin_1a03c344cc8afc1183a6343c37d520eb13"></span><span class="n"><span class="pre">raisim</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ArticulatedSystem</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">robotHub_</span></span></span><a class="headerlink" href="#_CPPv4N6raisin6plugin6Plugin9robotHub_E" title="Link to this definition"></a><br /></dt>
+<dd><p>ArticulatedSystem variable that holds the information about the robot. This is member of <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin_1ab11fa7dbe376588fb52478d625db1528"><span class="std std-ref">worldHub_</span></a>. Through this variable, you can</p>
+<p>set the estimated robot’s state(setGeneralizedCoordinate, setGeneralizedVelocity…)</p>
+<p>get the estimated robot’s state(getGeneralizedCoordinate, getGeneralizedVelocity…) </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin6Plugin9robotSim_E">
+<span id="_CPPv3N6raisin6plugin6Plugin9robotSim_E"></span><span id="_CPPv2N6raisin6plugin6Plugin9robotSim_E"></span><span id="raisin::plugin::Plugin::robotSim___raisim::ArticulatedSystemP"></span><span class="target" id="classraisin_1_1plugin_1_1Plugin_1aeba90e312761b73bf880c2377d18d219"></span><span class="n"><span class="pre">raisim</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ArticulatedSystem</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">robotSim_</span></span></span><a class="headerlink" href="#_CPPv4N6raisin6plugin6Plugin9robotSim_E" title="Link to this definition"></a><br /></dt>
+<dd><p>ArticulatedSystem variable that holds the information about the robot in the simulation. This is member of <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin_1a6e07caa92316a0af52f4ea3476901938"><span class="std std-ref">worldSim_</span></a>. Through this variable, you can</p>
+<p>set the estimated robot’s state(setGeneralizedCoordinate, setGeneralizedVelocity…)</p>
+<p>get the estimated robot’s state(getGeneralizedCoordinate, getGeneralizedVelocity…) </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin6Plugin9worldSim_E">
+<span id="_CPPv3N6raisin6plugin6Plugin9worldSim_E"></span><span id="_CPPv2N6raisin6plugin6Plugin9worldSim_E"></span><span id="raisin::plugin::Plugin::worldSim___raisim::WorldR"></span><span class="target" id="classraisin_1_1plugin_1_1Plugin_1a6e07caa92316a0af52f4ea3476901938"></span><span class="n"><span class="pre">raisim</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">World</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">worldSim_</span></span></span><a class="headerlink" href="#_CPPv4N6raisin6plugin6Plugin9worldSim_E" title="Link to this definition"></a><br /></dt>
+<dd><p><a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin_1a6e07caa92316a0af52f4ea3476901938"><span class="std std-ref">worldSim_</span></a> is solely for simulations and must not be used with actual robots. You can get ground truth information of simulation through <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin_1a6e07caa92316a0af52f4ea3476901938"><span class="std std-ref">worldSim_</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin6Plugin10serverSim_E">
+<span id="_CPPv3N6raisin6plugin6Plugin10serverSim_E"></span><span id="_CPPv2N6raisin6plugin6Plugin10serverSim_E"></span><span id="raisin::plugin::Plugin::serverSim___raisim::RaisimServerR"></span><span class="target" id="classraisin_1_1plugin_1_1Plugin_1a112106e9f4db6adee5ad196b20b5e175"></span><span class="n"><span class="pre">raisim</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">RaisimServer</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">serverSim_</span></span></span><a class="headerlink" href="#_CPPv4N6raisin6plugin6Plugin10serverSim_E" title="Link to this definition"></a><br /></dt>
+<dd><p>This is for visualization of <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin_1a6e07caa92316a0af52f4ea3476901938"><span class="std std-ref">worldSim_</span></a>, and simulated camera streaming in port 7000. If you want to use camera, make sure to turn on raisimUnreal on port 7000. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin6Plugin10paramRoot_E">
+<span id="_CPPv3N6raisin6plugin6Plugin10paramRoot_E"></span><span id="_CPPv2N6raisin6plugin6Plugin10paramRoot_E"></span><span id="raisin::plugin::Plugin::paramRoot___raisin::parameter::ParameterContainerR"></span><span class="target" id="classraisin_1_1plugin_1_1Plugin_1ab6ae2bb574ce6cbbf4f56aa710276e3a"></span><span class="n"><span class="pre">raisin</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">parameter</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="Parameter.html#_CPPv4N6raisin9parameter18ParameterContainerE" title="raisin::parameter::ParameterContainer"><span class="n"><span class="pre">ParameterContainer</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">paramRoot_</span></span></span><a class="headerlink" href="#_CPPv4N6raisin6plugin6Plugin10paramRoot_E" title="Link to this definition"></a><br /></dt>
+<dd><p>Use this variable instead of calling <a class="reference internal" href="Parameter.html#classraisin_1_1parameter_1_1ParameterContainer_1a1b11ad61de0b00abadb69cc1174316df"><span class="std std-ref">parameter::ParameterContainer::getRoot()</span></a>, which is not valid in dynamic library. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin6Plugin11dataLogger_E">
+<span id="_CPPv3N6raisin6plugin6Plugin11dataLogger_E"></span><span id="_CPPv2N6raisin6plugin6Plugin11dataLogger_E"></span><span id="raisin::plugin::Plugin::dataLogger___raisin::DataLoggerR"></span><span class="target" id="classraisin_1_1plugin_1_1Plugin_1a03219a395f2a47e7c2bd78751d85bc03"></span><span class="n"><span class="pre">raisin</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="DataLogger.html#_CPPv4N6raisin10DataLoggerE" title="raisin::DataLogger"><span class="n"><span class="pre">DataLogger</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">dataLogger_</span></span></span><a class="headerlink" href="#_CPPv4N6raisin6plugin6Plugin11dataLogger_E" title="Link to this definition"></a><br /></dt>
+<dd><p><p>Use this variable instead of calling “raisin::DataLogger raisin::DataLogger::getInstance() =</p>
+<p>raisin::DataLogger()”, which is not valid in dynamic library.</p>
+</p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin6Plugin7logIdx_E">
+<span id="_CPPv3N6raisin6plugin6Plugin7logIdx_E"></span><span id="_CPPv2N6raisin6plugin6Plugin7logIdx_E"></span><span id="raisin::plugin::Plugin::logIdx___s"></span><span class="target" id="classraisin_1_1plugin_1_1Plugin_1ae5183dde50b7ca138b292d8c53643968"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">logIdx_</span></span></span><a class="headerlink" href="#_CPPv4N6raisin6plugin6Plugin7logIdx_E" title="Link to this definition"></a><br /></dt>
+<dd><p>Initialize this with <a class="reference internal" href="DataLogger.html#classraisin_1_1DataLogger_1a9b58f45ae759576d76447c54db74802b"><span class="std std-ref">DataLogger::initializeAnotherDataGroup</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin6Plugin12postPlugins_E">
+<span id="_CPPv3N6raisin6plugin6Plugin12postPlugins_E"></span><span id="_CPPv2N6raisin6plugin6Plugin12postPlugins_E"></span><span id="raisin::plugin::Plugin::postPlugins___std::vector:PluginP:"></span><span class="target" id="classraisin_1_1plugin_1_1Plugin_1a1e259228731b9e4609bebeaaf7bf5074"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N6raisin6plugin6PluginE" title="raisin::plugin::Plugin"><span class="n"><span class="pre">Plugin</span></span></a><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">postPlugins_</span></span></span><a class="headerlink" href="#_CPPv4N6raisin6plugin6Plugin12postPlugins_E" title="Link to this definition"></a><br /></dt>
+<dd><p>all postPlugin-&gt;<a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin_1abe95c3daeaa30dfdd66a963c29633334"><span class="std std-ref">advance()</span></a> is called for after this-&gt;<a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin_1abe95c3daeaa30dfdd66a963c29633334"><span class="std std-ref">advance()</span></a> is called </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin6Plugin10terminate_E">
+<span id="_CPPv3N6raisin6plugin6Plugin10terminate_E"></span><span id="_CPPv2N6raisin6plugin6Plugin10terminate_E"></span><span id="raisin::plugin::Plugin::terminate___std::atomic_bool"></span><span class="target" id="classraisin_1_1plugin_1_1Plugin_1afa184434faefe5111352f27be6fb7c36"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">atomic_bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">terminate_</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="k"><span class="pre">false</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N6raisin6plugin6Plugin10terminate_E" title="Link to this definition"></a><br /></dt>
+<dd><p>If this becomes false, <a class="reference internal" href="#classraisin_1_1plugin_1_1PluginManager"><span class="std std-ref">PluginManager</span></a> stops calling <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin_1abe95c3daeaa30dfdd66a963c29633334"><span class="std std-ref">advance()</span></a>, and destroy <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin"><span class="std std-ref">Plugin</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Return<span class="colon">:</span></dt>
+<dd class="field-odd"><p>wheter the plugin is terminated </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin10PluginTypeE">
+<span id="_CPPv3N6raisin6plugin10PluginTypeE"></span><span id="_CPPv2N6raisin6plugin10PluginTypeE"></span><span class="target" id="namespaceraisin_1_1plugin_1afbe72091cfb20c6c022f6b5566baa357"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">raisin</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">plugin</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">PluginType</span></span></span><a class="headerlink" href="#_CPPv4N6raisin6plugin10PluginTypeE" title="Link to this definition"></a><br /></dt>
+<dd><p>PluginType specifies the function of <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin"><span class="std std-ref">Plugin</span></a>.</p>
+<p>Because the plugins of the same type can potentially conflict with each other, <a class="reference internal" href="#classraisin_1_1plugin_1_1PluginManager"><span class="std std-ref">PluginManager</span></a> unload the existing plugin of the same type when loading one.</p>
+<p>The user should specify the <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin_1a5fe69b3a3d5f72a8bb4a7edfd5beac59"><span class="std std-ref">Plugin::pluginType_</span></a> in the <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin"><span class="std std-ref">Plugin</span></a>’s constructor, such as <code class="docutils literal notranslate"><span class="pre">pluginType_</span> <span class="pre">=</span> <a class="reference internal" href="#namespaceraisin_1_1plugin_1afbe72091cfb20c6c022f6b5566baa357a135d269ed627bbd365ef59962a280a61"><span class="std std-ref"><span class="pre">PluginType::STATE_ESTIMATOR</span></span></a></code>.</p>
+<p>If a SLAM plugin is loaded, the existing state estimator and mapping plugins are additionally unloaded.</p>
+<p>To allow multiple <a class="reference internal" href="#classraisin_1_1plugin_1_1Plugin"><span class="std std-ref">Plugin</span></a> of the same type, set <code class="docutils literal notranslate"><span class="pre">pluginType_</span> <span class="pre">=</span> <a class="reference internal" href="#namespaceraisin_1_1plugin_1afbe72091cfb20c6c022f6b5566baa357a4fb2b0747cc0c09a3aefbc0287511a7b"><span class="std std-ref"><span class="pre">PluginType::CUSTOM</span></span></a></code>. </p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin10PluginType6CUSTOME">
+<span id="_CPPv3N6raisin6plugin10PluginType6CUSTOME"></span><span id="_CPPv2N6raisin6plugin10PluginType6CUSTOME"></span><span class="target" id="namespaceraisin_1_1plugin_1afbe72091cfb20c6c022f6b5566baa357a4fb2b0747cc0c09a3aefbc0287511a7b"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">CUSTOM</span></span></span><a class="headerlink" href="#_CPPv4N6raisin6plugin10PluginType6CUSTOME" title="Link to this definition"></a><br /></dt>
+<dd><p>multiple plugin with this type can be used </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin10PluginType15STATE_ESTIMATORE">
+<span id="_CPPv3N6raisin6plugin10PluginType15STATE_ESTIMATORE"></span><span id="_CPPv2N6raisin6plugin10PluginType15STATE_ESTIMATORE"></span><span class="target" id="namespaceraisin_1_1plugin_1afbe72091cfb20c6c022f6b5566baa357a135d269ed627bbd365ef59962a280a61"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">STATE_ESTIMATOR</span></span></span><a class="headerlink" href="#_CPPv4N6raisin6plugin10PluginType15STATE_ESTIMATORE" title="Link to this definition"></a><br /></dt>
+<dd><p>state estimator </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin10PluginType7MAPPINGE">
+<span id="_CPPv3N6raisin6plugin10PluginType7MAPPINGE"></span><span id="_CPPv2N6raisin6plugin10PluginType7MAPPINGE"></span><span class="target" id="namespaceraisin_1_1plugin_1afbe72091cfb20c6c022f6b5566baa357a5e3ee678b24699b2f3d9501e8948a445"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MAPPING</span></span></span><a class="headerlink" href="#_CPPv4N6raisin6plugin10PluginType7MAPPINGE" title="Link to this definition"></a><br /></dt>
+<dd><p>mapping </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6raisin6plugin10PluginType4SLAME">
+<span id="_CPPv3N6raisin6plugin10PluginType4SLAME"></span><span id="_CPPv2N6raisin6plugin10PluginType4SLAME"></span><span class="target" id="namespaceraisin_1_1plugin_1afbe72091cfb20c6c022f6b5566baa357aed900bbb1fe955052dd6919935cfe077"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SLAM</span></span></span><a class="headerlink" href="#_CPPv4N6raisin6plugin10PluginType4SLAME" title="Link to this definition"></a><br /></dt>
+<dd><p>both state estimator and mapping </p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="RaisinNetwork.html" class="btn btn-neutral float-left" title="Raisin Network" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Parameter.html" class="btn btn-neutral float-right" title="Parameter" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Raion Robotics..</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
