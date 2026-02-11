@@ -123,7 +123,7 @@ Publishers
 - Header: ``raisin_interfaces/msg/robot_state.hpp``
 - Members:
 
-  - ``timestamp`` (float64): Current time in seconds. On a real robot this is the system clock;
+  - ``timestamp`` (builtin_interfaces/Time): Current time. On a real robot this is the system clock;
     in simulation it is the world simulation time.
   - ``actuator_states[]`` (ActuatorState[]): Array of actuator states. Each entry contains:
 

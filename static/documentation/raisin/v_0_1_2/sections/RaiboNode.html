@@ -269,7 +269,7 @@ communication failure or motor driver exception).</p></td>
 <li><p>Header: <code class="docutils literal notranslate"><span class="pre">raisin_interfaces/msg/robot_state.hpp</span></code></p></li>
 <li><p>Members:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">timestamp</span></code> (float64): Current time in seconds. On a real robot this is the system clock;
+<li><p><code class="docutils literal notranslate"><span class="pre">timestamp</span></code> (builtin_interfaces/Time): Current time. On a real robot this is the system clock;
 in simulation it is the world simulation time.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">actuator_states[]</span></code> (ActuatorState[]): Array of actuator states. Each entry contains:</p>
 <ul>

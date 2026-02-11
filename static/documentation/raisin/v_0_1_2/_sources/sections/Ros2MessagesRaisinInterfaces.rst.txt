@@ -157,7 +157,7 @@ raisin_interfaces
 
 - ``RobotState``:
   - Fields:
-    - ``float64 timestamp``
+    - ``builtin_interfaces/Time timestamp``
     - ``ActuatorState[] actuator_states``
     - ``float64[3] base_pos``
     - ``float64[4] base_quat``
